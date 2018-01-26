@@ -1,0 +1,8 @@
+{
+  "name": "folarpos_instant",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
