@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { SendReceiptPage } from '../pages/send-receipt/send-receipt';
+import { PaymentPage } from '../pages/payment/payment';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,6 +17,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     HomePage,
     SendReceiptPage,
+    PaymentPage,
     ListPage
   ],
   imports: [
@@ -28,6 +30,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     ListPage,
     SendReceiptPage,
+    PaymentPage
   ],
   providers: [
     StatusBar,
