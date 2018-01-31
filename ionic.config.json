@@ -1,6 +1,6 @@
 {
   "name": "folarium_cashier",
-  "app_id": "",
+  "app_id": "1a62365b",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
