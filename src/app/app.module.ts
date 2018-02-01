@@ -8,9 +8,13 @@ import { ListPage } from '../pages/list/list';
 import { TablePage } from '../pages/table/table';
 import { LoginPage } from '../pages/login/login';
 import { SendReceiptPage } from '../pages/send-receipt/send-receipt';
+import { PaymentPage } from '../pages/payment/payment';
+import { ReceiptPage } from '../pages/receipt/receipt';
+import { ProductPage } from '../pages/product/product';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { ReceiptDataProvider } from '../providers/receipt-data/receipt-data';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TablePage,
     LoginPage,
     SendReceiptPage,
+    PaymentPage,
+    ReceiptPage,
+    ProductPage
   ],
   imports: [
     BrowserModule,
@@ -33,11 +40,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     LoginPage,
     TablePage,
     SendReceiptPage,
+    PaymentPage,
+    ReceiptPage,
+    ProductPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ReceiptDataProvider
   ]
 })
 export class AppModule {}

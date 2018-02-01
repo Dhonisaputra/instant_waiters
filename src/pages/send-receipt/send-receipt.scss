@@ -1,3 +1,30 @@
 page-send-receipt {
 
 }
+.sendreceipt-box
+{
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.flat
+{
+	border-radius: 0px;
+}
+.btn-send-email-inline
+{
+	margin: 0px;
+	width: 80px;
+}
+.input-send-email-inline
+{
+	height: 44px;flex-grow: 1;
+}
+
+.btn-action
+{
+	margin-bottom: 8px;
+}

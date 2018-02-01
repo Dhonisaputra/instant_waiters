@@ -10,4 +10,9 @@ import { PaymentPage } from './payment';
     IonicPageModule.forChild(PaymentPage),
   ],
 })
-export class PaymentPageModule {}
+export class PaymentPageModule {
+	receipt: any;
+	constructor()
+	{
+	}
+}

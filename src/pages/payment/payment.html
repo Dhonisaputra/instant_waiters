@@ -18,106 +18,61 @@
 
 	<ion-grid>
 		<ion-row class="relative">
-			<ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4></ion-col>
-			<div  class="receipt relative" col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-				<div class="receipt-body">
-					<div class="receipt--costumer-header pseudo">
-						<h5>Warung Enak</h5>
-						<div>Jl. Kartini 7 Sagan Yogyakarta</div>
-						<div>0821-3324-231</div>
-					</div>
-				</div>
-				<ion-row>
-					<ion-col col-5>
-						<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--table">
-					</ion-col>
-					<ion-col col-2></ion-col>
-					<ion-col col-5>
-						<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer">
-					</ion-col>
-				</ion-row>	
-				<table class="" id="table-receipt" style="margin-top: 10px;">
-					<thead style="border-bottom: 1px solid #aaa; margin-bottom: 8px;">
-						<tr>
-							<th>QTY</th>
-							<th>ITEM</th>
-							<th>HARGA</th>
-							<th>JUMLAH</th>
-						</tr>
-					</thead>
-					<tbody style="padding-top: 10px">
-						<tr class="text-align--center">
-							<td style="width: 10%;">1</td>
-							<td style="width: 50%; padding-left: 5px;" class="text-align--left">
-								<span>Pie Fruit</span><br>
-								<span class="text-mute">Topping chocolate</span>
-							</td>
-							<td style="width: 20%;">35000</td>
-							<td style="width: 20%;">35000</td>
-						</tr>
-
-						<tr class="text-align--center">
-							<td style="width: 10%;">1</td>
-							<td style="width: 50%; padding-left: 5px;" class="text-align--left">
-								<span>Chocolate Banana</span>
-							</td>
-							<td style="width: 20%;">35000</td>
-							<td style="width: 20%;">35000</td>
-						</tr>
-					</tbody>
-				</table>
-				<table>
-					<tbody style="padding-top: 10px">
-						<tr class="text-align--center">
-							<td style="width: 10%;"></td>							
-							<td style="width: 50%;"></td>							
-							<td style="width: 20%;">Total</td>
-							<td style="width: 20%;">70000</td>
-						</tr>
-
-						<tr class="text-align--center">
-							<td style="width: 10%;"></td>
-							<td style="width: 50%;"></td>							
-							<td style="width: 20%;">Pajak</td>
-							<td style="width: 20%;">7000</td>
-						</tr>
-
-						<tr class="text-align--center">
-							<td style="width: 10%;" ></td>
-							<td style="width: 50%;"></td>							
-							<td style="width: 20%;">Grand Total</td>
-							<td style="width: 20%;">77000</td>
-						</tr>
-
-					</tbody>
-				</table>
+			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
+				<page-receipt></page-receipt> 
 			</div>
 
-			<ion-col col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 class="payment-method">
-				<ion-row class="row form-group">
-					<ion-col col-3 class="">Total Belanja</ion-col>
-					<ion-col col-9 class=" input-box">
-						<input type="" class="form-control" name="">
-					</ion-col>
-				</ion-row>
-				<ion-row class="form-group">
-					<ion-col col-3 class="">Tunai</ion-col>
-					<ion-col col-9 class=" input-box">
-						<input type="" class="form-control--lg" name="">
-					</ion-col>
-				</ion-row>
-				<ion-row class="row form-group">
-					<ion-col col-3 class="">Kartu (Masuk ke)</ion-col>
-					<ion-col col-9 class=" input-box">
-						<input type="" class="form-control--lg" name="">
-					</ion-col>
-				</ion-row>
-				<ion-row class="row form-group">
-					<ion-col col-3 class=""></ion-col>
-					<ion-col col-9 class=" input-box">
-						<input type="" class="form-control--lg" name="">
-					</ion-col>
-				</ion-row>
+			<ion-col col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">
+				<div class="payment-method ">
+						
+					<ion-row padding class="center-distributed">
+						<ion-col col-7 col-xs-12 col-sm-12 col-md-8 class="tab">
+							<label class="tab-item active relative" col--33>
+								<input type="radio" class="sr-only" name=""> Tunai
+							</label>
+							<label class="tab-item relative" col--33>
+								<input type="radio" class="sr-only" name=""> kartu
+							</label>
+							<label class="tab-item relative" col--33>
+								<input type="radio" class="sr-only" name=""> Campuran
+							</label>
+						</ion-col>
+					</ion-row>
+					
+						
+					<ion-row class="center">
+						<ion-col col-8 col-xs-12 col-sm-12 col-md-8>
+							
+						
+							<ion-row class="row form-group">
+								<ion-col col-3 class="">Total Belanja</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="" class="form-control--lg" name="">
+								</ion-col>
+							</ion-row>
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Tunai</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="" class="form-control--lg" name="">
+								</ion-col>
+							</ion-row>
+							<ion-row class="row form-group">
+								<ion-col col-3 class="">Kartu (Masuk ke)</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="" class="form-control--lg" name="">
+								</ion-col>
+							</ion-row>
+							<ion-row class="row form-group">
+								<ion-col col-3 class=""></ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="" class="form-control--lg" name="">
+								</ion-col>
+							</ion-row>
+						
+						</ion-col>
+					</ion-row>
+				
+				</div> <!--  End of payment method -->
 			</ion-col>
 		</ion-row>
 	</ion-grid>

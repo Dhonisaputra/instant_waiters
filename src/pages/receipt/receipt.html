@@ -1,0 +1,78 @@
+<!--
+  Generated template for the ReceiptPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+	<div class="receipt relative">
+					<div class="receipt-header">
+						<div class="receipt--costumer-header pseudo">
+							<h5 class="title">Warung Enak</h5>
+							<div>Jl. Kartini 7 Sagan Yogyakarta</div>
+							<div>0821-3324-231</div>
+						</div>
+						<ion-row class="receipt-headinput">
+							<ion-col col-5>
+								<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--table" value="10">
+							</ion-col>
+							<ion-col col-2></ion-col>
+							<ion-col col-5>
+								<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer" value="Mr. Sandi">
+							</ion-col>
+						</ion-row>	
+					</div>
+					<div class="receipt-body">
+						
+						
+						<table class="table" id="table-receipt" style="margin-top: 10px;">
+							<thead style="border-bottom: 1px solid #aaa; padding-bottom: 3px;">
+								<tr>
+									<th>QTY</th>
+									<th>ITEM</th>
+									<th>HARGA</th>
+									<th>JUMLAH</th>
+								</tr>
+							</thead>
+							<tbody style="padding-top: 10px">
+								
+								<tr class="text-align--center" *ngFor="let item of receipts">
+									<td style="width: 10%;">{{item.amount}}</td>
+									<td style="width: 50%; padding-left: 5px;" class="text-align--left">
+										<span>{{item.name}}</span>
+									</td>
+									<td style="width: 20%;">{{item.price}}</td>
+									<td style="width: 20%;">{{item.price * item.amount}}</td>
+								</tr>
+
+							</tbody>
+						</table>
+						
+					</div>
+					<div class="receipt-footer"> 
+						<table class="table" style="">
+							<tbody style="padding-top: 10px">
+								<tr class="">
+									<td style="width: 10%;"></td>							
+									<td style="width: 10%;"></td>							
+									<td style="width: 50%;" class="text-align--right">Total</td>
+									<td style="width: 20%;" class="text-align--right">{{sumPrice}}</td>
+								</tr>
+
+								<tr class="">
+									<td style="width: 10%;"></td>
+									<td style="width: 10%;"></td>							
+									<td style="width: 50%;" class="text-align--right">Pajak</td>
+									<td style="width: 20%;" class="text-align--right">{{tax}}</td>
+								</tr>
+
+								<tr >
+									<td style="width: 10%;" ></td>
+									<td style="width: 10%;"></td>							
+									<td style="width: 50%;" class="text-align--right">Grand Total</td>
+									<td style="width: 20%;" class="text-align--right">{{GrandTotalPrice}}</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>

@@ -9,6 +9,8 @@ import { TablePage } from '../pages/table/table';
 import { LoginPage } from '../pages/login/login';
 import { SendReceiptPage } from '../pages/send-receipt/send-receipt';
 import { PaymentPage } from '../pages/payment/payment';
+import { ReceiptPage } from '../pages/receipt/receipt';
+import { ProductPage } from '../pages/product/product';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,6 +31,7 @@ export class MyApp {
       { title: 'Table', component: TablePage }, 
       { title: 'Send Receipt', component: SendReceiptPage },
       { title: 'Payment', component: PaymentPage },
+      { title: 'Product', component: ProductPage }
     ];
 
   }

@@ -1,94 +1,20 @@
 #payment-box {
 	background-color: #eee;
 }
-.row.form-group .input-box
+
+#section-right
 {
-	flex-grow: 1;
-	padding: 0px 15px;
+	height: calc(100vh - 66px);
 }
+
 .payment-method
 {
-	min-height: 100vh;
 	background-color: white;
 	left: 5px;
+	height: 100%;
+	overflow-x: auto; 
 }
 
-.receipt
-{
-	padding: 5px;
-    background-color: white;
-    position: absolute;
-    left: 0px;
-    top: 10px;
-    height: 79vh;
-    font-size: .8em;
-    display: flex;
-    flex-direction: column;
-}
-	.receipt-body
-	{
-		background-color: white;
-		padding: 4px;
-	}
-	.receipt--costumer-header h5
-	{
-		margin-bottom: 0px;
-	}
-	.receipt--costumer-header
-	{
-		text-align: center;
-		line-height: 1.2;
-	}
-
-	
-#table-receipt
-{
-	
-}
-	#table-receipt tbody>tr>td
-	{
-		padding: 3px 0px;
-		border-bottom: 1px solid #bbb;
-	}
-	.form-receipt--table
-	{
-
-	}
-		.form-receipt--border-bottom 
-		{
-			border:unset;
-			border-bottom: 1px solid #aaa;	
-		}
-
-.pseudo:before {
-  content: '';
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 10px;
-  top: -10px;
-  left: 0;
-  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0) 33.333%, white 33.333%, white 66.667%, rgba(0, 0, 0, 0) 66.667%), linear-gradient(-45deg, rgba(0, 0, 0, 0) 33.333%, white 33.333%, white 66.667%, rgba(0, 0, 0, 0) 66.667%);
-  background-size: 9px 50px;
-  background-position: 50% -30px;
-  background-repeat: repeat-x;
-  z-index: 1;
-  transform: rotate(180deg);
-}
-.pseudo:after {
-  content: '';
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 10px;
-  bottom: -10px;
-  left: 0;
-  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0) 33.333%, white 33.333%, white 66.667%, rgba(0, 0, 0, 0) 66.667%), linear-gradient(-45deg, rgba(0, 0, 0, 0) 33.333%, white 33.333%, white 66.667%, rgba(0, 0, 0, 0) 66.667%);
-  background-size: 9px 50px;
-  background-position: 50% -30px;
-  background-repeat: repeat-x;
-  z-index: 1;
-}
 
 
 /*form-receipt--border-bottom form-receipt--customer*/
