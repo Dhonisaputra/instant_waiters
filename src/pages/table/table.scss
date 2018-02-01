@@ -17,6 +17,15 @@ page-table {
 			justify-content: center;
 			align-items: center;
 			margin-bottom: 15px;
-			border: 1px solid #00E640;
-			margin-right: 15px;
+			border: 1px solid #03a02f;
+			margin-right: 7px;
+			color: #03a02f;
 		}
+		.table-item.selected
+		{
+			background-color: #F39C12;
+			border-color: #F39C12;
+			color: white;
+
+		}
+
