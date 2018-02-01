@@ -15,6 +15,7 @@ import { ProductPage } from '../pages/product/product';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ReceiptDataProvider } from '../providers/receipt-data/receipt-data';
+import { ConfigProvider } from '../providers/config/config';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ReceiptDataProvider } from '../providers/receipt-data/receipt-data';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ReceiptDataProvider
+    ReceiptDataProvider,
+    ConfigProvider
   ]
 })
 export class AppModule {}

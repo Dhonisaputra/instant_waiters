@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar>
+  	<button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>product</ion-title>
   </ion-navbar>
 
@@ -36,7 +39,7 @@
 					</div>
 					<ion-row class="box-body" id="">
 						<ion-col col-12 col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product" *ngFor="let item of items" (click)="addToList(item)">
-							<div class="product-body">{{item.id}}</div>
+							<div class="product-body">{{item.name}}</div>
 						</ion-col>
 					</ion-row>
 					<div class="box-footer" id="product-action">
