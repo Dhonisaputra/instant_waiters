@@ -60,7 +60,7 @@ page-receipt {
 	{
 		display:block;
 		max-height:300px;
-		overflow-y:scroll;
+		// overflow-y:scroll;
 	}
 	#table-receipt thead, #table-receipt tbody>tr
 	{
@@ -68,9 +68,14 @@ page-receipt {
 		width:100%;
 		table-layout:fixed;
 	}
+	
+	#table-receipt tbody>tr:last-child
+	{
+		margin-bottom: 10px;
+	}
 	#table-receipt tbody>tr>td
 	{
-		padding: 3px 0px;
+		padding: 5px 0px;
 		border-bottom: 1px solid #bbb;
 	}
 	.form-receipt--table

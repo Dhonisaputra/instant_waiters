@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { ConfigProvider } from '../../providers/config/config';
+import { ProductProvider } from '../../providers/product/product';
+import { BillProvider } from '../../providers/bill/bill';
 import * as $ from "jquery"
 /**
  * Generated class for the ProductPage page.
@@ -22,22 +24,44 @@ import * as $ from "jquery"
 
  	outlet: number;
 
- 	constructor(public navCtrl: NavController, public navParams: NavParams,private events: Events, config: ConfigProvider) {
+ 	constructor(public navCtrl: NavController, public navParams: NavParams,private events: Events, public config: ConfigProvider, public productProvider: ProductProvider, public bill: BillProvider) {
  		this.outlet = 1;
  		this.receipt = ReceiptPage;
  		this.items = [];
  		this.lists = [];
- 		for (var i = 0; i < 20; ++i) {
+ 		/*for (var i = 0; i < 20; ++i) {
  			this.items.push({id:i, name: 'Makanan '+i, price: 35000})
- 		}
+ 		}*/
 
- 		/*$.post( config.base_url('admin/outlet/product/get'), {outlet:this.outlet},{} )
+
+ 		// productProvider.get_product({outlet:this.outlet})
+ 		$.post( this.config.base_url('admin/outlet/product/get'),{outlet:this.outlet} )
  		.done((res) => {
  			res = JSON.parse(res)
  			console.log(res)
- 			// this.items = res.data;
- 		})*/
+ 			this.items = res.data;
+ 		})
  		/*.then()*/
+
+ 		this.events.subscribe('receive.data.receipt', (res) => {
+ 			var data = {
+	 			users_outlet: 1,
+	 			table_id: 1,
+	 			bank_id: 1,
+	 			payment_method: 1,
+	 			outlet: 1,
+	 			payment_nominal: 10000,
+	 			payment_bills: 10000,
+	 			payment_total: 10000,
+	 			visitor_name: 'Dhoni',
+	 			receipt: {}
+	 		}
+ 			console.log(res)
+ 			data.receipt = res;
+	  		var url = this.config.base_url('admin/outlet/transaction/add')
+	  		return $.post(url, data)
+ 		
+ 		})
  	}
 
  	addToList(item)
@@ -53,7 +77,6 @@ import * as $ from "jquery"
  			item.totalPrice = item.price * item.amount;
  			this.lists.push(item)
  			this.events.publish('receipt-data', this.lists)
- 			console.log(existence, item, this.lists)
  		}
  	}
 
@@ -67,6 +90,12 @@ import * as $ from "jquery"
 
  	ionViewDidLoad() {
  		console.log('ionViewDidLoad ProductPage');
+ 	}
+
+ 	saveBill()
+ 	{
+ 		
+ 		this.events.publish('get.data.receipt', {})
  	}
 
  }

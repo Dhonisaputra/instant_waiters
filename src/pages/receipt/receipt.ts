@@ -19,13 +19,14 @@ export class ReceiptPage {
 	GrandTotalPrice:number;
 	tax:number;
 	taxAmount:number;
+	visitor_name:string;
+	visitor_table:number;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, events: Events) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
 		this.receipts = []
 		this.taxAmount = 10;
 
 		events.subscribe('receipt-data', (data) => {
-			console.log('event', data)
 			this.receipts = data;
 			this.sumPrice = 0;
 			this.GrandTotalPrice = 0;
@@ -40,6 +41,16 @@ export class ReceiptPage {
 			}
 			this.tax = (this.taxAmount/100) * this.sumPrice;
 			this.GrandTotalPrice = this.sumPrice + this.tax;
+		});
+
+		events.subscribe('get.data.receipt', (data) => {
+			events.publish('receive.data.receipt', {
+				GrandTotalPrice: this.GrandTotalPrice,
+				sumPrice: this.GrandTotalPrice,
+				tax: this.tax,
+				receipts: this.receipts,
+				visitor: this.visitor_name
+			})
 		});
 	}
 

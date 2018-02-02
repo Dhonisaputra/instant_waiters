@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 /*
@@ -10,7 +9,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ReceiptDataProvider {
 
-  constructor(public http: HttpClient) {
+  constructor() {
     console.log('Hello ReceiptDataProvider Provider');
   }
 

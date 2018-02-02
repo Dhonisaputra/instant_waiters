@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
@@ -16,6 +17,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ReceiptDataProvider } from '../providers/receipt-data/receipt-data';
 import { ConfigProvider } from '../providers/config/config';
+import { ProductProvider } from '../providers/product/product';
+import { BillProvider } from '../providers/bill/bill';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { ConfigProvider } from '../providers/config/config';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -50,7 +54,9 @@ import { ConfigProvider } from '../providers/config/config';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ReceiptDataProvider,
-    ConfigProvider
+    ConfigProvider,
+    ProductProvider,
+    BillProvider
   ]
 })
 export class AppModule {}

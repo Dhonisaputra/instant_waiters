@@ -29,21 +29,31 @@
 						<ion-row padding class="center-distributed">
 							<ion-col col-7 col-xs-12 col-sm-12 col-md-8 class="tab">
 								<label class="tab-item active relative" col--33>
-									<input type="radio" class="sr-only" name=""> Makanan 
+									<input type="radio" class="sr-only" name="type_product"> Makanan 
 								</label>
 								<label class="tab-item relative" col--33>
-									<input type="radio" class="sr-only" name=""> Minuman
+									<input type="radio" class="sr-only" name="type_product"> Minuman
 								</label>
 							</ion-col>
 						</ion-row>
 					</div>
 					<ion-row class="box-body" id="">
 						<ion-col col-12 col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product" *ngFor="let item of items" (click)="addToList(item)">
-							<div class="product-body">{{item.name}}</div>
+							<div class="product-body" [style.backgroundImage]="'url('+item.image.url+')'">
+								<div class="product-name">{{item.name}}</div>
+							</div>
+						</ion-col>
+						<ion-col col-12 col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">
+							<div class="product-body" style="background-color: white;">
+								<div class="product-name">
+									<ion-icon name="ion-plus" style="color:white; font-size: 30px;"></ion-icon>
+								</div>
+							</div>
 						</ion-col>
 					</ion-row>
 					<div class="box-footer" id="product-action">
-						Footer
+						<button ion-button color="secondary" (click)="saveBill()">Simpan</button>
+						<button ion-button>Bayar</button>
 					</div>
 				
 				</div> <!--  End of payment method -->
