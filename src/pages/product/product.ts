@@ -43,7 +43,7 @@ import * as $ from "jquery"
  		})
  		/*.then()*/
 
- 		this.events.subscribe('receive.data.receipt', (res) => {
+ 		events.subscribe('receive.data.receipt', (res) => {
  			var data = {
 	 			users_outlet: 1,
 	 			table_id: 1,
@@ -58,7 +58,7 @@ import * as $ from "jquery"
 	 		}
  			console.log(res)
  			data.receipt = res;
-	  		var url = this.config.base_url('admin/outlet/transaction/add')
+	  		var url = config.base_url('admin/outlet/transaction/add')
 	  		return $.post(url, data)
  		
  		})
