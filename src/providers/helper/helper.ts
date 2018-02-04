@@ -38,7 +38,7 @@ export class HelperProvider {
 
   }
 
-  isJSON(str)
+  isJSON(str) 
   {
   	try {
         JSON.parse(str);

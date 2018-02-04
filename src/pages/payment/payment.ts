@@ -65,4 +65,10 @@ export class PaymentPage {
     console.log('ionViewDidLoad PaymentPage');
   }
 
+  priceToRupiah(number:any) 
+	{ 
+		let idr = this.helper.intToIDR(number)
+		return idr;
+	}
+
 }

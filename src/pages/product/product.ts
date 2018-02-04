@@ -268,7 +268,7 @@ export class ProductPage
 	}
 
 	priceToRupiah(number:any) 
-	{
+	{ 
 		let idr = this.helper.intToIDR(number)
 		return idr;
 	}

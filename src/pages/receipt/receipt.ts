@@ -57,7 +57,7 @@ export class ReceiptPage {
 	trigger_update_receipt()
 	{
 		let data = this.billProvider.data_receipts();
-
+		console.log(data)
 		this.set_receipts(data);
 
 	}	

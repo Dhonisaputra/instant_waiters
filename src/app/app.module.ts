@@ -19,6 +19,7 @@ import { ReceiptPage } from '../pages/receipt/receipt';
 import { ProductPage } from '../pages/product/product';
 import { BillSavedPage } from '../pages/bill-saved/bill-saved';
 import { SettingsPage } from '../pages/settings/settings';
+import { StocksPage } from '../pages/stocks/stocks';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -42,7 +43,8 @@ import { HelperProvider } from '../providers/helper/helper';
     ReceiptPage,
     ProductPage,
     BillSavedPage,
-    SettingsPage
+    SettingsPage,
+    StocksPage
 
   ],
   imports: [
@@ -62,7 +64,8 @@ import { HelperProvider } from '../providers/helper/helper';
     PaymentPage,
     ReceiptPage,
     ProductPage,
-    SettingsPage
+    SettingsPage,
+    StocksPage
   ],
   providers: [
     StatusBar,

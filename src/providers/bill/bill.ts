@@ -107,6 +107,11 @@ export class BillProvider {
         let existence = this.check_existences_receipt(item.id)
         if(existence.exist)
         {
+            if(this.receipts[existence.index].amount >= this.receipts[existence.index].stock)
+            {
+                console.error('unsufficient Stock! ')
+                return false;
+            }
             this.receipts[existence.index].amount = this.receipts[existence.index].amount + 1;
             this.receipts[existence.index].totalPrice = this.receipts[existence.index].amount * this.receipts[existence.index].price;
             // this.events.publish('bill.insert_item', {data: this.receipts, latest: item})

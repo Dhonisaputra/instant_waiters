@@ -108,7 +108,7 @@ export class DbLocalProvider {
     {
         return this.storage.get(dbname);
     }
-
+ 
     setdb(dbname:string, value:any)
     {
         return this.storage.set(dbname, value);
