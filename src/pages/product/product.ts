@@ -1,101 +1,276 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events , ModalController, LoadingController } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
-import { ConfigProvider } from '../../providers/config/config';
 import { ProductProvider } from '../../providers/product/product';
 import { BillProvider } from '../../providers/bill/bill';
+import { DbLocalProvider } from '../../providers/db-local/db-local';
+import { HelperProvider } from '../../providers/helper/helper'; 
+import { LocalNotifications } from '@ionic-native/local-notifications';
+
+import {BillSavedPage} from '../bill-saved/bill-saved'
 import * as $ from "jquery"
 /**
- * Generated class for the ProductPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+* Generated class for the ProductPage page.
+*
+* See https://ionicframework.com/docs/components/#navigation for more info on
+* Ionic pages and navigation.
+*/
 
- @IonicPage()
- @Component({
- 	selector: 'page-product',
- 	templateUrl: 'product.html',
- })
- export class ProductPage {
- 	receipt: any;
- 	items: Array<{id: number, name: string, price: number }>;
- 	lists: Array<{id: number, name: string, price: number, amount: number, totalPrice: number }>;
-
- 	outlet: number;
-
- 	constructor(public navCtrl: NavController, public navParams: NavParams,private events: Events, public config: ConfigProvider, public productProvider: ProductProvider, public bill: BillProvider) {
- 		this.outlet = 1;
- 		this.receipt = ReceiptPage;
- 		this.items = [];
- 		this.lists = [];
- 		/*for (var i = 0; i < 20; ++i) {
- 			this.items.push({id:i, name: 'Makanan '+i, price: 35000})
- 		}*/
+@IonicPage()
+@Component({
+	selector: 'page-product',
+	templateUrl: 'product.html',
+})
+export class ProductPage 
+{
+	receipt: any;
+	items: Array<{id: number, name: string, price: number }>;
+	lists: Array<{id: number, name: string, price: number, amount: number, totalPrice: number }>;
+	original_items: Array<{id: number, name: string, price: number, amount: number, totalPrice: number }>;
+	outlet: number;
+	unpaid_bill_length: number = 0;
+	filter_type_selected: number = 0;
+	filter_product_name: string = '';
+	filter_sort_product: string = '';
 
 
- 		// productProvider.get_product({outlet:this.outlet})
- 		$.post( this.config.base_url('admin/outlet/product/get'),{outlet:this.outlet} )
- 		.done((res) => {
- 			res = JSON.parse(res)
- 			console.log(res)
- 			this.items = res.data;
- 		})
- 		/*.then()*/
+	constructor(public navCtrl: NavController, public navParams: NavParams,private events: Events, public productProvider: ProductProvider, public billProvider: BillProvider, public modalCtrl: ModalController,private localNotifications: LocalNotifications, private dbLocalProvider: DbLocalProvider, public helper:HelperProvider, private loadingCtrl : LoadingController ) 
+	{
+		this.dbLocalProvider.opendb('outlet')
+		.then((val)=>{
+			this.outlet = val;
+			this.refresh_data({});
+			this.get_unpaid_bill();
+			
+		})
+		this.receipt = ReceiptPage;
+		this.items = [];
+		this.lists = [];
 
- 		events.subscribe('receive.data.receipt', (res) => {
- 			var data = {
-	 			users_outlet: 1,
-	 			table_id: 1,
-	 			bank_id: 1,
-	 			payment_method: 1,
-	 			outlet: 1,
-	 			payment_nominal: 10000,
-	 			payment_bills: 10000,
-	 			payment_total: 10000,
-	 			visitor_name: 'Dhoni',
-	 			receipt: {}
-	 		}
- 			console.log(res)
- 			data.receipt = res;
-	  		var url = config.base_url('admin/outlet/transaction/add')
-	  		return $.post(url, data)
- 		
- 		})
- 	}
+		// this.dbLocalProvider.sync_product();
 
- 	addToList(item)
- 	{
- 		let existence = this.check_existences_receipt(item.id)
- 		if(existence.exist)
- 		{
- 			this.lists[existence.index].amount = this.lists[existence.index].amount + 1;
- 			this.lists[existence.index].totalPrice = this.lists[existence.index].amount * this.lists[existence.index].price;
- 			this.events.publish('receipt-data', this.lists)
- 		}else{
- 			item.amount = 1;
- 			item.totalPrice = item.price * item.amount;
- 			this.lists.push(item)
- 			this.events.publish('receipt-data', this.lists)
- 		}
- 	}
 
- 	check_existences_receipt(id)
- 	{
- 		var result = this.lists.map(function(res){
- 			return res.id
- 		}).indexOf(id);
- 		return {index: result, exist: result < 0? false : true}
- 	}
+		/*productProvider.get_product({data:{outlet:this.outlet}})
+		.then((res) => {
+			console.log(res)
+			this.items = res.data;
+			this.original_items = res.data;
+			this.filter_product()
+		})*/
 
- 	ionViewDidLoad() {
- 		console.log('ionViewDidLoad ProductPage');
- 	}
+		events.subscribe('receive.data.receipt', (res) => {
+			var data = {
+				table_id: res.table,
+				outlet: this.outlet,
+				visitor_name: res.visitor,
+				users_outlet: 1,
+				bank_id: 1,
+				payment_method: 1,
+				payment_nominal: 0,
+				payment_bills: res.sumPrice,
+				payment_total: res.GrandTotalPrice,
+				receipt: {}
+			}
 
- 	saveBill()
- 	{
- 		
- 		this.events.publish('get.data.receipt', {})
- 	}
+			console.log(res)
+			data.receipt = res;
+			if(res._passed_data.pay == false)
+			{
+				
+				billProvider.save(data)
+				.then((res)=>{
 
- }
+					res = !this.helper.isJSON(res)? res : JSON.parse(res);
+					if(res.code == 500)
+					{
+						console.error('Need visitor and table number!');
+						return false;
+					}else
+					{					
+
+						this.events.publish('reset.data.receipt',{})
+						this.get_unpaid_bill();
+						
+					}
+				})
+			}else
+			{
+
+			}
+		})
+
+		/*this.localNotifications.schedule({
+		  id: 1,
+		  text: 'Single ILocalNotification',
+		});*/
+	}
+
+	get_product(data:any)
+	{
+		return this.productProvider.get_product(data)
+		.then((res) => {
+
+			res = !this.helper.isJSON(res)? res : JSON.parse(res);
+			if(data.infinite == true)
+			{
+				this.items = this.items.concat(res.data);
+				this.original_items = this.original_items.concat(res.data);
+			}else
+			{
+				this.items = res.data;
+				this.original_items = res.data;
+			}
+			// this.filter_product()
+		})
+	}
+
+	refresh_data(refresher:any)
+	{
+		let data:any = {outlet:this.outlet}
+		if(this.filter_sort_product != '')
+		{
+			data.order_by = this.filter_sort_product;
+		}
+
+		if(this.filter_type_selected > 0)
+		{	
+			data.where = data.where? data.where : {}
+			data.where.type = this.filter_type_selected;
+		}else
+		{
+			if(data.where && data.where.type)
+			{
+				delete data.where.type;
+			}
+		}
+
+		if(this.filter_product_name.length > 0)
+		{
+			data.like = data.like? data.like : []
+			data.like.push(['name', this.filter_product_name])
+		}else{
+			delete data.like
+		}
+
+		data.page = 1;
+		data.limit = 5;
+
+		this.get_product({data: data, online:true})
+		.then(()=>{
+			if(refresher.complete)
+			{
+				refresher.complete();
+			}
+		})
+	}
+
+	infinite_product()
+	{
+		var load = this.loadingCtrl.create({
+	      content: "Silahkan tunggu",
+	    });
+		load.present()
+		this.productProvider.last_options.data.page += 1;
+		this.productProvider.last_options.infinite = true;
+		this.get_product(this.productProvider.last_options)
+		.then( ()=>{
+			load.dismiss();
+		})
+
+	}
+	addToList(item)
+	{
+		this.billProvider.insert_item(item)
+		this.events.publish('bill.update', item)
+	}
+
+	reset_receipts(id)
+	{
+		this.events.publish('reset.data.receipt',{})
+	}
+
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad ProductPage');
+
+	}
+
+	openSavedBill()
+	{
+		let modalBill = this.modalCtrl.create(BillSavedPage);
+		modalBill.present();
+
+	}
+
+	saveBill()
+	{
+
+		// this.events.publish('get.data.receipt', {pay:false})
+		this.billProvider.save({
+			users_outlet: 1,
+			outlet: this.outlet,
+			bank_id: 1,
+			payment_method: 1,
+			payment_nominal: 0,
+		})
+		.done((res)=>{
+			res = !this.helper.isJSON(res)? res : JSON.parse(res);
+			if(res.code == 200)
+			{
+				this.events.publish('reset.data.receipt',{})
+				this.get_unpaid_bill();
+			}else
+			{
+				console.error('Error when saving the bill')
+			}
+		})
+	}
+
+	get_unpaid_bill()
+	{
+		this.billProvider.get_unpaid_bill({
+			outlet: this.outlet,
+			fields: 'payment_complete_status,outlet,pay_id',
+			where: {
+				payment_complete_status: 0
+			}
+		})
+		.then((res) => {
+			res = !this.helper.isJSON(res)? res : JSON.parse(res);
+			console.log(res)
+			this.unpaid_bill_length = res.data.length
+		})
+	}
+
+	pay_bill()
+	{
+		this.events.publish('get.data.receipt', {pay:true})
+	}
+
+	filter_product()
+	{
+		this.items = this.original_items;
+		if(this.filter_type_selected > 0)
+		{	
+			this.items = this.original_items.filter((res:any) => {
+				return res.type == this.filter_type_selected
+			});
+		}
+
+		if(this.filter_product_name.length > 0)
+		{
+			this.items = this.original_items.filter((res:any) => {
+				return res.name.indexOf(this.filter_product_name) > -1
+			});
+		}
+
+		return this.items;
+
+	}
+
+	priceToRupiah(number:any) 
+	{
+		let idr = this.helper.intToIDR(number)
+		return idr;
+	}
+
+}

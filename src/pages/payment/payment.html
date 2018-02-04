@@ -47,13 +47,19 @@
 							<ion-row class="row form-group">
 								<ion-col col-3 class="">Total Belanja</ion-col>
 								<ion-col col-9 class=" input-box">
-									<input type="" class="form-control--lg" name="">
+									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.GrandTotalPrice">
+								</ion-col>
+							</ion-row>
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Kembalian</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.returnMoney">
 								</ion-col>
 							</ion-row>
 							<ion-row class="form-group">
 								<ion-col col-3 class="">Tunai</ion-col>
 								<ion-col col-9 class=" input-box">
-									<input type="" class="form-control--lg" name="">
+									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.paid" (input)="sumReturn()">
 								</ion-col>
 							</ion-row>
 							<ion-row class="row form-group">
@@ -68,9 +74,16 @@
 									<input type="" class="form-control--lg" name="">
 								</ion-col>
 							</ion-row>
+
+							<ion-row class="row form-group center">
+									<button ion-button end (click)="payBill()">Simpan</button>
+
+									<button ion-button color="danger">Batal</button>
+							</ion-row>
 						
 						</ion-col>
 					</ion-row>
+
 				
 				</div> <!--  End of payment method -->
 			</ion-col>

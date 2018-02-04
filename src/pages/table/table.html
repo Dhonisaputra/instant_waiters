@@ -40,6 +40,6 @@
   </div>
 	
 	<div class="table-box">
-		<div class="table-item" *ngFor="let item of tableNum" (click)="selectTable($event, item.number)" [ngClass]="{'selected': item.status}"> Meja {{item.number}} </div>
+		<div col-sm-3 col-xs-4 col-4 col-md-2 col-lg-1 col-xl-1 class="table-item" *ngFor="let item of tableNum" (click)="selectTable($event, item.tab_id)" [ngClass]="{'selected': item.status_meja}"> {{item.tab_name}} </div>
 	</div>
 </ion-content>

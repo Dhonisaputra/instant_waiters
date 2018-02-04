@@ -11,49 +11,93 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>product</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="openSavedBill()">
+      	Nota tersimpan &nbsp; <ion-badge item-end>{{unpaid_bill_length}}</ion-badge>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content id="product-box">
+
 	<ion-grid>
-		<ion-row class="relative">
-			<div  col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4>
+		<ion-row class="relative" id="product-content-body">
+			<div  col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">
 				<page-receipt></page-receipt> 
 			</div>
 
 			<ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">
+
 				<div class="box" id="box-product">
 					<div class="box-header">
-						<ion-row padding class="center-distributed">
+						<ion-row class="center-distributed">
 							<ion-col col-7 col-xs-12 col-sm-12 col-md-8 class="tab">
-								<label class="tab-item active relative" col--33>
-									<input type="radio" class="sr-only" name="type_product"> Makanan 
+								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == 0}" col--33>
+									<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All 
 								</label>
-								<label class="tab-item relative" col--33>
-									<input type="radio" class="sr-only" name="type_product"> Minuman
+								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == 1}" col--33>
+									<input type="radio" class="sr-only" name="type_product" value=1 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Makanan 
+								</label>
+								<label class="tab-item relative" col--33 [ngClass]="{'active': filter_type_selected == 2}">
+									<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman
 								</label>
 							</ion-col>
 						</ion-row>
 					</div>
+					<div>
+						
+						<ion-row>
+							<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>
+								<ion-searchbar (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" style="padding: 8px 5px;"></ion-searchbar>
+							</ion-col>
+							<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4>
+							    <ion-item>
+								    <ion-label>Urutkan...</ion-label>
+								    <ion-select [(ngModel)]="filter_sort_product" (ionChange)="refresh_data()" interface="action-sheet">
+								      <ion-option value="favorite DESC">Favorit</ion-option>
+								      <ion-option value="price DESC">Termahal</ion-option>
+								      <ion-option value="price ASC">Termurah</ion-option>
+								      <ion-option value="stock DESC">Stok</ion-option>
+								    </ion-select>
+								  </ion-item>
+							</ion-col>
+						</ion-row>
+					</div>
 					<ion-row class="box-body" id="">
-						<ion-col col-12 col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product" *ngFor="let item of items" (click)="addToList(item)">
-							<div class="product-body" [style.backgroundImage]="'url('+item.image.url+')'">
-								<div class="product-name">{{item.name}}</div>
-							</div>
-						</ion-col>
-						<ion-col col-12 col-xs-12 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">
-							<div class="product-body" style="background-color: white;">
-								<div class="product-name">
-									<ion-icon name="ion-plus" style="color:white; font-size: 30px;"></ion-icon>
+						
+							<ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product" *ngFor="let item of items" (click)="addToList(item)">
+								<div class="product-body">
+									<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
+										
+										<div class="product-name">{{item.name}}</div>
+									</div>
+									<div class="product-detail">
+										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>
+										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->
+									</div>
 								</div>
-							</div>
-						</ion-col>
+							</ion-col>
+							<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">
+								<div class="product-body" style="background-color: white;">
+									<div class="product-name">
+										<ion-icon name="add" style="color:white; font-size: -webkit-xxx-large;"></ion-icon>
+									</div>
+								</div>
+							</ion-col> -->
+							<ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>
+
+								<button ion-button block (click)="infinite_product()">Load More</button>
+							</ion-col>
 					</ion-row>
 					<div class="box-footer" id="product-action">
+						<button ion-button color="danger" (click)="reset_receipts()">Hapus</button>
 						<button ion-button color="secondary" (click)="saveBill()">Simpan</button>
-						<button ion-button>Bayar</button>
+						<button ion-button (click)="pay_bill()">Bayar</button>
 					</div>
 				
 				</div> <!--  End of payment method -->

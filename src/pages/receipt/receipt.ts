@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import * as $ from "jquery"
+import { BillProvider } from '../../providers/bill/bill';
+import { DbLocalProvider } from '../../providers/db-local/db-local';
 
 /**
 * Generated class for the ReceiptPage page.
@@ -14,7 +17,7 @@ import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 	templateUrl: 'receipt.html',
 })
 export class ReceiptPage {
-	receipts:any;
+	receipts:any = [];
 	sumPrice:number;
 	GrandTotalPrice:number;
 	tax:number;
@@ -22,40 +25,78 @@ export class ReceiptPage {
 	visitor_name:string;
 	visitor_table:number;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider) {
 		this.receipts = []
 		this.taxAmount = 10;
 
-		events.subscribe('receipt-data', (data) => {
-			this.receipts = data;
-			this.sumPrice = 0;
-			this.GrandTotalPrice = 0;
-			this.tax = 0;
-			let RestotalPrice = data.map((res) => {
-				return res.totalPrice
-			})
+		// update data
+  		this.trigger_update_receipt();
 
-			console.log(RestotalPrice)
-			for (var i = 0; i < RestotalPrice.length; ++i) {
-				this.sumPrice = this.sumPrice + parseInt(RestotalPrice[i]);
-			}
-			this.tax = (this.taxAmount/100) * this.sumPrice;
-			this.GrandTotalPrice = this.sumPrice + this.tax;
+		// event listener to update bill
+	  	events.subscribe('bill.update', (data) => {
+	  		this.trigger_update_receipt();
 		});
 
+		// event listener to get data bill and passing to emiter
 		events.subscribe('get.data.receipt', (data) => {
-			events.publish('receive.data.receipt', {
-				GrandTotalPrice: this.GrandTotalPrice,
-				sumPrice: this.GrandTotalPrice,
-				tax: this.tax,
-				receipts: this.receipts,
-				visitor: this.visitor_name
-			})
+			let data_receipts = this.billProvider.data_receipts({	
+				_passed_data 	: data,
+			});
+
+			events.publish('receive.data.receipt', data_receipts)
+		});
+
+		// event listener to reset data bill
+		events.subscribe('reset.data.receipt', (data) => {
+			this.billProvider.reset_receipt();
+	  		this.trigger_update_receipt();
 		});
 	}
+
+	// function trigger to updating data receipts
+	trigger_update_receipt()
+	{
+		let data = this.billProvider.data_receipts();
+
+		this.set_receipts(data);
+
+	}	
+
+	update_receipt()
+	{
+		let receipt = {
+            GrandTotalPrice  : this.GrandTotalPrice,
+            sumPrice         : this.sumPrice,
+            tax              : this.tax,
+            receipts         : this.receipts,
+            visitor          : this.visitor_name,
+            visitor_name     : this.visitor_name,
+            table            : this.visitor_table,
+            visitor_table    : this.visitor_table,
+            taxAmount    	 : this.taxAmount,
+        }
+        this.billProvider.set_data_receipts(receipt);
+	}
+	set_receipts(data:any={})
+    {
+            this.GrandTotalPrice = data.GrandTotalPrice
+            this.sumPrice = data.sumPrice
+            this.tax = data.tax
+            this.receipts = data.receipts
+            this.visitor_name = data.visitor_name
+            this.visitor_table = data.visitor_table
+    }
+
+
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad ReceiptPage');
 	}
+	ionViewWillUnload()
+	{
+
+	}
+
+
 
 }

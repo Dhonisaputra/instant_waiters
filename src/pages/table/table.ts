@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { DbLocalProvider } from "../../providers/db-local/db-local";
 
 /**
  * Generated class for the TablePage page.
@@ -17,34 +18,32 @@ export class TablePage {
 
   tableNum : any;
   tableSelect : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-	this.tableNum = [
-		{number:1, status:false},
-		{number:2, status:false},
-		{number:3, status:false},
-		{number:4, status:false},
-		{number:5, status:false},
-		{number:6, status:false},
-		{number:7, status:false},
-		{number:8, status:false},
-		{number:9, status:false},
-		{number:10, status:false},
-		{number:11, status:false},
-		{number:12, status:false},
-		{number:13, status:false},
-		{number:14, status:false},
-		{number:15, status:false},
-		{number:16, status:false},
-	];
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private local : DbLocalProvider) {
+
+  	this.local.opendb('table')
+  	.then((res)=>{
+  		console.log(res)
+  		if(!res)
+  		{
+  			console.error('No Table defined. please do synchronize first!');
+	  		this.tableNum = [];
+  		}else
+  		{
+  			
+	  		console.log(res)
+	  		this.tableNum = res.results;
+  		}
+	  })
+}	
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TablePage');
   }
 
-  selectTable(event, item)
+  selectTable(event, tab_id)
   {
-  	this.tableNum[item-1].status = this.tableNum[item-1].status?false:true;
+  	var index = this.tableNum.map(function(res){ return res.tab_id }).indexOf(tab_id);
+  	this.tableNum[index].status_meja = this.tableNum[index].status_meja?false:true;
   }
 
 }

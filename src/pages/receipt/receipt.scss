@@ -56,6 +56,10 @@ page-receipt {
 {
 	
 }
+	#table-receipt thead>tr>td
+	{
+		margin-bottom: 6px;
+	}
 	#table-receipt tbody
 	{
 		display:block;
@@ -117,3 +121,38 @@ page-receipt {
   background-repeat: repeat-x;
   z-index: 1;
 }
+
+// start
+.pulse {
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(189, 26, 67, 0.4);;
+  animation: pulse 1s 1;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(189, 26, 67, 0.4);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 1px 20px rgba(189, 26, 67, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(189, 26, 67, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(189, 26, 67, 0.4);
+    box-shadow: 0 0 0 0 rgba(189, 26, 67, 0.4);
+  }
+  70% {
+      -moz-box-shadow: 0 0 1px 20px rgba(189, 26, 67, 0);
+      box-shadow: 0 0 1px 20px rgba(189, 26, 67, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(189, 26, 67, 0);
+      box-shadow: 0 0 0 0 rgba(189, 26, 67, 0);
+  }
+}
+
+// end

@@ -11,6 +11,7 @@ import { SendReceiptPage } from '../pages/send-receipt/send-receipt';
 import { PaymentPage } from '../pages/payment/payment';
 import { ReceiptPage } from '../pages/receipt/receipt';
 import { ProductPage } from '../pages/product/product';
+import { SettingsPage } from '../pages/settings/settings';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,6 +25,7 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
+      
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -31,7 +33,8 @@ export class MyApp {
       { title: 'Table', component: TablePage }, 
       { title: 'Send Receipt', component: SendReceiptPage },
       { title: 'Payment', component: PaymentPage },
-      { title: 'Product', component: ProductPage }
+      { title: 'Product', component: ProductPage },
+      { title: 'Settings', component: SettingsPage }
     ];
 
   }
