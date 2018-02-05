@@ -122,4 +122,9 @@ export class TransactionPage {
 
   }
 
+  edit_transaction(i, item)
+  {
+  	console.log(i, item)
+  }
+
 }
