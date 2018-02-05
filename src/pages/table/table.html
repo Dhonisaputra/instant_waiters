@@ -22,13 +22,13 @@
     <ion-col col-6 col-md-4 col-lg-4 col-xl-4>
       
       <div class="tab">
-        <label class="tab-item active relative">
-          <ion-badge item-start class="badge badge-flying flying-left bg-danger" color="assertive">2</ion-badge>
-          <input type="radio" class="sr-only" name=""> Meja
+        <label class="tab-item relative"  [ngClass]="{'active': choose_type_order == 1}" (change)="change_order(1)">
+          <!-- <ion-badge item-start class="badge badge-flying flying-left bg-danger" color="assertive">2</ion-badge> -->
+          <input type="radio" class="sr-only" value="1" name="type_order"> Meja
         </label>
-        <label class="tab-item relative">
-          <ion-badge item-start class="badge badge-flying flying-right bg-danger" color="assertive">2</ion-badge>
-          <input type="radio" class="sr-only" name=""> Bungkus
+        <label class="tab-item relative"  [ngClass]="{'active': choose_type_order == 2}" (change)="change_order(2)">
+          <!-- <ion-badge item-start class="badge badge-flying flying-right bg-danger" color="assertive">2</ion-badge> -->
+          <input type="radio" class="sr-only" value="2" name="type_order"> Bungkus
         </label>
       </div>
       
@@ -36,10 +36,13 @@
   </ion-row>
 
   <div style="margin: 10px 0px;" class="text-align--center" padding>
-    Pilih Meja
+    Silahkan Pilih Meja
   </div>
 	
 	<div class="table-box">
-		<div col-sm-3 col-xs-4 col-4 col-md-2 col-lg-1 col-xl-1 class="table-item" *ngFor="let item of tableNum" (click)="selectTable($event, item.tab_id)" [ngClass]="{'selected': item.status_meja}"> {{item.tab_name}} </div>
+		<div col-sm-3 col-xs-4 col-4 col-md-2 col-lg-1 col-xl-1 class="table-item" *ngFor="let item of tableNum; let i = index" (click)="selectTable(i, item.tab_id)" [ngClass]="{'selected': is_selected(i)}"> {{item.tab_name}} </div>
 	</div>
+  <div class="center">
+      <button ion-button (click)="order()" [disabled]="is_selection_null()">Selanjutnya >> </button>
+  </div>
 </ion-content>

@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { ConfigProvider } from '../../providers/config/config';
-
+import { PaymentPage } from "../payment/payment"
 import { HelperProvider } from '../../providers/helper/helper'; 
 
 import * as $ from "jquery"
+import * as moment from 'moment';
 
 /**
  * Generated class for the TransactionPage page.
@@ -25,30 +26,43 @@ export class TransactionPage {
 	outlet:number;
 	filter_by:string;
 	filter_input:any;
-	edit_transaction_status:boolean=true;
+	edit_transaction_status:boolean=false;
 
 
   transaction_params:any = {data:{limit: 20, page: 1}};
   constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider) {
+
   	this.dbLocalProvider.opendb('outlet')
     .then((val)=>{
       this.outlet = val;
       
-    	this.get_transaction({
-	        online:true,
-	        infinite: false,
-	        data: { 
-	          limit:20,
-	          outlet: this.outlet,
-	          page: 1,
-	          fields: 'pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complete_status,payment_complete_note,payment_cancel_status,payment_cancel_note,bills'
-	        }
-    	})
+
+      let dataFetch = {
+          online:true,
+          infinite: false,
+          data: { 
+            limit:20,
+            outlet: this.outlet,
+            page: 1,
+            fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complete_status,payment_complete_note,bills.outlet.pay_id.type.name.price.total.qty.product.detail_id`
+          }
+      }
+
+      if(this.navParams.data.body)
+      {
+        if(this.navParams.data.today == true)
+        {
+          this.navParams.data.body.where['payment_date_only'] = moment().format('YYYY-MM-DD')
+        }
+        dataFetch.data = Object.assign(dataFetch.data, this.navParams.data.body)
+      }
+
+    	this.get_transaction(dataFetch)
     })
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TransactionPage');
+    
   }
 
   get_transaction(data:any={data:{}})
@@ -124,10 +138,15 @@ export class TransactionPage {
   	
 
   }
-
+    
   edit_transaction(i, item)
   {
-  	console.log(i, item)
+    // this.edit_transaction_status = true;
+    this.navCtrl.push(PaymentPage, {
+      previous: 'transaction-page',
+      event: 'transaction.edit',
+      bill: item
+    })
   }
 
 }

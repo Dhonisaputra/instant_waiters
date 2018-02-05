@@ -2,14 +2,18 @@ import { Component } from '@angular/core';
 import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { PaymentPage } from '../payment/payment';
+import { TransactionPage } from '../transaction/transaction';
+
 import { ProductProvider } from '../../providers/product/product';
 import { BillProvider } from '../../providers/bill/bill';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { HelperProvider } from '../../providers/helper/helper'; 
+
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import {BillSavedPage} from '../bill-saved/bill-saved'
 import * as $ from "jquery"
+import * as moment from 'moment';
 /**
 * Generated class for the ProductPage page.
 *
@@ -38,13 +42,9 @@ export class ProductPage
 
 	constructor(public appCtrl: App, public navCtrl: NavController, public navParams: NavParams,private events: Events, public productProvider: ProductProvider, public billProvider: BillProvider, public modalCtrl: ModalController,private localNotifications: LocalNotifications, private dbLocalProvider: DbLocalProvider, public helper:HelperProvider, private loadingCtrl : LoadingController ) 
 	{
-		this.dbLocalProvider.opendb('outlet')
-		.then((val)=>{
-			this.outlet = val;
-			this.refresh_data({});
-			this.get_unpaid_bill();
-			
-		})
+		
+
+		
 		this.receipt = ReceiptPage;
 		this.items = [];
 		this.lists = [];
@@ -74,7 +74,6 @@ export class ProductPage
 				receipt: {}
 			}
 
-			console.log(res)
 			data.receipt = res;
 			if(!res.visitor_name || !res.visitor_table || res.receipts.length < 1)
 			{
@@ -198,15 +197,41 @@ export class ProductPage
 	}
 
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad ProductPage');
 
 	}
+	ionViewWillEnter()
+    {
+    	if(this.navParams.data.table)
+		{
+			var index = Object.keys(this.navParams.data.table).shift();
+			this.billProvider.set_component('visitor_table', this.navParams.data.table[index].tab_id)
+			this.events.publish('bill.update', {})
+
+		}else
+		{
+			this.billProvider.update_data_bill()
+		}
+
+		this.dbLocalProvider.opendb('outlet')
+		.then((val)=>{
+			this.outlet = val;
+			this.refresh_data({});
+			this.get_unpaid_bill();
+			
+		})
+    }
 
 	openSavedBill()
 	{
-		let modalBill = this.modalCtrl.create(BillSavedPage);
-		modalBill.present();
-
+		this.navCtrl.push(TransactionPage, {
+				body:{
+					where: {payment_complete_status:0}
+				},
+				today:true,
+				previous: 'product-page',
+				event: 'transaction.uncomplete'
+			}
+		)
 	}
 
 	saveBill()
@@ -237,21 +262,23 @@ export class ProductPage
 	{
 		this.billProvider.get_unpaid_bill({
 			outlet: this.outlet,
-			fields: 'payment_complete_status,outlet,pay_id',
+			fields: 'payment_complete_status,outlet,pay_id,payment_date_only',
 			where: {
+				payment_date_only: moment().format('YYYY-MM-DD'),
 				payment_complete_status: 0
 			}
 		})
 		.then((res) => {
 			res = !this.helper.isJSON(res)? res : JSON.parse(res);
-			console.log(res)
 			this.unpaid_bill_length = res.data.length
 		})
 	}
 
 	pay_bill()
 	{
-		this.events.publish('get.data.receipt', {pay:true})
+		// this.events.publish('get.data.receipt', {pay:true})
+		this.appCtrl.getRootNav().push(PaymentPage)
+
 	}
 
 	filter_product()

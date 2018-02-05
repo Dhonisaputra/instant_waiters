@@ -29,8 +29,9 @@ export class ReceiptPage {
 		this.receipts = []
 		this.taxAmount = 10;
 
+		// if(navParams)
+
 		// update data
-  		this.trigger_update_receipt();
 
 		// event listener to update bill
 	  	events.subscribe('bill.update', (data) => {
@@ -57,12 +58,18 @@ export class ReceiptPage {
 	trigger_update_receipt()
 	{
 		let data = this.billProvider.data_receipts();
-		console.log(data)
+		
 		this.set_receipts(data);
 
 	}	
 
 	update_receipt()
+	{
+		let receipt = this.get_data_receipt();
+        this.billProvider.set_data_receipts(receipt);
+	}
+
+	get_data_receipt()
 	{
 		let receipt = {
             GrandTotalPrice  : this.GrandTotalPrice,
@@ -75,7 +82,7 @@ export class ReceiptPage {
             visitor_table    : this.visitor_table,
             taxAmount    	 : this.taxAmount,
         }
-        this.billProvider.set_data_receipts(receipt);
+        return receipt;
 	}
 	set_receipts(data:any={})
     {
@@ -90,10 +97,23 @@ export class ReceiptPage {
 
 
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad ReceiptPage');
 	}
 	ionViewWillUnload()
 	{
+
+	}
+	ionViewWillEnter()
+	{
+		switch (this.navParams.data.event) {
+			case "transaction.edit":
+				// code...
+				break;
+			
+			default:
+  				this.trigger_update_receipt();
+
+				break;
+		}
 
 	}
 

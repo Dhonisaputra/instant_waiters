@@ -23,18 +23,8 @@ export class BillProvider {
 
     constructor(public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events) {
         this.taxAmount = 0;
-        console.log('Hello BillProvider Provider');
 
-        this.dbLocalProvider.opendb('bill.data')
-          .then( (res) =>{
-              if(res)
-              {
-                  res = Object.assign(res, {data: res.receipts, latest: {}})
-                  this.set_receipts(res)
-                  this.events.publish('bill.update')
-              }
-
-          })
+        this.update_data_bill();
     }
 
     save(data:any={})
@@ -68,6 +58,16 @@ export class BillProvider {
 
             }
         })
+    }
+
+    set_component(name:string, value:any)
+    {
+        this[name] = value;
+    }
+
+    get_component(name:string)
+    {
+        return this[name];
     }
 
     get(data:any)
@@ -190,14 +190,32 @@ export class BillProvider {
 
     set_data_receipts(data:any={})
     {
-        this.GrandTotalPrice = data.GrandTotalPrice
-        this.sumPrice = data.sumPrice
-        this.tax = data.tax
-        this.receipts = data.receipts
-        this.visitor_name = data.visitor_name
-        this.visitor_table = data.visitor_table
+        this.GrandTotalPrice  = data.GrandTotalPrice
+        this.sumPrice         = data.sumPrice
+        this.tax              = data.tax
+        this.receipts         = data.receipts
+        this.visitor_name     = data.visitor_name
+        this.visitor_table    = data.visitor_table
 
-        this.update_receipt();
+        if(!data.no_update)
+        {
+            this.update_receipt();
+        }
+    }
+
+    update_data_bill()
+    {
+        this.dbLocalProvider.opendb('bill.data')
+        .then( (res) =>{
+          if(res)
+          {
+              this.data_bill = res;
+              res = Object.assign(res, {data: res.receipts, latest: {}})
+              this.set_receipts(res)
+              this.events.publish('bill.update')
+          }
+
+        })
     }
 
     check_existences_receipt(id)
