@@ -25,6 +25,8 @@ export class TransactionPage {
 	outlet:number;
 	filter_by:string;
 	filter_input:any;
+	edit_transaction_status:boolean=true;
+
 
   transaction_params:any = {data:{limit: 20, page: 1}};
   constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider) {
@@ -38,7 +40,8 @@ export class TransactionPage {
 	        data: { 
 	          limit:20,
 	          outlet: this.outlet,
-	          page: 1
+	          page: 1,
+	          fields: 'pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complete_status,payment_complete_note,payment_cancel_status,payment_cancel_note,bills'
 	        }
     	})
     })

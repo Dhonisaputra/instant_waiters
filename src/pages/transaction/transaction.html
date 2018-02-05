@@ -18,29 +18,34 @@
 
 
 <ion-content padding>
-	<div>				
-		<ion-row>
-			<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>
-				<ion-searchbar (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 8px 5px;"></ion-searchbar>
-			</ion-col>
-			<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4>
-				<ion-item>
-					<ion-label>Urutkan...</ion-label>
-					<ion-select [(ngModel)]="filter_by" (ionChange)="filter_transaction()" interface="action-sheet">
-						<ion-option value="visitor_name">Nama</ion-option>
-						<ion-option value="pay_id">No Nota</ion-option>
-					</ion-select>
-				</ion-item>
-			</ion-col>
-		</ion-row>
+	<div *ngIf="!edit_transaction_status">
+		<div>				
+			<ion-row>
+				<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>
+					<ion-searchbar (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 8px 5px;"></ion-searchbar>
+				</ion-col>
+				<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4>
+					<ion-item>
+						<ion-label>Urutkan...</ion-label>
+						<ion-select [(ngModel)]="filter_by" (ionChange)="filter_transaction()" interface="action-sheet">
+							<ion-option value="visitor_name">Nama</ion-option>
+							<ion-option value="pay_id">No Nota</ion-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</div>
+		<ion-list>
+			<ion-item *ngFor="let item of items; let i = index" >
+				{{item.visitor_name}}
+				<button ion-button outline item-end (click)="edit_transaction(i, item)">Edit</button>
+			</ion-item>
+		</ion-list>
+		<ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">
+		   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+		</ion-infinite-scroll>
 	</div>
-	<ion-list>
-		<ion-item *ngFor="let item of items; let i = index" >
-			{{item.visitor_name}}
-			<ion-button outline end (click)="edit_transaction(i, item)">Edit</ion-button>
-		</ion-item>
-	</ion-list>
-	<ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">
-	   <ion-infinite-scroll-content></ion-infinite-scroll-content>
-	 </ion-infinite-scroll>
+	<div *ngIf="edit_transaction_status">
+
+	</div>
 </ion-content>
