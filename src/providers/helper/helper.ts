@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ConfigProvider } from '../../providers/config/config';
 
 /*
   Generated class for the HelperProvider provider.
@@ -10,7 +11,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class HelperProvider {
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public config: ConfigProvider) {
     console.log('Hello HelperProvider Provider');
   }
 
@@ -28,12 +29,14 @@ export class HelperProvider {
             rev2 += '.';
         }
     }
-    return rev2.split('').reverse().join('') + ',00';
+    return rev2.split('').reverse().join('');
  
   }
 
   IDRtoInt(angka:any)
   {
+
+    angka = angka? angka.toString() : '0';
   	return parseInt(angka.replace(/,.*|\D/g,''),10)
 
   }

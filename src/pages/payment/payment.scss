@@ -15,6 +15,79 @@
 	overflow-x: auto; 
 }
 
+/* input {
+  font-size: 31px;
+  padding: 3px 10px;
+  border: 0;
+  border-bottom: 2px solid #3498db;
+  margin: 0 15px;
+  width: 84%;
+  outline: 0;
+  text-align: right;
+  border-radius: 0;
+  color: #3498db;
+}
+ */
+/* ::-webkit-input-placeholder { color: #ccc; }
+:-moz-placeholder { color: #ccc; }
+::-moz-placeholder { color: #ccc; }
+:-ms-input-placeholder { color: #ccc; } */
+
+#container { 
+  // padding-top: 40px;
+  // width: 320px;
+  // height: 440px;
+  position: relative;
+  border: 1px solid #eee;
+  // margin-top: 20px;
+}
+
+.numpad { 
+	margin: 0;
+	padding: 0;
+  	display: flex;
+  	width: 100%;
+}
+
+.numpad .numpad-col { 
+  display: flex;
+  flex-wrap: wrap;
+}
+.numpad .numpad-number { 
+	flex-grow:1;
+	width: 70%;
+}
+.numpad .numpad-action { 
+	flex-direction: column;
+	width: 30%;
+}
+.numpad .numpad-action .numpad-key{
+	width: 100%;
+	
+} 
+.numpad .numpad-key {
+	font-size: 32px;
+	float: left;
+	list-style: none;
+	text-align: center;
+	height: 65px;
+	width: calc( 100% / 3 );
+	-webkit-font-smoothing: antialiased;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #03a02f;
+	border: 1px solid #eee;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
 
 
 /*form-receipt--border-bottom form-receipt--customer*/

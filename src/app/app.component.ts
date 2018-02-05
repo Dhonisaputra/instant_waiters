@@ -13,6 +13,7 @@ import { ReceiptPage } from '../pages/receipt/receipt';
 import { ProductPage } from '../pages/product/product';
 import { SettingsPage } from '../pages/settings/settings';
 import { StocksPage } from '../pages/stocks/stocks';
+import { TransactionPage } from '../pages/transaction/transaction';
 
 @Component({
   templateUrl: 'app.html'
@@ -36,7 +37,8 @@ export class MyApp {
       { title: 'Payment', component: PaymentPage },
       { title: 'Product', component: ProductPage },
       { title: 'Stocks', component: StocksPage },
-      { title: 'Settings', component: SettingsPage }
+      { title: 'Transaction', component: TransactionPage },
+      { title: 'Settings', component: SettingsPage },
     ];
 
   }

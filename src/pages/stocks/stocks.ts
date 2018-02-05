@@ -23,11 +23,23 @@ export class StocksPage {
 
 	items:any=[]
 	original_items:any=[]
+  outlet:number;
   constructor(public navCtrl: NavController, public navParams: NavParams, private productProvider : ProductProvider, private helper:HelperProvider, private dbLocalProvider: DbLocalProvider) {
 
-  	this.get_product({
-
-  	})
+    this.dbLocalProvider.opendb('outlet')
+    .then((val)=>{
+      this.outlet = val;
+      
+    	this.get_product({
+        online:true,
+        data: { 
+          limit:0,
+          outlet: this.outlet,
+          fields: 'id,outlet,type,price,name,unit,stock,image,stock_latest_update',
+          order_by: 'stock_latest_update DESC'
+        }
+    	})
+    })
   }
 
   get_product(data:any)
@@ -53,4 +65,20 @@ export class StocksPage {
     console.log('ionViewDidLoad StocksPage');
   }
 
+  filter_stock(ev:any)
+  {
+
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.items = this.original_items.filter((item) => {
+        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }else
+    {
+      this.items = this.original_items;
+    }
+
+  }
 }

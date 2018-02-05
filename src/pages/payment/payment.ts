@@ -17,8 +17,9 @@ import { BillProvider } from '../../providers/bill/bill';
   templateUrl: 'payment.html',
 })
 export class PaymentPage {
-	bill:any = {GrandTotalPrice:0, returnMoney: 0, paid:0}
+	bill:any = {GrandTotalPrice:0, returnMoney: 0, paid:''}
 	outlet: number;
+	paymentMethod:number= 1;
   constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider: DbLocalProvider, private events: Events, private helper: HelperProvider, private billProvider: BillProvider) {
   	this.dbLocalProvider.opendb('outlet')
 	.then((val)=>{
@@ -36,11 +37,30 @@ export class PaymentPage {
 
   sumReturn()
   {
+  	this.bill.paid = this.helper.IDRtoInt(this.bill.paid)
+  	this.bill.GrandTotalPrice = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
   	this.bill.returnMoney =  parseInt(this.bill.paid) < parseInt(this.bill.GrandTotalPrice)? 0 : parseInt(this.bill.paid) - parseInt(this.bill.GrandTotalPrice) 
+  	
+  	this.bill.returnMoney = 'Rp.' + this.helper.intToIDR(this.bill.returnMoney)
+  	this.bill.GrandTotalPrice = this.helper.intToIDR(this.bill.GrandTotalPrice)
+  	this.bill.paid = 'Rp.' + this.helper.intToIDR(this.bill.paid)
+  	
+  }
+
+  is_not_enough_money()
+  {
+  	let paid = this.helper.IDRtoInt(this.bill.paid)
+  	let total = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
+  	return paid < total
   }
 
   payBill()
   {
+  	if(this.is_not_enough_money())
+  	{
+  		alert("Not Enough Money!");
+  		return false;
+  	}
   	this.billProvider.save({
 		users_outlet: 1,
 		outlet: this.outlet,
@@ -71,4 +91,51 @@ export class PaymentPage {
 		return idr;
 	}
 
+	calculate(event, type:string, value:any) 
+	{
+		this.bill.paid = !this.bill.paid?'' : this.helper.IDRtoInt(this.bill.paid);
+		this.bill.paid = this.bill.paid.toString();
+		switch (type) {
+			case "numeric":
+				value = parseInt(value);
+				this.bill.paid += value
+				this.sumReturn();
+				break;
+			
+			case "action":
+				switch (value) {
+					case "pas":
+						this.bill.paid = this.bill.GrandTotalPrice
+						this.sumReturn();
+						break;
+
+					case "clear":
+						this.bill.paid = 0
+						this.sumReturn();
+						break;
+
+					case "rm":
+						if(this.bill.paid.length > 0)
+						{
+							var a = this.bill.paid.split('')
+							a.pop();
+							this.bill.paid = a.join('');
+						}else
+						{
+							this.bill.paid = 0;
+						}
+						this.sumReturn();
+						break;
+					
+					case 'simpan':
+						this.payBill()
+						break;
+					default:
+						// code...
+						break;
+				}
+				break;
+		}
+
+	}
 }

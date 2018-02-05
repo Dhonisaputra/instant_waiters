@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events , ModalController, LoadingController } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
+import { PaymentPage } from '../payment/payment';
 import { ProductProvider } from '../../providers/product/product';
 import { BillProvider } from '../../providers/bill/bill';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
@@ -32,9 +33,10 @@ export class ProductPage
 	filter_type_selected: number = 0;
 	filter_product_name: string = '';
 	filter_sort_product: string = '';
+	public paymentPage:any=PaymentPage;
 
 
-	constructor(public navCtrl: NavController, public navParams: NavParams,private events: Events, public productProvider: ProductProvider, public billProvider: BillProvider, public modalCtrl: ModalController,private localNotifications: LocalNotifications, private dbLocalProvider: DbLocalProvider, public helper:HelperProvider, private loadingCtrl : LoadingController ) 
+	constructor(public appCtrl: App, public navCtrl: NavController, public navParams: NavParams,private events: Events, public productProvider: ProductProvider, public billProvider: BillProvider, public modalCtrl: ModalController,private localNotifications: LocalNotifications, private dbLocalProvider: DbLocalProvider, public helper:HelperProvider, private loadingCtrl : LoadingController ) 
 	{
 		this.dbLocalProvider.opendb('outlet')
 		.then((val)=>{
@@ -74,6 +76,12 @@ export class ProductPage
 
 			console.log(res)
 			data.receipt = res;
+			if(!res.visitor_name || !res.visitor_table || res.receipts.length < 1)
+			{
+				console.error('Please fill table and name');
+				alert('Please make sure table number, visitor name and product is filled');
+				return false;
+			}
 			if(res._passed_data.pay == false)
 			{
 				
@@ -95,7 +103,7 @@ export class ProductPage
 				})
 			}else
 			{
-
+				this.appCtrl.getRootNav().push(PaymentPage)
 			}
 		})
 
