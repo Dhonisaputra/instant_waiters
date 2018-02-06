@@ -42,18 +42,40 @@
 			</ion-item>
 			<ion-item>
 				<h2>Stok</h2>
-    			<p>{{product.stock}}</p>
+    			<p>{{product.stock}} {{product.unit}}</p>
+			</ion-item>
+
+			<ion-item>
+				<h2>Stok Opname</h2>
+    			<p>{{product.stock_opname}} {{product.unit}}</p>
 			</ion-item>
 		</ion-list>
 
 		<ion-list *ngSwitchCase="'history_product'">
-			<ion-item>
-				<ion-thumbnail item-start>
-					<img src="img/thumbnail-kitten-1.jpg">
-				</ion-thumbnail>
-				<h2>Luna</h2>
-			</ion-item>
-			...
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Tanggal</th>
+							<th>Stok masuk</th>
+							<th>Stok keluar</th>
+							<th>Stok Sisa</th>
+							<th>Catatan</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of log_stock; let i = index;">
+							<td>{{i+1}}</td>
+							<td>{{item.stock_date}}</td>
+							<td>{{item.stock_in}}</td>
+							<td>{{item.stock_out}}</td>
+							<td>{{item.stock_rest}}</td>
+							<td>{{item.stock_note}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</ion-list>
 	</div>	
 </ion-content>

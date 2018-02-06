@@ -19,6 +19,7 @@ import * as $ from "jquery"
 export class DetailStockPage {
 	tab:string = 'detail_product';
 	product:any = {};
+	log_stock:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private helper:HelperProvider) {
   	if(!this.navParams.data)
   	{
@@ -38,10 +39,13 @@ export class DetailStockPage {
   process_get_stock(idproduct:number)
   {
   	let url = this.helper.config.base_url('admin/outlet/stock/log/get')
-  	$.post(url, {product:1, limit:10, page:1})
+  	$.post(url, {product: this.product.id, outlet:1, limit:10, page:1, order_by:'stock_date DESC'})
   	.then((res)=>{
   		res = this.helper.isJSON(res)? JSON.parse(res):res;
   		console.log(res)
+  		this.log_stock = res.data;
+  		let stock = this.log_stock[0]?this.log_stock[0].stock_rest : 0;
+  		this.product.stock_opname = this.product.stock < 1? this.product.stock - this.log_stock[0].stock_rest : stock;
   	})
   }
 }

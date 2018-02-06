@@ -27,7 +27,8 @@ export class TablePage {
   choose_type_order:number = 1;
   event_handler:any={};
   constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider) {
-
+    // this.helstorage.set('outlet', 1)
+    this.local.setdb('outlet', 1)
   	/*this.local.opendb('table')
   	.then((res)=>{
   		if(!res)
