@@ -145,7 +145,12 @@ export class TransactionPage {
     this.navCtrl.push(PaymentPage, {
       previous: 'transaction-page',
       event: 'transaction.edit',
-      bill: item
+      trigger_event: 'transaction.edit',
+      bill: item,
+      receipt_page_params:
+      {
+        can_edit_slide_item: false
+      }
     })
   }
 

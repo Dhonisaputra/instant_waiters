@@ -22,6 +22,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { StocksPage } from '../pages/stocks/stocks';
 import { BillItemEditorPage } from '../pages/bill-item-editor/bill-item-editor';
 import { TransactionPage } from '../pages/transaction/transaction';
+import { DetailStockPage } from '../pages/detail-stock/detail-stock';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -48,7 +49,8 @@ import { HelperProvider } from '../providers/helper/helper';
     SettingsPage,
     StocksPage,
     BillItemEditorPage,
-    TransactionPage
+    TransactionPage,
+    DetailStockPage
 
   ],
   imports: [
@@ -71,7 +73,8 @@ import { HelperProvider } from '../providers/helper/helper';
     SettingsPage,
     StocksPage,
     BillItemEditorPage,
-    TransactionPage
+    TransactionPage,
+    DetailStockPage
   ],
   providers: [
     StatusBar,

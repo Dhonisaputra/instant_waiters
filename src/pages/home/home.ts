@@ -10,10 +10,6 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private storage: Storage) {
   	this.storage.set('outlet', 1)
-  	.then(()=>{
-  		
-      console.log(this.storage.get('outlet'), 'set storage')
-  	})
   }
 
 }

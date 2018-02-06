@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, App } from 'ionic-angular';
 import { DbLocalProvider } from "../../providers/db-local/db-local";
 import { ProductPage } from "../../pages/product/product";
+import { DbTableProvider } from "../../providers/db-table/db-table";
+import { HelperProvider } from '../../providers/helper/helper'; 
 
 /**
  * Generated class for the TablePage page.
@@ -18,13 +20,15 @@ import { ProductPage } from "../../pages/product/product";
 export class TablePage {
 
   tableNum : any;
+  outlet : number;
   tableSelect : any;
   multiple:boolean = false;
   tableChoosen:any = {};
   choose_type_order:number = 1;
-  constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider) {
+  event_handler:any={};
+  constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider) {
 
-  	this.local.opendb('table')
+  	/*this.local.opendb('table')
   	.then((res)=>{
   		if(!res)
   		{
@@ -35,10 +39,36 @@ export class TablePage {
   			
 	  		this.tableNum = res.results;
   		}
-	  })
+	  })*/
 }	
 
+  ionViewWillEnter()
+  {
+    this.detect_parameters();
+
+  }
+
+
   ionViewDidLoad() {
+    this.local.opendb('outlet')
+    .then((val)=>{
+      this.outlet = val;
+      this.dbTableProvider.get_table({outlet: val})
+      .then( (res)=>{
+        res = !this.helper.isJSON(res)? res : JSON.parse(res);
+        if(res.code == 200)
+        {
+          this.tableNum = res.results;
+        }else
+        {
+          alert('Error on getting data')
+        }
+      })
+      .catch(()=>{
+          alert('Error on getting data')
+      })
+    })
+      
   }
 
   selectTable(index:number, tab_id:number)
@@ -85,10 +115,27 @@ export class TablePage {
     }
   }
 
+  detect_parameters()
+  {
+    this.event_handler[this.navParams.data.event] = this.navParams.data;
+    if(this.navParams.data.trigger_event)
+    {
+      switch (this.navParams.data.trigger_event) {
+        case "table.change":
+          console.log()
+          break;
+        
+        default:
+          // code...
+          break;
+      }
+    }
+  }
+
   order()
   {
     this.local.set_params('table.selected', this.tableChoosen);
     // this.appCtrl.getRootNav().push(ProductPage)
-    this.navCtrl.push(ProductPage, {'previous': 'table-page', 'table': this.tableChoosen, 'multiple': this.multiple})
+    this.navCtrl.push(ProductPage, {'previous': 'table-page', event:'table.pick', trigger_event:'order.pick', 'table': this.tableChoosen, 'multiple': this.multiple})
   }
 }

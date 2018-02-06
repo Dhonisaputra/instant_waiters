@@ -30,6 +30,21 @@ page-receipt {
 		flex-grow: 1;
 		overflow-y: auto; 
 	}
+		.receipt-body .item-receipt .item-inner
+		{
+			padding-right: 0px !important;
+		}
+		.receipt-body .item-receipt .label
+		{
+			margin-right: 0px !important;
+			padding: 8px 0px;
+		}
+		.receipt-body .item-receipt .label .receipt-detail--component
+		{
+			// word-wrap: 
+			white-space: normal;
+			padding-right: 4px;
+		}
 	.receipt-footer
 	{
 		padding: 4px 10px;

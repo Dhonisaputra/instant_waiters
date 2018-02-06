@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProductProvider } from '../../providers/product/product';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
+import { DetailStockPage } from '../detail-stock/detail-stock';
 
 import { HelperProvider } from '../../providers/helper/helper'; 
 
@@ -24,7 +25,10 @@ export class StocksPage {
 	items:any=[]
 	original_items:any=[]
   outlet:number;
+  detailStockPage:any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private productProvider : ProductProvider, private helper:HelperProvider, private dbLocalProvider: DbLocalProvider) {
+    this.detailStockPage = DetailStockPage;
 
     this.dbLocalProvider.opendb('outlet')
     .then((val)=>{
@@ -80,5 +84,9 @@ export class StocksPage {
       this.items = this.original_items;
     }
 
+  }
+  openDetailStock(item:any)
+  {
+    this.navCtrl.push(DetailStockPage, item)
   }
 }

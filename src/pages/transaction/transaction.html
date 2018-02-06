@@ -38,7 +38,7 @@
 		<ion-list>
 			<ion-item *ngFor="let item of items; let i = index" >
 				{{item.visitor_name}}
-				<button ion-button outline item-end (click)="edit_transaction(i, item)">Edit</button>
+				<button ion-button outline item-end (click)="edit_transaction(i, item)"> <ion-icon name="logo-usd"></ion-icon> Bayar </button>
 			</ion-item>
 		</ion-list>
 		<ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">

@@ -29,19 +29,25 @@ export class PaymentPage {
   	console.log(this.navParams.data)
   }
 
-  ionViewWillEnter()
+  ionViewDidEnter()
     {
+		this.get_temporary_data();		
+    	if(this.navParams.data.event)
+    	{
 
-        switch (this.navParams.data.event) {
-            case "transaction.edit":
-                // code...
-				this.edit_payment_method(this.navParams.data.bill)
-                break;
-            
-            default:
-				this.get_temporary_data();
-                break;
-        }
+	        switch (this.navParams.data.event) {
+	            case "transaction.edit":
+	                // code...
+					this.edit_payment_method(this.navParams.data.bill)
+	                break;
+	            
+	            default:
+					this.get_temporary_data();
+	                break;
+	        }
+    	}else
+    	{
+    	}
 
     }
 
@@ -57,9 +63,10 @@ export class PaymentPage {
   	this.bill.GrandTotalPrice = this.helper.intToIDR(this.bill.GrandTotalPrice)
   	this.bill.paid = 'Rp.' + this.helper.intToIDR(this.bill.paid)
 
+  	console.log(this.bill.paid)
   	if(!isInput)
   	{
-  		$('#paid').focus();	
+  		// $('#paid').focus();	
   	}
   	
   }
@@ -127,7 +134,7 @@ export class PaymentPage {
 			case "action":
 				switch (value) {
 					case "pas":
-						this.bill.paid = this.bill.GrandTotalPrice
+						this.bill.paid = this.billProvider.get_component('GrandTotalPrice');
 						this.sumReturn();
 						break;
 
@@ -214,10 +221,17 @@ export class PaymentPage {
 		  		}else
 		  		{
 		  			this.bill = res;
+					this.billProvider.set_data_receipts(res);
+					this.events.publish('bill.update', {})
 		  		}
 
 		  	} )
 	    	
+	    }else
+	    {
+			this.billProvider.set_data_receipts(data);
+			this.events.publish('bill.update', {})
+
 	    }
 	}
 }

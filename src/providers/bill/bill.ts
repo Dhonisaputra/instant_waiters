@@ -136,6 +136,10 @@ export class BillProvider {
         this.sumPrice = 0;
         this.GrandTotalPrice = 0;
         this.tax = 0;
+        this.receipts.forEach((val, i) => {
+            this.receipts[i].totalPrice = this.receipts[i].amount * this.receipts[i].price
+        })
+
         let RestotalPrice = this.receipts.map((res) => {
             return res.totalPrice
         })
@@ -216,6 +220,22 @@ export class BillProvider {
           }
 
         })
+    }
+
+    update_bill_item(index, name, value)
+    {
+        this.receipts[index][name] = value;
+    }
+
+    get_bill_item(index:number, name:string='')
+    {
+
+        return name.length < 1? this.receipts[index] : this.receipts[index][name];
+    }
+
+    remove_bill_item(index)
+    {
+        this.receipts.splice(index, 1);
     }
 
     check_existences_receipt(id)

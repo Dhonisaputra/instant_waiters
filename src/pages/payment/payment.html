@@ -40,12 +40,12 @@
 					</ion-row>
 					
 						
-					<ion-row class="center">
+					<ion-row class="center" *ngIf="paymentMethod == 1">
 						<ion-col col-12 col-xs-12 col-sm-12 col-md-4>
 							<input type="text" class="form-control--lg" id="paid" name="" [(ngModel)]="bill.paid" (input)="sumReturn(true)">				
 						</ion-col>
 						<ion-col col-12 col-xs-12 col-sm-12 col-md-4>
-							<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.returnMoney">				
+							<input type="text" class="form-control--lg" readonly name="" [(ngModel)]="bill.returnMoney">				
 						</ion-col>
 					</ion-row>
 

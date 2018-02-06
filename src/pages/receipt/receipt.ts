@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-import * as $ from "jquery"
 import { BillProvider } from '../../providers/bill/bill';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
+import { TablePage } from '../table/table';
+import * as $ from "jquery"
 
 /**
 * Generated class for the ReceiptPage page.
@@ -24,6 +25,8 @@ export class ReceiptPage {
 	taxAmount:number;
 	visitor_name:string;
 	visitor_table:number;
+	event_handler:any={};
+	receipt_page_params:any= {can_edit_slide_item: true}
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider) {
 		this.receipts = []
@@ -52,13 +55,17 @@ export class ReceiptPage {
 			this.billProvider.reset_receipt();
 	  		this.trigger_update_receipt();
 		});
+
+		if(this.navParams.data.receipt_page_params)
+		{
+			this.update_page_parameters(this.navParams.data.receipt_page_params);
+		}
 	}
 
 	// function trigger to updating data receipts
 	trigger_update_receipt()
 	{
 		let data = this.billProvider.data_receipts();
-		
 		this.set_receipts(data);
 
 	}	
@@ -102,8 +109,14 @@ export class ReceiptPage {
 	{
 
 	}
+	update_page_parameters(data:any={})
+	{
+		this.receipt_page_params = Object.assign(this.receipt_page_params, data)
+	}
 	ionViewWillEnter()
 	{
+
+
 		switch (this.navParams.data.event) {
 			case "transaction.edit":
 				// code...
@@ -115,8 +128,93 @@ export class ReceiptPage {
 				break;
 		}
 
+		this.detect_parameters();
+
+	}
+
+	detect_parameters()
+	{
+		this.event_handler[this.navParams.data.events] = this.navParams.data;
+		
+	}
+
+	change_table()
+	{
+		console.log(this.navCtrl)
+		let index:number=-1;
+		let isFound:boolean= false;
+		let navCtrlLen:number=this.navCtrl.length();
+
+		for ( let i=0; i < this.navCtrl.length(); i++ )
+		{
+			if(index<1)
+			{
+
+				let v = this.navCtrl.getViews()[i];
+				if(v.component.name == 'TablePage')
+				{
+					index = i;
+					isFound = true;
+					this.navCtrl.popTo(TablePage)
+				}
+			}
+
+			if(index < 0 && isFound == false)
+			{
+				console.log('force back', index, i, navCtrlLen)
+				this.navCtrl.push(TablePage, {
+					previous: 'product-page',
+					event: 'bill.changeTable',
+					trigger_event: 'table.change',
+					data: this.event_handler['table.pick']
+				})
+			}
+		}
+
 	}
 
 
+	removeReceipt(ev, item)
+	{
+		// alert('removed')
+		console.log(ev, item)
+	}
+
+	removeItem(index, item)
+	{
+		this.billProvider.remove_bill_item(index)
+		this.billProvider.count_pricing()
+		this.billProvider.update_receipt()
+		this.trigger_update_receipt();
+	}
+	reduceItem(index, item)
+	{
+		var dataitem = this.billProvider.get_bill_item(index);
+		if(dataitem.amount <= 1)
+		{
+			return false;
+		}else
+		{
+			this.billProvider.update_bill_item(index, 'amount', item.amount - 1)
+			this.billProvider.count_pricing()
+			this.billProvider.update_receipt()
+			this.trigger_update_receipt();
+		}
+
+	}
+	addItem(index, item)
+	{
+		var dataitem = this.billProvider.get_bill_item(index);
+		if(dataitem.amount >= parseInt(dataitem.stock))
+		{
+			return false;
+		}else
+		{
+			this.billProvider.update_bill_item(index, 'amount', item.amount + 1)
+			this.billProvider.count_pricing()
+			this.billProvider.update_receipt()
+			this.trigger_update_receipt();
+		}
+	}
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { PaymentPage } from '../payment/payment';
 import { TransactionPage } from '../transaction/transaction';
@@ -40,7 +40,20 @@ export class ProductPage
 	public paymentPage:any=PaymentPage;
 
 
-	constructor(public appCtrl: App, public navCtrl: NavController, public navParams: NavParams,private events: Events, public productProvider: ProductProvider, public billProvider: BillProvider, public modalCtrl: ModalController,private localNotifications: LocalNotifications, private dbLocalProvider: DbLocalProvider, public helper:HelperProvider, private loadingCtrl : LoadingController ) 
+	constructor(public appCtrl: App, 
+				public navCtrl: NavController, 
+				public navParams: NavParams,
+				private events: Events, 
+				public productProvider: ProductProvider, 
+				public billProvider: BillProvider, 
+				public modalCtrl: ModalController,
+				private localNotifications: LocalNotifications, 
+				private dbLocalProvider: DbLocalProvider, 
+				public helper:HelperProvider, 
+				private loadingCtrl : LoadingController, 
+				private alertCtrl: AlertController
+
+	) 
 	{
 		
 
@@ -160,7 +173,6 @@ export class ProductPage
 		}
 
 		data.page = 1;
-		data.limit = 5;
 
 		this.get_product({data: data, online:true})
 		.then(()=>{
@@ -197,10 +209,17 @@ export class ProductPage
 	}
 
 	ionViewDidLoad() {
+		this.dbLocalProvider.opendb('outlet')
+		.then((val)=>{
+			this.outlet = val;
+			this.refresh_data({});
+			
+		})
 
 	}
 	ionViewWillEnter()
     {
+		this.billProvider.update_data_bill()
     	if(this.navParams.data.table)
 		{
 			var index = Object.keys(this.navParams.data.table).shift();
@@ -209,16 +228,9 @@ export class ProductPage
 
 		}else
 		{
-			this.billProvider.update_data_bill()
 		}
 
-		this.dbLocalProvider.opendb('outlet')
-		.then((val)=>{
-			this.outlet = val;
-			this.refresh_data({});
 			this.get_unpaid_bill();
-			
-		})
     }
 
 	openSavedBill()
@@ -236,31 +248,51 @@ export class ProductPage
 
 	saveBill()
 	{
+		let alertVisitor = this.alertCtrl.create({
+			title: 'Nama pembeli',
+			inputs: [
+				{
+					name: 'alert_visitor_name',
+					placeholder: 'Nama pengunjung'
+				},
+			],
+			buttons: [
+		      {
+		        text: 'Cancel',
+		        role: 'cancel',
+		        handler: data => {
+		        }
+		      },
+		      {
+		        text: 'Selesai',
+		        handler: data => {
+		          	this.billProvider.set_component('visitor_name', data.alert_visitor_name)
+					this.events.publish('bill.update', {})
+					setTimeout(() => {
+						this.process_save_bill()
+						.then( () =>{
+							alertVisitor.dismiss();
+						} )
+					},300)
+		        }
+		      }
+		    ]
+		})
+		if(!this.billProvider.get_component('visitor_name') || this.billProvider.get_component('visitor_name').length < 1)
+		{
+			alertVisitor.present();
+		}else
+		{
+			this.process_save_bill()
+		}
 
 		// this.events.publish('get.data.receipt', {pay:false})
-		this.billProvider.save({
-			users_outlet: 1,
-			outlet: this.outlet,
-			bank_id: 1,
-			payment_method: 1,
-			payment_nominal: 0,
-		})
-		.done((res)=>{
-			res = !this.helper.isJSON(res)? res : JSON.parse(res);
-			if(res.code == 200)
-			{
-				this.events.publish('reset.data.receipt',{})
-				this.get_unpaid_bill();
-			}else
-			{
-				console.error('Error when saving the bill')
-			}
-		})
+		
 	}
 
 	get_unpaid_bill()
 	{
-		this.billProvider.get_unpaid_bill({
+		return this.billProvider.get_unpaid_bill({
 			outlet: this.outlet,
 			fields: 'payment_complete_status,outlet,pay_id,payment_date_only',
 			where: {
@@ -276,9 +308,98 @@ export class ProductPage
 
 	pay_bill()
 	{
-		// this.events.publish('get.data.receipt', {pay:true})
-		this.appCtrl.getRootNav().push(PaymentPage)
+		
 
+		let alertVisitor = this.alertCtrl.create({
+			title: 'Nama pembeli',
+			inputs: [
+				{
+					name: 'visitor_name',
+					placeholder: 'Nama pembeli'
+				},
+			],
+			buttons: [
+		      {
+		        text: 'Cancel',
+		        role: 'cancel',
+		        handler: data => {
+		        }
+		      },
+		      {
+		        text: 'Selesai',
+		        handler: data => {
+		        	if(data.visitor_name == '' || !data.visitor_name)
+		        	{
+		        		alert("Nama pembeli tidak boleh kosong!");
+		        		return false;
+		        	}
+		          	this.billProvider.set_component('visitor_name', data.visitor_name)
+					this.events.publish('bill.update', {})
+					setTimeout(() => {
+						alertVisitor.dismiss();
+						this.appCtrl.getRootNav().push(PaymentPage)
+					},300)
+		        }
+		      }
+		    ]
+		})
+		
+		this.error_product();
+		
+		if(!this.billProvider.get_component('visitor_name'))
+		{
+			alertVisitor.present();
+		}else
+		{
+			this.appCtrl.getRootNav().push(PaymentPage)
+		}
+		// this.events.publish('get.data.receipt', {pay:true})
+
+	}
+
+
+	private process_save_bill()
+	{
+		let loader = this.loadingCtrl.create({
+	      content: "Menyimpan nota. Silahkan tunggu!",
+	    });
+
+	    let alertSuccess = this.alertCtrl.create({
+		    title: 'Nota telah tersimpan',
+		});
+
+		let alertError = this.alertCtrl.create({
+		    title: 'Nota gagal tersimpan',
+		    subTitle: 'Silahkan ulangi kembali',
+		});
+
+	    loader.present()
+		return this.billProvider.save({
+			users_outlet: 1,
+			outlet: this.outlet,
+			bank_id: 1,
+			payment_method: 1,
+			payment_nominal: 0,
+		})
+		.done((res)=>{
+			res = !this.helper.isJSON(res)? res : JSON.parse(res);
+			if(res.code == 200)
+			{
+				this.events.publish('reset.data.receipt',{})
+				this.get_unpaid_bill();
+				alertSuccess.present();
+			}else
+			{
+				console.error('Error when saving the bill')
+				alertError.present();
+			}
+		})
+		.fail( ()=>{
+			alertError.present();
+		} )
+		.always(()=>{
+	    	loader.dismiss()
+		})
 	}
 
 	filter_product()
@@ -306,6 +427,20 @@ export class ProductPage
 	{ 
 		let idr = this.helper.intToIDR(number)
 		return idr;
+	}
+
+	private error_product()
+	{
+		let alertErrorProduct = this.alertCtrl.create({
+		    title: 'Kesalahan',
+		    subTitle: 'Silahkan pilih salah satu produk',
+		});
+
+		if(this.billProvider.get_component('receipts').length < 1)
+		{
+			alertErrorProduct.present();
+			return false;
+		}
 	}
 
 }

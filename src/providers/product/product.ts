@@ -24,7 +24,7 @@ export class ProductProvider {
 			options.data = Object.assign(
 				{
 					fields: 'id,outlet,type,price,name,unit,stock,image,charge_nominal,charge_percent,status,discount_nominal,discount_percent,status_text,can_be_removed,favorite'	,
-					limit: 5,
+					limit: 8,
 					page: 1,				
 				}, options.data)
 
