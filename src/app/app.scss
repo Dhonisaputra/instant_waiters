@@ -35,12 +35,12 @@
 		// min-width: 80px;
 		padding: 8px;
 		text-align: center;
-		border: 1px solid #03a02f;
+		border: 1px solid #c0392b;
 		font-size: .9em;
 	}
 	.tab-item.active
 	{
-		background-color: #03a02f;
+		background-color: #c0392b;
 		color: white;
 	}
 	.tab-item:first-child
@@ -646,7 +646,7 @@ button[ion-fab] {
             right: 40px;
 
             color: white;
-            background-color: rgba(0,0,0,0.7);
+            background-color: #c0392be6;
             line-height: 24px;
             padding: 4px 8px;
             border-radius: 4px;
