@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConfigProvider } from '../../providers/config/config';
-import { AlertController, Events } from 'ionic-angular';
+import { AlertController, Events, LoadingController  } from 'ionic-angular';
 import * as $ from "jquery"
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 
@@ -21,7 +21,7 @@ export class BillProvider {
     visitor_name:string;
     visitor_table:number;
 
-    constructor(public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events) {
+    constructor(public loadingCtrl: LoadingController, public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events) {
         this.taxAmount = 0;
 
         this.update_data_bill();
@@ -29,10 +29,23 @@ export class BillProvider {
 
     save(data:any={})
     {
+        let loader = this.loadingCtrl.create({
+          content: "Memproses permintaan...",
+        });
+        loader.present();
 
         let alertData = this.alertCont.create({
-            title: "Error occured when inserting the data. "
+            title: "Process gagal",
+            message: "Terdapat galat ketika menyimpan nota. Silahkan laporkan pengembang sistem.",
+            buttons : ["Ok"]
         })
+
+        let successData = this.alertCont.create({
+            title: "Process selesai",
+            message: "Nota telah disimpan",
+            buttons : ["Ok"]
+        })
+
         var url = this.config.base_url('admin/outlet/transaction/add')
         let billdata = this.data_receipts(data)
         billdata = {
@@ -54,9 +67,17 @@ export class BillProvider {
             res = JSON.parse(res)
             if(res.code == 500)
             {
-
-
+                alertData.present();
+            }else
+            {
+                successData.present();
             }
+        })
+        .fail(()=>{
+            alertData.present();
+        })
+        .always(()=>{
+            loader.dismiss();
         })
     }
 
@@ -107,13 +128,9 @@ export class BillProvider {
         let existence = this.check_existences_receipt(item.id)
         if(existence.exist)
         {
-            if(this.receipts[existence.index].amount >= this.receipts[existence.index].stock)
-            {
-                console.error('unsufficient Stock! ')
-                return false;
-            }
-            this.receipts[existence.index].amount = this.receipts[existence.index].amount + 1;
-            this.receipts[existence.index].totalPrice = this.receipts[existence.index].amount * this.receipts[existence.index].price;
+            
+            this.receipts[existence.index].amount = parseInt(this.receipts[existence.index].amount) + 1;
+            this.receipts[existence.index].totalPrice = parseInt(this.receipts[existence.index].amount) * parseInt(this.receipts[existence.index].price);
             // this.events.publish('bill.insert_item', {data: this.receipts, latest: item})
 
             $('#receipt-product-'+item.id+' .product-amount').addClass('pulse')
@@ -192,7 +209,7 @@ export class BillProvider {
         return Object.assign(receipt, data)
     }
 
-    set_data_receipts(data:any={})
+    set_data_receipts(data:any={}, update_db:boolean=true)
     {
         this.GrandTotalPrice  = data.GrandTotalPrice
         this.sumPrice         = data.sumPrice
@@ -201,7 +218,7 @@ export class BillProvider {
         this.visitor_name     = data.visitor_name
         this.visitor_table    = data.visitor_table
 
-        if(!data.no_update)
+        if(update_db)
         {
             this.update_receipt();
         }

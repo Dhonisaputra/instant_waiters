@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { ConfigProvider } from '../../providers/config/config';
 import { PaymentPage } from "../payment/payment"
@@ -21,25 +21,27 @@ import * as moment from 'moment';
     templateUrl: 'transaction.html',
 })
 export class TransactionPage {
-    items:any=[]
+    items         :any=[]
     original_items:any=[]
-    outlet:number;
-    filter_by:string="visitor_name";
-    order_by:string='payment_date DESC';
-    filter_input:any;
+    outlet        :number;
+    filter_by     :string="visitor_name";
+    order_by      :string='payment_date DESC';
+    filter_input  :any;
     payment_status:number=-1;
-    filter_date_start:string=moment().format('MM/DD/YYYY');
-    filter_date_end:string=moment().format('MM/DD/YYYY');
-    edit_transaction_status:boolean=false;
+    filter_date_start   :string=moment().format('MM/DD/YYYY');
+    filter_date_end     :string=moment().format('MM/DD/YYYY');
+    edit_transaction_status  :boolean=false;
+    page_params  :object={
+      action:'default', // [default, edit, pay]
+    }
 
 
     transaction_params:any = {data:{limit: 20, page: 1}};
-    constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider, private loadingCtrl: LoadingController) {
         console.log(this.filter_date_end, this.filter_date_end)
         this.dbLocalProvider.opendb('outlet')
         .then((val)=>{
             this.outlet = val;
-
 
             let dataFetch = {
                 online:true,
@@ -64,14 +66,32 @@ export class TransactionPage {
 
             this.get_transaction(dataFetch)
         })
+
+
+      console.log(this.navParams.data)
+
+      if(this.navParams.data.page_params)
+      {
+        this.update_page_parameters(this.navParams.data.page_params);
+      }
     }
 
     ionViewDidLoad() {
 
     }
 
+    update_page_parameters(data:any={})
+    {
+      this.page_params = Object.assign(this.page_params, data)
+    }
+
     get_transaction(data:any={data:{}})
     {
+        let loadingData = this.loadingCtrl.create({
+          content: "Silahkan tunggu"
+        });
+
+        loadingData.present();
         this.transaction_params = data;
 
         let url = this.config.base_url('admin/outlet/transaction/get')
@@ -96,6 +116,9 @@ export class TransactionPage {
                 alert('Error occured while fetching data transaction!')
             }
         })
+        .always( ()=>{
+            loadingData.dismiss();
+        } )
     }
 
     infinite_scroll(ev:any={})
@@ -117,7 +140,8 @@ export class TransactionPage {
 
         let val = this.filter_input;
 
-        this.transaction_params.data.where = this.transaction_params.data.where? this.transaction_params.data.where : {}
+        this.transaction_params.data.where = {}
+        this.transaction_params.data.like =  []
         this.transaction_params.infinite = false;
         this.transaction_params.data.page = 1;
 
@@ -126,7 +150,6 @@ export class TransactionPage {
 
             if(this.filter_by == 'visitor_name')
             {
-                this.transaction_params.data.like = this.transaction_params.data.like? this.transaction_params.data.like : []
                 this.transaction_params.data.like = [[this.filter_by, val]]; 
                 delete this.transaction_params.data.where[this.filter_by] 
             }else
@@ -138,8 +161,7 @@ export class TransactionPage {
 
         if(this.filter_by == 'payment_date')
         {
-            this.transaction_params.data.where['"payment_date >="'] = this.filter_date_start
-            this.transaction_params.data.where['"payment_date <="'] = this.filter_date_end;
+          this.transaction_params.data.like = [[this.filter_by, moment().format("YYYY-MM-DD")]]; 
         }
 
         this.transaction_params.data.where['payment_complete_status'] = this.payment_status;
@@ -152,6 +174,8 @@ export class TransactionPage {
         console.log(this.transaction_params.data)
 
         this.get_transaction(this.transaction_params)
+        .then(()=>{
+        })
 
 
     }
@@ -166,6 +190,19 @@ export class TransactionPage {
             receipt_page_params:
             {
                 can_edit_slide_item: false
+            }
+        })
+    }
+    pay_transaction(i, item)
+    {
+        this.navCtrl.push(PaymentPage, {
+            previous: 'transaction-page',
+            event: 'transaction.edit',
+            trigger_event: 'transaction.edit',
+            bill: item,
+            receipt_page_params:
+            {
+                can_edit_slide_item: true
             }
         })
     }

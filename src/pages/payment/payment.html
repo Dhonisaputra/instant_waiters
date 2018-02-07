@@ -28,13 +28,13 @@
 					<ion-row padding class="center-distributed">
 						<ion-col col-7 col-xs-12 col-sm-12 col-md-8 class="tab">
 							<label class="tab-item relative" [ngClass]="{'active': paymentMethod == 1}" col--33>
-								<input type="radio" class="sr-only" name="" [(ngModel)]="paymentMethod" value="1" > Tunai
+								<input type="radio" class="sr-only" name="" [(ngModel)]="paymentMethod" value="1" (change)="resetBillCounted()"> Tunai
 							</label>
 							<label class="tab-item relative" [ngClass]="{'active': paymentMethod == 2}" col--33>
-								<input type="radio" class="sr-only" name="" [(ngModel)]="paymentMethod" value="2" > kartu
+								<input type="radio" class="sr-only" name="" [(ngModel)]="paymentMethod" value="2" (change)="resetBillCounted()"> kartu
 							</label>
 							<label class="tab-item relative" [ngClass]="{'active': paymentMethod == 3}" col--33>
-								<input type="radio" class="sr-only" name="" [(ngModel)]="paymentMethod" value="3" > Campuran
+								<input type="radio" class="sr-only" name="" [(ngModel)]="paymentMethod" value="3" (change)="resetBillCounted()"> Campuran
 							</label>
 						</ion-col>
 					</ion-row>
@@ -88,27 +88,33 @@
 								</ion-col>
 							</ion-row>
 							<ion-row class="form-group">
-								<ion-col col-3 class="">Kembalian</ion-col>
-								<ion-col col-9 class=" input-box">
-									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.returnMoney">
-								</ion-col>
-							</ion-row>
-							<ion-row class="form-group">
 								<ion-col col-3 class="">Tunai</ion-col>
 								<ion-col col-9 class=" input-box">
 									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.paid" (input)="sumReturn()">
 								</ion-col>
 							</ion-row>
-							<ion-row class="row form-group">
+							
+							<ion-row class="form-group">
 								<ion-col col-3 class="">Kartu (Masuk ke)</ion-col>
-								<ion-col col-9 class=" input-box">
-									<input type="" class="form-control--lg" name="">
+								<ion-col col-9 class=" input-box input-group">
+									<input type="text" class="form-control--lg" name="" >
+									<span class="input-group-addon" id="basic-addon1"> Edit </span>
 								</ion-col>
 							</ion-row>
+							
 							<ion-row class="row form-group">
-								<ion-col col-3 class=""></ion-col>
+								<ion-col col-3 class="">Charge</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.chargePercent" (input)="countChargePercent($event)">
+									<span class="input-group-addon" id="basic-addon1"> % </span>
+									<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.chargeNominal" (input)="countChargeNominal()">
+								</ion-col>
+							</ion-row>
+
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Total</ion-col>
 								<ion-col col-9 class=" input-box">
-									<input type="" class="form-control--lg" name="">
+									<input type="text" readonly class="form-control--lg" name="" [(ngModel)]="bill.totalWithCharge">
 								</ion-col>
 							</ion-row>
 
@@ -121,7 +127,42 @@
 						</ion-col>
 
 						<ion-col col-8 col-xs-12 col-sm-12 col-md-8 *ngIf="paymentMethod == 2">
-							payment 2
+							<ion-row class="row form-group">
+								<ion-col col-3 class="">Total Belanja</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<span class="input-group-addon" id="basic-addon1">@</span>
+									<input type="text" class="form-control form-control--lg" name="" [(ngModel)]="bill.GrandTotalPrice">
+								</ion-col>
+							</ion-row>
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Masuk ke</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<input type="text" class="form-control--lg" name="" >
+									<span class="input-group-addon" id="basic-addon1"> Edit </span>
+								</ion-col>
+							</ion-row>
+							
+							<ion-row class="row form-group">
+								<ion-col col-3 class="">Charge</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.chargePercent" (input)="countChargePercent($event)">
+									<span class="input-group-addon" id="basic-addon1"> % </span>
+									<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.chargeNominal" (input)="countChargeNominal()">
+								</ion-col>
+							</ion-row>
+
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Total</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="text" readonly class="form-control--lg" name="" [(ngModel)]="bill.totalWithCharge">
+								</ion-col>
+							</ion-row>
+
+							<ion-row class="row form-group center">
+									<button ion-button end (click)="payBill()">Simpan</button>
+
+									<button ion-button color="danger">Batal</button>
+							</ion-row>
 						</ion-col>
 
 					</ion-row>

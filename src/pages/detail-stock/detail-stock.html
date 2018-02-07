@@ -8,6 +8,13 @@
 
 	<ion-navbar>
 		<ion-title>{{product.name}}</ion-title>
+		
+		<ion-buttons end>
+	      <button ion-button icon-only (click)="closeModal()" *ngIf="page_params.view_type == 'modal' ">
+	      	<ion-icon name="close-circle"></ion-icon>
+	      </button>
+	    </ion-buttons>
+
 	</ion-navbar>
 
 </ion-header>

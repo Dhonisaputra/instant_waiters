@@ -3,6 +3,7 @@ import { App, IonicPage, NavController, NavParams, Events , ModalController, Loa
 import { ReceiptPage } from '../receipt/receipt';
 import { PaymentPage } from '../payment/payment';
 import { TransactionPage } from '../transaction/transaction';
+import { DetailStockPage } from '../detail-stock/detail-stock';
 
 import { ProductProvider } from '../../providers/product/product';
 import { BillProvider } from '../../providers/bill/bill';
@@ -125,6 +126,32 @@ export class ProductPage
 		});*/
 	}
 
+	ionViewDidLoad() {
+		this.dbLocalProvider.opendb('outlet')
+		.then((val)=>{
+			this.outlet = val;
+			this.refresh_data({});
+			
+		})
+
+	}
+	ionViewWillEnter()
+    {
+		this.billProvider.update_data_bill()
+    	if(this.navParams.data.table)
+		{
+			var index = Object.keys(this.navParams.data.table).shift();
+			this.billProvider.set_component('visitor_table', this.navParams.data.table[index].tab_id)
+			this.events.publish('bill.update', {})
+
+		}else
+		{
+		}
+
+		this.get_unpaid_bill();
+    }
+
+
 	get_product(data:any)
 	{
 		return this.productProvider.get_product(data)
@@ -208,31 +235,7 @@ export class ProductPage
 		this.events.publish('reset.data.receipt',{})
 	}
 
-	ionViewDidLoad() {
-		this.dbLocalProvider.opendb('outlet')
-		.then((val)=>{
-			this.outlet = val;
-			this.refresh_data({});
-			
-		})
-
-	}
-	ionViewWillEnter()
-    {
-		this.billProvider.update_data_bill()
-    	if(this.navParams.data.table)
-		{
-			var index = Object.keys(this.navParams.data.table).shift();
-			this.billProvider.set_component('visitor_table', this.navParams.data.table[index].tab_id)
-			this.events.publish('bill.update', {})
-
-		}else
-		{
-		}
-
-			this.get_unpaid_bill();
-    }
-
+	
 	openSavedBill()
 	{
 		this.navCtrl.push(TransactionPage, {
@@ -240,6 +243,9 @@ export class ProductPage
 					where: {payment_complete_status:0}
 				},
 				today:true,
+				page_params:{
+					action:'pay'
+				},
 				previous: 'product-page',
 				event: 'transaction.uncomplete'
 			}
@@ -365,12 +371,15 @@ export class ProductPage
 	    });
 
 	    let alertSuccess = this.alertCtrl.create({
-		    title: 'Nota telah tersimpan',
+		    title: 'menyimpan nota sukses',
+		    subTitle: 'Nota telah tersimpan',
+		    buttons: ['OK']
 		});
 
 		let alertError = this.alertCtrl.create({
 		    title: 'Nota gagal tersimpan',
 		    subTitle: 'Silahkan ulangi kembali',
+		    buttons: ['OK']
 		});
 
 	    loader.present()
@@ -441,6 +450,14 @@ export class ProductPage
 			alertErrorProduct.present();
 			return false;
 		}
+	}
+
+	openDetailProduct(item, index)
+	{
+		item.page_params = {view_type:'modal'};
+		item.index = index;
+		let modal = this.modalCtrl.create(DetailStockPage, item)
+		modal.present();
 	}
 
 }

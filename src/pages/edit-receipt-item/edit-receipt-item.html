@@ -1,0 +1,70 @@
+<!--
+  Generated template for the EditReceiptItemPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>edit-receipt-item</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="closeModal()">
+      	<ion-icon name="close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="relative" id="product-content-body">
+      <div  col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">
+        <!-- <page-receipt></page-receipt>  -->
+      </div>
+
+      <ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">
+            <ion-row class="row form-group">
+              <ion-col col-3 class="">Jumlah Pembelian</ion-col>
+              <ion-col col-9 class=" input-box input-group">
+                <button class="" id="basic-addon1" (click)="reduceItem()">Kurangi</button>
+                <input type="text" class="form-control form-control--lg" name="" [(ngModel)]="item.amount">
+                <button class="" id="basic-addon1" (click)="addItem()">Tambah</button>
+              </ion-col>
+            </ion-row>
+            <ion-row class="form-group">
+              <ion-col col-3 class="">Harga</ion-col>
+              <ion-col col-9 class=" input-box input-group">
+                <input type="text" class="form-control--lg" name="" [(ngModel)]="item.price">
+              </ion-col>
+            </ion-row>
+            
+            <ion-row class="row form-group">
+              <ion-col col-3 class="">Diskon</ion-col>
+              <ion-col col-9 class=" input-box input-group">
+                <input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="item.chargePercent" (input)="countChargePercent($event)">
+                <span class="input-group-addon" id="basic-addon1"> % </span>
+                <input type="" class="form-control--lg form-control" name="" [(ngModel)]="item.chargeNominal" (input)="countChargeNominal()">
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="form-group">
+              <ion-col col-3 class="">Keterangan</ion-col>
+              <ion-col col-9 class=" input-box">
+                <textarea class="form-control" [(ngModel)]="item.notes"></textarea>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="row form-group center">
+                <button ion-button end (click)="updateItem()">Simpan</button>
+
+                <button ion-button color="danger" (click)="closeModal()">Batal</button>
+            </ion-row>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

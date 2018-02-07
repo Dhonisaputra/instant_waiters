@@ -21,20 +21,20 @@
 	<div *ngIf="!edit_transaction_status">
 		<div>				
 			<ion-row>
-				<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8 *ngIf="filter_by != 'payment_date' ">
+				<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>
 					<ion-searchbar (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 8px 5px;"></ion-searchbar>
 				</ion-col>
-				<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == 'payment_date' ">
+				<!-- <ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == 'payment_date' ">
 					<ion-item>
 				    <ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="filter_date_start"></ion-datetime>
 				  </ion-item>
 				</ion-col>
-
+				
 				<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == 'payment_date' ">
 					<ion-item>
 				    	<ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="filter_date_end"></ion-datetime>
 				  	</ion-item>
-				</ion-col>
+				</ion-col> -->
 
 				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>
 					<ion-item>
@@ -42,7 +42,7 @@
 						<ion-select [(ngModel)]="filter_by" (ionChange)="filter_transaction()" interface="action-sheet">
 							<ion-option value="visitor_name">Nama</ion-option>
 							<ion-option value="pay_id">No Nota</ion-option>
-							<ion-option value="payment_date">Tanggal</ion-option>
+							<ion-option value="payment_date">Hari ini</ion-option>
 						</ion-select>
 					</ion-item>
 				</ion-col>
@@ -88,6 +88,14 @@
 					<span *ngIf="item.payment_complete_status != 0" class="badge"> Dibayar </span>
 					<span *ngIf="item.payment_complete_status == 0" class="badge"> Belum Dibayar </span>
 				</p>
+				<p>
+					<button ion-button *ngIf="page_params.action=='default'"> Detail Transaction </button>
+					<button ion-button color="info" *ngIf="page_params.action=='pay' || item.payment_complete_status == 0" (click)="pay_transaction(i, item)"> Bayar </button>
+					<button ion-button color="warning" *ngIf="page_params.action=='edit' || item.payment_complete_status == 1" (click)="edit_transaction(i, item)"> Edit </button>
+				</p>
+			</ion-item>
+			<ion-item *ngIf="items.length < 1" class="text-align--center">
+				Tidak ditemukan transaksi
 			</ion-item>
 		</ion-list>
 		<ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">

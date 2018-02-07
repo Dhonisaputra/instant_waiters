@@ -31,8 +31,8 @@
 						</div>
 
 						<ion-list style="margin-top: 10px;">
-							<ion-item-sliding *ngFor="let item of receipts; let i = index;" >
-								<ion-item class="item-receipt" id="receipt-product-{{item.id}}" style="display: flex; padding-left: 0px;">
+							<ion-item-sliding *ngFor="let item of receipts; let i = index;">
+								<ion-item class="item-receipt" id="receipt-product-{{item.id}}" style="display: flex; padding-left: 0px;" (click)="editItem(item, i)">
 									<div style="display: flex;font-size: .8em;">
 										<div class="receipt-detail--component text-align--center" style="width: 10%;"  ><span class="product-amount">{{item.amount}}</span></div>
 										<div class="receipt-detail--component text-align--left" style="width: 50%;" >
@@ -45,19 +45,22 @@
 							    <ion-item-options side="right" *ngIf="receipt_page_params.can_edit_slide_item">
 							      <button ion-button color="danger" class="" (click)="removeItem(i, item)">
 							        <ion-icon name="trash"></ion-icon>
+							        Hapus
 							      </button>
 							    </ion-item-options>
 							    <ion-item-options side="left" *ngIf="receipt_page_params.can_edit_slide_item">
 							      <button ion-button color="secondary" class="" (click)="reduceItem(i, item)">
 							        <ion-icon name="remove"></ion-icon>
+							        Kurangi
 							      </button>
 							      <button ion-button color="primary" class="" (click)="addItem(i, item)">
 							        <ion-icon name="add"></ion-icon>
+							        Tambah
 							      </button>
 							    </ion-item-options>
 							</ion-item-sliding>
 						</ion-list>
-						
+						<div class="" *ngIf="receipts.length < 1" class="text-align--center"> Silahkan pilih menu disamping! </div>
 					</div>
 					<div class="receipt-footer"> 
 						<table class="" style="margin-bottom: 0px;width: 100%;">

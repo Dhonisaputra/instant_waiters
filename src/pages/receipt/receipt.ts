@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ModalController } from 'ionic-angular';
 import { BillProvider } from '../../providers/bill/bill';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { TablePage } from '../table/table';
+import { EditReceiptItemPage } from '../edit-receipt-item/edit-receipt-item';
 import * as $ from "jquery"
 
 /**
@@ -28,7 +29,7 @@ export class ReceiptPage {
 	event_handler:any={};
 	receipt_page_params:any= {can_edit_slide_item: true}
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController) {
 		this.receipts = []
 		this.taxAmount = 10;
 
@@ -73,7 +74,7 @@ export class ReceiptPage {
 	update_receipt()
 	{
 		let receipt = this.get_data_receipt();
-        this.billProvider.set_data_receipts(receipt);
+        this.billProvider.set_data_receipts(receipt, true);
 	}
 
 	get_data_receipt()
@@ -215,6 +216,13 @@ export class ReceiptPage {
 			this.billProvider.update_receipt()
 			this.trigger_update_receipt();
 		}
+	}
+	editItem(item, index)
+	{
+		item.index = index;
+		this.navCtrl.push(EditReceiptItemPage, item)
+		// let modal = this.modalCtrl.create(EditReceiptItemPage, item)
+		// modal.present();
 	}
 
 }

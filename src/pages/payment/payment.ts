@@ -32,6 +32,7 @@ export class PaymentPage {
   ionViewDidEnter()
     {
 		this.get_temporary_data();		
+		console.log(this.navParams.data)
     	if(this.navParams.data.event)
     	{
 
@@ -73,7 +74,7 @@ export class PaymentPage {
 
   is_not_enough_money()
   {
-  	let paid = this.helper.IDRtoInt(this.bill.paid)
+  	let paid =  this.paymentMethod == 3 || this.paymentMethod == 2? this.helper.IDRtoInt( this.bill.totalWithCharge) :this.helper.IDRtoInt(this.bill.paid) 
   	let total = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
   	return paid < total
   }
@@ -86,12 +87,23 @@ export class PaymentPage {
   		return false;
   	}
   	this.billProvider.save({
-		users_outlet: this.users_outlet,
-		outlet: this.outlet,
-		bank_id: this.bank_id,
-		payment_method: this.paymentMethod,
-		payment_nominal: parseInt(this.bill.paid),
-		payment_complete_status: 1,
+		users_outlet 			: this.users_outlet,
+		outlet					: this.outlet,
+		bank_id					: this.bank_id,
+		// payment
+		payment_bills			: this.helper.IDRtoInt(this.bill.sumPrice),
+		payment_method			: this.paymentMethod,
+		payment_nominal			: this.helper.IDRtoInt(this.bill.paid),
+		payment_total			: this.bill.chargePercent > 0 ? this.helper.IDRtoInt( this.bill.totalWithCharge ) : this.helper.IDRtoInt( this.bill.GrandTotalPrice ),
+		// tax
+		tax_nominal				: this.helper.IDRtoInt(this.bill.chargeNominal)||0,
+		tax_percent				: this.helper.IDRtoInt(this.bill.chargePercent)||0,
+		
+		paid_nominal			: this.paymentMethod == 3? this.helper.IDRtoInt( this.bill.paid) : 0,
+		paid_with_bank_nominal	: (this.paymentMethod == 3 || this.paymentMethod == 2) && this.helper.IDRtoInt( this.bill.totalWithCharge) > 0  ? this.helper.IDRtoInt( this.bill.totalWithCharge) : 0,
+		
+		payment_complete_status	: 1,
+
 		pay_id: this.navParams.data.bill && this.navParams.data.bill.pay_id? this.navParams.data.bill.pay_id : null
 	})
 	.done((res)=>{
@@ -99,6 +111,7 @@ export class PaymentPage {
 		if(res.code == 200 && (res.action && res.action == 'insert'))
 		{
 			this.events.publish('reset.data.receipt',{})
+			this.bill = {}
 		}else
 		{
 			console.error('Error when saving the bill')	
@@ -114,6 +127,14 @@ export class PaymentPage {
 	})
   }
 
+  resetBillCounted()
+  {
+  	this.bill = {}
+	this.get_temporary_data();
+	this.bill.totalWithCharge = this.helper.IDRtoInt( this.bill.GrandTotalPrice )
+
+
+  }
   priceToRupiah(number:any) 
 	{ 
 		let idr = this.helper.intToIDR(number)
@@ -171,9 +192,12 @@ export class PaymentPage {
 	edit_payment_method(data:any)
 	{
 
+		console.log(data)
+
 		let item = {
 			GrandTotalPrice  : data.payment_total,
             sumPrice         : data.payment_bills,
+            update_db 		 : false,
             tax              : data.tax_percent,
             receipts         : [],
             visitor          : data.visitor_name,
@@ -181,7 +205,6 @@ export class PaymentPage {
             table            : data.table_id,
             visitor_table    : data.table_id,
             taxAmount    	 : data.tax_percent,
-            no_update 		 : true,
 		}
 
 		data.bills.forEach((val, index) => {
@@ -197,14 +220,18 @@ export class PaymentPage {
 			item.receipts.push(d);
 		})
 
-		this.billProvider.set_data_receipts(item);
+
+		this.billProvider.set_data_receipts(item, false);
 		this.events.publish('bill.update', item)
+		this.get_temporary_data();		
+
 
 	}
 
 	get_temporary_data()
 	{
 		let data = this.billProvider.data_receipts();
+		console.log(data)
 
 	    this.bill = data;
 	    if(data.receipts.length < 1)
@@ -233,5 +260,27 @@ export class PaymentPage {
 			this.events.publish('bill.update', {})
 
 	    }
+
+		this.sumReturn();
+
+	}
+
+	countChargePercent()
+	{
+		let val = this.helper.IDRtoInt( this.bill.chargePercent )
+		let grandTotal = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
+		let chargeNominal = grandTotal * (val/100);
+		this.bill.totalWithCharge = this.helper.intToIDR( grandTotal + chargeNominal );
+		this.bill.chargeNominal = this.helper.intToIDR( chargeNominal )
+	}
+
+	countChargeNominal()
+	{
+		let val = this.helper.IDRtoInt( this.bill.chargeNominal )
+		let grandTotal = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
+		this.bill.chargePercent = ((val/grandTotal)*100).toFixed(1); // to make 1 digit after comma
+		this.bill.totalWithCharge = this.helper.intToIDR( grandTotal + val );
+
+
 	}
 }
