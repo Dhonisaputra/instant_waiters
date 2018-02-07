@@ -43,15 +43,15 @@
 									</div>
 								</ion-item>
 							    <ion-item-options side="right" *ngIf="receipt_page_params.can_edit_slide_item">
-							      <button ion-button color="danger" class="" icon-only (click)="removeItem(i, item)">
+							      <button ion-button color="danger" class="" (click)="removeItem(i, item)">
 							        <ion-icon name="trash"></ion-icon>
 							      </button>
 							    </ion-item-options>
 							    <ion-item-options side="left" *ngIf="receipt_page_params.can_edit_slide_item">
-							      <button ion-button color="secondary" icon-only class="" (click)="reduceItem(i, item)">
+							      <button ion-button color="secondary" class="" (click)="reduceItem(i, item)">
 							        <ion-icon name="remove"></ion-icon>
 							      </button>
-							      <button ion-button color="primary" icon-only class="" (click)="addItem(i, item)">
+							      <button ion-button color="primary" class="" (click)="addItem(i, item)">
 							        <ion-icon name="add"></ion-icon>
 							      </button>
 							    </ion-item-options>
@@ -60,7 +60,7 @@
 						
 					</div>
 					<div class="receipt-footer"> 
-						<table class="table" style="">
+						<table class="" style="margin-bottom: 0px;width: 100%;">
 							<tbody style="padding-top: 10px">
 								<tr class="">
 									<td style="width: 10%;"></td>							

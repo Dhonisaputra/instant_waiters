@@ -21,24 +21,73 @@
 	<div *ngIf="!edit_transaction_status">
 		<div>				
 			<ion-row>
-				<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>
+				<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8 *ngIf="filter_by != 'payment_date' ">
 					<ion-searchbar (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 8px 5px;"></ion-searchbar>
 				</ion-col>
-				<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4>
+				<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == 'payment_date' ">
 					<ion-item>
-						<ion-label>Urutkan...</ion-label>
+				    <ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="filter_date_start"></ion-datetime>
+				  </ion-item>
+				</ion-col>
+
+				<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == 'payment_date' ">
+					<ion-item>
+				    	<ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="filter_date_end"></ion-datetime>
+				  	</ion-item>
+				</ion-col>
+
+				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>
+					<ion-item>
+						<ion-label>Filter</ion-label>
 						<ion-select [(ngModel)]="filter_by" (ionChange)="filter_transaction()" interface="action-sheet">
 							<ion-option value="visitor_name">Nama</ion-option>
 							<ion-option value="pay_id">No Nota</ion-option>
+							<ion-option value="payment_date">Tanggal</ion-option>
 						</ion-select>
 					</ion-item>
 				</ion-col>
 			</ion-row>
+
+			<ion-row>
+				
+				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>
+					<ion-item>
+						<ion-label>Urutkan</ion-label>
+						<ion-select [(ngModel)]="order_by" (ionChange)="filter_transaction()" interface="action-sheet">
+							<ion-option value="pay_id DESC">No Nota</ion-option>
+							<ion-option value="visitor_name DESC">Nama (Z-A) </ion-option>
+							<ion-option value="visitor_name ASC">Nama (A-Z) </ion-option>
+							<ion-option value="payment_date DESC">Tanggal</ion-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>
+					<ion-item>
+						<ion-label>Status</ion-label>
+						<ion-select [(ngModel)]="payment_status" (ionChange)="filter_transaction()" interface="action-sheet">
+							<ion-option value="-1">Semua</ion-option>
+							<ion-option value="0">Belum Dibayar</ion-option>
+							<ion-option value="1">Dibayar</ion-option>
+						</ion-select>
+					</ion-item>
+				</ion-col>
+
+
+				
+
+			</ion-row>
+
 		</div>
 		<ion-list>
 			<ion-item *ngFor="let item of items; let i = index" >
-				{{item.visitor_name}}
-				<button ion-button outline item-end (click)="edit_transaction(i, item)"> <ion-icon name="logo-usd"></ion-icon> Bayar </button>
+				<h2>{{item.visitor_name}}</h2>
+				<p style="margin-top:6px;">{{item.payment_date}}</p>
+				<p>
+					<span> {{item.table_name}} </span> &middot;
+					<span> {{item.payment_total}} </span> &middot;
+					<span *ngIf="item.payment_complete_status != 0" class="badge"> Dibayar </span>
+					<span *ngIf="item.payment_complete_status == 0" class="badge"> Belum Dibayar </span>
+				</p>
 			</ion-item>
 		</ion-list>
 		<ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">
