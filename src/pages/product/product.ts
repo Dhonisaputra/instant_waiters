@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController, AlertController } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController, AlertController, ActionSheetController  } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { PaymentPage } from '../payment/payment';
 import { TransactionPage } from '../transaction/transaction';
@@ -52,7 +52,8 @@ export class ProductPage
 				private dbLocalProvider: DbLocalProvider, 
 				public helper:HelperProvider, 
 				private loadingCtrl : LoadingController, 
-				private alertCtrl: AlertController
+				private alertCtrl: AlertController,
+				private actionSheetCtrl: ActionSheetController 
 
 	) 
 	{
@@ -173,6 +174,11 @@ export class ProductPage
 
 	refresh_data(refresher:any)
 	{
+		let loader = this.loadingCtrl.create({
+	      content: "Please wait...",
+	    });
+	    loader.present();
+	    
 		let data:any = {outlet:this.outlet}
 		if(this.filter_sort_product != '')
 		{
@@ -207,6 +213,9 @@ export class ProductPage
 			{
 				refresher.complete();
 			}
+		})
+		.always(()=>{
+    		loader.dismiss();
 		})
 	}
 
@@ -366,23 +375,7 @@ export class ProductPage
 
 	private process_save_bill()
 	{
-		let loader = this.loadingCtrl.create({
-	      content: "Menyimpan nota. Silahkan tunggu!",
-	    });
-
-	    let alertSuccess = this.alertCtrl.create({
-		    title: 'menyimpan nota sukses',
-		    subTitle: 'Nota telah tersimpan',
-		    buttons: ['OK']
-		});
-
-		let alertError = this.alertCtrl.create({
-		    title: 'Nota gagal tersimpan',
-		    subTitle: 'Silahkan ulangi kembali',
-		    buttons: ['OK']
-		});
-
-	    loader.present()
+		
 		return this.billProvider.save({
 			users_outlet: 1,
 			outlet: this.outlet,
@@ -396,18 +389,9 @@ export class ProductPage
 			{
 				this.events.publish('reset.data.receipt',{})
 				this.get_unpaid_bill();
-				alertSuccess.present();
 			}else
 			{
-				console.error('Error when saving the bill')
-				alertError.present();
 			}
-		})
-		.fail( ()=>{
-			alertError.present();
-		} )
-		.always(()=>{
-	    	loader.dismiss()
 		})
 	}
 
@@ -459,5 +443,45 @@ export class ProductPage
 		let modal = this.modalCtrl.create(DetailStockPage, item)
 		modal.present();
 	}
+
+	product_sort() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Modify your album',
+      buttons: [
+        {
+          text: 'Favorit',
+          handler: () => {
+            this.filter_sort_product = "favorite DESC";
+            this.refresh_data()
+          }
+        },{
+          text: 'Termahal',
+          handler: () => {
+          	this.filter_sort_product = "price DESC";
+            this.refresh_data()
+          }
+        },{
+          text: 'Termurah',
+          handler: () => {
+          	this.filter_sort_product = "price ASC";
+            this.refresh_data()
+          }
+        },{
+          text: 'Stok',
+          handler: () => {
+          	this.filter_sort_product = "stock DESC";
+            this.refresh_data()
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          	// actionSheet.dismiss();
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
 
 }

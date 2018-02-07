@@ -38,7 +38,7 @@
             <ion-row class="form-group">
               <ion-col col-3 class="">Harga</ion-col>
               <ion-col col-9 class=" input-box input-group">
-                <input type="text" class="form-control--lg" name="" [(ngModel)]="item.price">
+                <input type="text" class="form-control--lg" name="" [(ngModel)]="item.totalPrice" readonly>
               </ion-col>
             </ion-row>
             
@@ -54,7 +54,7 @@
             <ion-row class="form-group">
               <ion-col col-3 class="">Keterangan</ion-col>
               <ion-col col-9 class=" input-box">
-                <textarea class="form-control" [(ngModel)]="item.notes"></textarea>
+                <textarea class="form-control" [(ngModel)]="item.note" (change)="changeNotes()"></textarea>
               </ion-col>
             </ion-row>
 

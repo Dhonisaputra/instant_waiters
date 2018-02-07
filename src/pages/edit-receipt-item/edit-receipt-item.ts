@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController  } from 'ionic-angular';
 import { BillProvider } from '../../providers/bill/bill';
 import { ReceiptPage } from '../receipt/receipt';
+import { HelperProvider } from '../../providers/helper/helper'; 
 
 /**
  * Generated class for the EditReceiptItemPage page.
@@ -17,8 +18,8 @@ import { ReceiptPage } from '../receipt/receipt';
 })
 export class EditReceiptItemPage {
 
-  item: object={}
-  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public billProvider:BillProvider) {
+  item: any={}
+  constructor(private helper:HelperProvider, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public billProvider:BillProvider) {
 
     
   }
@@ -54,9 +55,16 @@ export class EditReceiptItemPage {
     let price = this.helper.IDRtoInt(this.item.price)
     this.item.chargePercent = ((val/price)*100).toFixed(1); // to make 1 digit after comma
     this.item.totalWithCharge = this.helper.intToIDR( price + val );
-
-
   }
+
+  changeNotes()
+  {
+    this.item.note = this.item.notes?this.item.note:'';
+    this.billProvider.update_bill_item(this.item.index, 'notes', this.item.note)
+    // this.ionViewWillEnter()
+  }
+
+
 
   reduceItem()
   {

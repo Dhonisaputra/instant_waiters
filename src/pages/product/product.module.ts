@@ -4,10 +4,7 @@ import { ProductPage } from './product';
 import { ReceiptPage } from '../receipt/receipt';
 
 @NgModule({
-  declarations: [
-    ProductPage,
-    ReceiptPage,
-  ],
+ 
   entryComponents: [
     ReceiptPage,
   ],

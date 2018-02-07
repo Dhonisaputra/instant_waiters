@@ -4,13 +4,13 @@ page-receipt {
 
 .receipt
 {
-	height: calc(100vh - 93px);
-	min-height: calc(100vh - 93px);
+	height: calc(100vh - 113px);
+	min-height: calc(100vh - 113px);
 	padding: 5px;
     position: relative;
     background-color: white;
     left: 0px;
-    top: 10px;
+    top: 4px;
     font-size: .8em;
     display: flex;
     flex-direction: column;
@@ -108,7 +108,12 @@ page-receipt {
 			border:unset;
 			border-bottom: 1px solid #aaa;	
 		}
-
+.receipt-detail--component--notes
+{
+	font-size: .9em !important;
+    color: #9a9a9a !important;
+    margin-top: 5px !important;
+}
 .pseudo:before {
   content: '';
   position: absolute;

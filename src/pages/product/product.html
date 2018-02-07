@@ -5,21 +5,22 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+	<ion-toolbar color="main" class="center distributed">
+		<ion-navbar class="center distributed">
+			<button ion-button menuToggle>
+				<ion-icon name="menu"></ion-icon>
+			</button>
+			<ion-title>product</ion-title>
+			<ion-searchbar end (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" style="padding: 8px 5px;width: 40%;"></ion-searchbar>
+			
+			<ion-buttons end>
+				<button ion-button (click)="openSavedBill()">
+					Nota tersimpan &nbsp; <ion-badge item-end color="light">{{unpaid_bill_length}}</ion-badge>
+				</button>
+			</ion-buttons>
 
-  <ion-navbar>
-  	<button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>product</ion-title>
-
-    <ion-buttons end>
-      <button ion-button (click)="openSavedBill()">
-      	Nota tersimpan &nbsp; <ion-badge item-end>{{unpaid_bill_length}}</ion-badge>
-      </button>
-    </ion-buttons>
-
-  </ion-navbar>
-
+		</ion-navbar>
+	</ion-toolbar>
 </ion-header>
 
 
@@ -36,7 +37,7 @@
 				<div class="box" id="box-product">
 					<div class="box-header">
 						<ion-row class="center-distributed">
-							<ion-col col-7 col-xs-12 col-sm-12 col-md-8 class="tab">
+							<ion-col col-10 col-xs-10 col-sm-10 col-md-10 class="tab">
 								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == 0}" col--33>
 									<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All 
 								</label>
@@ -47,27 +48,14 @@
 									<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman
 								</label>
 							</ion-col>
-						</ion-row>
-					</div>
-					<div>
-						
-						<ion-row>
-							<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>
-								<ion-searchbar (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" style="padding: 8px 5px;"></ion-searchbar>
-							</ion-col>
-							<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4>
-							    <ion-item>
-								    <ion-label>Urutkan...</ion-label>
-								    <ion-select [(ngModel)]="filter_sort_product" (ionChange)="refresh_data()" interface="action-sheet">
-								      <ion-option value="favorite DESC">Favorit</ion-option>
-								      <ion-option value="price DESC">Termahal</ion-option>
-								      <ion-option value="price ASC">Termurah</ion-option>
-								      <ion-option value="stock DESC">Stok</ion-option>
-								    </ion-select>
-								  </ion-item>
+							<ion-col col-2 col-xs-2 col-sm-2 col-md-2>
+									<button ion-button clear icon-right (click)="product_sort()">
+									  Sort <ion-icon name="funnel"></ion-icon>
+									</button>
 							</ion-col>
 						</ion-row>
 					</div>
+					
 					<ion-row class="box-body" id="">
 						
 							<ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product" *ngFor="let item of items; let i = index" (click)="addToList(item)" (press)="openDetailProduct(item, index)">
@@ -94,15 +82,19 @@
 								<button ion-button block (click)="infinite_product()">Load More</button>
 							</ion-col>
 					</ion-row>
-					<div class="box-footer" id="product-action">
-						<button ion-button color="danger" (click)="reset_receipts()">Hapus</button>
-						<button ion-button color="secondary" (click)="saveBill()">Simpan</button>
-						<button ion-button (click)="pay_bill()">Bayar</button>
-					</div>
 				
 				</div> <!--  End of payment method -->
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+	
+	<ion-fab right bottom>
+    <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab color="primary" (click)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <ion-label class="glow">Reset Pesanan</ion-label> </button>
+      <button ion-fab color="primary" (click)="saveBill()"> <ion-icon name="paper"></ion-icon> <ion-label class="glow">Simpan Pesanan</ion-label> </button>
+      <button ion-fab color="primary" (click)="pay_bill()"> <ion-icon name="logo-usd"></ion-icon> <ion-label class="glow">Bayar Pesanan</ion-label> </button>
+    </ion-fab-list>
+  </ion-fab>
 
 </ion-content>

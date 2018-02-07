@@ -36,7 +36,8 @@
 									<div style="display: flex;font-size: .8em;">
 										<div class="receipt-detail--component text-align--center" style="width: 10%;"  ><span class="product-amount">{{item.amount}}</span></div>
 										<div class="receipt-detail--component text-align--left" style="width: 50%;" >
-											<span>{{item.name}}</span>
+											<span>{{item.name}}</span><br>
+											<p class="receipt-detail--component--notes">{{item.note}}</p>
 										</div>
 										<div class="receipt-detail--component" style="width: 20%;">{{item.price}}</div>
 										<div class="receipt-detail--component" style="width: 20%;">{{item.price * item.amount}}</div>
