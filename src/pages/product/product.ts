@@ -172,7 +172,7 @@ export class ProductPage
 		})
 	}
 
-	refresh_data(refresher:any)
+	refresh_data(refresher:any={})
 	{
 		let loader = this.loadingCtrl.create({
 	      content: "Please wait...",

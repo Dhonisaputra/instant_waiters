@@ -35,6 +35,9 @@ import { DbLocalProvider } from '../providers/db-local/db-local';
 import { DbTableProvider } from '../providers/db-table/db-table';
 import { HelperProvider } from '../providers/helper/helper';  
 
+
+import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
+
 @NgModule({
   declarations: [
     MyApp,
@@ -52,7 +55,8 @@ import { HelperProvider } from '../providers/helper/helper';
     BillItemEditorPage,
     TransactionPage,
     DetailStockPage,
-    EditReceiptItemPage
+    EditReceiptItemPage,
+    AbsoluteDragDirective
 
   ],
   imports: [

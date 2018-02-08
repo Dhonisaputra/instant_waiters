@@ -88,12 +88,12 @@
 		</ion-row>
 	</ion-grid>
 	
-	<ion-fab right bottom>
+	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="40">
     <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>
     <ion-fab-list side="top">
-      <button ion-fab color="primary" (click)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <ion-label class="glow">Reset Pesanan</ion-label> </button>
-      <button ion-fab color="primary" (click)="saveBill()"> <ion-icon name="paper"></ion-icon> <ion-label class="glow">Simpan Pesanan</ion-label> </button>
-      <button ion-fab color="primary" (click)="pay_bill()"> <ion-icon name="logo-usd"></ion-icon> <ion-label class="glow">Bayar Pesanan</ion-label> </button>
+      <button ion-fab ion-fab-item color="main" (click)="pay_bill()"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow">Bayar Pesanan</span> </button>
+      <button ion-fab ion-fab-item color="main" (click)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>
+      <button ion-fab ion-fab-item color="main" (click)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>
     </ion-fab-list>
   </ion-fab>
 

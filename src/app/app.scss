@@ -636,22 +636,32 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .fab {
     contain: layout;
 }
+button[ion-fab-item]
+{
+  // left: -60px;
+  width: 47px;
+  height: 47px;
+}
 button[ion-fab] {
         overflow: visible;
         position: relative;
-
-        ion-label {
+        border: 2px solid white;
+        .label {
             position: absolute;
-            top: -8px;
-            right: 40px;
+            // top: -8px;
+            right: 36px;
 
             color: white;
-            background-color: #c0392be6;
+            background-color: #c0392b;
             line-height: 24px;
             padding: 4px 8px;
-            border-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
         }
-        ion-label.glow {
-          box-shadow: 0px 0px 0px 3px white;
+        .label.glow {
+          border: 2px solid white;
+            border-right: none !important;
         }
     }
