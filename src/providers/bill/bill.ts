@@ -284,14 +284,24 @@ export class BillProvider {
     */
     set_order_session(data:object={})
     {
-        this.bill.save_records = this.bill.save_records? this.bill.save_records : []
-        data = Object.assign({items_length:0, timestamp:moment().unix()}, data)
-        this.bill.save_records.push(data)
+        this.bill.item_orders = this.bill.item_orders? this.bill.item_orders : []
+        data = Object.assign({length:0, timestamp:moment().unix()}, data)
+        this.bill.item_orders.push(data)
     }
 
     get_order_session()
     {
-        return this.bill.save_records? this.bill.save_records.length : 0;
+        return this.bill.item_orders? this.bill.item_orders.length : 0;
     }
+
+    set_order_session_item_counter(session:number)
+    {
+        this.bill.item_orders[session].length += 1;
+    }
+    get_order_session_item_counter(session:number)
+    {
+        return this.bill.item_orders[session].length;
+    }
+
 
 }
