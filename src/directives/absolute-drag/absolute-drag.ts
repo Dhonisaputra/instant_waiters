@@ -49,7 +49,12 @@ export class AbsoluteDragDirective {
         let newTop = ev.center.y;
         if(this.reduceRight)
         {
-        	newLeft = newLeft - this.reduceRight;
+            newLeft = newLeft - this.reduceRight;
+        }
+
+        if(this.reduceBottom)
+        {
+        	newTop = newTop - this.reduceBottom;
         }
  
         this.domCtrl.write(() => {

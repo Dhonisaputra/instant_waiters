@@ -30,6 +30,7 @@ import * as moment from 'moment';
 export class ProductPage 
 {
 	receipt: any;
+	searchinput:boolean=false;
 	items: Array<{id: number, name: string, price: number }>;
 	lists: Array<{id: number, name: string, price: number, amount: number, totalPrice: number }>;
 	original_items: Array<{id: number, name: string, price: number, amount: number, totalPrice: number }>;
@@ -41,39 +42,27 @@ export class ProductPage
 	public paymentPage:any=PaymentPage;
 
 
-	constructor(public appCtrl: App, 
-				public navCtrl: NavController, 
-				public navParams: NavParams,
-				private events: Events, 
-				public productProvider: ProductProvider, 
-				public billProvider: BillProvider, 
-				public modalCtrl: ModalController,
-				private localNotifications: LocalNotifications, 
-				private dbLocalProvider: DbLocalProvider, 
-				public helper:HelperProvider, 
-				private loadingCtrl : LoadingController, 
-				private alertCtrl: AlertController,
-				private actionSheetCtrl: ActionSheetController 
-
-	) 
-	{
+	constructor(
+		public appCtrl: App, 
+		public navCtrl: NavController, 
+		public navParams: NavParams,
+		private events: Events, 
+		public productProvider: ProductProvider, 
+		public billProvider: BillProvider, 
+		public modalCtrl: ModalController,
+		private localNotifications: LocalNotifications, 
+		private dbLocalProvider: DbLocalProvider, 
+		public helper:HelperProvider, 
+		private loadingCtrl : LoadingController, 
+		private alertCtrl: AlertController,
+		private actionSheetCtrl: ActionSheetController
+	) {
 		
 
 		
 		this.receipt = ReceiptPage;
 		this.items = [];
 		this.lists = [];
-
-		// this.dbLocalProvider.sync_product();
-
-
-		/*productProvider.get_product({data:{outlet:this.outlet}})
-		.then((res) => {
-			console.log(res)
-			this.items = res.data;
-			this.original_items = res.data;
-			this.filter_product()
-		})*/
 
 		events.subscribe('receive.data.receipt', (res) => {
 			var data = {
@@ -219,22 +208,30 @@ export class ProductPage
 		})
 	}
 
-	infinite_product()
+	infinite_product(ev:any={})
 	{
-		var load = this.loadingCtrl.create({
+		/*var load = this.loadingCtrl.create({
 	      content: "Silahkan tunggu",
-	    });
-		load.present()
+	    });*/
+		// load.present()
 		this.productProvider.last_options.data.page += 1;
 		this.productProvider.last_options.infinite = true;
 		this.get_product(this.productProvider.last_options)
 		.then( ()=>{
-			load.dismiss();
+			if(ev.complete)
+			{
+				ev.complete()
+			}
+			// load.dismiss();
 		})
 
 	}
-	addToList(item)
+	add_to_bill(item)
 	{
+		// check is this bill have been saved before.
+		let order_session = this.billProvider.get_order_session()
+
+		item.order_session = order_session
 		this.billProvider.insert_item(item)
 		this.events.publish('bill.update', item)
 	}
@@ -387,12 +384,19 @@ export class ProductPage
 			res = !this.helper.isJSON(res)? res : JSON.parse(res);
 			if(res.code == 200)
 			{
+				this.billProvider.set_bill_component('pay_id', res.data.pay_id)
+				this.billProvider.set_order_session()
 				this.events.publish('reset.data.receipt',{})
 				this.get_unpaid_bill();
 			}else
 			{
 			}
 		})
+	}
+
+	print_bill()
+	{
+		
 	}
 
 	filter_product()
@@ -438,7 +442,7 @@ export class ProductPage
 
 	openDetailProduct(item, index)
 	{
-		item.page_params = {view_type:'modal'};
+		item.page_params = {view_type:'modal', show_history_stock:false};
 		item.index = index;
 		let modal = this.modalCtrl.create(DetailStockPage, item)
 		modal.present();
@@ -482,6 +486,11 @@ export class ProductPage
       ]
     });
     actionSheet.present();
+  }
+
+  toggleSearchInput()
+  {
+  	this.searchinput = !this.searchinput;
   }
 
 }

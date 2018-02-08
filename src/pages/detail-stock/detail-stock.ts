@@ -22,7 +22,10 @@ import * as $ from "jquery"
      log_stock:any;
      page_params  :object={
         action:'default', // [default, edit, pay]
-        view_type: 'page', // [page, modal]
+        view_type: 'page', // [page, modal],
+        show_history_stock: true, // boolean [true-false]
+        show_segment: true, // boolean [true-false]
+        show_detail_product: true, // boolean [true-false]
     }
     constructor(public navCtrl: NavController, private viewCtrl: ViewController, public navParams: NavParams, private helper:HelperProvider) {
         if(!this.navParams.data)

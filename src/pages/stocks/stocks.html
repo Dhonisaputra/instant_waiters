@@ -5,23 +5,44 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+    <ion-toolbar color="main">
 
-  <ion-navbar>
-  	<button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>stocks</ion-title>
-  </ion-navbar>
+        <ion-navbar>
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+            <ion-title>stocks</ion-title>
+            <ion-searchbar class="searchbar-toolbar" *ngIf="page_params.toggleSearchInput" (ionInput)="filter_stock($event)" style="width: 35%;"></ion-searchbar>
+            <ion-buttons class="center distributed">
+                <button ion-button icon-only (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">
+                    <ion-icon name="search"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-navbar>
+        
 
+    </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-searchbar (ionInput)="filter_stock($event)"></ion-searchbar>
-	<ion-list>
-		<button ion-item *ngFor="let item of items" style="padding: 6px 0px;"  (click)="openDetailStock(item)">
-			{{item.name}}
-      <ion-icon name="arrow-forward" item-end></ion-icon>
-		</button>
-	</ion-list>
+    <ion-refresher (ionRefresh)="first_time_get_product($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    
+    <ion-list style="margin-top: 10px;">
+        <ion-item  style="padding: 6px 0px;">
+            <strong>{{items.length}}</strong> produk ditemukan. 
+        </ion-item>
+        <ion-item *ngIf="items.length < 1" class="text-align--center"  style="padding: 6px 0px;">
+            Tidak ditemukan produk
+        </ion-item>
+        <button ion-item *ngFor="let item of items" style="padding: 6px 0px;" (click)="openDetailStock(item)">
+            {{item.name}}
+            <span class="bs-label pull-right"  [ngClass]="{'label-primary': item.stock > 0, 'label-warning': item.stock == 0, 'label-danger': item.stock < 0 }"> {{item.stock}}</span>
+            <!-- <span class="bs-label label-warning" *ngIf="item.stock == 0"> {{item.stock}}</span> -->
+            <!-- <span class="bs-label label-danger" *ngIf="item.stock < 0"> {{item.stock}}</span> -->
+            <ion-icon name="arrow-forward" item-end></ion-icon>
+        </button>
+    </ion-list>
 </ion-content>

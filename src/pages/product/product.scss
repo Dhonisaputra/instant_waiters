@@ -8,7 +8,7 @@ page-product {
 
 #section-right
 {
-	height: calc(100vh - 85px);
+	height: auto;
 	background-color: white;
 }
 
@@ -31,12 +31,13 @@ page-product {
 	}
 	.box-body
 	{
-		flex-grow: 1;
-		overflow-y: scroll;
+		// flex-grow: 1;
+		// overflow-y: scroll;
 		display: flex;
 		justify-content: left;
 		background-color: white;
 		flex-wrap: wrap;
+
 	}
 	.box-body #infinite-scroll
 	{
@@ -66,6 +67,8 @@ page-product {
 	padding: 5px;
 	display: flex;
 	flex-direction: column;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 	.product>.product-body
 	{
@@ -86,7 +89,7 @@ page-product {
 		color: white;
 		position: relative;
 		background-position: center;
-		padding-top: 100%;
+		padding-top: 75%;
 	}
 
 	.product>.product-body .product-name
@@ -124,7 +127,15 @@ page-product {
 		flex-grow: 1;
 	}
 
-
+#section-left
+{
+	
+	.receipt-product
+	{
+		position: fixed;
+	}
+}
+	
 
 /*form-receipt--border-bottom form-receipt--customer*/
 

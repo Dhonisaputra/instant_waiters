@@ -6,12 +6,25 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-  	<button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Transaction</ion-title>
-  </ion-navbar>
+  	<ion-toolbar color="main">
+	  	<ion-navbar>
+	  		<ion-title>Toolbar</ion-title>
+	  		<button ion-button menuToggle>
+	  			<ion-icon name="menu"></ion-icon>
+	  		</button>
+			<ion-searchbar *ngIf="page_params.toggleSearchInput" class="searchbar-toolbar" (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 0px 5px; width:40%;"></ion-searchbar>
+			<ion-buttons class="center distributed">
+				<button ion-button icon-only (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">
+					<ion-icon name="search"></ion-icon>
+				</button>
+			</ion-buttons>
+			<ion-buttons>
+				<button ion-button clear icon-right color="light" (click)="page_params.toggleFilter = !page_params.toggleFilter">
+				  Sort <ion-icon name="funnel"></ion-icon>
+				</button>
+			</ion-buttons>
+		</ion-navbar>
+	</ion-toolbar>
 
 </ion-header>
 
@@ -22,7 +35,6 @@
 		<div>				
 			<ion-row>
 				<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>
-					<ion-searchbar (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 8px 5px;"></ion-searchbar>
 				</ion-col>
 				<!-- <ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == 'payment_date' ">
 					<ion-item>
@@ -36,9 +48,13 @@
 				  	</ion-item>
 				</ion-col> -->
 
+			</ion-row>
+
+			<ion-row *ngIf="page_params.toggleFilter">
+				
 				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>
 					<ion-item>
-						<ion-label>Filter</ion-label>
+						<ion-label>Cari berdasarkan</ion-label>
 						<ion-select [(ngModel)]="filter_by" (ionChange)="filter_transaction()" interface="action-sheet">
 							<ion-option value="visitor_name">Nama</ion-option>
 							<ion-option value="pay_id">No Nota</ion-option>
@@ -46,10 +62,6 @@
 						</ion-select>
 					</ion-item>
 				</ion-col>
-			</ion-row>
-
-			<ion-row>
-				
 				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>
 					<ion-item>
 						<ion-label>Urutkan</ion-label>
@@ -79,24 +91,43 @@
 
 		</div>
 		<ion-list>
-			<ion-item *ngFor="let item of items; let i = index" >
-				<h2>{{item.visitor_name}}</h2>
-				<p style="margin-top:6px;">{{item.payment_date}}</p>
-				<p>
-					<span> {{item.table_name}} </span> &middot;
-					<span> {{item.payment_total}} </span> &middot;
-					<span *ngIf="item.payment_complete_status != 0" class="badge"> Dibayar </span>
-					<span *ngIf="item.payment_complete_status == 0" class="badge"> Belum Dibayar </span>
-				</p>
-				<p>
-					<button ion-button *ngIf="page_params.action=='default'"> Detail Transaction </button>
-					<button ion-button color="info" *ngIf="page_params.action=='pay' || item.payment_complete_status == 0" (click)="pay_transaction(i, item)"> Bayar </button>
-					<button ion-button color="warning" *ngIf="page_params.action=='edit' || item.payment_complete_status == 1" (click)="edit_transaction(i, item)"> Edit </button>
-				</p>
-			</ion-item>
+			<ion-item-sliding *ngFor="let item of items; let i = index">
+
+				<ion-item >
+						<span>{{item.payment_date}}</span> &middot;
+					<span style="font-weight:700; ">
+						{{item.visitor_name}}
+					</span>
+					<p style="margin-top: 10px;">
+						<span> {{item.table_name}} </span> &middot;
+						<span> {{item.payment_total}} </span> &middot;
+						<span *ngIf="item.payment_complete_status != 0" class="bs-label label-success"> Terbayar </span>
+						<span *ngIf="item.payment_complete_status == 0" class="bs-label label-danger"> Belum Dibayar </span>
+					</p>
+					<p>
+						
+					</p>
+					<ion-icon name="done-all" *ngIf="item.payment_complete_status == 1" color="primary" item-end></ion-icon>
+					<ion-icon name="alert" *ngIf="item.payment_complete_status == 0" color="danger" item-end></ion-icon>
+				</ion-item>
+				
+				<ion-item-options side="right">
+			      	
+			      	<button ion-button color="info" class="center distributed" *ngIf="page_params.action=='default'"> 
+			      		<ion-icon name="information-circle" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
+			      	</button>
+					<button ion-button color="primary" class="center distributed" *ngIf="page_params.action=='pay' || item.payment_complete_status == 0" (click)="pay_transaction(i, item)"> 
+						<ion-icon name="logo-usd" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
+					</button>
+					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action=='edit' || item.payment_complete_status == 1" (click)="edit_transaction(i, item)">
+						<ion-icon name="create" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
+					</button>
+			    </ion-item-options>
+			</ion-item-sliding>
 			<ion-item *ngIf="items.length < 1" class="text-align--center">
 				Tidak ditemukan transaksi
 			</ion-item>
+
 		</ion-list>
 		<ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">
 		   <ion-infinite-scroll-content></ion-infinite-scroll-content>

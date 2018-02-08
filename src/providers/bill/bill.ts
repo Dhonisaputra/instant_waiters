@@ -3,6 +3,7 @@ import { ConfigProvider } from '../../providers/config/config';
 import { AlertController, Events, LoadingController  } from 'ionic-angular';
 import * as $ from "jquery"
 import { DbLocalProvider } from '../../providers/db-local/db-local';
+import * as moment from 'moment';
 
 /*
 Generated class for the BillProvider provider.
@@ -12,14 +13,17 @@ and Angular DI.
 */
 @Injectable()
 export class BillProvider {
-    data_bill:any;
-    receipts:any = [];
-    sumPrice:number;
-    GrandTotalPrice:number;
-    tax:number;
-    taxAmount:number;
-    visitor_name:string;
-    visitor_table:number;
+    data_bill       :any;
+    bill            :any = {
+        save_records: []
+    };
+    receipts        :any = [];
+    sumPrice        :number;
+    GrandTotalPrice :number;
+    tax             :number;
+    taxAmount       :number;
+    visitor_name    :string;
+    visitor_table   :number;
 
     constructor(public loadingCtrl: LoadingController, public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events) {
         this.taxAmount = 0;
@@ -83,12 +87,24 @@ export class BillProvider {
 
     set_component(name:string, value:any)
     {
+        this.bill[name] = value;
         this[name] = value;
     }
 
     get_component(name:string)
     {
         return this[name];
+    }
+
+    set_bill_component(name:string, value:any, value_default:any='')
+    {
+        this.bill[name] = this.bill[name]?this.bill[name]:value_default
+        this.bill[name] = value;
+    }
+
+    get_bill_component(name:string)
+    {
+        return this.bill[name];
     }
 
     get(data:any)
@@ -261,6 +277,21 @@ export class BillProvider {
             return res.id
         }).indexOf(id);
         return {index: result, exist: result < 0? false : true}
+    }
+
+    /*
+    // fungsi ini sebagai penanda tentang jumlah save dari suatu bill
+    */
+    set_order_session(data:object={})
+    {
+        this.bill.save_records = this.bill.save_records? this.bill.save_records : []
+        data = Object.assign({items_length:0, timestamp:moment().unix()}, data)
+        this.bill.save_records.push(data)
+    }
+
+    get_order_session()
+    {
+        return this.bill.save_records? this.bill.save_records.length : 0;
     }
 
 }

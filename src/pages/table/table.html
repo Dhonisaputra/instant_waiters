@@ -5,16 +5,17 @@
   Ionic pages and navigation.
 -->
 <ion-header class="bg-green">
-
-  <ion-navbar>
-  	<button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Table</ion-title>
-    <ion-buttons end>
-      <button ion-button end (click)="order()" color="primary" round [disabled]="is_selection_null()"> Order &nbsp;&nbsp; <ion-icon name="arrow-round-forward"></ion-icon> </button>
-    </ion-buttons>
-  </ion-navbar>
+  <ion-toolbar color="main">
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Table</ion-title>
+      <ion-buttons end>
+        <button ion-button end (click)="order()" color="primary" round [disabled]="is_selection_null()"> Order &nbsp;&nbsp; <ion-icon name="arrow-round-forward"></ion-icon> </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-toolbar>
 
 </ion-header>
 

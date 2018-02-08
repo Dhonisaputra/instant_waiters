@@ -26,6 +26,11 @@ export class StocksPage {
 	original_items:any=[]
   outlet:number;
   detailStockPage:any;
+  page_params  :object={
+      action:'default', // [default, edit, pay],
+      toggleSearchInput: false,
+      toggleFilter: false
+    }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private productProvider : ProductProvider, private helper:HelperProvider, private dbLocalProvider: DbLocalProvider) {
     this.detailStockPage = DetailStockPage;
@@ -34,19 +39,35 @@ export class StocksPage {
     .then((val)=>{
       this.outlet = val;
       
-    	this.get_product({
-        online:true,
-        data: { 
-          limit:0,
-          outlet: this.outlet,
-          fields: 'id,outlet,type,price,name,unit,stock,image,stock_latest_update',
-          order_by: 'stock_latest_update DESC'
-        }
-    	})
+    	this.first_time_get_product();
+    })
+
+    if(this.navParams.data.page_params)
+    {
+      this.update_page_parameters(this.navParams.data.page_params);
+    }
+  }
+
+  first_time_get_product(refresher:any={})
+  {
+    this.get_product({
+      online:true,
+      data: { 
+        limit:0,
+        outlet: this.outlet,
+        fields: 'id,outlet,type,price,name,unit,stock,image,stock_latest_update',
+        order_by: 'stock_latest_update DESC'
+      }
+    })
+    .then( ()=> {
+      if(typeof refresher.complete == 'function')
+      {
+        refresher.complete();
+      }
     })
   }
 
-  get_product(data:any)
+  get_product(data:any={})
   {
   	return this.productProvider.get_product(data)
   	.then((res) => {
@@ -68,6 +89,12 @@ export class StocksPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad StocksPage');
   }
+
+  update_page_parameters(data:any={})
+  {
+    this.page_params = Object.assign(this.page_params, data)
+  }
+
 
   filter_stock(ev:any)
   {

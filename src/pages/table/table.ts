@@ -137,6 +137,6 @@ export class TablePage {
   {
     this.local.set_params('table.selected', this.tableChoosen);
     // this.appCtrl.getRootNav().push(ProductPage)
-    this.navCtrl.push(ProductPage, {'previous': 'table-page', event:'table.pick', trigger_event:'order.pick', 'table': this.tableChoosen, 'multiple': this.multiple})
+    this.navCtrl.setRoot(ProductPage, {'previous': 'table-page', event:'table.pick', trigger_event:'order.pick', 'table': this.tableChoosen, 'multiple': this.multiple})
   }
 }

@@ -11,8 +11,13 @@
 				<ion-icon name="menu"></ion-icon>
 			</button>
 			<ion-title>product</ion-title>
-			<ion-searchbar end (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" style="padding: 8px 5px;width: 40%;"></ion-searchbar>
+			<ion-searchbar *ngIf="searchinput" end (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" class="searchbar-toolbar" style="padding: 0px;width: 40%;"></ion-searchbar>
 			
+			<ion-buttons class="center distributed">
+				<button ion-button icon-only (click)="toggleSearchInput()">
+					<ion-icon name="search"></ion-icon>
+				</button>
+			</ion-buttons>
 			<ion-buttons end>
 				<button ion-button (click)="openSavedBill()">
 					Nota tersimpan &nbsp; <ion-badge item-end color="light">{{unpaid_bill_length}}</ion-badge>
@@ -29,7 +34,9 @@
 	<ion-grid>
 		<ion-row class="relative" id="product-content-body">
 			<div  col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">
-				<page-receipt></page-receipt> 
+				<div class="receipt-product">
+					<page-receipt></page-receipt> 
+				</div>
 			</div>
 
 			<ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">
@@ -49,48 +56,53 @@
 								</label>
 							</ion-col>
 							<ion-col col-2 col-xs-2 col-sm-2 col-md-2>
-									<button ion-button clear icon-right (click)="product_sort()">
-									  Sort <ion-icon name="funnel"></ion-icon>
-									</button>
+								<button ion-button clear icon-right color="main" (click)="product_sort()">
+								  Sort <ion-icon name="funnel"></ion-icon>
+								</button>
 							</ion-col>
 						</ion-row>
 					</div>
 					
-					<ion-row class="box-body" id="">
-						
-							<ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product" *ngFor="let item of items; let i = index" (click)="addToList(item)" (press)="openDetailProduct(item, index)">
-								<div class="product-body">
-									<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
-										
-										<div class="product-name">{{item.name}}</div>
+						<ion-row class="box-body" id="">
+							
+								<ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product" *ngFor="let item of items; let i = index" (click)="add_to_bill(item)" (press)="openDetailProduct(item, index)">
+									<div class="product-body">
+										<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
+											
+											<div class="product-name">{{item.name}}</div>
+										</div>
+										<div class="product-detail">
+											<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>
+											<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->
+										</div>
 									</div>
-									<div class="product-detail">
-										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>
-										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->
+								</ion-col>
+								<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">
+									<div class="product-body" style="background-color: white;">
+										<div class="product-name">
+											<ion-icon name="add" style="color:white; font-size: -webkit-xxx-large;"></ion-icon>
+										</div>
 									</div>
-								</div>
-							</ion-col>
-							<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">
-								<div class="product-body" style="background-color: white;">
-									<div class="product-name">
-										<ion-icon name="add" style="color:white; font-size: -webkit-xxx-large;"></ion-icon>
-									</div>
-								</div>
-							</ion-col> -->
-							<ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>
-
-								<button ion-button block (click)="infinite_product()">Load More</button>
-							</ion-col>
+								</ion-col> -->
+								
+								<!-- <ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>
+								
+									<button ion-button block color="main" (click)="infinite_product()">Load More</button>
+								</ion-col> -->
 					</ion-row>
-				
+					<ion-infinite-scroll (ionInfinite)="infinite_product($event)">
+					   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+					 </ion-infinite-scroll>
 				</div> <!--  End of payment method -->
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+
 	
-	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="40">
+	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30">
     <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>
     <ion-fab-list side="top">
+      <button ion-fab ion-fab-item color="main" (click)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>
       <button ion-fab ion-fab-item color="main" (click)="pay_bill()"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow">Bayar Pesanan</span> </button>
       <button ion-fab ion-fab-item color="main" (click)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>
       <button ion-fab ion-fab-item color="main" (click)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>

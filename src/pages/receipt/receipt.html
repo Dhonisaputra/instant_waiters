@@ -44,19 +44,16 @@
 									</div>
 								</ion-item>
 							    <ion-item-options side="right" *ngIf="receipt_page_params.can_edit_slide_item">
-							      <button ion-button color="danger" class="" (click)="removeItem(i, item)">
-							        <ion-icon name="trash"></ion-icon>
-							        Hapus
+							      <button ion-button color="danger" class="center distributed" (click)="removeItem(i, item)">
+							        <ion-icon name="trash" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>
 							      </button>
 							    </ion-item-options>
 							    <ion-item-options side="left" *ngIf="receipt_page_params.can_edit_slide_item">
-							      <button ion-button color="secondary" class="" (click)="reduceItem(i, item)">
-							        <ion-icon name="remove"></ion-icon>
-							        Kurangi
+							      <button ion-button color="secondary" class="center distributed" (click)="reduceItem(i, item)">
+							        <ion-icon name="remove" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>
 							      </button>
-							      <button ion-button color="primary" class="" (click)="addItem(i, item)">
-							        <ion-icon name="add"></ion-icon>
-							        Tambah
+							      <button ion-button color="primary" class="center distributed" (click)="addItem(i, item)">
+							        <ion-icon name="add" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>
 							      </button>
 							    </ion-item-options>
 							</ion-item-sliding>
@@ -69,21 +66,28 @@
 								<tr class="">
 									<td style="width: 10%;"></td>							
 									<td style="width: 10%;"></td>							
-									<td style="width: 50%;" class="text-align--right">Total</td>
+									<td style="width: 50%;" class="text-align--right">Bill</td>
 									<td style="width: 20%;" class="text-align--right">{{sumPrice}}</td>
 								</tr>
 
-								<tr class="">
+								<tr class="" *ngIf="tax">
 									<td style="width: 10%;"></td>
 									<td style="width: 10%;"></td>							
 									<td style="width: 50%;" class="text-align--right">Pajak</td>
 									<td style="width: 20%;" class="text-align--right">{{tax}}</td>
 								</tr>
 
+								<tr class="" *ngIf="discount">
+									<td style="width: 10%;"></td>
+									<td style="width: 10%;"></td>							
+									<td style="width: 50%;" class="text-align--right">Diskon</td>
+									<td style="width: 20%;" class="text-align--right">{{discount}}</td>
+								</tr>
+
 								<tr >
 									<td style="width: 10%;" ></td>
 									<td style="width: 10%;"></td>							
-									<td style="width: 50%;" class="text-align--right">Grand Total</td>
+									<td style="width: 50%;" class="text-align--right">Total</td>
 									<td style="width: 20%;" class="text-align--right">{{GrandTotalPrice}}</td>
 								</tr>
 

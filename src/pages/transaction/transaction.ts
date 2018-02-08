@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ActionSheetController } from 'ionic-angular';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { ConfigProvider } from '../../providers/config/config';
 import { PaymentPage } from "../payment/payment"
@@ -32,12 +32,14 @@ export class TransactionPage {
     filter_date_end     :string=moment().format('MM/DD/YYYY');
     edit_transaction_status  :boolean=false;
     page_params  :object={
-      action:'default', // [default, edit, pay]
+      action:'default', // [default, edit, pay],
+      toggleSearchInput: false,
+      toggleFilter: false
     }
-
-
     transaction_params:any = {data:{limit: 20, page: 1}};
-    constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider, private loadingCtrl: LoadingController) {
+
+
+    constructor(private actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider, private loadingCtrl: LoadingController) {
         console.log(this.filter_date_end, this.filter_date_end)
         this.dbLocalProvider.opendb('outlet')
         .then((val)=>{
@@ -64,7 +66,8 @@ export class TransactionPage {
                 dataFetch.data = Object.assign(dataFetch.data, this.navParams.data.body)
             }
 
-            this.get_transaction(dataFetch)
+            this.transaction_params = dataFetch;
+            this.filter_transaction()
         })
 
 
@@ -119,6 +122,40 @@ export class TransactionPage {
         .always( ()=>{
             loadingData.dismiss();
         } )
+    }
+
+    product_sort() {
+        let actionSheet = this.actionSheetCtrl.create({
+          title: 'Urutkan berdasarkan',
+          buttons: [
+            {
+              text: 'Nama costumer',
+              handler: () => {
+                this.filter_by = "visitor_name";
+                this.filter_transaction()
+              }
+            },{
+              text: 'Nomor nota',
+              handler: () => {
+                  this.filter_by = "pay_id";
+                this.filter_transaction()
+              }
+            },{
+              text: 'Tanggal pembelian',
+              handler: () => {
+                  this.filter_by = "payment_date";
+                this.filter_transaction()
+              }
+            },{
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                  // actionSheet.dismiss();
+              }
+            }
+          ]
+        });
+        actionSheet.present();
     }
 
     infinite_scroll(ev:any={})
