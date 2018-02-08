@@ -233,6 +233,7 @@ export class ProductPage
 
 		item.order_session = order_session
 		this.billProvider.insert_item(item)
+		this.billProvider.set_order_session_item_counter(order_session);
 		this.events.publish('bill.update', item)
 	}
 
