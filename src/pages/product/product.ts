@@ -4,6 +4,7 @@ import { ReceiptPage } from '../receipt/receipt';
 import { PaymentPage } from '../payment/payment';
 import { TransactionPage } from '../transaction/transaction';
 import { DetailStockPage } from '../detail-stock/detail-stock';
+import { TablePage } from '../table/table';
 
 import { ProductProvider } from '../../providers/product/product';
 import { BillProvider } from '../../providers/bill/bill';
@@ -121,24 +122,43 @@ export class ProductPage
 		.then((val)=>{
 			this.outlet = val;
 			this.refresh_data({});
+			this.get_unpaid_bill();
 			
 		})
 
 	}
 	ionViewWillEnter()
     {
-		this.billProvider.update_data_bill()
-    	if(this.navParams.data.table)
-		{
-			var index = Object.keys(this.navParams.data.table).shift();
-			this.billProvider.set_component('visitor_table', this.navParams.data.table[index].tab_id)
-			this.events.publish('bill.update', {})
+    	console.log(this.navParams.data)
+		this.billProvider.pull_data_bill()
+		.then( ()=>{
 
-		}else
-		{
-		}
+			switch (this.navParams.data.event) {
+				case "transaction.edit":
+					this.billProvider.update_bill_component(this.navParams.data.bill,true)
+					this.billProvider.count_pricing();
+					this.events.publish('bill.update', {})
+					break;
+				
+				default:
+					// code...
+					break;
+			}
 
-		this.get_unpaid_bill();
+	    	if(this.navParams.data.table)
+			{
+				var index = Object.keys(this.navParams.data.table).shift();
+				this.billProvider.set_bill_component('table_id', this.navParams.data.table[index].tab_id)
+				this.billProvider.set_bill_component('table_name', this.navParams.data.table[index].tab_name)
+				this.billProvider.set_bill_component('table', this.navParams.data.table[index])
+                this.billProvider.update_bill_component({},true);
+				this.events.publish('bill.update', {})
+
+			}else
+			{
+			}
+
+		})
     }
 
 
@@ -229,11 +249,15 @@ export class ProductPage
 	add_to_bill(item)
 	{
 		// check is this bill have been saved before.
-		let order_session = this.billProvider.get_order_session()
+		if(!this.billProvider.isset_order_session())
+		{
+			this.billProvider.add_order_session();
+		}
 
-		item.order_session = order_session
+		item.order_session = this.billProvider.get_active_order_session();
+		console.log(item.order_session, this.billProvider.bill)
 		this.billProvider.insert_item(item)
-		this.billProvider.set_order_session_item_counter(order_session);
+		this.billProvider.set_order_session_item_counter(item.order_session);
 		this.events.publish('bill.update', item)
 	}
 
@@ -279,7 +303,8 @@ export class ProductPage
 		      {
 		        text: 'Selesai',
 		        handler: data => {
-		          	this.billProvider.set_component('visitor_name', data.alert_visitor_name)
+		          	this.billProvider.set_bill_component('visitor_name', data.alert_visitor_name)
+		          	this.billProvider.update_bill_component({},true)
 					this.events.publish('bill.update', {})
 					setTimeout(() => {
 						this.process_save_bill()
@@ -291,7 +316,17 @@ export class ProductPage
 		      }
 		    ]
 		})
-		if(!this.billProvider.get_component('visitor_name') || this.billProvider.get_component('visitor_name').length < 1)
+		if(!this.billProvider.get_bill_component('table_id') )
+		{
+			this.navCtrl.setRoot(TablePage, {
+				previous: 'product-page',
+				event: 'bill.changeTable',
+				trigger_event: 'table.change',
+			})
+			return false;
+		}
+
+		if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
 		{
 			alertVisitor.present();
 		}else
@@ -307,10 +342,10 @@ export class ProductPage
 	{
 		return this.billProvider.get_unpaid_bill({
 			outlet: this.outlet,
-			fields: 'payment_complete_status,outlet,pay_id,payment_date_only',
+			fields: 'payment_nominal,outlet,pay_id,payment_date_only',
 			where: {
 				payment_date_only: moment().format('YYYY-MM-DD'),
-				payment_complete_status: 0
+				payment_nominal: 0,
 			}
 		})
 		.then((res) => {
@@ -346,7 +381,7 @@ export class ProductPage
 		        		alert("Nama pembeli tidak boleh kosong!");
 		        		return false;
 		        	}
-		          	this.billProvider.set_component('visitor_name', data.visitor_name)
+		          	this.billProvider.set_bill_component('visitor_name', data.visitor_name)
 					this.events.publish('bill.update', {})
 					setTimeout(() => {
 						alertVisitor.dismiss();
@@ -359,7 +394,7 @@ export class ProductPage
 		
 		this.error_product();
 		
-		if(!this.billProvider.get_component('visitor_name'))
+		if(!this.billProvider.get_bill_component('visitor_name'))
 		{
 			alertVisitor.present();
 		}else
@@ -373,7 +408,6 @@ export class ProductPage
 
 	private process_save_bill()
 	{
-		
 		return this.billProvider.save({
 			users_outlet: 1,
 			outlet: this.outlet,
@@ -385,8 +419,6 @@ export class ProductPage
 			res = !this.helper.isJSON(res)? res : JSON.parse(res);
 			if(res.code == 200)
 			{
-				this.billProvider.set_bill_component('pay_id', res.data.pay_id)
-				this.billProvider.set_order_session()
 				this.events.publish('reset.data.receipt',{})
 				this.get_unpaid_bill();
 			}else
@@ -434,7 +466,7 @@ export class ProductPage
 		    subTitle: 'Silahkan pilih salah satu produk',
 		});
 
-		if(this.billProvider.get_component('receipts').length < 1)
+		if(this.billProvider.get_bill_component('receipts').length < 1)
 		{
 			alertErrorProduct.present();
 			return false;

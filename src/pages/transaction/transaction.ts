@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ActionSheetCont
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { ConfigProvider } from '../../providers/config/config';
 import { PaymentPage } from "../payment/payment"
+import { ProductPage } from "../product/product"
 import { HelperProvider } from '../../providers/helper/helper'; 
 
 import * as $ from "jquery"
@@ -53,7 +54,7 @@ export class TransactionPage {
                     outlet: this.outlet,
                     page: 1,
                     join:['table'],
-                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complete_status,payment_complete_note,bills.outlet.pay_id.type.name.price.total.qty.product.detail_id,table_name`
+                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders.outlet.pay_id.type.name.price.total.qty.product.detail_id.order_session,table_name`
                 }
             }
 
@@ -201,10 +202,10 @@ export class TransactionPage {
           this.transaction_params.data.like = [[this.filter_by, moment().format("YYYY-MM-DD")]]; 
         }
 
-        this.transaction_params.data.where['payment_complete_status'] = this.payment_status;
+        this.transaction_params.data.where['payment_complement_status'] = this.payment_status;
         if(this.payment_status < 0)
         {
-            delete this.transaction_params.data.where['payment_complete_status'];
+            delete this.transaction_params.data.where['payment_complement_status'];
         }
 
         this.transaction_params.data.order_by = this.order_by;
@@ -232,10 +233,10 @@ export class TransactionPage {
     }
     pay_transaction(i, item)
     {
-        this.navCtrl.push(PaymentPage, {
+        this.navCtrl.push(ProductPage, {
             previous: 'transaction-page',
             event: 'transaction.edit',
-            trigger_event: 'transaction.edit',
+            trigger_event: 'product.pay',
             bill: item,
             receipt_page_params:
             {

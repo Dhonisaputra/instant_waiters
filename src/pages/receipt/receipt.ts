@@ -27,6 +27,7 @@ export class ReceiptPage {
 	visitor_name:string;
 	visitor_table:number;
 	event_handler:any={};
+	bill:any=this.billProvider.default_bill_value();
 	receipt_page_params:any= {can_edit_slide_item: true}
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController) {
@@ -44,7 +45,7 @@ export class ReceiptPage {
 
 		// event listener to get data bill and passing to emiter
 		events.subscribe('get.data.receipt', (data) => {
-			let data_receipts = this.billProvider.data_receipts({	
+			let data_receipts = this.billProvider.data_bill({	
 				_passed_data 	: data,
 			});
 
@@ -53,7 +54,7 @@ export class ReceiptPage {
 
 		// event listener to reset data bill
 		events.subscribe('reset.data.receipt', (data) => {
-			this.billProvider.reset_receipt();
+			this.billProvider.reset_bill();
 	  		this.trigger_update_receipt();
 		});
 
@@ -66,40 +67,36 @@ export class ReceiptPage {
 	// function trigger to updating data receipts
 	trigger_update_receipt()
 	{
-		let data = this.billProvider.data_receipts();
+		let data = this.billProvider.data_bill();
 		this.set_receipts(data);
+		this.billProvider.detection_order_session_from_orders(data.orders)
 
 	}	
 
 	update_receipt()
 	{
 		let receipt = this.get_data_receipt();
-        this.billProvider.set_data_receipts(receipt, true);
+        this.billProvider.update_bill_component(receipt, true);
 	}
 
 	get_data_receipt()
 	{
 		let receipt = {
-            GrandTotalPrice  : this.GrandTotalPrice,
-            sumPrice         : this.sumPrice,
-            tax              : this.tax,
-            receipts         : this.receipts,
-            visitor          : this.visitor_name,
-            visitor_name     : this.visitor_name,
-            table            : this.visitor_table,
-            visitor_table    : this.visitor_table,
-            taxAmount    	 : this.taxAmount,
+            // GrandTotalPrice  : this.GrandTotalPrice,
+            // sumPrice         : this.sumPrice,
+            // tax              : this.tax,
+            // receipts         : this.receipts,
+            visitor_name     : this.bill.visitor_name,
+            table_id         : this.bill.visitor_table,
+            // visitor_table    : this.visitor_table,
+            // taxAmount    	 : this.taxAmount,
         }
         return receipt;
 	}
 	set_receipts(data:any={})
     {
-            this.GrandTotalPrice = data.GrandTotalPrice
-            this.sumPrice = data.sumPrice
-            this.tax = data.tax
-            this.receipts = data.receipts
-            this.visitor_name = data.visitor_name
-            this.visitor_table = data.visitor_table
+        this.bill = data;
+        console.log(data)    
     }
 
 
@@ -117,10 +114,8 @@ export class ReceiptPage {
 	ionViewWillEnter()
 	{
 
-
 		switch (this.navParams.data.event) {
 			case "transaction.edit":
-				// code...
 				break;
 			
 			default:
@@ -146,31 +141,12 @@ export class ReceiptPage {
 		let isFound:boolean= false;
 		let navCtrlLen:number=this.navCtrl.length();
 
-		for ( let i=0; i < this.navCtrl.length(); i++ )
-		{
-			if(index<1)
-			{
-
-				let v = this.navCtrl.getViews()[i];
-				if(v.component.name == 'TablePage')
-				{
-					index = i;
-					isFound = true;
-					this.navCtrl.popTo(TablePage)
-				}
-			}
-
-			if(index < 0 && isFound == false)
-			{
-				console.log('force back', index, i, navCtrlLen)
-				this.navCtrl.push(TablePage, {
-					previous: 'product-page',
-					event: 'bill.changeTable',
-					trigger_event: 'table.change',
-					data: this.event_handler['table.pick']
-				})
-			}
-		}
+		this.navCtrl.setRoot(TablePage, {
+			previous: 'product-page',
+			event: 'bill.changeTable',
+			trigger_event: 'table.change',
+			data: this.event_handler['table.pick']
+		})
 
 	}
 
@@ -183,37 +159,37 @@ export class ReceiptPage {
 
 	removeItem(index, item)
 	{
-		this.billProvider.remove_bill_item(index)
+		this.billProvider.remove_order(index)
 		this.billProvider.count_pricing()
-		this.billProvider.update_receipt()
+		this.billProvider.update_bill()
 		this.trigger_update_receipt();
 	}
 	reduceItem(index, item)
 	{
-		var dataitem = this.billProvider.get_bill_item(index);
+		var dataitem = this.billProvider.get_order_item(index);
 		if(dataitem.amount <= 1)
 		{
 			return false;
 		}else
 		{
-			this.billProvider.update_bill_item(index, 'amount', item.amount - 1)
+			this.billProvider.update_order_item(index, 'amount', item.amount - 1)
 			this.billProvider.count_pricing()
-			this.billProvider.update_receipt()
+			this.billProvider.update_bill()
 			this.trigger_update_receipt();
 		}
 
 	}
 	addItem(index, item)
 	{
-		var dataitem = this.billProvider.get_bill_item(index);
+		var dataitem = this.billProvider.get_order_item(index);
 		if(dataitem.amount >= parseInt(dataitem.stock))
 		{
 			return false;
 		}else
 		{
-			this.billProvider.update_bill_item(index, 'amount', item.amount + 1)
+			this.billProvider.update_order_item(index, 'amount', item.amount + 1)
 			this.billProvider.count_pricing()
-			this.billProvider.update_receipt()
+			this.billProvider.update_bill()
 			this.trigger_update_receipt();
 		}
 	}

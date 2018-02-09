@@ -56,7 +56,7 @@ import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag
     TransactionPage,
     DetailStockPage,
     EditReceiptItemPage,
-    AbsoluteDragDirective
+    // AbsoluteDragDirective
 
   ],
   imports: [

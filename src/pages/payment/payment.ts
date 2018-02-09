@@ -155,7 +155,7 @@ export class PaymentPage {
 			case "action":
 				switch (value) {
 					case "pas":
-						this.bill.paid = this.billProvider.get_component('GrandTotalPrice');
+						this.bill.paid = this.billProvider.get_bill_component('payment_total');
 						this.sumReturn();
 						break;
 
@@ -221,7 +221,7 @@ export class PaymentPage {
 		})
 
 
-		this.billProvider.set_data_receipts(item, false);
+		this.billProvider.set_data_bill(item, false);
 		this.events.publish('bill.update', item)
 		this.get_temporary_data();		
 
@@ -230,7 +230,7 @@ export class PaymentPage {
 
 	get_temporary_data()
 	{
-		let data = this.billProvider.data_receipts();
+		let data = this.billProvider.data_bill();
 		console.log(data)
 
 	    this.bill = data;
@@ -248,7 +248,7 @@ export class PaymentPage {
 		  		}else
 		  		{
 		  			this.bill = res;
-					this.billProvider.set_data_receipts(res);
+					this.billProvider.set_data_bill(res);
 					this.events.publish('bill.update', {})
 		  		}
 
@@ -256,7 +256,7 @@ export class PaymentPage {
 	    	
 	    }else
 	    {
-			this.billProvider.set_data_receipts(data);
+			this.billProvider.set_data_bill(data);
 			this.events.publish('bill.update', {})
 
 	    }

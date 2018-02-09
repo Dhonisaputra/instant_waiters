@@ -31,7 +31,7 @@ export class EditReceiptItemPage {
   ionViewWillEnter()
   {
     // this.billProvider.update_data_bill()
-    let item = this.billProvider.get_bill_item(this.navParams.data.index);
+    let item = this.billProvider.get_bill_component(this.navParams.data.index);
     this.item = item?item:{}
   }
 
@@ -60,7 +60,7 @@ export class EditReceiptItemPage {
   changeNotes()
   {
     this.item.note = this.item.notes?this.item.note:'';
-    this.billProvider.update_bill_item(this.item.index, 'notes', this.item.note)
+    this.billProvider.set_bill_component(this.item.index, 'notes', this.item.note)
     // this.ionViewWillEnter()
   }
 
@@ -68,13 +68,13 @@ export class EditReceiptItemPage {
 
   reduceItem()
   {
-    var dataitem = this.billProvider.get_bill_item(this.item.index);
+    var dataitem = this.billProvider.get_bill_component(this.item.index);
     if(dataitem.amount <= 1)
     {
       return false;
     }else
     {
-      this.billProvider.update_bill_item(this.item.index, 'amount', parseInt(this.item.amount) - 1)
+      this.billProvider.set_bill_component(this.item.index, 'amount', parseInt(this.item.amount) - 1)
       this.billProvider.count_pricing()
       this.ionViewWillEnter()
       // this.trigger_update_receipt();
@@ -83,9 +83,9 @@ export class EditReceiptItemPage {
   }
   addItem()
   {
-    var dataitem = this.billProvider.get_bill_item(this.item.index);
+    var dataitem = this.billProvider.get_bill_component(this.item.index);
     
-      this.billProvider.update_bill_item(this.item.index, 'amount', parseInt(this.item.amount) + 1)
+      this.billProvider.set_bill_component(this.item.index, 'amount', parseInt(this.item.amount) + 1)
       this.billProvider.count_pricing()
       this.ionViewWillEnter()
       // this.trigger_update_receipt();
@@ -94,7 +94,7 @@ export class EditReceiptItemPage {
 
   updateItem()
   {
-      this.billProvider.update_receipt()
+      this.billProvider.update_bill()
       // this.closeModal();
       this.navCtrl.pop({})
   }

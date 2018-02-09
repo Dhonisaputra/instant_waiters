@@ -4,6 +4,7 @@ import { AlertController, Events, LoadingController  } from 'ionic-angular';
 import * as $ from "jquery"
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import * as moment from 'moment';
+import { HelperProvider } from '../../providers/helper/helper'; 
 
 /*
 Generated class for the BillProvider provider.
@@ -13,22 +14,33 @@ and Angular DI.
 */
 @Injectable()
 export class BillProvider {
-    data_bill       :any;
-    bill            :any = {
-        save_records: []
-    };
-    receipts        :any = [];
-    sumPrice        :number;
-    GrandTotalPrice :number;
-    tax             :number;
-    taxAmount       :number;
-    visitor_name    :string;
-    visitor_table   :number;
+    bill            :any = this.default_bill_value()
+    temp_bill       :any = this.default_bill_value() // it will be temporary variable
+    
 
-    constructor(public loadingCtrl: LoadingController, public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events) {
-        this.taxAmount = 0;
+    constructor(public loadingCtrl: LoadingController, public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events, private helper: HelperProvider) {
 
-        this.update_data_bill();
+        this.pull_data_bill();
+    }
+
+    default_bill_value()
+    {
+        return {
+            order_session: [],
+            orders: [],
+            payment_bills:0,
+            payment_total:0,
+            payment_nominal:0,
+            outlet:undefined,
+            visitor_name:'',
+            table_id:undefined,
+            discount_id:undefined,
+            payment_method:undefined,
+            paid_nominal:undefined,
+            paid_with_bank_nominal:undefined,
+            table:{}
+
+        };
     }
 
     save(data:any={})
@@ -51,30 +63,20 @@ export class BillProvider {
         })
 
         var url = this.config.base_url('admin/outlet/transaction/add')
-        let billdata = this.data_receipts(data)
-        billdata = {
-            users_outlet     : billdata.users_outlet,
-            table_id         : billdata.table,
-            outlet           : billdata.outlet,
-            visitor_name     : billdata.visitor,
-            bank_id          : billdata.bank_id,
-            payment_method   : billdata.payment_method,
-            payment_nominal  : billdata.payment_nominal,
-            payment_bills    : billdata.sumPrice,
-            payment_total    : billdata.GrandTotalPrice,
-            bill_item        : billdata.receipts
-        }
-
-        billdata = Object.assign(billdata, data)
+        let billdata = this.data_bill(data)
+        console.log(billdata, this.bill)
         return $.post(url, billdata)
         .done((res) => {
-            res = JSON.parse(res)
-            if(res.code == 500)
-            {
-                alertData.present();
-            }else
+            res = !this.helper.isJSON(res)? res : JSON.parse(res);
+            if(res.code == 200)
             {
                 successData.present();
+                this.set_bill_component('pay_id', res.data.pay_id); // new method.
+                this.update_bill_component({},true);
+
+            }else
+            {
+                alertData.present();
             }
         })
         .fail(()=>{
@@ -84,29 +86,6 @@ export class BillProvider {
             loader.dismiss();
         })
     }
-
-    set_component(name:string, value:any)
-    {
-        this.bill[name] = value;
-        this[name] = value;
-    }
-
-    get_component(name:string)
-    {
-        return this[name];
-    }
-
-    set_bill_component(name:string, value:any, value_default:any='')
-    {
-        this.bill[name] = this.bill[name]?this.bill[name]:value_default
-        this.bill[name] = value;
-    }
-
-    get_bill_component(name:string)
-    {
-        return this.bill[name];
-    }
-
     get(data:any)
     {
 
@@ -122,31 +101,121 @@ export class BillProvider {
             }
         })
     }
-
-    set_data_bill(data)
-    {
-        this.data_bill = data;
-    }
-
-    get_data_bill()
-    {
-        return this.data_bill;
-    }
-
+    
     get_unpaid_bill(data:any)
     {
         return this.get(data)
     }
 
+    set_bill_component(name:string, value:any, value_default:any='', also_save_temp:boolean=false)
+    {
+        this.bill[name] = this.bill[name]?this.bill[name]:value_default
+        this.bill[name] = value;
+        if(also_save_temp)
+        {
+            this.temp_bill[name] = this.temp_bill[name]?this.temp_bill[name]:value_default
+            this.temp_bill[name] = value;
+        }
+    }
+
+    public get_bill_component(name:any=undefined, get_temp:boolean=false)
+    {
+        if(!name)
+        {
+            return this.bill;
+        }
+        return get_temp? this.temp_bill[name] : this.bill[name];
+    }
+    update_bill_component(data:object={}, update_db:boolean=false)
+    {
+        this.bill = Object.assign(this.bill, data)
+        this.temp_bill = this.bill
+
+        this.detection_order_session_from_orders(this.bill.orders, true)
+        
+
+        if(update_db)
+        {
+            this.update_bill();
+        }
+    }
+
+    put_bill_component(data:object={})
+    {
+        this.bill = data
+        this.temp_bill = this.bill
+    }
+
+    // O R D E R
+    public get_order(index:number)
+    {
+        return this.get_bill_component('orders')[index];
+    }
+
+    set_order(index:number, content:any={})
+    {
+        return this.get_bill_component('orders')[index];
+    }
+    insert_order(data:any)
+    {
+        this.get_bill_component('orders').push(data);
+    }
+
+    remove_order(index)
+    {
+        this.get_bill_component('orders').splice(index, 1);
+    }
+    
+    update_order_item(index, name, value)
+    {
+        let order = this.get_order(index);
+        if(order)
+        {
+            order[name] = value;
+        }
+
+    }
+
+    public get_order_item(index:number, name:string='')
+    {
+        let order = this.get_bill_component('orders');
+        return name.length < 1? undefined : this.get_order(index)[name];
+    }
+
+    delete_order_item(index:number, name:string='')
+    {
+        let order = this.get_bill_component('orders');
+        if(name.length)
+        {
+            delete this.get_order(index)[name];
+        }
+    }
+
+    // E N D  O F  O R D E R
+
+
+
+    public check_existences_order(id)
+    {
+        let order = this.get_bill_component('orders');
+        
+        var result = order.map(function(res){
+            return res.id
+        }).indexOf(id);
+        return {index: result, exist: result < 0? false : true}
+    }
+
+
     // METHOD
     insert_item(item)
     {
-        let existence = this.check_existences_receipt(item.id)
+        let existence = this.check_existences_order(item.id)
         if(existence.exist)
         {
+            let order = this.get_bill_component('orders');
+            order[existence.index].qty     = parseInt(order[existence.index].qty) + 1;
+            order[existence.index].total = parseInt(order[existence.index].qty) * parseInt(order[existence.index].price);
             
-            this.receipts[existence.index].amount = parseInt(this.receipts[existence.index].amount) + 1;
-            this.receipts[existence.index].totalPrice = parseInt(this.receipts[existence.index].amount) * parseInt(this.receipts[existence.index].price);
             // this.events.publish('bill.insert_item', {data: this.receipts, latest: item})
 
             $('#receipt-product-'+item.id+' .product-amount').addClass('pulse')
@@ -154,153 +223,194 @@ export class BillProvider {
                 $('#receipt-product-'+item.id+' .product-amount').removeClass('pulse')
             },800)
         }else{
-            item.amount = 1;
-            item.totalPrice = item.price * item.amount;
-            this.receipts.push(item)
+            item.qty = 1;
+            item.total = item.price * item.qty;
+            this.insert_order(item)
         }
         this.count_pricing()
-        this.update_receipt();
+        this.update_bill();
 
     }
 
     count_pricing()
     {
 
-        this.sumPrice = 0;
-        this.GrandTotalPrice = 0;
-        this.tax = 0;
-        this.receipts.forEach((val, i) => {
-            this.receipts[i].totalPrice = this.receipts[i].amount * this.receipts[i].price
+        this.set_bill_component('payment_bills',0);
+        this.set_bill_component('payment_total',0);
+
+        let payment_total = this.get_bill_component('payment_total');
+        let payment_bills = this.get_bill_component('payment_bills');
+        let tax_nominal = this.get_bill_component('tax_nominal');
+        let discount_nominal = this.get_bill_component('discount_nominal');
+
+        tax_nominal = tax_nominal?parseInt(tax_nominal):0;
+        discount_nominal = discount_nominal?parseInt(discount_nominal):0;
+
+        let order = this.get_bill_component('orders');
+
+        order.forEach((val, i) => {
+            order[i].total = order[i].qty * order[i].price
         })
 
-        let RestotalPrice = this.receipts.map((res) => {
-            return res.totalPrice
+        let RestotalPrice = order.map((res) => {
+            return res.total
         })
 
         for (var i = 0; i < RestotalPrice.length; ++i) {
-            this.sumPrice = this.sumPrice + parseInt(RestotalPrice[i]);
+            payment_bills = payment_bills + parseInt(RestotalPrice[i]);
         }
-        this.tax = (this.taxAmount/100) * this.sumPrice;
-        this.GrandTotalPrice = this.sumPrice + this.tax;
+
+       
+        payment_total = payment_bills - discount_nominal + tax_nominal;
+
+        this.set_bill_component('payment_bills', payment_bills, true);
+        this.set_bill_component('payment_total', payment_total, true);
+
     }
 
-    set_receipts(data)
+    set_bill(data)
     {
-        this.receipts = data.data;
+        this.set_bill_component('orders', data.data);
         this.count_pricing()
-        this.visitor_name = data.visitor? data.visitor : this.visitor_name
-        this.visitor_table = data.table? data.table : this.visitor_table
-        this.update_receipt();
+        this.set_bill_component('visitor_name', data.visitor_name);
+        this.set_bill_component('table_id', data.visitor_table);
+        this.update_bill();
     }
 
-    update_receipt()
+    update_bill()
     {
-        this.dbLocalProvider.setdb('bill.data', this.data_receipts({}))
+        this.dbLocalProvider.setdb('bill.data', this.data_bill())
     }
 
-    reset_receipt()
+    reset_bill()
     {
-        this.GrandTotalPrice = 0
-        this.tax = 0
-        this.taxAmount = 0
-        this.visitor_name = ''
-        this.visitor_table = 0
-        this.sumPrice = 0
-        this.receipts = []
+        
+        this.bill = this.default_bill_value();
         this.dbLocalProvider.removedb('bill.data')
+        this.reset_order_session();
+
     }
-    data_receipts(data:any={})
+    data_bill(data:any={})
     {
-        let receipt = {
-            GrandTotalPrice  : this.GrandTotalPrice,
-            sumPrice         : this.sumPrice,
-            tax              : this.tax,
-            receipts         : this.receipts,
-            visitor          : this.visitor_name,
-            visitor_name     : this.visitor_name,
-            table            : this.visitor_table,
-            table_id         : this.visitor_table,
-            visitor_table    : this.visitor_table,
-        }
+        let receipt = this.get_bill_component()
         return Object.assign(receipt, data)
     }
 
-    set_data_receipts(data:any={}, update_db:boolean=true)
+    set_data_bill(data:any={}, update_db:boolean=true)
     {
-        this.GrandTotalPrice  = data.GrandTotalPrice
-        this.sumPrice         = data.sumPrice
-        this.tax              = data.tax
-        this.receipts         = data.receipts
-        this.visitor_name     = data.visitor_name
-        this.visitor_table    = data.visitor_table
-
-        if(update_db)
-        {
-            this.update_receipt();
-        }
+        
     }
 
-    update_data_bill()
+    pull_data_bill()
     {
-        this.dbLocalProvider.opendb('bill.data')
+        return this.dbLocalProvider.opendb('bill.data')
         .then( (res) =>{
+            
           if(res)
           {
-              this.data_bill = res;
-              res = Object.assign(res, {data: res.receipts, latest: {}})
-              this.set_receipts(res)
+              this.put_bill_component(res)
+              this.detection_order_session_from_orders(res.orders)
               this.events.publish('bill.update')
           }
 
         })
     }
 
-    update_bill_item(index, name, value)
-    {
-        this.receipts[index][name] = value;
-    }
-
-    get_bill_item(index:number, name:string='')
-    {
-
-        return name.length < 1? this.receipts[index] : this.receipts[index][name];
-    }
-
-    remove_bill_item(index)
-    {
-        this.receipts.splice(index, 1);
-    }
-
-    check_existences_receipt(id)
-    {
-        var result = this.receipts.map(function(res){
-            return res.id
-        }).indexOf(id);
-        return {index: result, exist: result < 0? false : true}
-    }
+    
 
     /*
     // fungsi ini sebagai penanda tentang jumlah save dari suatu bill
     */
-    set_order_session(data:object={})
+
+    // set order session from local-storage 
+    reset_order_session()
     {
-        this.bill.item_orders = this.bill.item_orders? this.bill.item_orders : []
-        data = Object.assign({length:0, timestamp:moment().unix()}, data)
-        this.bill.item_orders.push(data)
+
+        this.bill.order_session = [];
+        this.dbLocalProvider.setdb('bill.order_session', this.bill.order_session)
+
+    }
+
+    set_order_session(data:object=[])
+    {
+        this.bill.order_session = data;
+    }
+
+    // create new order session
+
+    detection_order_session_from_orders(orders:any=[], create_new:boolean=false)
+    {
+        this.reset_order_session();
+        let order_array = {}
+        orders.forEach((value, index)=>{
+            if(!order_array[value.order_session])
+            {
+                order_array[value.order_session] = {count:0, first: value.id};
+                this.update_order_item(index, 'first_session_order', true)
+                console.log(this.bill.orders)
+            }else
+            {
+                order_array[value.order_session].count = order_array[value.order_session].count + 1;
+            }
+        })
+
+        // recreate previous session
+        $.each(order_array, (i, val)=>{
+            this.add_order_session(val)
+        })
+        if(create_new)
+        {
+            // create new session
+            this.add_order_session();
+        }
+
+
+
+
+
+    }
+    add_order_session(data:object={})
+    {
+        this.bill.order_session = this.bill.order_session? this.bill.order_session : []
+        data = Object.assign({count:0, timestamp:moment().unix()}, data)
+        this.bill.order_session.push(data)
+        this.dbLocalProvider.setdb('bill.order_session', this.bill.order_session)
+        console.log(data)
     }
 
     get_order_session()
     {
-        return this.bill.item_orders? this.bill.item_orders.length : 0;
+        return this.bill.order_session? this.bill.order_session.length : 0;
     }
 
     set_order_session_item_counter(session:number)
     {
-        this.bill.item_orders[session].length += 1;
+        this.bill.order_session[session].count = parseInt(this.bill.order_session[session].count) + 1;
     }
     get_order_session_item_counter(session:number)
     {
-        return this.bill.item_orders[session].length;
+        return this.bill.order_session[session].length;
+    }
+    get_active_order_session()
+    {
+        if(!this.bill.order_session)
+        {
+            this.bill.order_session = [];
+        }
+
+        return this.bill.order_session.length - 1;
+    }
+    isset_order_session()
+    {
+        let order = this.get_bill_component('orders');
+        if(order.length < 1)
+        {
+            return false;
+        }
+        order = order.filter((res)=>{
+            return !res.detail_id;
+        })
+        return  order.length > 0? true : false;
     }
 
 

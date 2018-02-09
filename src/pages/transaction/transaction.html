@@ -116,10 +116,10 @@
 			      	<button ion-button color="info" class="center distributed" *ngIf="page_params.action=='default'"> 
 			      		<ion-icon name="information-circle" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
 			      	</button>
-					<button ion-button color="primary" class="center distributed" *ngIf="page_params.action=='pay' || item.payment_complete_status == 0" (click)="pay_transaction(i, item)"> 
+					<button ion-button color="primary" class="center distributed" *ngIf="page_params.action=='pay' || item.payment_nominal == 0" (click)="pay_transaction(i, item)"> 
 						<ion-icon name="logo-usd" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
 					</button>
-					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action=='edit' || item.payment_complete_status == 1" (click)="edit_transaction(i, item)">
+					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action=='edit' || item.payment_nominal == 1" (click)="edit_transaction(i, item)">
 						<ion-icon name="create" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
 					</button>
 			    </ion-item-options>
