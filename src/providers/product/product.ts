@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConfigProvider } from '../../providers/config/config';
 import * as $ from "jquery"
 import { Storage } from '@ionic/storage';
+import { HelperProvider } from '../../providers/helper/helper'; 
 
 /*
 Generated class for the ProductProvider provider.
@@ -13,7 +14,8 @@ and Angular DI.
 export class ProductProvider {
 	public last_request: any;
 	public last_options: any;
-	constructor(public config: ConfigProvider, private storage: Storage) {
+	public data:any={products:{}}
+	constructor(public config: ConfigProvider, private storage: Storage, public helper:HelperProvider) {
 		console.log('Hello ProductProvider Provider');
 	}
 
@@ -24,18 +26,30 @@ export class ProductProvider {
 			options.data = Object.assign(
 				{
 					fields: 'id,outlet,type,price,name,unit,stock,image,charge_nominal,charge_percent,status,discount_nominal,discount_percent,status_text,can_be_removed,favorite'	,
-					limit: 12,
+					limit: 25,
 					page: 1,				
 				}, options.data)
 
 			this.last_options = options;
 			this.last_request = options.data;
 
-			return $.post( this.config.base_url('admin/outlet/product/get'), options.data )
+			let http = $.post( this.config.base_url('admin/outlet/product/get'), options.data )
+			return http;
+			
 		}else
 		{
 			return this.storage.get('product')
 		}
+	}
+
+	get_data(name:string)
+	{
+		return this.data[name];
+	}
+
+	set_data(name:string, value:any)
+	{
+		this.data[name] = value;
 	}
 
 }

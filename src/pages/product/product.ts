@@ -271,7 +271,7 @@ export class ProductPage
 	{
 		this.navCtrl.push(TransactionPage, {
 				body:{
-					where: {payment_complete_status:0}
+					where: {payment_nominal:0}
 				},
 				today:true,
 				page_params:{

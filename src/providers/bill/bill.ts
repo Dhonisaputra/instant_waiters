@@ -64,7 +64,6 @@ export class BillProvider {
 
         var url = this.config.base_url('admin/outlet/transaction/add')
         let billdata = this.data_bill(data)
-        console.log(billdata, this.bill)
         return $.post(url, billdata)
         .done((res) => {
             res = !this.helper.isJSON(res)? res : JSON.parse(res);
@@ -195,22 +194,35 @@ export class BillProvider {
 
 
 
-    public check_existences_order(id)
+    public check_existences_order(id, event:string='add')
     {
+        if(!id)
+        {
+            return {exist: false, index:-1}
+        }
         let order = this.get_bill_component('orders');
         
+
+        // search object array that contain event == event[add||reduce]
         var result = order.map(function(res){
-            return res.id
+            if(res.event && res.event == event)
+            {
+                return res.id
+            }
         }).indexOf(id);
         return {index: result, exist: result < 0? false : true}
     }
 
 
     // METHOD
-    insert_item(item)
+    insert_item(item, event:string='add')
     {
-        let existence = this.check_existences_order(item.id)
-        if(existence.exist)
+
+        let existence = this.check_existences_order(item.id, event)
+        
+        item.event = event;
+
+        if(existence.exist && existence.index && existence.index > -1)
         {
             let order = this.get_bill_component('orders');
             order[existence.index].qty     = parseInt(order[existence.index].qty) + 1;
@@ -218,12 +230,12 @@ export class BillProvider {
             
             // this.events.publish('bill.insert_item', {data: this.receipts, latest: item})
 
-            $('#receipt-product-'+item.id+' .product-amount').addClass('pulse')
+            $('#receipt-product-'+item.id+'-'+event+' .product-amount').addClass('pulse')
             setTimeout(function(){
-                $('#receipt-product-'+item.id+' .product-amount').removeClass('pulse')
+                $('#receipt-product-'+item.id+'-'+event+' .product-amount').removeClass('pulse')
             },800)
         }else{
-            item.qty = 1;
+            item.qty = item.qty && event != 'add' ?item.qty:1;
             item.total = item.price * item.qty;
             this.insert_order(item)
         }
@@ -248,8 +260,9 @@ export class BillProvider {
 
         let order = this.get_bill_component('orders');
 
-        order.forEach((val, i) => {
+        $.each(order, (i, val)=>{
             order[i].total = order[i].qty * order[i].price
+
         })
 
         let RestotalPrice = order.map((res) => {
@@ -345,9 +358,9 @@ export class BillProvider {
         orders.forEach((value, index)=>{
             if(!order_array[value.order_session])
             {
-                order_array[value.order_session] = {count:0, first: value.id};
+                console.log(order_array, order_array[value.order_session])
+                order_array[value.order_session] = {count:1, first: value.id};
                 this.update_order_item(index, 'first_session_order', true)
-                console.log(this.bill.orders)
             }else
             {
                 order_array[value.order_session].count = order_array[value.order_session].count + 1;
@@ -375,7 +388,6 @@ export class BillProvider {
         data = Object.assign({count:0, timestamp:moment().unix()}, data)
         this.bill.order_session.push(data)
         this.dbLocalProvider.setdb('bill.order_session', this.bill.order_session)
-        console.log(data)
     }
 
     get_order_session()
@@ -403,7 +415,7 @@ export class BillProvider {
     isset_order_session()
     {
         let order = this.get_bill_component('orders');
-        if(order.length < 1)
+        if(order && order.length < 1)
         {
             return false;
         }

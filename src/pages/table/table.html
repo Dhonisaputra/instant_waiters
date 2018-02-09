@@ -11,9 +11,7 @@
         <ion-icon name="menu"></ion-icon>
       </button>
       <ion-title>Table</ion-title>
-      <ion-buttons end>
-        <button ion-button end (click)="order()" color="primary" round [disabled]="is_selection_null()"> Order &nbsp;&nbsp; <ion-icon name="arrow-round-forward"></ion-icon> </button>
-      </ion-buttons>
+      
     </ion-navbar>
   </ion-toolbar>
 
@@ -44,7 +42,7 @@
   </div>
 	
 	<div class="table-box">
-		<div col-sm-3 col-xs-4 col-4 col-md-2 col-lg-1 col-xl-1 class="table-item" *ngFor="let item of tableNum; let i = index" (click)="selectTable(i, item.tab_id)" [ngClass]="{'selected': is_selected(i)}"> {{item.tab_name}} </div>
+		<div col-4 col-xs-4 col-sm-4 col-md-2 col-lg-1 col-xl-1 class="table-item" *ngFor="let item of tableNum; let i = index" (click)="selectTable(i, item.tab_id)" [ngClass]="{'selected': is_selected(i)}"> {{item.tab_name}} </div>
 	</div>
   <div class="center">
       <!-- <button ion-button >Selanjutnya >> </button> -->

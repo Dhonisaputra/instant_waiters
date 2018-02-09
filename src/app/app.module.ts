@@ -24,6 +24,7 @@ import { BillItemEditorPage } from '../pages/bill-item-editor/bill-item-editor';
 import { TransactionPage } from '../pages/transaction/transaction';
 import { DetailStockPage } from '../pages/detail-stock/detail-stock';
 import { EditReceiptItemPage } from "../pages/edit-receipt-item/edit-receipt-item"
+import { TotalPaymentEditorPage } from '../pages/total-payment-editor/total-payment-editor';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -56,6 +57,7 @@ import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag
     TransactionPage,
     DetailStockPage,
     EditReceiptItemPage,
+    TotalPaymentEditorPage
     // AbsoluteDragDirective
 
   ],
@@ -81,7 +83,9 @@ import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag
     BillItemEditorPage,
     TransactionPage,
     DetailStockPage,
-    EditReceiptItemPage
+    EditReceiptItemPage,
+    TotalPaymentEditorPage
+
   ],
   providers: [
     StatusBar,

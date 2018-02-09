@@ -66,7 +66,7 @@
 						</ion-list>
 						<div class="" *ngIf="!billProvider.get_bill_component('orders') || billProvider.get_bill_component('orders').length < 1" class="text-align--center"> Silahkan pilih menu disamping! </div>
 					</div>
-					<div class="receipt-footer"> 
+					<div class="receipt-footer" (click)="edit_total_payment()"> 
 						<table class="" style="margin-bottom: 0px;width: 100%;">
 							<tbody style="padding-top: 10px">
 								<tr class="">

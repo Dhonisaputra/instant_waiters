@@ -27,7 +27,7 @@ export class TransactionPage {
     outlet        :number;
     filter_by     :string="visitor_name";
     order_by      :string='payment_date DESC';
-    filter_input  :any;
+    filter_input  :string='';
     payment_status:number=-1;
     filter_date_start   :string=moment().format('MM/DD/YYYY');
     filter_date_end     :string=moment().format('MM/DD/YYYY');
@@ -173,10 +173,26 @@ export class TransactionPage {
     }
 
 
+    search_transaction(ev:any={})
+    {
+        let val = this.filter_input;
+        let character_length = 4;
+        if(val && val.length < character_length)
+        {
+            return false;
+        }
+        this.filter_transaction();
+
+    }
     filter_transaction(ev:any={})
     {
+        let exclude_to_filter_input = ['table_name','visitor_name', 'pay_id']
 
         let val = this.filter_input;
+        if(val && exclude_to_filter_input.indexOf('this.filter_by') > -1)
+        {
+            return false;
+        }
 
         this.transaction_params.data.where = {}
         this.transaction_params.data.like =  []

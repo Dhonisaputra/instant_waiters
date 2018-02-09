@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ModalController } from 'ionic-angular';
 import { BillProvider } from '../../providers/bill/bill';
+// import { ProductProvider } from '../../providers/product/product';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { TablePage } from '../table/table';
+import { TotalPaymentEditorPage } from '../total-payment-editor/total-payment-editor';
 import { EditReceiptItemPage } from '../edit-receipt-item/edit-receipt-item';
 import * as $ from "jquery"
 
@@ -23,7 +25,7 @@ export class ReceiptPage {
 	sumPrice:number;
 	GrandTotalPrice:number;
 	tax:number;
-	taxAmount:number;
+	taxqty:number;
 	visitor_name:string;
 	visitor_table:number;
 	event_handler:any={};
@@ -32,7 +34,7 @@ export class ReceiptPage {
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController) {
 		this.receipts = []
-		this.taxAmount = 10;
+		this.taxqty = 10;
 
 		// if(navParams)
 
@@ -89,7 +91,7 @@ export class ReceiptPage {
             visitor_name     : this.bill.visitor_name,
             table_id         : this.bill.visitor_table,
             // visitor_table    : this.visitor_table,
-            // taxAmount    	 : this.taxAmount,
+            // taxqty    	 : this.taxqty,
         }
         return receipt;
 	}
@@ -166,13 +168,33 @@ export class ReceiptPage {
 	}
 	reduceItem(index, item)
 	{
-		var dataitem = this.billProvider.get_order_item(index);
-		if(dataitem.amount <= 1)
+		item = Object.assign({}, item)
+		var dataitem = this.billProvider.get_order(index);
+		if(item.detail_id)
 		{
-			return false;
+			delete item.detail_id;
+			if(!this.billProvider.isset_order_session())
+			{
+				this.billProvider.add_order_session();
+			}
+
+			item.order_session = this.billProvider.get_active_order_session();
+			item.id = item.product;
+			item.qty = -Math.abs(1);
+			item.price = -Math.abs(item.price * item.qty );
+
+			this.billProvider.insert_item(item, 'reduce')
+			this.billProvider.set_order_session_item_counter(item.order_session);
+
+			this.trigger_update_receipt();
 		}else
 		{
-			this.billProvider.update_order_item(index, 'amount', item.amount - 1)
+			if(item.qty <= 0)
+			{
+				return false;
+			}
+
+			this.billProvider.update_order_item(index, 'qty', parseInt(item.qty) - 1)
 			this.billProvider.count_pricing()
 			this.billProvider.update_bill()
 			this.trigger_update_receipt();
@@ -181,22 +203,48 @@ export class ReceiptPage {
 	}
 	addItem(index, item)
 	{
-		var dataitem = this.billProvider.get_order_item(index);
-		if(dataitem.amount >= parseInt(dataitem.stock))
+		item = Object.assign({}, item)
+		var dataitem = this.billProvider.get_order(index);
+		if(item.detail_id)
 		{
-			return false;
+			delete item.detail_id;
+			if(!this.billProvider.isset_order_session())
+			{
+				this.billProvider.add_order_session();
+			}
+
+			item.order_session = this.billProvider.get_active_order_session();
+			item.id = item.product;
+
+			this.billProvider.insert_item(item)
+			this.billProvider.set_order_session_item_counter(item.order_session);
+
+			this.trigger_update_receipt();
 		}else
 		{
-			this.billProvider.update_order_item(index, 'amount', item.amount + 1)
-			this.billProvider.count_pricing()
-			this.billProvider.update_bill()
-			this.trigger_update_receipt();
+			if(parseInt(dataitem.qty) >= parseInt(dataitem.stock))
+			{
+				return false;
+			}else
+			{
+				this.billProvider.update_order_item(index, 'qty', parseInt(item.qty) + 1)
+				this.billProvider.count_pricing()
+				this.billProvider.update_bill()
+				this.trigger_update_receipt();
+			}
 		}
 	}
 	editItem(item, index)
 	{
 		item.index = index;
 		this.navCtrl.push(EditReceiptItemPage, item)
+		// let modal = this.modalCtrl.create(EditReceiptItemPage, item)
+		// modal.present();
+	}
+
+	edit_total_payment()
+	{
+		this.navCtrl.push(TotalPaymentEditorPage, {})
 		// let modal = this.modalCtrl.create(EditReceiptItemPage, item)
 		// modal.present();
 	}

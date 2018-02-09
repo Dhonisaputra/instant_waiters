@@ -102,7 +102,7 @@ export class PaymentPage {
 		paid_nominal			: this.paymentMethod == 3? this.helper.IDRtoInt( this.bill.paid) : 0,
 		paid_with_bank_nominal	: (this.paymentMethod == 3 || this.paymentMethod == 2) && this.helper.IDRtoInt( this.bill.totalWithCharge) > 0  ? this.helper.IDRtoInt( this.bill.totalWithCharge) : 0,
 		
-		payment_complete_status	: 1,
+		payment_complement_status	: 1,
 
 		pay_id: this.navParams.data.bill && this.navParams.data.bill.pay_id? this.navParams.data.bill.pay_id : null
 	})
