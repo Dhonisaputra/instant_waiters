@@ -21,20 +21,17 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row class="relative" id="product-content-body">
-      <div  col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">
-        <!-- <page-receipt></page-receipt>  -->
-      </div>
-
-      <ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">
+    <ion-row class="relative center " id="product-content-body">
+     
+      <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 id="section-right" class="column">
             <ion-row class="row form-group">
               <ion-col col-3 class="">Jumlah Pembelian</ion-col>
               <ion-col col-9 class=" input-box input-group">
-                <button class="" ion-button color="light" icon-only id="" round (click)="reduceItem()">
+                <button class="" ion-button color="light" icon-only id="" round (click)="reduceItem()" style="margin-right: 10px;">
                   <ion-icon name="remove"></ion-icon>
                 </button>
                 <input type="text" class="form-control form-control--lg" name="" [(ngModel)]="item.qty">
-                <button class="" ion-button color="light" icon-only id="" round (click)="addItem()">
+                <button class="" ion-button color="light" icon-only id="" round (click)="addItem()"  style="margin-left: 10px;">
                   <ion-icon name="add"></ion-icon>
                 </button>
               </ion-col>
@@ -58,7 +55,22 @@
             <ion-row class="form-group">
               <ion-col col-3 class="">Keterangan</ion-col>
               <ion-col col-9 class=" input-box">
-                <textarea class="form-control" [(ngModel)]="item.note" (change)="changeNotes()" style="height: 100px;"></textarea>
+                <textarea class="form-control" [(ngModel)]="item.note" (input)="changeNotes()" style="height: 100px;"></textarea>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="form-group">
+             
+              <ion-col col-3 class="">Complement?</ion-col>
+              <ion-col col-9 class=" input-box">
+                  <ion-toggle checked="false" value="1" [(ngModel)]="item.complement_status" (ionChange)="changeComplementStatus()"></ion-toggle>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="form-group" *ngIf="item.complement_status > 0">
+              <ion-col col-3 class="">Complement Note</ion-col>
+              <ion-col col-9 class=" input-box">
+                <textarea class="form-control" [(ngModel)]="item.complement_note" (input)="changeComplementNotes()" style="height: 100px;"></textarea>
               </ion-col>
             </ion-row>
 

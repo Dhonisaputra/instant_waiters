@@ -37,7 +37,7 @@ import { DbTableProvider } from '../providers/db-table/db-table';
 import { HelperProvider } from '../providers/helper/helper';  
 
 
-import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
+// import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 
 @NgModule({
   declarations: [

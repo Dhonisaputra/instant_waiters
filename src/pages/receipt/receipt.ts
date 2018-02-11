@@ -57,6 +57,7 @@ export class ReceiptPage {
 		// event listener to reset data bill
 		events.subscribe('reset.data.receipt', (data) => {
 			this.billProvider.reset_bill();
+			this.bill = {}
 	  		this.trigger_update_receipt();
 		});
 
@@ -98,9 +99,14 @@ export class ReceiptPage {
 	set_receipts(data:any={})
     {
         this.bill = data;
-        console.log(data)    
     }
 
+    get_orders()
+    {
+    	let orders = this.billProvider.get_bill_component('orders')
+
+    	return orders;
+    }
 
 
 	ionViewDidLoad() {
@@ -237,8 +243,11 @@ export class ReceiptPage {
 	{
 		item.index = index;
 		this.navCtrl.push(EditReceiptItemPage, item)
-		// let modal = this.modalCtrl.create(EditReceiptItemPage, item)
-		// modal.present();
+		/*let modal = this.modalCtrl.create(EditReceiptItemPage, item)
+		modal.present();
+		modal.onDidDismiss(data => {
+			this.trigger_update_receipt();
+	   });*/
 	}
 
 	edit_total_payment()

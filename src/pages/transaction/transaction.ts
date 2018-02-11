@@ -41,7 +41,6 @@ export class TransactionPage {
 
 
     constructor(private actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider, private loadingCtrl: LoadingController) {
-        console.log(this.filter_date_end, this.filter_date_end)
         this.dbLocalProvider.opendb('outlet')
         .then((val)=>{
             this.outlet = val;
@@ -54,7 +53,7 @@ export class TransactionPage {
                     outlet: this.outlet,
                     page: 1,
                     join:['table'],
-                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders.outlet.pay_id.type.name.price.total.qty.product.detail_id.order_session.note,table_name`
+                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders,table_name`
                 }
             }
 
@@ -72,7 +71,6 @@ export class TransactionPage {
         })
 
 
-      console.log(this.navParams.data)
 
       if(this.navParams.data.page_params)
       {
@@ -225,7 +223,6 @@ export class TransactionPage {
         }
 
         this.transaction_params.data.order_by = this.order_by;
-        console.log(this.transaction_params.data)
 
         this.get_transaction(this.transaction_params)
         .then(()=>{
@@ -249,6 +246,7 @@ export class TransactionPage {
     }
     pay_transaction(i, item)
     {
+        item = Object.assign({}, item)
         this.navCtrl.push(ProductPage, {
             previous: 'transaction-page',
             event: 'transaction.edit',

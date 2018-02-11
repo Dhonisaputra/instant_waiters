@@ -73,10 +73,12 @@ export class BillProvider {
 
         var url = this.config.base_url('admin/outlet/transaction/add')
         let billdata = this.data_bill(data)
-        data = Object.assign(billdata, data)
+        billdata = Object.assign(billdata, data)
+        billdata.complement_status = data.complement_status == 'true'? 1 : 0;
         return $.post(url, billdata)
         .done((res) => {
             res = !this.helper.isJSON(res)? res : JSON.parse(res);
+            
             if(res.code == 200)
             {
                 successData.present();
@@ -236,6 +238,7 @@ export class BillProvider {
             let order = this.get_bill_component('orders');
             order[existence.index].qty       = parseInt(order[existence.index].qty) + 1;
             order[existence.index].total     = parseInt(order[existence.index].qty) * parseInt(order[existence.index].price);
+            order[existence.index].total     = (order[existence.index].discount_nominal)? parseInt(order[existence.index].total) - order[existence.index].discount_nominal : order[existence.index].total;
 
             $('#receipt-product-'+item.id+'-'+event+' .product-amount').addClass('pulse')
             setTimeout(function(){
@@ -244,6 +247,7 @@ export class BillProvider {
         }else{
             item.qty = item.qty && event != 'add' ?item.qty:1;
             item.total = item.price * item.qty;
+            item.total = item.discount_nominal? parseInt(item.discount_nominal) - item.total : item.total;
             this.insert_order(item)
         }
         this.count_pricing()
@@ -262,19 +266,41 @@ export class BillProvider {
         let tax_nominal = this.get_bill_component('tax_nominal');
         let discount_nominal = this.get_bill_component('discount_nominal');
 
-        console.log(payment_bills, discount_nominal, tax_nominal)
         tax_nominal = tax_nominal?parseInt(tax_nominal):0;
         discount_nominal = discount_nominal?parseInt(discount_nominal):0;
 
         let order = this.get_bill_component('orders');
 
         $.each(order, (i, val)=>{
-            order[i].total = order[i].qty * order[i].price
+            if(!val.complement_status || parseInt(val.complement_status) < 1)
+            {
+                let total = order[i].qty * order[i].price    
+                let discount_nominal = parseInt(val.discount_nominal);
+                if(discount_nominal)
+                {
+                    total = total - discount_nominal;
+                }
+                this.update_order_item(i, 'total', total);
+
+                order[i].total = total;
+                
+            }else
+            {
+                order[i].total = 0;
+            }
 
         })
+        console.log(order)
 
         let RestotalPrice = order.map((res) => {
-            return res.total
+            // lakukan pengechekan apakah order memiliki "complement_status";
+            if(!res.complement_status || parseInt(res.complement_status) < 1)
+            {
+                return res.total
+            }else
+            {
+                return 0;
+            }
         })
 
         for (var i = 0; i < RestotalPrice.length; ++i) {
@@ -299,7 +325,8 @@ export class BillProvider {
 
     update_bill()
     {
-        this.dbLocalProvider.setdb('bill.data', this.data_bill())
+        let bill = this.data_bill();
+        // this.dbLocalProvider.setdb('bill.data', this.data_bill())
     }
 
     reset_bill()
@@ -346,7 +373,7 @@ export class BillProvider {
     reset_order_session()
     {
 
-        this.bill.order_session = [];
+        this.set_bill_component('order_session', [])
         this.dbLocalProvider.setdb('bill.order_session', this.bill.order_session)
 
     }
@@ -426,6 +453,7 @@ export class BillProvider {
         let order = this.get_bill_component('orders');
         if(order && order.length < 1)
         {
+            this.reset_order_session()
             return false;
         }
         order = order.filter((res)=>{

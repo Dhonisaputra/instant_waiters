@@ -94,16 +94,16 @@ export class PaymentPage {
   		return false;
   	}
   	this.billProvider.save({
-		users_outlet 			: this.users_outlet,
-		outlet					: this.outlet,
-		bank_id					: this.bank_id,
-		event 					: 'make_a_payment',
-		payment_nominal			: this.helper.IDRtoInt( this.bill.payment_nominal),
-		payment_rest			: this.helper.IDRtoInt( this.bill.payment_rest),
-		paid_with_bank_nominal	: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.paid_with_bank_nominal) > 0  ? this.helper.IDRtoInt( this.bill.paid_with_bank_nominal) : 0,
+		users_outlet 				: this.users_outlet,
+		outlet						: this.outlet,
+		bank_id						: this.bank_id,
+		event 						: 'make_a_payment',
+		payment_nominal				: this.helper.IDRtoInt( this.bill.payment_nominal),
+		payment_rest				: this.helper.IDRtoInt( this.bill.payment_rest),
+		paid_with_bank_nominal		: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.paid_with_bank_nominal) > 0  ? this.helper.IDRtoInt( this.bill.paid_with_bank_nominal) : 0,
 		payment_bank_charge_nominal	: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.payment_bank_charge_nominal) > 0  ? this.helper.IDRtoInt( this.bill.payment_bank_charge_nominal) : 0,
 		payment_bank_charge_percent	: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.payment_bank_charge_percent) > 0  ? this.helper.IDRtoInt( this.bill.payment_bank_charge_percent) : 0,
-		payment_method 			: this.payment_method,
+		payment_method 				: this.payment_method,
 	})
 	.done((res)=>{
 		res = !this.helper.isJSON(res)? res : JSON.parse(res);
@@ -268,7 +268,7 @@ export class PaymentPage {
 
 	    }*/
 
-		this.sumReturn();
+		// this.sumReturn();
 
 	}
 

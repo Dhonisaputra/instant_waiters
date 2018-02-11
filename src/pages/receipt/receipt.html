@@ -31,7 +31,7 @@
 						</div>
 
 						<ion-list style="margin-top: 10px;">
-							<div *ngFor="let item of billProvider.get_bill_component('orders'); let i = index;">
+							<div *ngFor="let item of get_orders(); let i = index;">
 								<div class="session-order" *ngIf="item.first_session_order && item.order_session > 0">
 									Tambahan ke {{item.order_session}}
 								</div>
@@ -40,14 +40,24 @@
 									<ion-item class="item-receipt" id="receipt-product-{{item.id}}" style="display: flex; padding-left: 0px;" (click)="editItem(item, i)">
 										<div style="display: flex;font-size: .8em;">
 											<div class="receipt-detail--component text-align--center" style="width: 10%;"  ><span class="product-amount">{{item.qty}}</span></div>
+											
 											<div class="receipt-detail--component text-align--left" style="width: 50%;" >
 												<span>{{item.name}}</span><br>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Complement?</p>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.discount_nominal > 0">Discount</p>
 												<p class="receipt-detail--component--notes">{{item.note}}</p>
 											</div>
-											<div class="receipt-detail--component" style="width: 20%;">Rp.{{billProvider.helper.intToIDR(item.price)}}</div>
+
+											<div class="receipt-detail--component" style="width: 20%;">
+												<span> Rp.{{billProvider.helper.intToIDR(item.price)}} </span>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Yes</p>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.discount_nominal > 0">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>
+											</div>
 											<div class="receipt-detail--component" style="width: 20%;">Rp.{{billProvider.helper.intToIDR(item.total)}}</div>
 										</div>
 									</ion-item>
+
+									<!-- menu slider -->
 								    <ion-item-options side="right" *ngIf="receipt_page_params.can_edit_slide_item">
 								      <button ion-button color="danger" class="center distributed" (click)="removeItem(i, item)">
 								        <ion-icon name="trash" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>

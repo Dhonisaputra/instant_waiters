@@ -27,7 +27,7 @@ export class TablePage {
   tableChoosen:any = {};
   choose_type_order:number = 1;
   event_handler:any={};
-  constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider, private billProvider:BillProvider) {
+  constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider, private events:Events, private billProvider:BillProvider) {
     // this.helstorage.set('outlet', 1)
     this.local.setdb('outlet', 1)
   	/*this.local.opendb('table')
@@ -124,7 +124,6 @@ export class TablePage {
     {
       switch (this.navParams.data.trigger_event) {
         case "table.change":
-          console.log()
           break;
         
         default:
@@ -136,8 +135,19 @@ export class TablePage {
 
   order()
   {
+    console.log(this.navParams.data.trigger_event)
     this.local.set_params('table.selected', this.tableChoosen);
     let trigger_event = this.navParams.data.trigger_event == 'table.change'? 'table.change' : 'order.pick';
+    if(trigger_event == 'order.pick')
+    {
+      this.billProvider.reset_order_session();
+      this.billProvider.set_bill_component('order_session',[]);
+      this.billProvider.set_bill_component('orders',[]);
+      this.billProvider.set_bill_component('visitor_name','');
+      this.billProvider.update_bill_component({},true);
+      this.events.publish('bill.update', {})
+    }
+    
     this.navCtrl.setRoot(ProductPage, {'previous': 'table-page', event:'table.pick', trigger_event: trigger_event, 'table': this.tableChoosen, 'multiple': this.multiple})
   }
 }

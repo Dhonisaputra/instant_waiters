@@ -122,6 +122,7 @@ export class ProductPage
 		.then((val)=>{
 			this.outlet = val;
 			this.refresh_data({});
+			this.billProvider.count_pricing();
 			this.get_unpaid_bill();
 			
 		})
@@ -130,13 +131,11 @@ export class ProductPage
 	ionViewWillEnter()
     {
     	var index;
-    	console.log(this.navParams.data)
 		this.billProvider.pull_data_bill()
 		.then( ()=>{
 
 			switch (this.navParams.data.event) {
 				case "transaction.edit":
-					console.log(this.navParams.data.bill)
 					this.billProvider.update_bill_component(this.navParams.data.bill,true)
 					this.billProvider.count_pricing();
 					this.events.publish('bill.update', {})
@@ -147,7 +146,7 @@ export class ProductPage
 					break;
 			}
 
-			console.log(this.navParams.data.trigger_event)
+			// console.log(this.navParams.data.trigger_event)
 			switch (this.navParams.data.trigger_event) {
 				case "new.order":
 				case "order.new":
@@ -165,14 +164,11 @@ export class ProductPage
 					break;
 
 				case "order.pick":
-					this.billProvider.reset_order_session();
-					this.billProvider.set_bill_component('orders',[]);
-					this.billProvider.set_bill_component('visitor_name','');
 					index = Object.keys(this.navParams.data.table).shift();
-					this.billProvider.set_bill_component('table_id', this.navParams.data.table[index].tab_id)
-					this.billProvider.set_bill_component('table_name', this.navParams.data.table[index].tab_name)
-					this.billProvider.set_bill_component('table', this.navParams.data.table[index])
-	                this.billProvider.update_bill_component({},true);
+				    this.billProvider.set_bill_component('table_id', this.navParams.data.table[index].tab_id)
+				    this.billProvider.set_bill_component('table_name', this.navParams.data.table[index].tab_name)
+				    this.billProvider.set_bill_component('table', this.navParams.data.table[index])
+		            this.billProvider.update_bill_component({},true);
 					this.events.publish('bill.update', {})
 
 					break;
@@ -200,7 +196,7 @@ export class ProductPage
 	{
 		return this.productProvider.get_product(data)
 		.then((res) => {
-
+			console.log(res)
 			res = !this.helper.isJSON(res)? res : JSON.parse(res);
 			if(data.infinite == true)
 			{
@@ -283,21 +279,29 @@ export class ProductPage
 	add_to_bill(item)
 	{
 		// check is this bill have been saved before.
+		item = Object.assign({},item)
+		
+		console.log(item)
 		if(!this.billProvider.isset_order_session())
 		{
 			this.billProvider.add_order_session();
 		}
 
 		item.order_session = this.billProvider.get_active_order_session();
-		console.log(item.order_session, this.billProvider.bill)
 		this.billProvider.insert_item(item)
 		this.billProvider.set_order_session_item_counter(item.order_session);
 		this.events.publish('bill.update', item)
 	}
 
-	reset_receipts(fab?:FabContainer):void
+	reset_receipts()
 	{
-		this.events.publish('reset.data.receipt',{})
+		this.billProvider.reset_bill();
+        this.billProvider.update_bill_component({},true);
+		this.events.publish('bill.update', {})
+		console.log(this.items, this.original_items)
+		this.items = this.original_items;
+
+		// this.events.publish('reset.data.receipt',{})
 	}
 
 	
@@ -317,7 +321,7 @@ export class ProductPage
 		)
 	}
 
-	saveBill(fab?:FabContainer):void
+	saveBill()
 	{
 		let alertVisitor = this.alertCtrl.create({
 			title: 'Nama pembeli',
@@ -358,14 +362,17 @@ export class ProductPage
 				trigger_event: 'table.change',
 			})
 			return false;
-		}
-
-		if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
-		{
-			alertVisitor.present();
 		}else
 		{
-			this.process_save_bill()
+
+
+			if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
+			{
+				alertVisitor.present();
+			}else
+			{
+				this.process_save_bill()
+			}
 		}
 
 		// this.events.publish('get.data.receipt', {pay:false})
@@ -388,7 +395,7 @@ export class ProductPage
 		})
 	}
 
-	pay_bill(fab?:FabContainer):void
+	pay_bill()
 	{
 
 		let alertVisitor = this.alertCtrl.create({
@@ -470,7 +477,7 @@ export class ProductPage
 		})
 	}
 
-	print_bill(fab?:FabContainer):void
+	print_bill()
 	{
 	}
 
