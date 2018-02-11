@@ -72,29 +72,33 @@
 								<tr class="">
 									<td style="width: 10%;"></td>							
 									<td style="width: 10%;"></td>							
-									<td style="width: 50%;" class="text-align--right">Bill</td>
-									<td style="width: 20%;" class="text-align--right">Rp.{{billProvider.helper.intToIDR(bill.payment_bills)}}</td>
+									<td style="width: 48%;" class="text-align--right">Bill</td>
+									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>
+									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(bill.payment_bills)}} </span> </td>
 								</tr>
 
-								<tr class="" *ngIf="tax">
+								<tr class="" *ngIf="billProvider.get_bill_component('tax_nominal')>0">
 									<td style="width: 10%;"></td>
 									<td style="width: 10%;"></td>							
-									<td style="width: 50%;" class="text-align--right">Pajak</td>
-									<td style="width: 20%;" class="text-align--right">{{bill.tax_nominal}}</td>
+									<td style="width: 48%;" class="text-align--right">Pajak</td>
+									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>
+									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component('tax_nominal'))}} </span> </td>
 								</tr>
 
-								<tr class="" *ngIf="discount">
+								<tr class="" *ngIf="billProvider.get_bill_component('discount_nominal')>0">
 									<td style="width: 10%;"></td>
 									<td style="width: 10%;"></td>							
-									<td style="width: 50%;" class="text-align--right">Diskon</td>
-									<td style="width: 20%;" class="text-align--right">{{bill.discount_nominal}}</td>
+									<td style="width: 48%;" class="text-align--right">Diskon</td>
+									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>
+									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component('discount_nominal'))}} </span> </td>
 								</tr>
 
 								<tr >
 									<td style="width: 10%;" ></td>
 									<td style="width: 10%;"></td>							
-									<td style="width: 50%;" class="text-align--right">Total</td>
-									<td style="width: 20%;" class="text-align--right">Rp.{{billProvider.helper.intToIDR(bill.payment_total)}}</td>
+									<td style="width: 48%;" class="text-align--right">Total</td>
+									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>
+									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component('payment_total'))}} </span> </td>
 								</tr>
 
 							</tbody>

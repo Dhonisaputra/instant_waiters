@@ -19,9 +19,9 @@ import * as $ from "jquery"
   templateUrl: 'payment.html',
 })
 export class PaymentPage {
-	bill:any = {GrandTotalPrice:0, returnMoney: 0, paid:''}
+	bill:any = {payment_total:0, returnMoney: 0, payment_nominal:''}
 	outlet: number;
-	paymentMethod:number= 1;
+	payment_method:number= 1;
 	users_outlet:number=1;
 	bank_id:number=1;
   constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider: DbLocalProvider, private events: Events, private helper: HelperProvider, private billProvider: BillProvider) {
@@ -31,7 +31,6 @@ export class PaymentPage {
 
   ionViewDidEnter()
     {
-		this.get_temporary_data();		
 		console.log(this.navParams.data)
     	if(this.navParams.data.event)
     	{
@@ -48,35 +47,43 @@ export class PaymentPage {
 	        }
     	}else
     	{
+			this.get_temporary_data();		
     	}
 
     }
 
   sumReturn(isInput:boolean=false)
   {
-  	this.bill.paid = this.helper.IDRtoInt(this.bill.paid)
-  	this.bill.paid = isNaN(this.bill.paid)? 0 : this.bill.paid;
-  	this.bill.GrandTotalPrice = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
+  	let payment_nominal = this.helper.IDRtoInt(this.bill.payment_nominal)
+  	payment_nominal = isNaN(payment_nominal)? 0 : payment_nominal;
+  	let payment_total = this.helper.IDRtoInt(this.billProvider.get_bill_component('payment_total'))
 
-  	this.bill.returnMoney =  parseInt(this.bill.paid) < parseInt(this.bill.GrandTotalPrice)? 0 : parseInt(this.bill.paid) - parseInt(this.bill.GrandTotalPrice) 
+  	let payment_rest =  payment_nominal < payment_total? 0 : payment_nominal - payment_total 
+
+  	let paid_with_bank_nominal = payment_total - payment_nominal;
   	
-  	this.bill.returnMoney = 'Rp.' + this.helper.intToIDR(this.bill.returnMoney)
-  	this.bill.GrandTotalPrice = this.helper.intToIDR(this.bill.GrandTotalPrice)
-  	this.bill.paid = 'Rp.' + this.helper.intToIDR(this.bill.paid)
+  	this.bill.paid_with_bank_nominal = 'Rp.' + this.helper.intToIDR(paid_with_bank_nominal);
+  	this.bill.payment_rest = 'Rp.' + this.helper.intToIDR(payment_rest)
+  	this.bill.payment_nominal = 'Rp.' + this.helper.intToIDR(payment_nominal)
 
-  	console.log(this.bill.paid)
+  	console.log(this.bill)
   	if(!isInput)
   	{
-  		// $('#paid').focus();	
+  		// $('#payment_nominal').focus();	
   	}
   	
   }
 
   is_not_enough_money()
   {
-  	let paid =  this.paymentMethod == 3 || this.paymentMethod == 2? this.helper.IDRtoInt( this.bill.totalWithCharge) :this.helper.IDRtoInt(this.bill.paid) 
-  	let total = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
-  	return paid < total
+  	let payment_nominal = this.helper.IDRtoInt(this.bill.payment_nominal);
+  	let paid_with_bank = this.helper.IDRtoInt( this.bill.paid_with_bank_nominal);
+
+  	payment_nominal =  this.payment_method == 3 || this.payment_method == 2? paid_with_bank + payment_nominal : payment_nominal;
+
+  	let total = this.helper.IDRtoInt(this.bill.payment_total)
+  	
+  	return payment_nominal < total
   }
 
   payBill()
@@ -90,28 +97,26 @@ export class PaymentPage {
 		users_outlet 			: this.users_outlet,
 		outlet					: this.outlet,
 		bank_id					: this.bank_id,
-		// payment
-		payment_bills			: this.helper.IDRtoInt(this.bill.sumPrice),
-		payment_method			: this.paymentMethod,
-		payment_nominal			: this.helper.IDRtoInt(this.bill.paid),
-		payment_total			: this.bill.chargePercent > 0 ? this.helper.IDRtoInt( this.bill.totalWithCharge ) : this.helper.IDRtoInt( this.bill.GrandTotalPrice ),
-		// tax
-		tax_nominal				: this.helper.IDRtoInt(this.bill.chargeNominal)||0,
-		tax_percent				: this.helper.IDRtoInt(this.bill.chargePercent)||0,
-		
-		paid_nominal			: this.paymentMethod == 3? this.helper.IDRtoInt( this.bill.paid) : 0,
-		paid_with_bank_nominal	: (this.paymentMethod == 3 || this.paymentMethod == 2) && this.helper.IDRtoInt( this.bill.totalWithCharge) > 0  ? this.helper.IDRtoInt( this.bill.totalWithCharge) : 0,
-		
-		payment_complement_status	: 1,
-
-		pay_id: this.navParams.data.bill && this.navParams.data.bill.pay_id? this.navParams.data.bill.pay_id : null
+		event 					: 'make_a_payment',
+		payment_nominal			: this.helper.IDRtoInt( this.bill.payment_nominal),
+		payment_rest			: this.helper.IDRtoInt( this.bill.payment_rest),
+		paid_with_bank_nominal	: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.paid_with_bank_nominal) > 0  ? this.helper.IDRtoInt( this.bill.paid_with_bank_nominal) : 0,
+		payment_bank_charge_nominal	: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.payment_bank_charge_nominal) > 0  ? this.helper.IDRtoInt( this.bill.payment_bank_charge_nominal) : 0,
+		payment_bank_charge_percent	: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.payment_bank_charge_percent) > 0  ? this.helper.IDRtoInt( this.bill.payment_bank_charge_percent) : 0,
+		payment_method 			: this.payment_method,
 	})
 	.done((res)=>{
 		res = !this.helper.isJSON(res)? res : JSON.parse(res);
-		if(res.code == 200 && (res.action && res.action == 'insert'))
+		if(res.code == 200)
 		{
-			this.events.publish('reset.data.receipt',{})
+
 			this.bill = {}
+			this.navCtrl.setRoot(ProductPage, {
+  				previous: 'payment-page',
+  				event: 'payment.cashier',
+  				trigger_event: "order.new",
+  				message: "Nota telah dibayarkan"
+  			})
 		}else
 		{
 			console.error('Error when saving the bill')	
@@ -131,7 +136,7 @@ export class PaymentPage {
   {
   	this.bill = {}
 	this.get_temporary_data();
-	this.bill.totalWithCharge = this.helper.IDRtoInt( this.bill.GrandTotalPrice )
+	this.bill.paid_with_bank_nominal = this.helper.IDRtoInt( this.bill.payment_total )
 
 
   }
@@ -143,36 +148,41 @@ export class PaymentPage {
 
 	calculate(event, type:string, value:any) 
 	{
-		this.bill.paid = !this.bill.paid?'' : this.helper.IDRtoInt(this.bill.paid);
-		this.bill.paid = this.bill.paid.toString();
+		let payment_nominal = !this.bill.payment_nominal? this.billProvider.get_bill_component('payment_nominal') : this.helper.IDRtoInt(this.bill.payment_nominal) ;
+		payment_nominal = payment_nominal.toString();
 		switch (type) {
 			case "numeric":
-				value = parseInt(value);
-				this.bill.paid += value
+				value = parseInt(value).toString();
+				
+				payment_nominal += value
+				console.log(payment_nominal, typeof payment_nominal, typeof value)
+				this.bill.payment_nominal = 'Rp.'+this.helper.intToIDR(parseInt(payment_nominal));
 				this.sumReturn();
 				break;
 			
 			case "action":
 				switch (value) {
 					case "pas":
-						this.bill.paid = this.billProvider.get_bill_component('payment_total');
+						this.bill.payment_nominal = 'Rp.'+this.helper.intToIDR(this.billProvider.get_bill_component('payment_total'));
 						this.sumReturn();
 						break;
 
 					case "clear":
-						this.bill.paid = 0
-						this.sumReturn();
+						this.bill.payment_nominal = 0
+						// this.sumReturn();
 						break;
 
 					case "rm":
-						if(this.bill.paid.length > 0)
+						let payment_nominal = this.helper.IDRtoInt(this.bill.payment_nominal).toString();
+						if(payment_nominal.length > 0)
 						{
-							var a = this.bill.paid.split('')
+							var a = payment_nominal.split('')
 							a.pop();
-							this.bill.paid = a.join('');
+							payment_nominal = a.join('');
+							this.bill.payment_nominal = 'Rp.'+this.helper.intToIDR(parseInt(payment_nominal));
 						}else
 						{
-							this.bill.paid = 0;
+							this.bill.payment_nominal = 0;
 						}
 						this.sumReturn();
 						break;
@@ -195,7 +205,7 @@ export class PaymentPage {
 		console.log(data)
 
 		let item = {
-			GrandTotalPrice  : data.payment_total,
+			payment_total  : data.payment_total,
             sumPrice         : data.payment_bills,
             update_db 		 : false,
             tax              : data.tax_percent,
@@ -231,15 +241,15 @@ export class PaymentPage {
 	get_temporary_data()
 	{
 		let data = this.billProvider.data_bill();
-		console.log(data)
-
+		data = Object.assign({},data);
+		this.events.publish('bill.update', {})
 	    this.bill = data;
-	    if(data.receipts.length < 1)
+/*
+	    if(data.orders.length < 1)
 	    {
 		  	this.dbLocalProvider.opendb('bill.data')
 		  	.then( (res) =>{
-	        console.log
-		  		if(res.receipts.length < 1)
+		  		if(res.orders.length < 1)
 		  		{
 		  			this.navCtrl.setRoot(ProductPage, {
 		  				previous: 'payment-page',
@@ -248,18 +258,15 @@ export class PaymentPage {
 		  		}else
 		  		{
 		  			this.bill = res;
-					this.billProvider.set_data_bill(res);
-					this.events.publish('bill.update', {})
 		  		}
 
 		  	} )
 	    	
 	    }else
 	    {
-			this.billProvider.set_data_bill(data);
 			this.events.publish('bill.update', {})
 
-	    }
+	    }*/
 
 		this.sumReturn();
 
@@ -267,20 +274,23 @@ export class PaymentPage {
 
 	countChargePercent()
 	{
-		let val = this.helper.IDRtoInt( this.bill.chargePercent )
-		let grandTotal = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
+		let val = this.helper.IDRtoInt( this.bill.payment_bank_charge_percent )
+		let grandTotal = this.helper.IDRtoInt(this.bill.payment_total)
+		let payment_nominal = this.helper.IDRtoInt(this.bill.payment_nominal)
 		let chargeNominal = grandTotal * (val/100);
-		this.bill.totalWithCharge = this.helper.intToIDR( grandTotal + chargeNominal );
-		this.bill.chargeNominal = this.helper.intToIDR( chargeNominal )
+		if(payment_nominal > 0)
+		{
+			grandTotal = grandTotal - payment_nominal;
+		}
+		this.bill.paid_with_bank_nominal = 'Rp.'+this.helper.intToIDR( grandTotal + chargeNominal );
+		this.bill.payment_bank_charge_nominal = 'Rp.'+this.helper.intToIDR( chargeNominal )
 	}
 
 	countChargeNominal()
 	{
-		let val = this.helper.IDRtoInt( this.bill.chargeNominal )
-		let grandTotal = this.helper.IDRtoInt(this.bill.GrandTotalPrice)
-		this.bill.chargePercent = ((val/grandTotal)*100).toFixed(1); // to make 1 digit after comma
-		this.bill.totalWithCharge = this.helper.intToIDR( grandTotal + val );
-
-
+		let val = this.helper.IDRtoInt( this.bill.payment_bank_charge_nominal )
+		let grandTotal = this.helper.IDRtoInt(this.bill.payment_total)
+		this.bill.payment_bank_charge_percent = ((val/grandTotal)*100).toFixed(1); // to make 1 digit after comma
+		this.bill.paid_with_bank_nominal = this.helper.intToIDR( grandTotal + val );
 	}
 }

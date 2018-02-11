@@ -77,8 +77,9 @@ export class ReceiptPage {
 
 	update_receipt()
 	{
-		let receipt = this.get_data_receipt();
-        this.billProvider.update_bill_component(receipt, true);
+		// let receipt = this.get_data_receipt();
+        this.billProvider.set_bill_component('visitor_name', this.bill.visitor_name);
+        this.billProvider.update_bill_component({}, true);
 	}
 
 	get_data_receipt()
@@ -89,7 +90,6 @@ export class ReceiptPage {
             // tax              : this.tax,
             // receipts         : this.receipts,
             visitor_name     : this.bill.visitor_name,
-            table_id         : this.bill.visitor_table,
             // visitor_table    : this.visitor_table,
             // taxqty    	 : this.taxqty,
         }
@@ -138,7 +138,6 @@ export class ReceiptPage {
 
 	change_table()
 	{
-		console.log(this.navCtrl)
 		let index:number=-1;
 		let isFound:boolean= false;
 		let navCtrlLen:number=this.navCtrl.length();
@@ -244,9 +243,13 @@ export class ReceiptPage {
 
 	edit_total_payment()
 	{
-		this.navCtrl.push(TotalPaymentEditorPage, {})
-		// let modal = this.modalCtrl.create(EditReceiptItemPage, item)
-		// modal.present();
+		// this.navCtrl.push(TotalPaymentEditorPage, {})
+		let modal = this.modalCtrl.create(TotalPaymentEditorPage, {})
+		modal.present();
+		modal.onDidDismiss(data => {
+			this.trigger_update_receipt();
+	     console.log(data);
+	   });
 	}
 
 }

@@ -6,54 +6,64 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>total-payment-editor</ion-title>
-  </ion-navbar>
+	<!-- <ion-toolbar color="main"> -->
+	  <ion-navbar>
+	    <ion-title>total-payment-editor</ion-title>
+	    <ion-buttons end>
+	      <button ion-button icon-only (click)="closeModal()" *ngIf="page_params.view_type == 'modal' ">
+	      	<ion-icon name="close-circle"></ion-icon>
+	      </button>
+	    </ion-buttons>
+	  </ion-navbar>
+	<!-- </ion-toolbar> -->
 
 </ion-header>
 
 
 <ion-content padding>
-	<ion-col col-8 col-xs-12 col-sm-12 col-md-8 >
-		<ion-row class="row form-group">
-			<ion-col col-3 class="">Total Belanja</ion-col>
-			<ion-col col-9 class=" input-box">
-				<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.total_bills">
-			</ion-col>
-		</ion-row>
+	<div class="center distributed">
 		
-		<ion-row class="row form-group">
-			<ion-col col-3 class="">Discount</ion-col>
-			<ion-col col-9 class=" input-box input-group">
-				<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.discount_percent">
-				<span class="input-group-addon" id="basic-addon1"> % </span>
-				<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.discount_nominal" >
-			</ion-col>
-		</ion-row>
+		<ion-col col-6 col-xs-6 col-sm-6 col-md-6 >
+			<ion-row class="row form-group">
+				<ion-col col-3 class="">Total Belanja</ion-col>
+				<ion-col col-9 class=" input-box">
+					<input type="text" class="form-control--lg" name="" readonly value="Rp. {{helper.intToIDR(billProvider.get_bill_component('payment_bills'))}}">
+				</ion-col>
+			</ion-row>
+			
+			<ion-row class="row form-group">
+				<ion-col col-3 class="">Discount</ion-col>
+				<ion-col col-9 class=" input-box input-group">
+					<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.discount_percent" (input)="countDiscountNominal()">
+					<span class="input-group-addon" id="basic-addon1"> % </span>
+					<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.discount_nominal" (input)="countDiscountPercent()">
+				</ion-col>
+			</ion-row>
 
-		<ion-row class="row form-group">
-			<ion-col col-3 class="">Pajak</ion-col>
-			<ion-col col-9 class=" input-box input-group">
-				<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.tax_percent">
-				<span class="input-group-addon" id="basic-addon1"> % </span>
-				<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.tax_nominal" (input)="countChargeNominal()">
-			</ion-col>
-		</ion-row>
+			<ion-row class="row form-group">
+				<ion-col col-3 class="">Pajak</ion-col>
+				<ion-col col-9 class=" input-box input-group">
+					<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.tax_percent"  (input)="countTaxNominal()">
+					<span class="input-group-addon" id="basic-addon1"> % </span>
+					<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.tax_nominal" (input)="countTaxPercent()">
+				</ion-col>
+			</ion-row>
 
-		<ion-row class="form-group">
-			<ion-col col-3 class="">Total</ion-col>
-			<ion-col col-9 class=" input-box">
-				<input type="text" readonly class="form-control--lg" name="" [(ngModel)]="bill.payment_total">
-			</ion-col>
-		</ion-row>
+			<ion-row class="form-group">
+				<ion-col col-3 class="">Total </ion-col>
+				<ion-col col-9 class=" input-box">
+					<input type="text" readonly class="form-control--lg" name="" value="Rp. {{ helper.intToIDR(billProvider.get_bill_component('payment_total')) }}">
+				</ion-col>
+			</ion-row>
 
-		<ion-row class="row form-group center">
-				<!-- <button ion-button end (click)="payBill()">Simpan</button> -->
+			<ion-row class="row form-group center">
+					<button ion-button end (click)="updateItem()">Simpan</button>
 
-				<button ion-button color="danger">Batal</button>
-		</ion-row>
-	
-	</ion-col>
+					<button ion-button color="danger">Batal</button>
+			</ion-row>
+		
+		</ion-col>
 							
+	</div>
 						
 </ion-content>

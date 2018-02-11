@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController, AlertController, ActionSheetController  } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController, AlertController, ActionSheetController, FabContainer  } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { PaymentPage } from '../payment/payment';
 import { TransactionPage } from '../transaction/transaction';
@@ -129,12 +129,14 @@ export class ProductPage
 	}
 	ionViewWillEnter()
     {
+    	var index;
     	console.log(this.navParams.data)
 		this.billProvider.pull_data_bill()
 		.then( ()=>{
 
 			switch (this.navParams.data.event) {
 				case "transaction.edit":
+					console.log(this.navParams.data.bill)
 					this.billProvider.update_bill_component(this.navParams.data.bill,true)
 					this.billProvider.count_pricing();
 					this.events.publish('bill.update', {})
@@ -145,17 +147,49 @@ export class ProductPage
 					break;
 			}
 
-	    	if(this.navParams.data.table)
-			{
-				var index = Object.keys(this.navParams.data.table).shift();
-				this.billProvider.set_bill_component('table_id', this.navParams.data.table[index].tab_id)
-				this.billProvider.set_bill_component('table_name', this.navParams.data.table[index].tab_name)
-				this.billProvider.set_bill_component('table', this.navParams.data.table[index])
-                this.billProvider.update_bill_component({},true);
-				this.events.publish('bill.update', {})
+			console.log(this.navParams.data.trigger_event)
+			switch (this.navParams.data.trigger_event) {
+				case "new.order":
+				case "order.new":
+					this.billProvider.reset_bill();
+	                this.billProvider.update_bill_component({},true);
+					this.events.publish('reset.data.receipt',{})
+					break;
 
-			}else
-			{
+				case "order.reset":
+					this.billProvider.reset_order_session();
+					this.billProvider.set_bill_component('orders',[]);
+					this.billProvider.set_bill_component('visitor_name','');
+	                this.billProvider.update_bill_component({},true);
+					this.events.publish('bill.update', {})
+					break;
+
+				case "order.pick":
+					this.billProvider.reset_order_session();
+					this.billProvider.set_bill_component('orders',[]);
+					this.billProvider.set_bill_component('visitor_name','');
+					index = Object.keys(this.navParams.data.table).shift();
+					this.billProvider.set_bill_component('table_id', this.navParams.data.table[index].tab_id)
+					this.billProvider.set_bill_component('table_name', this.navParams.data.table[index].tab_name)
+					this.billProvider.set_bill_component('table', this.navParams.data.table[index])
+	                this.billProvider.update_bill_component({},true);
+					this.events.publish('bill.update', {})
+
+					break;
+					
+				case "table.change":
+					index = Object.keys(this.navParams.data.table).shift();
+					this.billProvider.set_bill_component('table_id', this.navParams.data.table[index].tab_id)
+					this.billProvider.set_bill_component('table_name', this.navParams.data.table[index].tab_name)
+					this.billProvider.set_bill_component('table', this.navParams.data.table[index])
+	                this.billProvider.update_bill_component({},true);
+	                // this.billProvider.pull_data_bill();
+					this.events.publish('bill.update', {})
+					break;
+				
+				default:
+					// code...
+					break;
 			}
 
 		})
@@ -261,7 +295,7 @@ export class ProductPage
 		this.events.publish('bill.update', item)
 	}
 
-	reset_receipts(id)
+	reset_receipts(fab?:FabContainer):void
 	{
 		this.events.publish('reset.data.receipt',{})
 	}
@@ -283,7 +317,7 @@ export class ProductPage
 		)
 	}
 
-	saveBill()
+	saveBill(fab?:FabContainer):void
 	{
 		let alertVisitor = this.alertCtrl.create({
 			title: 'Nama pembeli',
@@ -354,9 +388,8 @@ export class ProductPage
 		})
 	}
 
-	pay_bill()
+	pay_bill(fab?:FabContainer):void
 	{
-		
 
 		let alertVisitor = this.alertCtrl.create({
 			title: 'Nama pembeli',
@@ -394,7 +427,17 @@ export class ProductPage
 		
 		this.error_product();
 		
-		if(!this.billProvider.get_bill_component('visitor_name'))
+		if(!this.billProvider.get_bill_component('table_id') )
+		{
+			this.navCtrl.setRoot(TablePage, {
+				previous: 'product-page',
+				event: 'bill.changeTable',
+				trigger_event: 'table.change',
+			})
+			return false;
+		}
+
+		if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
 		{
 			alertVisitor.present();
 		}else
@@ -427,9 +470,8 @@ export class ProductPage
 		})
 	}
 
-	print_bill()
+	print_bill(fab?:FabContainer):void
 	{
-		
 	}
 
 	filter_product()
@@ -466,7 +508,7 @@ export class ProductPage
 		    subTitle: 'Silahkan pilih salah satu produk',
 		});
 
-		if(this.billProvider.get_bill_component('receipts').length < 1)
+		if(this.billProvider.get_bill_component('orders').length < 1)
 		{
 			alertErrorProduct.present();
 			return false;

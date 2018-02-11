@@ -30,8 +30,10 @@ export class EditReceiptItemPage {
 
   ionViewWillEnter()
   {
+    this.item = {}
     // this.billProvider.update_data_bill()
-    let item = this.billProvider.get_bill_component(this.navParams.data.index);
+    console.log(this.navParams.data.index)
+    let item = this.billProvider.get_order(this.navParams.data.index);
     this.item = item?item:{}
   }
 
@@ -42,25 +44,25 @@ export class EditReceiptItemPage {
 
   countChargePercent()
   {
-    let val = this.helper.IDRtoInt( this.item.chargePercent )
+    let val = this.helper.IDRtoInt( this.item.discount_percent )
     let price = this.helper.IDRtoInt(this.item.price)
     let chargeNominal = price * (val/100);
     this.item.totalWithCharge = this.helper.intToIDR( price + chargeNominal );
-    this.item.chargeNominal = this.helper.intToIDR( chargeNominal )
+    this.item.discount_nominal = this.helper.intToIDR( chargeNominal )
   }
 
   countChargeNominal()
   {
-    let val = this.helper.IDRtoInt( this.item.chargeNominal )
+    let val = this.helper.IDRtoInt( this.item.discount_nominal )
     let price = this.helper.IDRtoInt(this.item.price)
-    this.item.chargePercent = ((val/price)*100).toFixed(1); // to make 1 digit after comma
+    this.item.discount_percent = ((val/price)*100).toFixed(1); // to make 1 digit after comma
     this.item.totalWithCharge = this.helper.intToIDR( price + val );
   }
 
   changeNotes()
   {
-    this.item.note = this.item.notes?this.item.note:'';
-    this.billProvider.set_bill_component(this.item.index, 'notes', this.item.note)
+    this.item.note = this.item.note?this.item.note:'';
+    this.billProvider.update_order_item(this.item.index, 'notes', this.item.note)
     // this.ionViewWillEnter()
   }
 
@@ -68,13 +70,13 @@ export class EditReceiptItemPage {
 
   reduceItem()
   {
-    var dataitem = this.billProvider.get_bill_component(this.item.index);
-    if(dataitem.amount <= 1)
+    var dataitem = this.billProvider.get_order(this.item.index);
+    if(dataitem.qty <= 1)
     {
       return false;
     }else
     {
-      this.billProvider.set_bill_component(this.item.index, 'amount', parseInt(this.item.amount) - 1)
+      this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) - 1)
       this.billProvider.count_pricing()
       this.ionViewWillEnter()
       // this.trigger_update_receipt();
@@ -83,9 +85,9 @@ export class EditReceiptItemPage {
   }
   addItem()
   {
-    var dataitem = this.billProvider.get_bill_component(this.item.index);
+    var dataitem = this.billProvider.get_order(this.item.index);
     
-      this.billProvider.set_bill_component(this.item.index, 'amount', parseInt(this.item.amount) + 1)
+      this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) + 1)
       this.billProvider.count_pricing()
       this.ionViewWillEnter()
       // this.trigger_update_receipt();

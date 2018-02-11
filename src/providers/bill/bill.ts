@@ -31,13 +31,22 @@ export class BillProvider {
             payment_bills:0,
             payment_total:0,
             payment_nominal:0,
+
+            discount_nominal:0,
+            discount_percent:0,
+            discount_id:undefined,
+
+            tax_nominal:0,
+            tax_percent:0,
+
             outlet:undefined,
             visitor_name:'',
             table_id:undefined,
-            discount_id:undefined,
+            
             payment_method:undefined,
             paid_nominal:undefined,
             paid_with_bank_nominal:undefined,
+
             table:{}
 
         };
@@ -64,14 +73,13 @@ export class BillProvider {
 
         var url = this.config.base_url('admin/outlet/transaction/add')
         let billdata = this.data_bill(data)
+        data = Object.assign(billdata, data)
         return $.post(url, billdata)
         .done((res) => {
             res = !this.helper.isJSON(res)? res : JSON.parse(res);
             if(res.code == 200)
             {
                 successData.present();
-                this.set_bill_component('pay_id', res.data.pay_id); // new method.
-                this.update_bill_component({},true);
 
             }else
             {
@@ -153,7 +161,7 @@ export class BillProvider {
 
     set_order(index:number, content:any={})
     {
-        return this.get_bill_component('orders')[index];
+        this.get_bill_component('orders')[index] = content;
     }
     insert_order(data:any)
     {
@@ -222,13 +230,12 @@ export class BillProvider {
         
         item.event = event;
 
-        if(existence.exist && existence.index && existence.index > -1)
+        console.log(existence)
+        if(existence.exist && existence.index > -1)
         {
             let order = this.get_bill_component('orders');
-            order[existence.index].qty     = parseInt(order[existence.index].qty) + 1;
-            order[existence.index].total = parseInt(order[existence.index].qty) * parseInt(order[existence.index].price);
-            
-            // this.events.publish('bill.insert_item', {data: this.receipts, latest: item})
+            order[existence.index].qty       = parseInt(order[existence.index].qty) + 1;
+            order[existence.index].total     = parseInt(order[existence.index].qty) * parseInt(order[existence.index].price);
 
             $('#receipt-product-'+item.id+'-'+event+' .product-amount').addClass('pulse')
             setTimeout(function(){
@@ -255,6 +262,7 @@ export class BillProvider {
         let tax_nominal = this.get_bill_component('tax_nominal');
         let discount_nominal = this.get_bill_component('discount_nominal');
 
+        console.log(payment_bills, discount_nominal, tax_nominal)
         tax_nominal = tax_nominal?parseInt(tax_nominal):0;
         discount_nominal = discount_nominal?parseInt(discount_nominal):0;
 
@@ -273,7 +281,6 @@ export class BillProvider {
             payment_bills = payment_bills + parseInt(RestotalPrice[i]);
         }
 
-       
         payment_total = payment_bills - discount_nominal + tax_nominal;
 
         this.set_bill_component('payment_bills', payment_bills, true);
@@ -356,13 +363,15 @@ export class BillProvider {
         this.reset_order_session();
         let order_array = {}
         orders.forEach((value, index)=>{
+            value.order_session = parseInt(value.order_session);
             if(!order_array[value.order_session])
             {
-                console.log(order_array, order_array[value.order_session])
+
                 order_array[value.order_session] = {count:1, first: value.id};
                 this.update_order_item(index, 'first_session_order', true)
             }else
             {
+                this.update_order_item(index, 'first_session_order', false)
                 order_array[value.order_session].count = order_array[value.order_session].count + 1;
             }
         })

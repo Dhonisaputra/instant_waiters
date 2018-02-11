@@ -54,7 +54,7 @@ export class TransactionPage {
                     outlet: this.outlet,
                     page: 1,
                     join:['table'],
-                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders.outlet.pay_id.type.name.price.total.qty.product.detail_id.order_session,table_name`
+                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders.outlet.pay_id.type.name.price.total.qty.product.detail_id.order_session.note,table_name`
                 }
             }
 

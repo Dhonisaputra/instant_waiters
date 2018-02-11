@@ -4,6 +4,7 @@ import { DbLocalProvider } from "../../providers/db-local/db-local";
 import { ProductPage } from "../../pages/product/product";
 import { DbTableProvider } from "../../providers/db-table/db-table";
 import { HelperProvider } from '../../providers/helper/helper'; 
+import { BillProvider } from '../../providers/bill/bill';
 
 /**
  * Generated class for the TablePage page.
@@ -26,7 +27,7 @@ export class TablePage {
   tableChoosen:any = {};
   choose_type_order:number = 1;
   event_handler:any={};
-  constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider) {
+  constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider, private billProvider:BillProvider) {
     // this.helstorage.set('outlet', 1)
     this.local.setdb('outlet', 1)
   	/*this.local.opendb('table')
@@ -136,7 +137,7 @@ export class TablePage {
   order()
   {
     this.local.set_params('table.selected', this.tableChoosen);
-    // this.appCtrl.getRootNav().push(ProductPage)
-    this.navCtrl.setRoot(ProductPage, {'previous': 'table-page', event:'table.pick', trigger_event:'order.pick', 'table': this.tableChoosen, 'multiple': this.multiple})
+    let trigger_event = this.navParams.data.trigger_event == 'table.change'? 'table.change' : 'order.pick';
+    this.navCtrl.setRoot(ProductPage, {'previous': 'table-page', event:'table.pick', trigger_event: trigger_event, 'table': this.tableChoosen, 'multiple': this.multiple})
   }
 }

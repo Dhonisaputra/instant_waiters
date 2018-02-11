@@ -30,31 +30,35 @@
             <ion-row class="row form-group">
               <ion-col col-3 class="">Jumlah Pembelian</ion-col>
               <ion-col col-9 class=" input-box input-group">
-                <button class="" id="basic-addon1" (click)="reduceItem()">Kurangi</button>
-                <input type="text" class="form-control form-control--lg" name="" [(ngModel)]="item.amount">
-                <button class="" id="basic-addon1" (click)="addItem()">Tambah</button>
+                <button class="" ion-button color="light" icon-only id="" round (click)="reduceItem()">
+                  <ion-icon name="remove"></ion-icon>
+                </button>
+                <input type="text" class="form-control form-control--lg" name="" [(ngModel)]="item.qty">
+                <button class="" ion-button color="light" icon-only id="" round (click)="addItem()">
+                  <ion-icon name="add"></ion-icon>
+                </button>
               </ion-col>
             </ion-row>
             <ion-row class="form-group">
               <ion-col col-3 class="">Harga</ion-col>
               <ion-col col-9 class=" input-box input-group">
-                <input type="text" class="form-control--lg" name="" [(ngModel)]="item.totalPrice" readonly>
+                <input type="text" class="form-control--lg" name="" [(ngModel)]="item.price" readonly>
               </ion-col>
             </ion-row>
             
             <ion-row class="row form-group">
               <ion-col col-3 class="">Diskon</ion-col>
               <ion-col col-9 class=" input-box input-group">
-                <input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="item.chargePercent" (input)="countChargePercent($event)">
+                <input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="item.discount_percent" (input)="countChargeNominal($event)">
                 <span class="input-group-addon" id="basic-addon1"> % </span>
-                <input type="" class="form-control--lg form-control" name="" [(ngModel)]="item.chargeNominal" (input)="countChargeNominal()">
+                <input type="" class="form-control--lg form-control" name="" [(ngModel)]="item.discount_nominal" (input)="countChargePercent()">
               </ion-col>
             </ion-row>
 
             <ion-row class="form-group">
               <ion-col col-3 class="">Keterangan</ion-col>
               <ion-col col-9 class=" input-box">
-                <textarea class="form-control" [(ngModel)]="item.note" (change)="changeNotes()"></textarea>
+                <textarea class="form-control" [(ngModel)]="item.note" (change)="changeNotes()" style="height: 100px;"></textarea>
               </ion-col>
             </ion-row>
 
