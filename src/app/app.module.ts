@@ -57,7 +57,7 @@ import { HelperProvider } from '../providers/helper/helper';
     TransactionPage,
     DetailStockPage,
     EditReceiptItemPage,
-    TotalPaymentEditorPage
+    TotalPaymentEditorPage,
     // AbsoluteDragDirective
 
   ],
@@ -84,7 +84,7 @@ import { HelperProvider } from '../providers/helper/helper';
     TransactionPage,
     DetailStockPage,
     EditReceiptItemPage,
-    TotalPaymentEditorPage
+    TotalPaymentEditorPage,
 
   ],
   providers: [
