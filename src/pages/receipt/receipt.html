@@ -39,19 +39,23 @@
 								<ion-item-sliding >
 									<ion-item class="item-receipt" id="receipt-product-{{item.id}}" style="display: flex; padding-left: 0px;" (click)="editItem(item, i)">
 										<div style="display: flex;font-size: .8em;">
-											<div class="receipt-detail--component text-align--center" style="width: 10%;"  ><span class="product-amount">{{item.qty}}</span></div>
+											<div class="receipt-detail--component text-align--center" style="width: 10%;"  >
+												<span class="product-amount">{{item.qty}}</span>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0 && item.complement_item < item.qty">{{item.complement_item}}</p>
+
+											</div>
 											
 											<div class="receipt-detail--component text-align--left" style="width: 50%;" >
 												<span>{{item.name}}</span><br>
-												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Complement?</p>
-												<p class="italic receipt-detail--component--properties" *ngIf="item.discount_nominal > 0">Discount</p>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Complement</p>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.discount_nominal > 0 && (item.complement_status < 1 || item.complement_item < item.qty )">Discount</p>
 												<p class="receipt-detail--component--notes">{{item.note}}</p>
 											</div>
 
 											<div class="receipt-detail--component" style="width: 20%;">
 												<span> Rp.{{billProvider.helper.intToIDR(item.price)}} </span>
-												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Yes</p>
-												<p class="italic receipt-detail--component--properties" *ngIf="item.discount_nominal > 0">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0"> &nbsp; </p>
+												<p class="italic receipt-detail--component--properties" *ngIf="item.discount_nominal > 0 && (item.complement_status < 1 || item.complement_item < item.qty )">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>
 											</div>
 											<div class="receipt-detail--component" style="width: 20%;">Rp.{{billProvider.helper.intToIDR(item.total)}}</div>
 										</div>

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, ToastController, Config } from 'ionic-angular';
+import { Nav, Platform, ToastController, Config, IonicApp, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -27,23 +27,26 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   lastTimeBackPress:number=0;
   timePeriodToExit:number=2000;
+  public routeHistory: Array<any>;
 
-  constructor(public toastCtrl: ToastController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private storage:Storage) {
+
+  constructor(private app : App, public toastCtrl: ToastController, public platform: Platform, private ionicApp: IonicApp, public statusBar: StatusBar, public splashScreen: SplashScreen, private storage:Storage) {
+
     this.initializeApp();
-      
-
+    
     // used for an example of ngFor and navigation
     this.pages = [
       // { title: 'Home', component: HomePage },
       { title: 'Table', component: TablePage }, 
       // { title: 'Send Receipt', component: SendReceiptPage },
       // { title: 'Payment', component: PaymentPage },
-      { title: 'Product', component: ProductPage },
+      { title: 'Cashier', component: ProductPage },
       { title: 'Stocks', component: StocksPage },
       { title: 'Transaction', component: TransactionPage },
       { title: 'Settings', component: SettingsPage },
     ];
     this.storage.set('outlet', 1)
+    this.routeHistory = [];
     
 
   }
@@ -52,7 +55,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.platform.registerBackButtonAction(()=>this.preventClose());
+      this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
@@ -72,4 +75,5 @@ export class MyApp {
     });
     toast.present(); 
   }
+
 }

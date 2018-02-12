@@ -18,7 +18,7 @@ export class BillProvider {
     temp_bill       :any = this.default_bill_value() // it will be temporary variable
     
 
-    constructor(public loadingCtrl: LoadingController, public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events, private helper: HelperProvider) {
+    constructor(public loadingCtrl: LoadingController, public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events, public helper: HelperProvider) {
 
         this.pull_data_bill();
     }
@@ -75,6 +75,7 @@ export class BillProvider {
         let billdata = this.data_bill(data)
         billdata = Object.assign(billdata, data)
         billdata.complement_status = data.complement_status == 'true'? 1 : 0;
+        console.log(billdata)
         return $.post(url, billdata)
         .done((res) => {
             res = !this.helper.isJSON(res)? res : JSON.parse(res);
@@ -286,7 +287,23 @@ export class BillProvider {
                 
             }else
             {
-                order[i].total = 0;
+                console.log(val)
+                if(val.complement_item < val.qty)
+                {
+                    let total = (order[i].qty - val.complement_item) * order[i].price    
+                    let discount_nominal = parseInt(val.discount_nominal);
+                    if(discount_nominal)
+                    {
+                        total = total - discount_nominal;
+                    }
+                    this.update_order_item(i, 'total', total);
+
+                    order[i].total = total;
+
+                }else
+                {
+                    order[i].total = 0;
+                }
             }
 
         })
@@ -294,7 +311,7 @@ export class BillProvider {
 
         let RestotalPrice = order.map((res) => {
             // lakukan pengechekan apakah order memiliki "complement_status";
-            if(!res.complement_status || parseInt(res.complement_status) < 1)
+            if( !res.complement_status || parseInt(res.complement_status) < 1 || (parseInt(res.complement_status) > 0 && res.complement_item < res.qty) )
             {
                 return res.total
             }else

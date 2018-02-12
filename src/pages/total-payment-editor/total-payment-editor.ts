@@ -5,7 +5,7 @@ import { BillProvider } from '../../providers/bill/bill';
 
 
 import * as $ from "jquery"
-import * as moment from 'moment';
+// import * as moment from 'moment';
 /**
  * Generated class for the TotalPaymentEditorPage page.
  *
@@ -30,13 +30,14 @@ export class TotalPaymentEditorPage {
     }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public billProvider:BillProvider, public helper:HelperProvider) {
   	this.bill = this.billProvider.get_bill_component()
+  	this.get_discount();
     if(this.navParams.data.page_params)
     {
         this.update_page_parameters(this.navParams.data.page_params);
     }
   }
 
-  
+
    ionViewDidLoad() {
         console.log('ionViewDidLoad DetailStockPage');
     }
@@ -109,5 +110,78 @@ export class TotalPaymentEditorPage {
       this.billProvider.update_bill()
       this.billProvider.count_pricing()
       this.closeModal();
+  }
+
+  change_discount()
+  {
+  	let index = this.bill.discounts.map((res)=>{
+  		return res.discount_id
+  	}).indexOf(this.bill.discount_id);
+
+  	if(this.bill.discount_id < 1)
+  	{
+  		this.bill.discount_percent = 0;
+	  	this.billProvider.set_bill_component('discount', '');
+	  	console.log('no change')
+  	}else
+  	{
+  		let discount = this.bill.discounts[index];
+  		this.bill.discount_percent = discount.discount_percent;
+	  	this.billProvider.set_bill_component('discount', this.bill.discounts[index]);
+  	}
+  	this.billProvider.set_bill_component('discount_id', this.bill.discount_id);
+  	this.countDiscountNominal();
+
+  	/*if(this.bill.discount[index].discount_percent < 1 && this.bill.discounts[index].discount_nominal > 0)
+  	{
+  		this.bill.discount_nominal = this.bill.discounts[index].discount_nominal;
+	  	this.billProvider.set_bill_component('discount_nominal', this.bill.discounts[index].discount_nominal);
+  	}else
+  	{
+
+  		this.bill.discount_percent = this.bill.discounts[index].discount_percent;
+  		this.billProvider.set_bill_component('discount_nominal', this.bill.discounts[index].discount_percent);
+  		this.countDiscountNominal()
+  	}*/
+  }
+
+  toggleTax(e)
+  {
+  	if(this.bill.is_tax)
+  	{
+  		this.bill.tax_percent = 10;
+  	}else
+  	{
+  		this.bill.tax_percent = 0;
+  	}
+  	this.countTaxNominal();
+  }
+
+  toggleDiscount()
+  {
+	this.bill.discount_percent = 0;
+  	if(this.bill.is_discount)
+  	{
+  	}else
+  	{
+		this.bill.discount_percent = 0;
+		this.bill.discount = []
+		this.bill.is_discount = 0;
+		this.bill.discount_type_fill = 0
+		this.bill.discount_id = 0;
+  	}
+  	this.countDiscountNominal();
+
+  }
+  get_discount()
+  {
+  	let data = {
+  		outlet: 1
+  	}
+  	$.post(this.helper.config.base_url('admin/disc-manage/data/discount/active'), data)
+  	.done((res)=>{
+        res = !this.helper.isJSON(res)? res : JSON.parse(res); 
+        this.bill.discounts = res.data
+  	})
   }
 }

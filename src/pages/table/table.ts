@@ -13,7 +13,9 @@ import { BillProvider } from '../../providers/bill/bill';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  priority: 'high'
+})
 @Component({
   selector: 'page-table',
   templateUrl: 'table.html',

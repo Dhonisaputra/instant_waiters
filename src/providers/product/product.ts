@@ -34,6 +34,10 @@ export class ProductProvider {
 			this.last_request = options.data;
 
 			let http = $.post( this.config.base_url('admin/outlet/product/get'), options.data )
+			http.then( (res) =>{
+				res = !this.helper.isJSON(res)? res : JSON.parse(res);
+				this.data.temp_product = res;
+			} )
 			return http;
 			
 		}else
@@ -45,6 +49,11 @@ export class ProductProvider {
 	get_data(name:string)
 	{
 		return this.data[name];
+	}
+
+	get_temporary()
+	{
+		return this.data.temp_product;
 	}
 
 	set_data(name:string, value:any)

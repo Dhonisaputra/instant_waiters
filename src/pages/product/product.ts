@@ -40,6 +40,9 @@ export class ProductPage
 	filter_type_selected: number = 0;
 	filter_product_name: string = '';
 	filter_sort_product: string = '';
+	page_params:any={
+		use_temporary_data:false
+	}
 	public paymentPage:any=PaymentPage;
 
 
@@ -109,7 +112,12 @@ export class ProductPage
 			{
 				this.appCtrl.getRootNav().push(PaymentPage)
 			}
-		})
+		});
+
+		if(this.navParams.data.page_params)
+        {
+            this.update_page_parameters(this.navParams.data.page_params);
+        }
 
 		/*this.localNotifications.schedule({
 		  id: 1,
@@ -128,6 +136,11 @@ export class ProductPage
 		})
 
 	}
+	update_page_parameters(data:any={})
+    {
+        this.page_params = Object.assign(this.page_params, data)
+    }
+
 	ionViewWillEnter()
     {
     	var index;
@@ -135,10 +148,13 @@ export class ProductPage
 		.then( ()=>{
 
 			switch (this.navParams.data.event) {
+
 				case "transaction.edit":
 					this.billProvider.update_bill_component(this.navParams.data.bill,true)
 					this.billProvider.count_pricing();
 					this.events.publish('bill.update', {})
+
+					this.navParams.data = {} // this code use to reset navParams. bcause, whenever a page pushed from this page and popped back, this data bill item always from the previous event. 
 					break;
 				
 				default:
@@ -298,7 +314,6 @@ export class ProductPage
 		this.billProvider.reset_bill();
         this.billProvider.update_bill_component({},true);
 		this.events.publish('bill.update', {})
-		console.log(this.items, this.original_items)
 		this.items = this.original_items;
 
 		// this.events.publish('reset.data.receipt',{})
@@ -354,16 +369,6 @@ export class ProductPage
 		      }
 		    ]
 		})
-		if(!this.billProvider.get_bill_component('table_id') )
-		{
-			this.navCtrl.setRoot(TablePage, {
-				previous: 'product-page',
-				event: 'bill.changeTable',
-				trigger_event: 'table.change',
-			})
-			return false;
-		}else
-		{
 
 
 			if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
@@ -373,7 +378,6 @@ export class ProductPage
 			{
 				this.process_save_bill()
 			}
-		}
 
 		// this.events.publish('get.data.receipt', {pay:false})
 		
@@ -434,7 +438,10 @@ export class ProductPage
 		
 		this.error_product();
 		
-		if(!this.billProvider.get_bill_component('table_id') )
+		/*LINE FOR REQUIRED TABLE ID
+		=========================================================================
+		*/
+		/*if(!this.billProvider.get_bill_component('table_id') )
 		{
 			this.navCtrl.setRoot(TablePage, {
 				previous: 'product-page',
@@ -442,7 +449,10 @@ export class ProductPage
 				trigger_event: 'table.change',
 			})
 			return false;
-		}
+		}*/
+		/*
+		===========================================================================
+		END OF LINE FOR REQUIRED TABLE ID*/
 
 		if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
 		{

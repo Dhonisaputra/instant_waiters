@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
 import { BillProvider } from '../../providers/bill/bill';
 import { ReceiptPage } from '../receipt/receipt';
-import { HelperProvider } from '../../providers/helper/helper'; 
+import { ProductPage } from '../product/product';
 
 /**
  * Generated class for the EditReceiptItemPage page.
@@ -18,9 +18,10 @@ import { HelperProvider } from '../../providers/helper/helper';
 })
 export class EditReceiptItemPage {
 
-  item: any={}
-  constructor(private helper:HelperProvider, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public billProvider:BillProvider) {
+  item: any;
 
+  constructor( public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public billProvider:BillProvider, private alertCtrl: AlertController) {
+    this.item = {}
     
   }
 
@@ -44,15 +45,15 @@ export class EditReceiptItemPage {
 
   countChargeNominal()
   {
-    let product_price = this.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
-    let qty = this.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
+    let product_price = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
+    let qty = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
 
-    let val = this.helper.IDRtoInt( this.item.discount_percent )
-    let price = this.helper.IDRtoInt(this.item.price)
+    let val = this.billProvider.helper.IDRtoInt( this.item.discount_percent )
+    let price = this.billProvider.helper.IDRtoInt(this.item.price)
     let chargeNominal = price * (val/100);
     
-    this.item.totalWithCharge = this.helper.intToIDR( price + chargeNominal );
-    this.item.discount_nominal = this.helper.intToIDR( chargeNominal )
+    this.item.totalWithCharge = this.billProvider.helper.intToIDR( price + chargeNominal );
+    this.item.discount_nominal = this.billProvider.helper.intToIDR( chargeNominal )
     this.billProvider.update_order_item(this.item.index, 'discount_nominal', chargeNominal)
 
     this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-chargeNominal)
@@ -60,15 +61,15 @@ export class EditReceiptItemPage {
 
   countChargePercent()
   {
-    let product_price = this.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
-    let qty = this.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
-    let val = this.helper.IDRtoInt( this.item.discount_nominal )
-    let price = this.helper.IDRtoInt(this.item.price)
+    let product_price = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
+    let qty = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
+    let val = this.billProvider.helper.IDRtoInt( this.item.discount_nominal )
+    let price = this.billProvider.helper.IDRtoInt(this.item.price)
 
     val = val?val:0;
 
     this.item.discount_percent = ((val/price)*100).toFixed(1); // to make 1 digit after comma
-    this.item.totalWithCharge = this.helper.intToIDR( price + val );
+    this.item.totalWithCharge = this.billProvider.helper.intToIDR( price + val );
     this.billProvider.update_order_item(this.item.index, 'discount_percent', this.item.discount_percent)
     this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-val)
   }
@@ -86,18 +87,78 @@ export class EditReceiptItemPage {
     this.billProvider.update_order_item(this.item.index, 'complement_note', this.item.complement_note)
     // this.ionViewWillEnter()
   }
+
+  changeComplementItems(type:string='input')
+  {
+    let qty;
+    switch (type) {
+      case "input":
+        qty = this.billProvider.get_order_item(this.item.index, 'qty')
+        this.item.complement_item = this.item.complement_item > qty ? qty : this.item.complement_item;
+        this.billProvider.update_order_item(this.item.index, 'complement_item', this.item.complement_item)
+        break;
+
+      case "reduce":
+        this.item.complement_item -=1;
+        if(this.item.complement_item < 1)
+        {
+          this.item.complement_item = 1;
+        }
+        this.billProvider.update_order_item(this.item.index, 'complement_item', this.item.complement_item)
+        break;
+
+      case "add":
+        // code...
+        this.item.complement_item +=1;
+        qty = this.billProvider.get_order_item(this.item.index, 'qty')
+        this.item.complement_item = this.item.complement_item > qty ? qty : this.item.complement_item;
+        this.billProvider.update_order_item(this.item.index, 'complement_item', this.item.complement_item)
+        break;
+      
+      default:
+        // code...
+        break;
+    }
+    // this.ionViewWillEnter()
+  }
   changeComplementStatus()
   {
-    let product_price = this.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
-    let qty = this.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
+    let product_price = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
+    let qty = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
     let complement_status = this.item.complement_status? 1 : 0;
-    this.billProvider.update_order_item(this.item.index, 'complement_status', complement_status)
+
+    this.billProvider.update_order_item(this.item.index, 'complement_status', complement_status);
+
     if(this.item.complement_status > 0)
     {
-      this.billProvider.update_order_item(this.item.index, 'total', 0)  
+      // jika ditemukan complement < 1, maka lakukan complement semuanya.
+      if(!this.item.complement_item || this.item.complement_item < 1)
+      {
+        this.item.complement_item = this.billProvider.get_order_item(this.item.index, 'qty')
+      }else
+      {
+        
+      }
+
+      // update total
+      if(this.item.complement_item == qty)
+      {
+        this.billProvider.update_order_item(this.item.index, 'total', 0)  
+      }else
+      {
+        let not_complement = qty - this.item.complement_item;
+        let price = not_complement * product_price;
+        this.billProvider.update_order_item(this.item.index, 'total', price)  
+         
+      }
+      
+      // simpan complement item.
+      this.billProvider.update_order_item(this.item.index, 'complement_item', this.item.complement_item)  
     }else
     {
+      this.item.complement_item = 0;
       this.billProvider.update_order_item(this.item.index, 'total', product_price*qty)  
+      this.billProvider.update_order_item(this.item.index, 'complement_item', 0)  
       this.countChargeNominal()
     }
     // this.ionViewWillEnter()
@@ -133,11 +194,30 @@ export class EditReceiptItemPage {
 
   updateItem()
   {
+      let alertErrorProduct = this.alertCtrl.create({
+          title: 'Kesalahan',
+          subTitle: 'Mohon untuk mengisi catatan complement!',
+      });
+
+      if(this.item.complement_status > 0 && ( !this.item.complement_note || this.item.complement_note.toString().length < 1) )
+      {
+        alertErrorProduct.present();
+        return false;
+      }
+
       this.changeComplementStatus();
       this.billProvider.update_bill()
       this.billProvider.count_pricing()
       // this.closeModal();
       this.navCtrl.pop({})
+      /*this.navCtrl.setRoot(ProductPage,{
+        event: 'order.return',
+        trigger_event: 'order.return',
+        page_params:
+        {
+          use_temporary_data: true
+        }
+      })*/
   }
 
   

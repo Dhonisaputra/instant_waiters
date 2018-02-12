@@ -243,11 +243,11 @@ export class ReceiptPage {
 	{
 		item.index = index;
 		this.navCtrl.push(EditReceiptItemPage, item)
-		/*let modal = this.modalCtrl.create(EditReceiptItemPage, item)
-		modal.present();
-		modal.onDidDismiss(data => {
-			this.trigger_update_receipt();
-	   });*/
+		// let modal = this.modalCtrl.create(EditReceiptItemPage, item)
+		// modal.present();
+		// modal.onDidDismiss(data => {
+			// this.trigger_update_receipt();
+	   // });
 	}
 
 	edit_total_payment()

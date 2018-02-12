@@ -846,3 +846,12 @@ ion-page.modal {
 {
   font-style: italic;
 }
+
+.ion-checkbox-no-bordered
+{
+  
+}
+  .ion-checkbox-no-bordered .item-inner
+  {
+    border-bottom: none !important;
+  }
