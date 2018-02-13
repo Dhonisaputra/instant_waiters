@@ -55,6 +55,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      this.storage.set('outlet', 1)
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();
       this.splashScreen.hide();

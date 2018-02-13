@@ -41,7 +41,7 @@ export class ProductPage
 	filter_type_selected: number = 0;
 	filter_product_name: string = '';
 	filter_sort_product: string = '';
-	page_params:object={
+	page_params:any={
 		use_temporary_data:false,
 		product_width: {
 			default: 6,
