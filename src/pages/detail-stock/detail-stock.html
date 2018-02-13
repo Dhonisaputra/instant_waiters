@@ -5,17 +5,24 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+	<ion-toolbar  color="main">
+		<ion-navbar>
+			<ion-title>{{product.name}}</ion-title>
+			
+			<ion-buttons end>
+		      <button ion-button icon-only (click)="closeModal()" *ngIf="page_params.view_type == 'modal' ">
+		      	<ion-icon name="close-circle"></ion-icon>
+		      </button>
+		    </ion-buttons>
 
-	<ion-navbar>
-		<ion-title>{{product.name}}</ion-title>
-		
-		<ion-buttons end>
-	      <button ion-button icon-only (click)="closeModal()" *ngIf="page_params.view_type == 'modal' ">
-	      	<ion-icon name="close-circle"></ion-icon>
-	      </button>
-	    </ion-buttons>
+		    <ion-buttons end>
+		      <a ion-button target="_blank" href="{{helper.config.base_url('admin/outlet/stock/export/download')}}/{{product.outlet}}/{{product.id}}">
+		      	Download kartu stok
+		      </a>
+		    </ion-buttons>
 
-	</ion-navbar>
+		</ion-navbar>
+	</ion-toolbar>
 
 </ion-header>
 

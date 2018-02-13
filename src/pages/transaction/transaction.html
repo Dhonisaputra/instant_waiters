@@ -94,34 +94,39 @@
 		<ion-list>
 			<ion-item-sliding *ngFor="let item of items; let i = index">
 
-				<ion-item >
-						<span>{{item.payment_date}}</span> &middot;
+				<ion-item (click)="default_click_transaction(i, item)">
+						<span>{{transform_date(item.payment_date)}}</span> &middot;
 					<span style="font-weight:700; ">
 						{{item.visitor_name}}
 					</span>
 					<p style="margin-top: 10px;">
-						<span> {{item.table_name}} </span> &middot;
-						<span> {{item.payment_total}} </span> &middot;
-						<span *ngIf="item.payment_nominal > 0" class="bs-label label-success"> Terbayar </span>
-						<span *ngIf="item.payment_nominal <= 0" class="bs-label label-danger"> Belum Dibayar </span>
+						<span> Nota {{item.pay_id}} &middot;</span>
+						<span *ngIf="!item.table_name"> Tidak menggunakan meja &middot;</span> 
+						<span *ngIf="item.table_name"> {{item.table_name}} &middot;</span> 
+						<span> Rp.{{helper.intToIDR(item.payment_total)}} &middot;</span>
+						<span *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" class="bs-label label-success"> Terbayar </span>
+						<span *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" class="bs-label label-warning"> Belum Dibayar </span>
+						<span *ngIf="item.payment_cancel_status == 1" class="bs-label label-danger"> Pembayaran Dibatalkan </span>
+			      	<!-- {{item.payment_nominal + item.paid_with_bank_nominal}} -->
 					</p>
 					<p>
 						
 					</p>
-					<ion-icon name="done-all" *ngIf="item.payment_nominal > 0" color="primary" item-end></ion-icon>
-					<ion-icon name="alert" *ngIf="item.payment_nominal < 1" color="danger" item-end></ion-icon>
+					<ion-icon name="done-all" *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" color="primary" item-end></ion-icon>
+					<ion-icon name="alert" *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" color="warning" item-end></ion-icon>
+					<ion-icon name="trash" *ngIf="item.payment_cancel_status == 1" color="danger" item-end></ion-icon>
 				</ion-item>
 				
 				<ion-item-options side="right">
 			      	
-			      	<button ion-button color="info" class="center distributed" *ngIf="page_params.action=='default'"> 
-			      		<ion-icon name="information-circle" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
-			      	</button>
-					<button ion-button color="primary" class="center distributed" *ngIf="page_params.action=='pay' || item.payment_nominal == 0" (click)="pay_transaction(i, item)"> 
+					<button ion-button color="primary" class="center distributed" *ngIf=" helper.IDRtoInt(item.payment_nominal) + helper.IDRtoInt(item.paid_with_bank_nominal) < helper.IDRtoInt(item.payment_total) && item.payment_cancel_status == 0" (click)="pay_transaction(i, item)"> 
 						<ion-icon name="logo-usd" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
 					</button>
-					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action=='edit' || item.payment_nominal == 1" (click)="edit_transaction(i, item)">
+					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action=='edit' || item.payment_nominal + item.paid_with_bank_nominal >= item.payment_total" (click)="edit_transaction(i, item)">
 						<ion-icon name="create" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
+					</button>
+					<button ion-button color="danger" class="center distributed" (click)="cancel_transaction(i, item)" *ngIf="item.payment_cancel_status == 0">
+						<ion-icon name="trash" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
 					</button>
 			    </ion-item-options>
 			</ion-item-sliding>

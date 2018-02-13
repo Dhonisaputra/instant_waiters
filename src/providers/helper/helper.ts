@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LoadingController } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
+
+import * as $ from "jquery"
+
+import * as moment from 'moment';
 
 /*
   Generated class for the HelperProvider provider.
@@ -11,7 +16,7 @@ import { ConfigProvider } from '../../providers/config/config';
 @Injectable()
 export class HelperProvider {
 
-  constructor(public http: HttpClient, public config: ConfigProvider) {
+  constructor(public http: HttpClient, public config: ConfigProvider, public loadingCtrl: LoadingController) {
     console.log('Hello HelperProvider Provider');
   }
 
@@ -49,6 +54,16 @@ export class HelperProvider {
         return false;
     }
     return {status:true, result: JSON.parse(str)};
+  }
+
+  nominalToPercent(nominal:number, total:number)
+  {
+    return ((nominal/total)*100).toFixed(1);
+  }
+
+  percentToNominal(percent:number, total:number)
+  {
+    return total * (percent/100);
   }
 
 }

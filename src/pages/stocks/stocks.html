@@ -31,8 +31,10 @@
     </ion-refresher>
     
     <ion-list style="margin-top: 10px;">
-        <ion-item  style="padding: 6px 0px;">
-            <strong>{{items.length}}</strong> produk ditemukan. 
+        <ion-item style="padding: 6px 0px;">
+            <span class="pull-right">
+                <strong>{{items.length}}</strong> produk ditemukan. 
+            </span>
         </ion-item>
         <ion-item *ngIf="items.length < 1" class="text-align--center"  style="padding: 6px 0px;">
             Tidak ditemukan produk

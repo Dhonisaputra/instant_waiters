@@ -1,3 +1,40 @@
 page-bill-item-editor {
 
 }
+
+#product-box {
+	background-color: #eee !important;
+}
+
+#section-right
+{
+	height: auto;
+	max-height: 90vh;
+	overflow-y: auto; 
+	background-color: white;
+	font-size: .9em;
+
+}
+
+#section-left .receipt-product
+{
+	position: relative !important;
+	width: 100% !important;
+}
+
+#section-right .item-md
+{
+    font-size: 1.4rem !important;
+}
+#section-left .receipt-product .item
+{
+    font-size: 1.9rem !important;
+}
+.receipt-footer
+{
+	display: none !important;
+}
+input
+{
+	pointer-events: none;
+}

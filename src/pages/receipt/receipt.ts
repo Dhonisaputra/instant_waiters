@@ -30,7 +30,7 @@ export class ReceiptPage {
 	visitor_table:number;
 	event_handler:any={};
 	bill:any=this.billProvider.default_bill_value();
-	receipt_page_params:any= {can_edit_slide_item: true}
+	receipt_page_params:any= {can_edit_slide_item: true,can_edit_bill_total:true, can_edit_table:false, can_edit_visitor_name:false}
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController) {
 		this.receipts = []
@@ -42,6 +42,7 @@ export class ReceiptPage {
 
 		// event listener to update bill
 	  	events.subscribe('bill.update', (data) => {
+		console.log('update')
 	  		this.trigger_update_receipt();
 		});
 
@@ -71,6 +72,7 @@ export class ReceiptPage {
 	trigger_update_receipt()
 	{
 		let data = this.billProvider.data_bill();
+		console.log(data)
 		this.set_receipts(data);
 		this.billProvider.detection_order_session_from_orders(data.orders)
 
@@ -241,6 +243,10 @@ export class ReceiptPage {
 	}
 	editItem(item, index)
 	{
+		if(!this.receipt_page_params.can_edit_slide_item)
+		{
+			return false
+		}
 		item.index = index;
 		this.navCtrl.push(EditReceiptItemPage, item)
 		// let modal = this.modalCtrl.create(EditReceiptItemPage, item)
@@ -252,6 +258,10 @@ export class ReceiptPage {
 
 	edit_total_payment()
 	{
+		if(!this.receipt_page_params.can_edit_bill_total)
+		{
+			return false;
+		}
 		// this.navCtrl.push(TotalPaymentEditorPage, {})
 		let modal = this.modalCtrl.create(TotalPaymentEditorPage, {})
 		modal.present();

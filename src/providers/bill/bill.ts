@@ -139,6 +139,7 @@ export class BillProvider {
     update_bill_component(data:object={}, update_db:boolean=false)
     {
         this.bill = Object.assign(this.bill, data)
+        console.log(this.bill)
         this.temp_bill = this.bill
 
         this.detection_order_session_from_orders(this.bill.orders, true)
@@ -233,7 +234,6 @@ export class BillProvider {
         
         item.event = event;
 
-        console.log(existence)
         if(existence.exist && existence.index > -1)
         {
             let order = this.get_bill_component('orders');
@@ -266,6 +266,11 @@ export class BillProvider {
         let payment_bills = this.get_bill_component('payment_bills');
         let tax_nominal = this.get_bill_component('tax_nominal');
         let discount_nominal = this.get_bill_component('discount_nominal');
+        let discount_percent = this.get_bill_component('discount_percent');
+        let discount_id = this.get_bill_component('discount_id');
+
+        
+        console.log(discount_id, discount_percent, discount_nominal, payment_total)
 
         tax_nominal = tax_nominal?parseInt(tax_nominal):0;
         discount_nominal = discount_nominal?parseInt(discount_nominal):0;
@@ -287,7 +292,6 @@ export class BillProvider {
                 
             }else
             {
-                console.log(val)
                 if(val.complement_item < val.qty)
                 {
                     let total = (order[i].qty - val.complement_item) * order[i].price    
@@ -307,7 +311,7 @@ export class BillProvider {
             }
 
         })
-        console.log(order)
+
 
         let RestotalPrice = order.map((res) => {
             // lakukan pengechekan apakah order memiliki "complement_status";
@@ -324,10 +328,16 @@ export class BillProvider {
             payment_bills = payment_bills + parseInt(RestotalPrice[i]);
         }
 
+        if(discount_id && !discount_nominal)
+        {
+            discount_nominal = this.helper.percentToNominal(discount_percent, payment_bills);
+        }
+
         payment_total = payment_bills - discount_nominal + tax_nominal;
 
         this.set_bill_component('payment_bills', payment_bills, true);
         this.set_bill_component('payment_total', payment_total, true);
+        this.set_bill_component('discount_nominal', discount_nominal, true);
 
     }
 
@@ -477,6 +487,18 @@ export class BillProvider {
             return !res.detail_id;
         })
         return  order.length > 0? true : false;
+    }
+
+    cancel_bill(pay_id:number, note:string)
+    {
+        var url = this.config.base_url('admin/outlet/transaction/update')
+        let billdata = {
+            pay_id: pay_id,
+            payment_cancel_note: note,
+            payment_cancel_status: 1
+
+        }
+        return $.post(url, billdata)
     }
 
 

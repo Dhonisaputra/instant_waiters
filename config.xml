@@ -18,7 +18,7 @@
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreenDelay" value="1000" />
     <preference name="Fullscreen" value="true" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -90,4 +90,5 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <engine name="browser" spec="~5.0.3" />
     <engine name="android" spec="~6.3.0" />
+    <plugin name="cordova-plugin-datecs-printer" spec="^0.8.2" />
 </widget>

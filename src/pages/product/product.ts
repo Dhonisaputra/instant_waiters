@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController, AlertController, ActionSheetController, FabContainer  } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController, AlertController, ActionSheetController, FabContainer, PopoverController  } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { PaymentPage } from '../payment/payment';
 import { TransactionPage } from '../transaction/transaction';
 import { DetailStockPage } from '../detail-stock/detail-stock';
 import { TablePage } from '../table/table';
+import { TooltipProductPage } from '../tooltip-product/tooltip-product';
 
 import { ProductProvider } from '../../providers/product/product';
 import { BillProvider } from '../../providers/bill/bill';
@@ -40,26 +41,34 @@ export class ProductPage
 	filter_type_selected: number = 0;
 	filter_product_name: string = '';
 	filter_sort_product: string = '';
-	page_params:any={
-		use_temporary_data:false
+	page_params:object={
+		use_temporary_data:false,
+		product_width: {
+			default: 6,
+			xs: 6,
+			sm: 4,
+			md: 3
+
+		}
 	}
 	public paymentPage:any=PaymentPage;
 
 
 	constructor(
-		public appCtrl: App, 
-		public navCtrl: NavController, 
-		public navParams: NavParams,
-		private events: Events, 
-		public productProvider: ProductProvider, 
-		public billProvider: BillProvider, 
-		public modalCtrl: ModalController,
-		private localNotifications: LocalNotifications, 
-		private dbLocalProvider: DbLocalProvider, 
-		public helper:HelperProvider, 
-		private loadingCtrl : LoadingController, 
-		private alertCtrl: AlertController,
-		private actionSheetCtrl: ActionSheetController
+		public appCtrl 				: App, 
+		public navCtrl 				: NavController, 
+		public navParams 			: NavParams,
+		private events 				: Events, 
+		public productProvider 		: ProductProvider, 
+		public billProvider 		: BillProvider, 
+		public modalCtrl			: ModalController,
+		private localNotifications	: LocalNotifications, 
+		private dbLocalProvider		: DbLocalProvider, 
+		public helper				: HelperProvider, 
+		private loadingCtrl		 	: LoadingController, 
+		private alertCtrl			: AlertController,
+		private actionSheetCtrl		: ActionSheetController,
+		private popoverController 	: PopoverController
 	) {
 		
 
@@ -68,6 +77,9 @@ export class ProductPage
 		this.items = [];
 		this.lists = [];
 
+		events.subscribe('zoom.controller', (res) => {
+			this.product_zoom(res.event)
+		});
 		events.subscribe('receive.data.receipt', (res) => {
 			var data = {
 				table_id: res.table,
@@ -583,6 +595,63 @@ export class ProductPage
   toggleSearchInput()
   {
   	this.searchinput = !this.searchinput;
+  }
+
+  product_zoom_controller(value:number, type:string)
+  {
+  	let ruleLen = [2,3,4,6];
+  	let index = ruleLen.indexOf(value);
+  	/*if(index<0)
+  	{
+  		return value;
+  	}*/
+  	switch (type) {
+  		case "in":
+  			value = index+1 > ruleLen.length -1 ? ruleLen[ruleLen.length -1] : ruleLen[index+1];
+  			break;
+
+  		case "out":
+  			value = index-1 < 0? ruleLen[0] : ruleLen[index-1];
+  			break;
+  	}
+
+  	return value;
+
+  }
+  product_zoom(type:string='in')
+  {
+
+	this.page_params.product_width.xs = this.product_zoom_controller(this.page_params.product_width.xs, type)
+	this.page_params.product_width.sm = this.product_zoom_controller(this.page_params.product_width.sm, type)
+	this.page_params.product_width.md = this.product_zoom_controller(this.page_params.product_width.md, type)
+
+  	/*switch (type) {
+  		case "in":
+  			this.page_params.product_width.xs = this.page_params.product_width.xs < 6?  : this.page_params.product_width.xs;
+  			this.page_params.product_width.sm = this.page_params.product_width.sm < 6?  : this.page_params.product_width.sm;
+  			this.page_params.product_width.md = this.page_params.product_width.md < 6?  : this.page_params.product_width.md;
+  			break;
+
+  		case "out":
+  			this.page_params.product_width.xs = this.page_params.product_width.xs > 2? this.page_params.product_width.xs - 1 : this.page_params.product_width.xs;
+  			this.page_params.product_width.sm = this.page_params.product_width.sm > 2? this.page_params.product_width.sm - 1 : this.page_params.product_width.sm;
+  			this.page_params.product_width.md = this.page_params.product_width.md > 2? this.page_params.product_width.md - 1 : this.page_params.product_width.md;
+  			break;
+  		
+  		default:
+  			// code...
+  			break;
+  	}*/
+  }
+  tooltip_present(ev:any)
+  {
+  	let popover = this.popoverController.create(TooltipProductPage, {
+  		zoom: this.product_zoom
+  	});
+  	popover.present({
+  		ev: ev,
+  		
+  	});
   }
 
 }

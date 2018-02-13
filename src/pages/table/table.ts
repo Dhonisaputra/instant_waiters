@@ -5,6 +5,8 @@ import { ProductPage } from "../../pages/product/product";
 import { DbTableProvider } from "../../providers/db-table/db-table";
 import { HelperProvider } from '../../providers/helper/helper'; 
 import { BillProvider } from '../../providers/bill/bill';
+declare let DatecsPrinter:any;
+
 
 /**
  * Generated class for the TablePage page.
@@ -21,7 +23,7 @@ import { BillProvider } from '../../providers/bill/bill';
   templateUrl: 'table.html',
 })
 export class TablePage {
-
+  DatecsPrinter: any;
   tableNum : any;
   outlet : number;
   tableSelect : any;
@@ -49,7 +51,7 @@ export class TablePage {
   ionViewWillEnter()
   {
     this.detect_parameters();
-
+    console.log(window, this.DatecsPrinter)
   }
 
 

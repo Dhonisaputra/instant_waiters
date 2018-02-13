@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ActionSheetController, AlertController } from 'ionic-angular';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { ConfigProvider } from '../../providers/config/config';
 import { PaymentPage } from "../payment/payment"
 import { ProductPage } from "../product/product"
+import { BillProvider } from "../../providers/bill/bill"
+import { BillItemEditorPage } from "../bill-item-editor/bill-item-editor"
 import { HelperProvider } from '../../providers/helper/helper'; 
 
 import * as $ from "jquery"
@@ -40,7 +42,7 @@ export class TransactionPage {
     transaction_params:any = {data:{limit: 20, page: 1}};
 
 
-    constructor(private actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider, private loadingCtrl: LoadingController) {
+    constructor(private billProvider: BillProvider, private actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider, private loadingCtrl: LoadingController) {
         this.dbLocalProvider.opendb('outlet')
         .then((val)=>{
             this.outlet = val;
@@ -52,8 +54,8 @@ export class TransactionPage {
                     limit:20,
                     outlet: this.outlet,
                     page: 1,
-                    join:['table'],
-                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders,table_name`
+                    join:['table','discount'],
+                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders,table_name,payment_rest,discount_name,discount_percent,discount_nominal,payment_cancel_status,payment_cancel_note`
                 }
             }
 
@@ -259,4 +261,96 @@ export class TransactionPage {
         })
     }
 
+    info_transaction(index, item)
+    {
+        this.navCtrl.push(BillItemEditorPage, {
+                bill:item, index:index,
+                receipt_page_params:
+                {
+                    can_edit_slide_item: false,
+                    can_edit_bill_total: false,
+                    can_edit_table:true, can_edit_visitor_name:true
+                }
+            })
+    }
+
+    default_click_transaction(index, item)
+    {
+        if(!this.navParams.data.event)
+        {
+            this.info_transaction(index, item)
+        }else
+        {
+            this.pay_transaction(index, item)
+        }
+    }
+
+    transform_date(date)
+    {
+        return moment(date).format('HH:mm - YYYY MMM DD')
+    }
+
+    cancel_transaction(index, item)
+    {
+        let alert = this.alertCtrl.create({
+            title: 'Success',
+            subTitle: 'Orderan telah dibatalkan',
+            buttons: ['OK']
+        });
+
+        let alertGagal = this.alertCtrl.create({
+            title: 'Kesalahan',
+            subTitle: 'Terdapat kesalahan saat membatalkan order. Silahkan dicoba kembali!',
+            buttons: ['OK']
+        });
+
+        let prompt = this.alertCtrl.create({
+          title: 'Batalkan pesanan',
+          message: "Silahkan isikan alasan",
+          inputs: [
+            {
+              name: 'cancel_note',
+              placeholder: 'Alasan pembatalan'
+            },
+          ],
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: data => {
+                // console.log('Cancel clicked');
+              }
+            },
+            {
+              text: 'Save',
+              handler: data => {
+                  let loading = this.helper.loadingCtrl.create({
+                      content: 'Silahkan tunggu'
+                  })
+                  loading.present();
+                this.billProvider.cancel_bill(item.pay_id, data.cancel_note)
+                .then( (res) =>{
+                    res = !this.helper.isJSON(res)? res : JSON.parse(res); 
+                    if(res.code == 200)
+                    {
+                        alert.present();
+                    }else
+                    {
+                        alertGagal.present()
+                    }
+
+                } )
+                .fail( ()=>{
+                    alertGagal.present();
+                } )
+                .always(() => {
+                    loading.dismiss();
+                })
+
+              }
+            }
+          ]
+        });
+        prompt.present();
+    }
 }
