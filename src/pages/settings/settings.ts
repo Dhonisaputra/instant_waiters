@@ -39,9 +39,9 @@ export class SettingsPage {
     }).present();
   }
 
-  to_error_page()
+  to_error_page(code, message)
   {
-    this.navCtrl.push(ErrorPage, {code:404, message:'Page not found!'});
+    this.navCtrl.push(ErrorPage, {code:code, message:message});
   }
   sync()
   {
