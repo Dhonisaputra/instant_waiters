@@ -34,13 +34,14 @@ export class StocksPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private productProvider : ProductProvider, private helper:HelperProvider, private dbLocalProvider: DbLocalProvider) {
     this.detailStockPage = DetailStockPage;
+    this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+    this.first_time_get_product();
 
-    this.dbLocalProvider.opendb('outlet')
+    /*this.dbLocalProvider.opendb('outlet')
     .then((val)=>{
       this.outlet = val;
       
-    	this.first_time_get_product();
-    })
+    })*/
 
     if(this.navParams.data.page_params)
     {

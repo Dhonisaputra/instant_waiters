@@ -125,11 +125,11 @@ export class PaymentPage {
 	})
   }
   ionViewDidLoad() {
-    this.dbLocalProvider.opendb('outlet')
+	this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+    /*this.dbLocalProvider.opendb('outlet')
 	.then((val)=>{
-		this.outlet = val;
 		
-	})
+	})*/
   }
 
   resetBillCounted()

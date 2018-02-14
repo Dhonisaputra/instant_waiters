@@ -7,6 +7,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { SQLite } from '@ionic-native/sqlite';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -26,6 +27,7 @@ import { DetailStockPage } from '../pages/detail-stock/detail-stock';
 import { EditReceiptItemPage } from "../pages/edit-receipt-item/edit-receipt-item"
 import { TotalPaymentEditorPage } from '../pages/total-payment-editor/total-payment-editor';
 import { TooltipProductPage } from '../pages/tooltip-product/tooltip-product';
+import { ErrorPage } from '../pages/error/error';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -59,7 +61,8 @@ import { HelperProvider } from '../providers/helper/helper';
     DetailStockPage,
     EditReceiptItemPage,
     TotalPaymentEditorPage,
-    TooltipProductPage
+    TooltipProductPage,
+    ErrorPage
     // AbsoluteDragDirective
 
   ],
@@ -87,7 +90,8 @@ import { HelperProvider } from '../providers/helper/helper';
     DetailStockPage,
     EditReceiptItemPage,
     TotalPaymentEditorPage,
-    TooltipProductPage
+    TooltipProductPage,
+    ErrorPage
 
   ],
   providers: [
@@ -97,6 +101,7 @@ import { HelperProvider } from '../providers/helper/helper';
     SQLite,
     File,
     FileTransfer,
+    ScreenOrientation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ReceiptDataProvider,
     ConfigProvider,

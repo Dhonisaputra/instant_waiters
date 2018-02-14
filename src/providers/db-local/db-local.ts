@@ -16,7 +16,7 @@ and Angular DI.
 @Injectable()
 export class DbLocalProvider {
     fileTransfer: FileTransferObject = this.transfer.create();
-    params: any= {} // variable to store temporary params || karena saya belum bisa ngirim / ganti page menggunakan parameters.
+    params: any= {is_login:false} // variable to store temporary params || karena saya belum bisa ngirim / ganti page menggunakan parameters.
 
     constructor(public http: HttpClient, public config: ConfigProvider, public storage: Storage, private events: Events, private localNotifications: LocalNotifications, private transfer: FileTransfer, private file: File) {
     }

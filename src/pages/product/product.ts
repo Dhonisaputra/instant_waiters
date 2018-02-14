@@ -138,14 +138,16 @@ export class ProductPage
 	}
 
 	ionViewDidLoad() {
-		this.dbLocalProvider.opendb('outlet')
+		this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+	
+		this.refresh_data({});
+		this.billProvider.count_pricing();
+		this.get_unpaid_bill();
+		
+		/*this.dbLocalProvider.opendb('outlet')
 		.then((val)=>{
-			this.outlet = val;
-			this.refresh_data({});
-			this.billProvider.count_pricing();
-			this.get_unpaid_bill();
 			
-		})
+		})*/
 
 	}
 	update_page_parameters(data:any={})
@@ -222,9 +224,9 @@ export class ProductPage
 
 	get_product(data:any)
 	{
+		
 		return this.productProvider.get_product(data)
 		.then((res) => {
-			console.log(res)
 			res = !this.helper.isJSON(res)? res : JSON.parse(res);
 			if(data.infinite == true)
 			{
@@ -236,7 +238,8 @@ export class ProductPage
 				this.original_items = res.data;
 			}
 			// this.filter_product()
-		})
+		}).always( ()=>{
+		} )
 	}
 
 	refresh_data(refresher:any={})
@@ -309,7 +312,6 @@ export class ProductPage
 		// check is this bill have been saved before.
 		item = Object.assign({},item)
 		
-		console.log(item)
 		if(!this.billProvider.isset_order_session())
 		{
 			this.billProvider.add_order_session();

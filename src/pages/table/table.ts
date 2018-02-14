@@ -33,7 +33,8 @@ export class TablePage {
   event_handler:any={};
   constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider, private events:Events, private billProvider:BillProvider) {
     // this.helstorage.set('outlet', 1)
-    this.local.setdb('outlet', 1)
+    // this.local.setdb('outlet', 1)
+    console.log(this.helper.local.get_params(this.helper.config.variable.credential));
   	/*this.local.opendb('table')
   	.then((res)=>{
   		if(!res)
@@ -51,29 +52,41 @@ export class TablePage {
   ionViewWillEnter()
   {
     this.detect_parameters();
-    console.log(window, this.DatecsPrinter)
+    
+    if(!this.navParams.data.trigger_event || this.navParams.data.trigger_event != 'table.change' )
+    {
+
+      if(this.helper.local.get_params(this.helper.config.variable.settings) && this.helper.local.get_params(this.helper.config.variable.settings).cashier_only)
+      {
+        this.navCtrl.setRoot(ProductPage);
+      }
+
+    }
   }
 
 
   ionViewDidLoad() {
-    this.local.opendb('outlet')
+    this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+  
+    this.dbTableProvider.get_table({outlet: this.outlet})
+    .then( (res)=>{
+      res = !this.helper.isJSON(res)? res : JSON.parse(res);
+      if(res.code == 200)
+      {
+        this.tableNum = res.results;
+      }else
+      {
+        alert('Error on getting data')
+      }
+    })
+    .catch(()=>{
+        alert('Error on getting data')
+    })
+    
+    /*this.local.opendb('outlet')
     .then((val)=>{
       this.outlet = val;
-      this.dbTableProvider.get_table({outlet: val})
-      .then( (res)=>{
-        res = !this.helper.isJSON(res)? res : JSON.parse(res);
-        if(res.code == 200)
-        {
-          this.tableNum = res.results;
-        }else
-        {
-          alert('Error on getting data')
-        }
-      })
-      .catch(()=>{
-          alert('Error on getting data')
-      })
-    })
+    })*/
       
   }
 

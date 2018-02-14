@@ -10,6 +10,10 @@ and Angular DI.
 export class ConfigProvider {
 
 	host: string;
+	variable:any = {
+		credential: 'credential',
+		settings: 'settings'
+	}
 	constructor() {
 		// this.host = 'http://localhost/folarpos-instant/';
 		this.host = 'http://192.168.1.38/folarpos-instant/';

@@ -43,34 +43,36 @@ export class TransactionPage {
 
 
     constructor(private billProvider: BillProvider, private actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider:DbLocalProvider, private helper: HelperProvider, private config: ConfigProvider, private loadingCtrl: LoadingController) {
+        this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+        let dataFetch = {
+            online:true,
+            infinite: false,
+            data: { 
+                limit:20,
+                outlet: this.outlet,
+                page: 1,
+                join:['table','discount'],
+                fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders,table_name,payment_rest,discount_name,discount_percent,discount_nominal,payment_cancel_status,payment_cancel_note`
+            }
+        }
+
+        if(this.navParams.data.body)
+        {
+            if(this.navParams.data.today == true)
+            {
+                this.navParams.data.body.where['payment_date_only'] = moment().format('YYYY-MM-DD')
+            }
+            dataFetch.data = Object.assign(dataFetch.data, this.navParams.data.body)
+        }
+
+        this.transaction_params = dataFetch;
+
+/*        this.filter_transaction()
         this.dbLocalProvider.opendb('outlet')
         .then((val)=>{
             this.outlet = val;
 
-            let dataFetch = {
-                online:true,
-                infinite: false,
-                data: { 
-                    limit:20,
-                    outlet: this.outlet,
-                    page: 1,
-                    join:['table','discount'],
-                    fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders,table_name,payment_rest,discount_name,discount_percent,discount_nominal,payment_cancel_status,payment_cancel_note`
-                }
-            }
-
-            if(this.navParams.data.body)
-            {
-                if(this.navParams.data.today == true)
-                {
-                    this.navParams.data.body.where['payment_date_only'] = moment().format('YYYY-MM-DD')
-                }
-                dataFetch.data = Object.assign(dataFetch.data, this.navParams.data.body)
-            }
-
-            this.transaction_params = dataFetch;
-            this.filter_transaction()
-        })
+        })*/
 
 
 

@@ -5,20 +5,28 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+	<ion-toolbar color="main">
 
-  <ion-navbar>
-  	<button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>settings</ion-title>
-  </ion-navbar>
+		<ion-navbar>
+			<button ion-button menuToggle>
+				<ion-icon name="menu"></ion-icon>
+			</button>
+			<ion-title>settings</ion-title>
+		</ion-navbar>
 
+	</ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
-	<ion-list>
-		<button ion-item icon-only >
+	<ion-list *ngIf="segment == 'menu'">
+		<button ion-item icon-only (click)="segment = 'global'">
+			<ion-icon name="settings" item-start></ion-icon>
+			Settings
+			<ion-icon name="arrow-forward" item-end></ion-icon>
+		</button>  
+
+		<button ion-item icon-only  (click)="to_error_page()">
 			<ion-icon name="print" item-start></ion-icon>
 			Printer
 			<ion-icon name="arrow-forward" item-end></ion-icon>
@@ -30,18 +38,30 @@
 			<ion-icon name="arrow-forward" item-end></ion-icon>
 		</button>  
 
-		<button ion-item icon-only>
+		<button ion-item icon-only (click)="to_error_page()">
 			<ion-icon name="person" item-start></ion-icon>
 			Pengguna
 			<ion-icon name="arrow-forward" item-end></ion-icon>
 		</button>  
 
-		<button ion-item icon-only>
+		<button ion-item icon-only (click)="to_error_page()">
 			<ion-icon name="unlock" item-start></ion-icon>
 			Logout
 			<ion-icon name="arrow-forward" item-end></ion-icon>
 		</button>  
 
 	</ion-list>
+
+	<!-- Page -->
+	<div *ngIf="segment == 'global'">
+  		<button ion-button color="primary" icon-left (click)="segment = 'menu'" style="margin-left: 15px;"> <ion-icon name="arrow-back"></ion-icon> &nbsp; Kembali</button>
+  		<hr>
+		<ion-list>
+  			<ion-item>
+  				<ion-label> Langsung Tampilkan product</ion-label>
+  				<ion-toggle checked="true" (ionChange)="update_settings()" [(ngModel)]="settings.cashier_only"></ion-toggle>
+			</ion-item>
+		</ion-list>
+	</div>
 
 </ion-content>
