@@ -44,6 +44,7 @@ export class MyApp {
       { title: 'Stocks', component: StocksPage },
       { title: 'Transaction', component: TransactionPage },
       { title: 'Settings', component: SettingsPage },
+      { title: 'Login', component: LoginPage },
     ];
     this.storage.set('outlet', 1)
     this.routeHistory = [];

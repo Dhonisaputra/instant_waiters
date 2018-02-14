@@ -2,11 +2,11 @@ page-bill-item-editor {
 
 }
 
-#product-box {
+#product-box-detail {
 	background-color: #eee !important;
 }
 
-#section-right
+#product-box-detail #section-right
 {
 	height: auto;
 	max-height: 90vh;
@@ -22,19 +22,19 @@ page-bill-item-editor {
 	width: 100% !important;
 }
 
-#section-right .item-md
+#product-box-detail #section-right .item-md
 {
     font-size: 1.4rem !important;
 }
-#section-left .receipt-product .item
+#product-box-detail #section-left .receipt-product .item
 {
     font-size: 1.9rem !important;
 }
-.receipt-footer
+#product-box-detail .receipt-footer
 {
 	display: none !important;
 }
-input
+#product-box-detail input
 {
 	pointer-events: none;
 }

@@ -6,16 +6,44 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-  	<button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
+	<ion-toolbar color="main">
+		<ion-navbar>
+			<button ion-button menuToggle>
+				<ion-icon name="menu"></ion-icon>
+			</button>
+			<ion-title>Login</ion-title>
+		</ion-navbar>
+	</ion-toolbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding >
+	<div class="center distributed" style="flex-direction: column;">
+		
+	<div class="col-md-6 col-lg-6 col-sm-8 col-xs-12">
+		<div style="text-align: center;">
+			<img src="assets/imgs/folarpos.png" style="width: auto; height: 150px;">
+			<h3>Log into Folarpos Instan</h3>
+		</div>
+		<ion-list >
+			<ion-item>
+				<ion-label floating>Email</ion-label>
+				<ion-input type="text" required [(ngModel)]="user.user_email_or_phone"></ion-input>
+			</ion-item>
 
+			<ion-item>
+				<ion-label floating>Password</ion-label>
+				<ion-input type="password" required [(ngModel)]="user.user_password"></ion-input>
+			</ion-item>
+			<ion-item style="display: none;">
+			</ion-item>
+
+		</ion-list>
+
+		<div padding style="padding-right: 0px;">
+			<button ion-button block color="main" large (click)="signIn($event)">Sign In</button>
+		</div>
+	</div>
+	</div>
 </ion-content>
