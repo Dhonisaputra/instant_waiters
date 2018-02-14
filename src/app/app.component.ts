@@ -39,15 +39,15 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       // { title: 'Home', component: HomePage },
-      { title: 'Table', component: TablePage }, 
+      // { title: 'Table', component: TablePage }, 
       // { title: 'Send Receipt', component: SendReceiptPage },
       // { title: 'Payment', component: PaymentPage },
-      { title: 'Cashier', component: ProductPage },
-      { title: 'Stocks', component: StocksPage },
-      { title: 'Transaction', component: TransactionPage },
+      { title: 'Kasir', component: ProductPage },
+      { title: 'Stok', component: StocksPage },
+      { title: 'Transaksi', component: TransactionPage },
       { title: 'Settings', component: SettingsPage },
     ];
-    this.storage.set('outlet', 1)
+    // this.storage.set('outlet', 1)
     this.routeHistory = [];
     
 
