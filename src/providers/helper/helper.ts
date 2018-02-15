@@ -69,4 +69,9 @@ export class HelperProvider {
     return total * (percent/100);
   }
 
+  toInt(text:any)
+  {
+    return parseInt(text)
+  }
+
 }

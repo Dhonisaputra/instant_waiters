@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProductProvider } from '../../providers/product/product';
-import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { DetailStockPage } from '../detail-stock/detail-stock';
 
 import { HelperProvider } from '../../providers/helper/helper'; 
@@ -32,7 +31,7 @@ export class StocksPage {
       toggleFilter: false
     }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private productProvider : ProductProvider, private helper:HelperProvider, private dbLocalProvider: DbLocalProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private productProvider : ProductProvider, private helper:HelperProvider) {
     this.detailStockPage = DetailStockPage;
     this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
     this.first_time_get_product();

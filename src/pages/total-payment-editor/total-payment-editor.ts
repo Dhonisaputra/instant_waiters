@@ -21,6 +21,7 @@ import * as $ from "jquery"
 export class TotalPaymentEditorPage {
 
 	bill:any={};
+  outlet:any;
    page_params  :object={
         action:'default', // [default, edit, pay]
         view_type: 'modal', // [page, modal],
@@ -30,7 +31,9 @@ export class TotalPaymentEditorPage {
     }
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public navParams: NavParams, public billProvider:BillProvider, public helper:HelperProvider) {
   	this.bill = this.billProvider.get_bill_component()
-  	this.get_discount();
+    this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+    this.get_discount();
+    
     if(this.navParams.data.page_params)
     {
         this.update_page_parameters(this.navParams.data.page_params);
@@ -52,6 +55,7 @@ export class TotalPaymentEditorPage {
 
   countTaxNominal()
   {
+    this.bill.tax_percent = this.helper.toInt(this.bill.tax_percent)> 99?99:this.bill.tax_percent;
     let val = this.helper.IDRtoInt( this.bill.tax_percent )
     let total = this.billProvider.get_bill_component('payment_bills');
     
@@ -78,8 +82,15 @@ export class TotalPaymentEditorPage {
     this.billProvider.count_pricing()
   }
 
-  countDiscountNominal()
+  countDiscountNominal(el:any={})
   {
+    let discount_percent = this.helper.toInt(this.bill.discount_percent) > 99?99:this.bill.discount_percent;
+    if(el.target && discount_percent >=99)
+    {
+      $(el.target).val(discount_percent)
+      this.bill.discount_percent = discount_percent;
+    }
+    
     let val = this.helper.IDRtoInt( this.bill.discount_percent )
     let total = this.billProvider.get_bill_component('payment_bills');
     
@@ -89,12 +100,20 @@ export class TotalPaymentEditorPage {
     this.billProvider.set_bill_component('discount_percent', val)
 
     this.billProvider.count_pricing()
+
   }
 
-  countDiscountPercent()
+  countDiscountPercent(el:any={})
   {
     let val = this.helper.IDRtoInt( this.bill.discount_nominal )
     let total = this.billProvider.get_bill_component('payment_bills');
+    if(val >= total && el.target)
+    {
+      val = total;
+      this.bill.discount_nominal = val;
+      $(el.target).val(val)
+    }
+
     let discount_percent = ((val/total)*100).toFixed(1); // to make 1 digit after comma
     
     this.billProvider.set_bill_component('discount_percent', discount_percent)
@@ -175,9 +194,11 @@ export class TotalPaymentEditorPage {
   }
   get_discount()
   {
-  	let data = {
-  		outlet: 1
+    this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+    let data = {
+  		outlet: this.outlet
   	}
+    console.log(data)
   	$.post(this.helper.config.base_url('admin/disc-manage/data/discount/active'), data)
   	.done((res)=>{
         res = !this.helper.isJSON(res)? res : JSON.parse(res); 

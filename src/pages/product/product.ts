@@ -138,6 +138,7 @@ export class ProductPage
 	}
 
 	ionViewDidLoad() {
+
 		this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
 	
 		this.refresh_data({});
@@ -157,6 +158,7 @@ export class ProductPage
 
 	ionViewWillEnter()
     {
+    	
     	var index;
 		this.billProvider.pull_data_bill()
 		.then( ()=>{
@@ -168,7 +170,7 @@ export class ProductPage
 					this.billProvider.count_pricing();
 					this.events.publish('bill.update', {})
 
-					this.navParams.data = {} // this code use to reset navParams. bcause, whenever a page pushed from this page and popped back, this data bill item always from the previous event. 
+					this.navParams.data = {event:'order.do'} // this code use to reset navParams. bcause, whenever a page pushed from this page and popped back, this data bill item always from the previous event. 
 					break;
 				
 				default:

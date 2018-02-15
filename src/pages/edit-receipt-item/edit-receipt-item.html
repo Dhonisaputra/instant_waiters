@@ -31,7 +31,7 @@
                 <button class="" ion-button color="light" icon-only id="" round (click)="reduceItem()" style="margin-right: 10px;">
                   <ion-icon name="remove"></ion-icon>
                 </button>
-                <input type="text" class="form-control form-control--lg" name="" [(ngModel)]="item.qty">
+                <input type="number" class="form-control form-control--lg" name="" [(ngModel)]="item.qty">
                 <button class="" ion-button color="light" icon-only id="" round (click)="addItem()"  style="margin-left: 10px;">
                   <ion-icon name="add"></ion-icon>
                 </button>
@@ -41,16 +41,16 @@
             <ion-row class="form-group">
               <ion-col col-3 class="">Harga</ion-col>
               <ion-col col-9 class=" input-box input-group">
-                <input type="text" class="form-control--lg" name="" [(ngModel)]="item.price" readonly>
+                <input type="text" class="form-control--lg" name="" [(ngModel)]="item.price" disabled>
               </ion-col>
             </ion-row>
             
             <ion-row class="row form-group">
               <ion-col col-3 class="">Diskon</ion-col>
               <ion-col col-9 class=" input-box input-group">
-                <input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="item.discount_percent" (input)="countChargeNominal($event)">
+                <input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="item.discount_percent" (input)="countChargeNominal($event)">
                 <span class="input-group-addon" id="basic-addon1"> % </span>
-                <input type="" class="form-control--lg form-control" name="" [(ngModel)]="item.discount_nominal" (input)="countChargePercent()">
+                <input type="number" class="form-control--lg form-control" name="" [(ngModel)]="item.discount_nominal" (input)="countChargePercent($event)">
               </ion-col>
             </ion-row>
 
@@ -75,7 +75,7 @@
                  <button class="" ion-button color="light" icon-only id="" round (click)="changeComplementItems('reduce')" style="margin-right: 10px;">
                   <ion-icon name="remove"></ion-icon>
                 </button>
-                <input type="number" class="form-control" [(ngModel)]="item.complement_item" (input)="changeComplementItems('input')">
+                <input type="number" min="1" max="{{item.qty}}" class="form-control" [(ngModel)]="item.complement_item" (input)="changeComplementItems('input', $event)">
                 <button class="" ion-button color="light" icon-only id="" round (click)="changeComplementItems('add')"  style="margin-left: 10px;">
                   <ion-icon name="add"></ion-icon>
                 </button>

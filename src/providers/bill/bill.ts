@@ -281,28 +281,41 @@ export class BillProvider {
             if(!val.complement_status || parseInt(val.complement_status) < 1)
             {
                 let total = order[i].qty * order[i].price    
-                let discount_nominal = parseInt(val.discount_nominal);
-                if(discount_nominal)
+                let order_discount_nominal = parseInt(val.discount_nominal);
+                if(val.discount_percent)
                 {
-                    total = total - discount_nominal;
+                    order_discount_nominal = this.helper.percentToNominal(val.discount_percent, total)
+                }
+                if(order_discount_nominal)
+                {
+                    total = total - order_discount_nominal;
                 }
                 this.update_order_item(i, 'total', total);
+                this.update_order_item(i, 'discount_nominal', order_discount_nominal);
 
                 order[i].total = total;
+                order[i].discount_nominal = order_discount_nominal;
                 
             }else
             {
                 if(val.complement_item < val.qty)
                 {
                     let total = (order[i].qty - val.complement_item) * order[i].price    
-                    let discount_nominal = parseInt(val.discount_nominal);
-                    if(discount_nominal)
+                    let order_discount_nominal = parseInt(val.discount_nominal);
+                    if(val.discount_percent)
                     {
-                        total = total - discount_nominal;
+                        order_discount_nominal = this.helper.percentToNominal(val.discount_percent, total)
+                    }
+
+                    if(order_discount_nominal)
+                    {
+                        total = total - order_discount_nominal;
                     }
                     this.update_order_item(i, 'total', total);
+                    this.update_order_item(i, 'discount_nominal', order_discount_nominal);
 
                     order[i].total = total;
+                    order[i].discount_nominal = order_discount_nominal;
 
                 }else
                 {
@@ -328,7 +341,7 @@ export class BillProvider {
             payment_bills = payment_bills + parseInt(RestotalPrice[i]);
         }
 
-        if(discount_id && !discount_nominal)
+        if(discount_id && discount_percent)
         {
             discount_nominal = this.helper.percentToNominal(discount_percent, payment_bills);
         }

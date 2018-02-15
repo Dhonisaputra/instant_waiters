@@ -61,18 +61,18 @@ export class TransactionPage {
             if(this.navParams.data.today == true)
             {
                 this.navParams.data.body.where['payment_date_only'] = moment().format('YYYY-MM-DD')
+                this.payment_status = 0;
+                this.filter_by = 'payment_date';
             }
             dataFetch.data = Object.assign(dataFetch.data, this.navParams.data.body)
+            // this.get_transaction(dataFetch);
+
         }
 
         this.transaction_params = dataFetch;
+        this.filter_transaction()
 
-/*        this.filter_transaction()
-        this.dbLocalProvider.opendb('outlet')
-        .then((val)=>{
-            this.outlet = val;
-
-        })*/
+        
 
 
 

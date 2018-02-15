@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, ToastController, Config, IonicApp, App } from 'ionic-angular';
+import { Nav, Platform, ToastController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -14,8 +14,7 @@ import { ProductPage } from '../pages/product/product';
 import { SettingsPage } from '../pages/settings/settings';
 import { StocksPage } from '../pages/stocks/stocks';
 import { TransactionPage } from '../pages/transaction/transaction';
-import { Storage } from '@ionic/storage';
-import { ScreenOrientation } from '@ionic-native/screen-orientation';
+// import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { HelperProvider } from '../providers/helper/helper'; 
 @Component({
@@ -32,17 +31,17 @@ export class MyApp {
   public routeHistory: Array<any>;
 
 
-  constructor(private screenOrientation: ScreenOrientation, private app : App, public toastCtrl: ToastController, public platform: Platform, private ionicApp: IonicApp, public statusBar: StatusBar, public splashScreen: SplashScreen, private storage:Storage, public helper:HelperProvider) {
+  constructor(public toastCtrl: ToastController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public helper:HelperProvider) {
 
     this.initializeApp();
-    
+    let default_page = !this.helper.local.get_params(this.helper.config.variable.settings) || !this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first?  ProductPage : TablePage ;
     // used for an example of ngFor and navigation
     this.pages = [
       // { title: 'Home', component: HomePage },
-      // { title: 'Table', component: TablePage }, 
+      { title: 'Kasir', component: default_page }, 
       // { title: 'Send Receipt', component: SendReceiptPage },
       // { title: 'Payment', component: PaymentPage },
-      { title: 'Kasir', component: ProductPage },
+      // { title: 'Kasir', component: ProductPage },
       { title: 'Stok', component: StocksPage },
       { title: 'Transaksi', component: TransactionPage },
       { title: 'Settings', component: SettingsPage },
@@ -81,9 +80,9 @@ export class MyApp {
 
   logout()
   {
-    this.helper.storage.remove(this.helper.config.variable.credential)
     this.helper.local.reset_params('is_login');
-    this.helper.local.reset_params(this.helper.config.variable.credential);
+    this.helper.storage.remove(this.helper.config.variable.credential)
+    this.helper.local.set_params(this.helper.config.variable.credential,{data:{}, outlet:{}, type_product:[]});
     this.nav.setRoot(LoginPage);
   }
 

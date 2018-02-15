@@ -6,6 +6,7 @@ import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { TablePage } from '../table/table';
 import { TotalPaymentEditorPage } from '../total-payment-editor/total-payment-editor';
 import { EditReceiptItemPage } from '../edit-receipt-item/edit-receipt-item';
+import { HelperProvider } from '../../providers/helper/helper'; 
 import * as $ from "jquery"
 
 /**
@@ -32,7 +33,7 @@ export class ReceiptPage {
 	bill:any=this.billProvider.default_bill_value();
 	receipt_page_params:any= {can_edit_slide_item: true,can_edit_bill_total:true, can_edit_table:false, can_edit_visitor_name:false}
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController) {
+	constructor(public helper:HelperProvider, public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController) {
 		this.receipts = []
 		this.taxqty = 10;
 

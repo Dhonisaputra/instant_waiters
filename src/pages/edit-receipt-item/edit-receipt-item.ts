@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController, AlertController  }
 import { BillProvider } from '../../providers/bill/bill';
 import { ReceiptPage } from '../receipt/receipt';
 import { ProductPage } from '../product/product';
+import * as $ from "jquery"
 
 /**
  * Generated class for the EditReceiptItemPage page.
@@ -43,12 +44,19 @@ export class EditReceiptItemPage {
   	this.viewCtrl.dismiss();
   }
 
-  countChargeNominal()
+  countChargeNominal(el:any={})
   {
     let product_price = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
     let qty = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
 
     let val = this.billProvider.helper.IDRtoInt( this.item.discount_percent )
+    if(val >= 99 && el.target)
+    {
+      val = 99;
+      $(el.target).val(val)
+      this.item.discount_percent = val;
+    }
+
     let price = this.billProvider.helper.IDRtoInt(this.item.price)
     let chargeNominal = price * (val/100);
     
@@ -59,12 +67,19 @@ export class EditReceiptItemPage {
     this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-chargeNominal)
   }
 
-  countChargePercent()
+  countChargePercent(el:any={})
   {
     let product_price = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
     let qty = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
     let val = this.billProvider.helper.IDRtoInt( this.item.discount_nominal )
     let price = this.billProvider.helper.IDRtoInt(this.item.price)
+
+    if(val >= product_price && el.target)
+    {
+      val = product_price;
+      $(el.target).val(val)
+      this.item.discount_nominal = val;
+    }
 
     val = val?val:0;
 
@@ -88,13 +103,20 @@ export class EditReceiptItemPage {
     // this.ionViewWillEnter()
   }
 
-  changeComplementItems(type:string='input')
+  changeComplementItems(type:string='input', el:any={})
   {
     let qty;
     switch (type) {
       case "input":
         qty = this.billProvider.get_order_item(this.item.index, 'qty')
-        this.item.complement_item = this.item.complement_item > qty ? qty : this.item.complement_item;
+        let complement_item = this.item.complement_item > qty ? qty : this.item.complement_item;
+
+        if(this.item.complement_item >= qty && el.target)
+        {  
+          $(el.target).val(complement_item)
+          this.item.complement_item = complement_item;
+        }  
+
         this.billProvider.update_order_item(this.item.index, 'complement_item', this.item.complement_item)
         break;
 

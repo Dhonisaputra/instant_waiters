@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HelperProvider } from '../../providers/helper/helper'; 
 import { TablePage } from '../table/table'; 
+import { ProductPage } from '../product/product'; 
 import * as $ from "jquery"
 
 /**
@@ -28,36 +29,32 @@ export class LoginPage {
 			content: 'Melakukan pengecheckan pengguna. Silahkan tunggu..'
 		})
 		loader.present();
-		if(!this.helper.local.get_params(this.helper.config.variable.credential))
-	    {
-	      this.helper.storage.get(this.helper.config.variable.credential)
-	      .then((val) => {
-	        if(!val)
-	        {
-	        	this.helper.local.set_params('is_login', false);
+		
+		this.helper.storage.get(this.helper.config.variable.credential)
+		.then((val) => {
+			if(!val || !val.outlet)
+			{
+				this.helper.local.set_params('is_login', false);
 				loader.dismiss();
-	        }else
-	        {
-		      this.helper.storage.get(this.helper.config.variable.settings)
-		      .then( (resSettings)=>{
-				this.helper.local.set_params(this.helper.config.variable.settings, resSettings);
-				this.helper.local.set_params(this.helper.config.variable.credential, val);
-	        	this.helper.local.set_params('is_login', true);
-				this.navCtrl.setRoot(TablePage);
-				loader.dismiss();
-		      })
+
+			}else
+			{
+				this.helper.storage.get(this.helper.config.variable.settings)
+				.then( (resSettings)=>{
+					this.helper.local.set_params(this.helper.config.variable.settings, resSettings);
+					this.helper.local.set_params(this.helper.config.variable.credential, val);
+					this.helper.local.set_params('is_login', true);
+					let default_page = !resSettings.choose_table_first?  ProductPage : TablePage ;
+
+					this.navCtrl.setRoot(default_page);
+					loader.dismiss();
+				})
 
 
-	        }
-	      })
-	      
-	    }else
-	    {
-			loader.dismiss();
+			}
+		})
 
-          this.navCtrl.setRoot(TablePage);
-	    }
-	    
+
 	}
 
 	signIn()

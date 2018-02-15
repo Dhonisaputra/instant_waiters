@@ -14,8 +14,9 @@
 			<ion-searchbar *ngIf="searchinput" end (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" class="searchbar-toolbar" style="padding: 0px;width: 40%;"></ion-searchbar>
 			
 			<ion-buttons class="center distributed">
-				<button ion-button icon-only (click)="toggleSearchInput()">
-					<ion-icon name="search"></ion-icon>
+				<button ion-button icon-only color="light" (click)="toggleSearchInput()">
+					<ion-icon name="search" *ngIf="!searchinput"></ion-icon>
+					<ion-icon name="close" *ngIf="searchinput"></ion-icon>
 				</button>
 			</ion-buttons>
 			<ion-buttons end>
@@ -54,12 +55,12 @@
 								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == 0}" col--33 color="main">
 									<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All 
 								</label>
-								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == 1}" col--33 color="main">
-									<input type="radio" class="sr-only" name="type_product" value=1 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Makanan 
+								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == item.type_id}" col--33 color="main" *ngFor="let item of helper.local.get_params(this.helper.config.variable.credential).type_product; let i = index;">
+									<input type="radio" class="sr-only" name="type_product" value="{{item.type_id}}" [(ngModel)]="filter_type_selected" (change)="refresh_data()"> {{item.type_name}}
 								</label>
-								<label class="tab-item relative" col--33 [ngClass]="{'active': filter_type_selected == 2}" color="main">
+								<!-- <label class="tab-item relative" col--33 [ngClass]="{'active': filter_type_selected == 2}" color="main">
 									<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman
-								</label>
+								</label> -->
 							</ion-col>
 							<ion-col col-2 col-xs-2 col-sm-2 col-md-2>
 								<button ion-button clear icon-right color="main" (click)="product_sort()">

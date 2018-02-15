@@ -41,30 +41,35 @@
 	</div>
 
 	<div [ngSwitch]="tab">
-		<ion-list *ngSwitchCase="'detail_product'">
-			<ion-item>
-    			<div style="width: 40%;">
+		<div *ngSwitchCase="'detail_product'">
+			<div class="col-md-4">
+    			<div style="">
     				<img src="{{product.image.url}}">
     			</div>
-			</ion-item>
-			<ion-item>
-				<h2>Nama</h2>
-    			<p>{{product.name}}</p>
-			</ion-item>
-			<ion-item>
-				<h2>Harga</h2>
-    			<p>Rp. {{product.price_idr}}</p>
-			</ion-item>
-			<ion-item>
-				<h2>Stok</h2>
-    			<p>{{product.stock}} {{product.unit}}</p>
-			</ion-item>
+			</div>
+			<div class="col-md-8">
+				<ion-list>
+					<ion-item>
+						<h2>Nama</h2>
+		    			<p>{{product.name}}</p>
+					</ion-item>
+					<ion-item>
+						<h2>Harga</h2>
+		    			<p>Rp. {{product.price_idr}}</p>
+					</ion-item>
+					<ion-item>
+						<h2>Stok</h2>
+		    			<p>{{product.stock}} {{product.unit}}</p>
+					</ion-item>
 
-			<ion-item>
-				<h2>Stok Opname</h2>
-    			<p>{{product.stock_opname}} {{product.unit}}</p>
-			</ion-item>
-		</ion-list>
+					<ion-item>
+						<h2>Stok Opname</h2>
+		    			<p>{{product.stock_opname}} {{product.unit}}</p>
+					</ion-item>
+				</ion-list>
+				
+			</div>
+		</div>
 
 		<ion-list *ngSwitchCase="'history_stock'">
 			<div class="table-responsive">

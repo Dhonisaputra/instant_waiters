@@ -20,7 +20,9 @@ import { ErrorPage } from '../../pages/error/error';
 export class SettingsPage {
 
   segment:string='menu';
-  settings:any={};
+  settings:any={
+    choose_table_first:true
+  };
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbLocalProvider, public helper: HelperProvider) {
     this.settings = Object.assign(this.settings, this.helper.local.get_params(this.helper.config.variable.settings) )
   }

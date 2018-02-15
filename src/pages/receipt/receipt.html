@@ -7,9 +7,9 @@
 	<div class="receipt relative">
 					<div class="receipt-header">
 						<div class="receipt--costumer-header pseudo">
-							<h5 class="title">Warung Enak</h5>
-							<div>Jl. Kartini 7 Sagan Yogyakarta</div>
-							<div>0821-3324-231</div>
+							<h5 class="title">{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : ''}}</h5>
+							<div class=" center " style="display: flex;"><div style="width: 80%;">{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:''}}</div> </div>
+							<div>{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:''}}</div>
 						</div>
 						<ion-row class="receipt-headinput">
 							<ion-col col-5>
@@ -48,16 +48,16 @@
 											<div class="receipt-detail--component text-align--left" style="width: 50%;" >
 												<span>{{item.name}}</span><br>
 												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Complement</p>
-												<p class="italic receipt-detail--component--properties" *ngIf="item.discount_nominal > 0 && (item.complement_status < 1 || item.complement_item < item.qty )">Discount</p>
+												<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">Diskon {{billProvider.helper.toInt(item.discount_percent)}}%</p>
 												<p class="receipt-detail--component--notes">{{item.note}}</p>
 											</div>
 
 											<div class="receipt-detail--component" style="width: 20%;">
-												<span> Rp.{{billProvider.helper.intToIDR(item.price)}} </span>
+												<span> {{billProvider.helper.intToIDR(item.price)}} </span>
 												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0"> &nbsp; </p>
-												<p class="italic receipt-detail--component--properties" *ngIf="item.discount_nominal > 0 && (item.complement_status < 1 || item.complement_item < item.qty )">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>
+												<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>
 											</div>
-											<div class="receipt-detail--component" style="width: 20%;">Rp.{{billProvider.helper.intToIDR(item.total)}}</div>
+											<div class="receipt-detail--component" style="width: 20%;">{{billProvider.helper.intToIDR(item.total)}}</div>
 										</div>
 									</ion-item>
 
@@ -83,7 +83,7 @@
 					<div class="receipt-footer" (click)="edit_total_payment()"> 
 						<table class="" style="margin-bottom: 0px;width: 100%;">
 							<tbody style="padding-top: 10px">
-								<tr class="">
+								<tr class="" *ngIf="billProvider.get_bill_component('tax_nominal')>0 || billProvider.get_bill_component('discount_nominal')>0">
 									<td style="width: 10%;"></td>							
 									<td style="width: 10%;"></td>							
 									<td style="width: 48%;" class="text-align--right">Bill</td>
@@ -102,7 +102,7 @@
 								<tr class="" *ngIf="billProvider.get_bill_component('discount_nominal')>0">
 									<td style="width: 10%;"></td>
 									<td style="width: 10%;"></td>							
-									<td style="width: 48%;" class="text-align--right">Diskon</td>
+									<td style="width: 48%;" class="text-align--right">Diskon {{ billProvider.helper.toInt(billProvider.get_bill_component('discount_percent')) > 0? billProvider.get_bill_component('discount_percent')+'%':''  }}</td>
 									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>
 									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component('discount_nominal'))}} </span> </td>
 								</tr>
@@ -110,9 +110,9 @@
 								<tr >
 									<td style="width: 10%;" ></td>
 									<td style="width: 10%;"></td>							
-									<td style="width: 48%;" class="text-align--right">Total</td>
-									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>
-									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component('payment_total'))}} </span> </td>
+									<td style="width: 48%; padding-top: 10px; font-size: 1.3em;" class="text-align--right">Total</td>
+									<td style="width: 5%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span class="">Rp.</span> </td>
+									<td style="width: 10%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component('payment_total'))}} </span> </td>
 								</tr>
 
 							</tbody>
