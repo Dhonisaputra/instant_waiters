@@ -6,14 +6,17 @@
     </ion-header>
 
   <ion-content>
-    
+    <!-- {{helper.local.get_params(helper.config.variable.credential).users}} -->
     <ion-list>
-      <ion-item>
+      <ion-item *ngIf="helper.local.get_params('is_login') && helper.local.get_params(helper.config.variable.credential).users">
         <ion-avatar item-start>
-          <img src="img/avatar-cher.png">
+          <img src="{{helper.config.base_url( )+helper.local.get_params(helper.config.variable.credential).users.users_photo}}">
         </ion-avatar>
-        <h2>Users name</h2>
+        <h2>{{helper.local.get_params(helper.config.variable.credential).users.users_fullname}}</h2>
         <p>Cashier</p>
+        <p>
+          <button ion-button small color="main" menuClose (click)="logout()">Log Out</button>
+        </p>
       </ion-item>
     </ion-list>
     <ion-list>
@@ -22,9 +25,9 @@
         {{p.title}}
       </button>
 
-      <button menuClose ion-item (click)="logout()">
+      <!-- <button menuClose ion-item (click)="logout()">
         Logout
-      </button>
+      </button> -->
     </ion-list>
   </ion-content>
 

@@ -14,7 +14,8 @@ import { HelperProvider } from '../../providers/helper/helper';
 
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
-import {BillSavedPage} from '../bill-saved/bill-saved'
+import {BillSavedPage} from '../bill-saved/bill-saved';
+// import {KeysPipe} from '../../pipes/keys/keys';
 import * as $ from "jquery"
 import * as moment from 'moment';
 /**
@@ -130,6 +131,13 @@ export class ProductPage
         {
             this.update_page_parameters(this.navParams.data.page_params);
         }
+
+        // pinned product
+		this.helper.storage.get('pinned_product')
+		.then( (res)=>{
+			res = res?res:[]
+	        this.helper.local.set_params('pinned_product', res);
+		})
 
 		/*this.localNotifications.schedule({
 		  id: 1,
@@ -548,6 +556,75 @@ export class ProductPage
 		}
 	}
 
+	productOptions(item, index)
+	{
+		this.helper.actionSheet.create({
+			title: 'Aksi produk',
+			buttons: [
+	        {
+	          	text: 'Detail product',
+	          	handler: () => {
+	          		this.openDetailProduct(item, index)
+	          	}
+	        },{
+	          	text: 'Pin produk',
+	          	handler: () => {
+	          		this.pinProduct(item, index)
+	          	}
+	        }
+	        ]
+		}).present();
+
+	}
+
+	pinnedProductOptions(item, index)
+	{
+		this.helper.actionSheet.create({
+			title: 'Aksi produk',
+			buttons: [
+	        {
+	          	text: 'Detail product',
+	          	handler: () => {
+	          		this.openDetailProduct(item, index)
+	          	}
+	        },{
+	          	text: 'Lepaskan dari pin produk',
+	          	handler: () => {
+	          		this.unpinProduct(item, index)
+	          	}
+	        }
+	        ]
+		}).present();
+
+	}
+
+	unpinProduct(item, index)
+	{
+		let pinned_product = this.helper.local.get_params('pinned_product');
+		pinned_product.splice(index, 1)
+		this.helper.local.set_params('pinned_product', pinned_product);
+		this.helper.storage.set('pinned_product', pinned_product);
+		this.helper.toast.create({
+			message: 'Produk telah di hapus dari pin',
+			duration: 1500
+		}).present()
+	}
+	pinProduct(item, index)
+	{
+		let pinned_product = this.helper.local.get_params('pinned_product');
+		pinned_product = pinned_product?pinned_product:[]
+
+		item.index = index;
+		pinned_product.push(item);
+
+		this.helper.local.set_params('pinned_product', pinned_product);
+		this.helper.storage.set('pinned_product', pinned_product);
+		this.helper.toast.create({
+			message: 'Produk telah di pin',
+			duration: 1500
+		}).present()
+
+	}
 	openDetailProduct(item, index)
 	{
 		item.page_params = {view_type:'modal', show_history_stock:false};

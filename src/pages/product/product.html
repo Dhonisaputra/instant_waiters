@@ -69,21 +69,42 @@
 							</ion-col>
 						</ion-row>
 					</div>
-					
+					<div *ngIf="!this.helper.local.get_params('pinned_product') || this.helper.local.get_params('pinned_product').length > 0" style="margin-bottom:10px;">
+						<strong style="font-size: .9em;margin-left: 5px;">Produk di Pin</strong>		
 						<ion-row class="box-body" id="">
-							
-								<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (click)="add_to_bill(item)" (press)="openDetailProduct(item, index)">
-									<div class="product-body">
-										<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
-											
-											<div class="product-name">{{item.name}}</div>
-										</div>
-										<div class="product-detail">
-											<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>
-											<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->
-										</div>
+							<ion-col class="pinned_post col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of this.helper.local.get_params('pinned_product'); let i = index" (click)="add_to_bill(item)" (press)="pinnedProductOptions(item, index)">
+								<div class="product-body">
+									<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
+										
+										<div class="product-name">{{item.name}}</div>
 									</div>
-								</ion-col>
+									<div class="product-detail">
+										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>
+										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->
+									</div>
+								</div>
+							</ion-col>
+						</ion-row>
+					</div>
+					<div>
+						<strong style="font-size: .9em;margin-left: 5px;" *ngIf="!this.helper.local.get_params('pinned_product') || this.helper.local.get_params('pinned_product').length > 0">Produk</strong>
+						<ion-row class="box-body" id="">
+
+							<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (click)="add_to_bill(item)" (press)="productOptions(item, index)">
+								<div class="product-body">
+									<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
+										
+										<div class="product-name">{{item.name}}</div>
+									</div>
+									<div class="product-detail">
+										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>
+										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->
+									</div>
+								</div>
+							</ion-col>
+						</ion-row>
+					</div>
+
 								<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">
 									<div class="product-body" style="background-color: white;">
 										<div class="product-name">
@@ -96,7 +117,6 @@
 								
 									<button ion-button block color="main" (click)="infinite_product()">Load More</button>
 								</ion-col> -->
-					</ion-row>
 					<ion-infinite-scroll (ionInfinite)="infinite_product($event)">
 					   <ion-infinite-scroll-content></ion-infinite-scroll-content>
 					 </ion-infinite-scroll>

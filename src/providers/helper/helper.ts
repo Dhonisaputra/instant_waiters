@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController, ToastController} from 'ionic-angular';
+import { LoadingController, AlertController, ToastController, ActionSheetController} from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { Storage } from '@ionic/storage';
@@ -19,7 +19,16 @@ import * as moment from 'moment';
 export class HelperProvider {
   public $:any=$;
   public moment:any=moment;
-  constructor(public http: HttpClient, public config: ConfigProvider, public toast:ToastController, public alertCtrl:AlertController, public loadingCtrl: LoadingController, public local: DbLocalProvider, public storage:Storage) {
+  constructor(
+    public http: HttpClient, 
+    public config: ConfigProvider, 
+    public toast:ToastController, 
+    public alertCtrl:AlertController, 
+    public loadingCtrl: LoadingController, 
+    public local: DbLocalProvider, 
+    public storage:Storage,
+    public actionSheet: ActionSheetController
+    ) {
     console.log('Hello HelperProvider Provider');
   }
 

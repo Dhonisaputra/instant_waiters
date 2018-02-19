@@ -39,13 +39,13 @@ export class LoginPage {
 
 			}else
 			{
+
 				this.helper.storage.get(this.helper.config.variable.settings)
 				.then( (resSettings)=>{
-					this.helper.local.set_params(this.helper.config.variable.settings, resSettings);
 					this.helper.local.set_params(this.helper.config.variable.credential, val);
 					this.helper.local.set_params('is_login', true);
-					let default_page = !resSettings.choose_table_first?  ProductPage : TablePage ;
-
+					this.helper.local.set_params(this.helper.config.variable.settings, resSettings);
+					let default_page = resSettings && !resSettings.choose_table_first?  ProductPage : TablePage ;
 					this.navCtrl.setRoot(default_page);
 					loader.dismiss();
 				})

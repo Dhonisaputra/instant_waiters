@@ -28,6 +28,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   lastTimeBackPress:number=0;
   timePeriodToExit:number=2000;
+  users: any={}
   public routeHistory: Array<any>;
 
 
@@ -60,6 +61,8 @@ export class MyApp {
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      // this.users = this.helper.local.get_params(this.helper.config.variable.credential).users;
     });
   }
 
@@ -82,7 +85,9 @@ export class MyApp {
   {
     this.helper.local.reset_params('is_login');
     this.helper.storage.remove(this.helper.config.variable.credential)
-    this.helper.local.set_params(this.helper.config.variable.credential,{data:{}, outlet:{}, type_product:[]});
+    this.helper.storage.remove('pinned_product')
+    this.helper.local.set_params(this.helper.config.variable.credential,{users:{}, data:{}, outlet:{}, type_product:[]});
+    this.helper.local.set_params('pinned_params',[]);
     this.nav.setRoot(LoginPage);
   }
 
