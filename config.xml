@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="id.co.folarium.folarpos" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>folarpos_instant</name>
+    <name>Folarpos_instant</name>
     <description>Folarpos Instant</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <author email="dhoni.p.saputra@gmail.com" href="http://ionicframework.com/">Folarpos Developer Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -20,6 +20,10 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="1000" />
     <preference name="Fullscreen" value="true" />
+    <platform name="browser">
+        <preference name="SplashScreen" value="resources/browser/folarpos.png" />
+        <preference name="SplashScreenBackgroundColor" value="#4e8ef7" />
+    </platform>
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />

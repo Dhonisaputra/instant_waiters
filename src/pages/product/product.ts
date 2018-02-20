@@ -193,6 +193,7 @@ export class ProductPage
 					this.billProvider.reset_bill();
 	                this.billProvider.update_bill_component({},true);
 					this.events.publish('reset.data.receipt',{})
+					this.navParams.data = {event:'order.do'} // this code use to reset navParams. bcause, whenever a page pushed from this page and popped back, this data bill item always from the previous event. 
 					break;
 
 				case "order.reset":
