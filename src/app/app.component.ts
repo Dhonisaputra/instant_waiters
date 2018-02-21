@@ -24,6 +24,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = LoginPage;
+  tablePage: any = TablePage;
+  productPage: any = ProductPage;
 
   pages: Array<{title: string, component: any}>;
   lastTimeBackPress:number=0;
@@ -35,14 +37,15 @@ export class MyApp {
   constructor(public toastCtrl: ToastController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public helper:HelperProvider) {
 
     this.initializeApp();
-    let default_page = !this.helper.local.get_params(this.helper.config.variable.settings) || !this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first?  ProductPage : TablePage ;
+    // console.log(helper.local.get_params(this.helper.config.variable.settings))
+    // let default_page = !this.helper.local.get_params(this.helper.config.variable.settings) || this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first?  TablePage : ProductPage ;
     // used for an example of ngFor and navigation
     this.pages = [
       // { title: 'Home', component: HomePage },
-      { title: 'Kasir', component: default_page }, 
+      // { title: 'Kasir', component: TablePage }, 
+      // { title: 'Kasir', component: ProductPage },
       // { title: 'Send Receipt', component: SendReceiptPage },
       // { title: 'Payment', component: PaymentPage },
-      // { title: 'Kasir', component: ProductPage },
       { title: 'Stok', component: StocksPage },
       { title: 'Transaksi', component: TransactionPage },
       { title: 'Settings', component: SettingsPage },
@@ -61,15 +64,20 @@ export class MyApp {
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-
       // this.users = this.helper.local.get_params(this.helper.config.variable.credential).users;
     });
-  }
+  } 
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  setRoot(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page);
   }
 
   preventClose()

@@ -19,14 +19,15 @@ import * as $ from "jquery"
   templateUrl: 'payment.html',
 })
 export class PaymentPage {
-	bill:any = {payment_total:0, returnMoney: 0, payment_nominal:''}
+	bill:any = {payment_total:0, returnMoney: 0, payment_nominal:'', payment_rest:0}
 	outlet: number;
 	payment_method:number= 1;
 	users_outlet:number=1;
 	bank_id:number=1;
+	numpad_type:string='numpad';
   constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider: DbLocalProvider, private events: Events, private helper: HelperProvider, private billProvider: BillProvider) {
   	
-  	console.log(this.navParams.data)
+  	this.numpad_type = 'numpad';
   }
 
   ionViewDidEnter()
@@ -62,9 +63,9 @@ export class PaymentPage {
 
   	let paid_with_bank_nominal = payment_total - payment_nominal;
   	
-  	this.bill.paid_with_bank_nominal = 'Rp.' + this.helper.intToIDR(paid_with_bank_nominal);
-  	this.bill.payment_rest = 'Rp.' + this.helper.intToIDR(payment_rest)
-  	this.bill.payment_nominal = 'Rp.' + this.helper.intToIDR(payment_nominal)
+  	this.bill.paid_with_bank_nominal = this.helper.intToIDR(paid_with_bank_nominal);
+  	this.bill.payment_rest = this.helper.intToIDR(payment_rest)
+  	this.bill.payment_nominal = this.helper.intToIDR(payment_nominal)
 
   	console.log(this.bill)
   	if(!isInput)
@@ -155,15 +156,42 @@ export class PaymentPage {
 				value = parseInt(value).toString();
 				
 				payment_nominal += value
-				console.log(payment_nominal, typeof payment_nominal, typeof value)
-				this.bill.payment_nominal = 'Rp.'+this.helper.intToIDR(parseInt(payment_nominal));
+				this.bill.payment_nominal = this.helper.intToIDR(parseInt(payment_nominal));
 				this.sumReturn();
 				break;
-			
+
+			case "value":
+				this.bill.payment_nominal = this.helper.intToIDR(parseInt(value));
+				this.sumReturn();
+				break;
+
+			case "sum":
+				payment_nominal = this.helper.IDRtoInt(this.bill.payment_nominal);
+				value = parseInt(value);
+				payment_nominal = payment_nominal + value;
+
+				console.log(value, payment_nominal)
+
+				this.bill.payment_nominal = this.helper.intToIDR(parseInt(payment_nominal));
+				
+				this.sumReturn();
+				break;
+
+			case "substract":
+				payment_nominal = this.helper.IDRtoInt(this.bill.payment_nominal);
+				value = parseInt(value);
+				payment_nominal = payment_nominal - value;
+
+				console.log(value, payment_nominal)
+
+				this.bill.payment_nominal = this.helper.intToIDR(parseInt(payment_nominal));
+				
+				this.sumReturn();
+				break;
 			case "action":
 				switch (value) {
 					case "pas":
-						this.bill.payment_nominal = 'Rp.'+this.helper.intToIDR(this.billProvider.get_bill_component('payment_total'));
+						this.bill.payment_nominal = this.helper.intToIDR(this.billProvider.get_bill_component('payment_total'));
 						this.sumReturn();
 						break;
 
@@ -172,6 +200,8 @@ export class PaymentPage {
 						// this.sumReturn();
 						break;
 
+					
+
 					case "rm":
 						let payment_nominal = this.helper.IDRtoInt(this.bill.payment_nominal).toString();
 						if(payment_nominal.length > 0)
@@ -179,7 +209,7 @@ export class PaymentPage {
 							var a = payment_nominal.split('')
 							a.pop();
 							payment_nominal = a.join('');
-							this.bill.payment_nominal = 'Rp.'+this.helper.intToIDR(parseInt(payment_nominal));
+							this.bill.payment_nominal = this.helper.intToIDR(parseInt(payment_nominal));
 						}else
 						{
 							this.bill.payment_nominal = 0;
@@ -282,8 +312,8 @@ export class PaymentPage {
 		{
 			grandTotal = grandTotal - payment_nominal;
 		}
-		this.bill.paid_with_bank_nominal = 'Rp.'+this.helper.intToIDR( grandTotal + chargeNominal );
-		this.bill.payment_bank_charge_nominal = 'Rp.'+this.helper.intToIDR( chargeNominal )
+		this.bill.paid_with_bank_nominal = this.helper.intToIDR( grandTotal + chargeNominal );
+		this.bill.payment_bank_charge_nominal = this.helper.intToIDR( chargeNominal )
 	}
 
 	countChargeNominal()

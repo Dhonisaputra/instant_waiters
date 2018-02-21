@@ -28,6 +28,7 @@ import { EditReceiptItemPage } from "../pages/edit-receipt-item/edit-receipt-ite
 import { TotalPaymentEditorPage } from '../pages/total-payment-editor/total-payment-editor';
 import { TooltipProductPage } from '../pages/tooltip-product/tooltip-product';
 import { ErrorPage } from '../pages/error/error';
+import { SplitBillPage } from '../pages/split-bill/split-bill';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -62,7 +63,8 @@ import { HelperProvider } from '../providers/helper/helper';
     EditReceiptItemPage,
     TotalPaymentEditorPage,
     TooltipProductPage,
-    ErrorPage
+    ErrorPage,
+    SplitBillPage
     // AbsoluteDragDirective
 
   ],
@@ -91,7 +93,8 @@ import { HelperProvider } from '../providers/helper/helper';
     EditReceiptItemPage,
     TotalPaymentEditorPage,
     TooltipProductPage,
-    ErrorPage
+    ErrorPage,
+    SplitBillPage
 
   ],
   providers: [

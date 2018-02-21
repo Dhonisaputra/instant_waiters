@@ -31,7 +31,15 @@ export class ReceiptPage {
 	visitor_table:number;
 	event_handler:any={};
 	bill:any=this.billProvider.default_bill_value();
-	receipt_page_params:any= {can_edit_slide_item: true,can_edit_bill_total:true, can_edit_table:false, can_edit_visitor_name:false}
+	receipt_page_params:any= {
+		can_edit_slide_item: true,
+		can_edit_bill_total:true, 
+		can_edit_table:false, 
+		can_edit_visitor_name:false,
+		show_footer:true,
+		show_header:true,
+		show_content:true
+	}
 
 	constructor(public helper:HelperProvider, public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController) {
 		this.receipts = []
@@ -43,7 +51,6 @@ export class ReceiptPage {
 
 		// event listener to update bill
 	  	events.subscribe('bill.update', (data) => {
-		console.log('update')
 	  		this.trigger_update_receipt();
 		});
 
@@ -65,6 +72,7 @@ export class ReceiptPage {
 
 		if(this.navParams.data.receipt_page_params)
 		{
+			console.log(this.navParams.data.receipt_page_params)
 			this.update_page_parameters(this.navParams.data.receipt_page_params);
 		}
 	}
@@ -147,16 +155,22 @@ export class ReceiptPage {
 
 	change_table()
 	{
-		let index:number=-1;
-		let isFound:boolean= false;
-		let navCtrlLen:number=this.navCtrl.length();
+		this.events.publish('bill.table.change', {})
 
-		this.navCtrl.setRoot(TablePage, {
-			previous: 'product-page',
-			event: 'bill.changeTable',
-			trigger_event: 'table.change',
-			data: this.event_handler['table.pick']
-		})
+
+		if(this.receipt_page_params.can_edit_table)
+		{
+			let index:number=-1;
+			let isFound:boolean= false;
+			let navCtrlLen:number=this.navCtrl.length();
+
+			this.navCtrl.setRoot(TablePage, {
+				previous: 'product-page',
+				event: 'bill.changeTable',
+				trigger_event: 'table.change',
+				data: this.event_handler['table.pick']
+			})
+		}
 
 	}
 
@@ -164,7 +178,6 @@ export class ReceiptPage {
 	removeReceipt(ev, item)
 	{
 		// alert('removed')
-		console.log(ev, item)
 	}
 
 	removeItem(index, item)
@@ -244,6 +257,8 @@ export class ReceiptPage {
 	}
 	editItem(item, index)
 	{
+		this.events.publish('bill.item.clicked', {item:item, index:index})
+
 		if(!this.receipt_page_params.can_edit_slide_item)
 		{
 			return false
@@ -268,7 +283,6 @@ export class ReceiptPage {
 		modal.present();
 		modal.onDidDismiss(data => {
 			this.trigger_update_receipt();
-	     console.log(data);
 	   });
 	}
 

@@ -56,10 +56,10 @@ export class TablePage {
     if(!this.navParams.data.trigger_event || this.navParams.data.trigger_event != 'table.change' )
     {
 
-      if(this.helper.local.get_params(this.helper.config.variable.settings) && !this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first)
+      /*if(this.helper.local.get_params(this.helper.config.variable.settings) && !this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first)
       {
         this.navCtrl.setRoot(ProductPage);
-      }
+      }*/
 
     }
   }

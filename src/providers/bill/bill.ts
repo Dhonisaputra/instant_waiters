@@ -15,7 +15,8 @@ and Angular DI.
 @Injectable()
 export class BillProvider {
     bill            :any = this.default_bill_value()
-    temp_bill       :any = this.default_bill_value() // it will be temporary variable
+    temp_bill       :any = this.default_bill_value() // it will be temporary variable,
+    records_bill    :any = [] // use if we want to create another bill
     
 
     constructor(public loadingCtrl: LoadingController, public config: ConfigProvider, public alertCont: AlertController, public dbLocalProvider: DbLocalProvider, private events: Events, public helper: HelperProvider) {
@@ -185,6 +186,10 @@ export class BillProvider {
             order[name] = value;
         }
 
+    }
+    set_order_item(index, name, value)
+    {
+        this.update_order_item(index, name, value);
     }
 
     public get_order_item(index:number, name:string='')
@@ -514,5 +519,57 @@ export class BillProvider {
         return $.post(url, billdata)
     }
 
+
+    // B I L L S 
+    new_nota(value:any=undefined)
+    {
+        value = value?value:this.default_bill_value();
+        this.records_bill.push(value)
+        let index = Object.keys(this.get_nota()).pop()
+        return parseInt(index);
+    }
+
+    get_nota(index:number=undefined)
+    {
+        return !this.records_bill[index]?this.records_bill:this.records_bill[index];
+    }
+
+    get_nota_component(index:number, property:string)
+    {
+        let nota = this.get_nota(index);
+        return nota[property];
+    }
+    set_nota_component(index:number, property:string, value:any='')
+    {
+        let nota = this.get_nota(index);
+        nota[property] = value;
+    }
+
+    get_nota_order(index:number, order_index:number, property:any=undefined)
+    {
+        let nota = this.get_nota(index);
+        if(order_index >=0 && !nota['orders'][order_index])
+        {
+            return false;
+        }
+
+        if(order_index<0)
+        {
+            return nota['orders'];
+        }
+        return !property?nota['orders'][order_index]:nota['orders'][order_index][property];
+    }
+
+    set_nota_order(index:number, order_index:number, property:any=undefined, value:any='')
+    {
+        let nota = this.get_nota(index);
+        if(property)
+        {
+            nota['orders'][order_index][property] = value;        
+        }else
+        {
+            nota['orders'][order_index] = value;        
+        }
+    }
 
 }

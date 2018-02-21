@@ -4,6 +4,7 @@ import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { ConfigProvider } from '../../providers/config/config';
 import { PaymentPage } from "../payment/payment"
 import { ProductPage } from "../product/product"
+import { SplitBillPage } from "../split-bill/split-bill"
 import { BillProvider } from "../../providers/bill/bill"
 import { BillItemEditorPage } from "../bill-item-editor/bill-item-editor"
 import { HelperProvider } from '../../providers/helper/helper'; 
@@ -354,5 +355,61 @@ export class TransactionPage {
           ]
         });
         prompt.present();
+    }
+
+    advanceOptions(index, item)
+    {
+
+        if(item.payment_nominal <= 0 && item.payment_cancel_status == 0)
+        {
+            this.actionSheetCtrl.create({
+              title: 'Opsi lanjutan',
+              buttons: [
+                {
+                  text: 'Gabungkan Nota',
+                  handler: () => {
+                    // this.filter_transaction()
+                  }
+                },{
+                  text: 'Pisahkan Nota',
+                  handler: () => {
+                    this.splitBill(index, item)
+                  }
+                },{
+                  text: 'Lihat Detail Transaksi',
+                  handler: () => {
+                      this.info_transaction(index, item)
+                  }
+                }
+              ]
+            }).present();  
+        }else if(item.payment_nominal > 0 && item.payment_cancel_status == 0)
+        {
+            this.actionSheetCtrl.create({
+              title: 'Opsi lanjutan',
+              buttons: [
+                {
+                  text: 'Lihat Detail Transaksi',
+                  handler: () => {
+                      this.info_transaction(index, item)
+                  }
+                }
+              ]
+            }).present();
+        }
+    }
+
+    splitBill(index, item)
+    {
+        this.navCtrl.push(SplitBillPage,{
+            index:index, bill:item,
+            receipt_page_params:
+            {
+                can_edit_slide_item: false,
+                can_edit_bill_total: false,
+                can_edit_table:false, can_edit_visitor_name:false,
+                show_footer:false
+            }
+        })
     }
 }

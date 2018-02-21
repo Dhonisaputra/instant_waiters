@@ -1,0 +1,35 @@
+<!--
+  Generated template for the SplitBillPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	
+	<ion-toolbar color="main">
+		<ion-navbar>
+			<ion-title>Pisahkan bill</ion-title>
+		</ion-navbar>
+		<ion-buttons end>
+			<button ion-button clear color="light" (click)="pay_transaction()">
+				Bayar
+			</button>
+		</ion-buttons>
+		
+	</ion-toolbar>
+	
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row class="relative">
+			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">
+				<div class="receipt-product">
+					<page-receipt></page-receipt> 
+				</div>
+			</div>
+		</ion-row>
+	</ion-grid>
+</ion-content>

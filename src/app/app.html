@@ -21,6 +21,8 @@
     </ion-list>
     <ion-list>
        <!-- <ion-item-divider>Menu</ion-item-divider> -->
+      <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(this.helper.config.variable.settings) || helper.local.get_params(this.helper.config.variable.settings).choose_table_first"> Kasir </button>
+      <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(this.helper.config.variable.settings) && !helper.local.get_params(this.helper.config.variable.settings).choose_table_first"> Kasir </button>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
