@@ -127,6 +127,7 @@ export class PaymentPage {
   }
   ionViewDidLoad() {
 	this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+	this.users_outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id;
     /*this.dbLocalProvider.opendb('outlet')
 	.then((val)=>{
 		

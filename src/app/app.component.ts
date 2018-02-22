@@ -14,6 +14,8 @@ import { ProductPage } from '../pages/product/product';
 import { SettingsPage } from '../pages/settings/settings';
 import { StocksPage } from '../pages/stocks/stocks';
 import { TransactionPage } from '../pages/transaction/transaction';
+import { MemberPage } from '../pages/member/member';
+
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { HelperProvider } from '../providers/helper/helper'; 
@@ -48,6 +50,7 @@ export class MyApp {
       // { title: 'Payment', component: PaymentPage },
       { title: 'Stok', component: StocksPage },
       { title: 'Transaksi', component: TransactionPage },
+      { title: 'Member', component: MemberPage },
       { title: 'Settings', component: SettingsPage },
     ];
     // this.storage.set('outlet', 1)

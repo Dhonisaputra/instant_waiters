@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ModalController, ViewController } from 'ionic-angular';
 import { BillProvider } from '../../providers/bill/bill';
 // import { ProductProvider } from '../../providers/product/product';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
@@ -7,6 +7,8 @@ import { TablePage } from '../table/table';
 import { TotalPaymentEditorPage } from '../total-payment-editor/total-payment-editor';
 import { EditReceiptItemPage } from '../edit-receipt-item/edit-receipt-item';
 import { HelperProvider } from '../../providers/helper/helper'; 
+import { MemberNewFormPage } from '../member-new-form/member-new-form'; 
+import { MemberPage } from '../member/member'; 
 import * as $ from "jquery"
 
 /**
@@ -38,10 +40,11 @@ export class ReceiptPage {
 		can_edit_visitor_name:false,
 		show_footer:true,
 		show_header:true,
-		show_content:true
+		show_content:true,
+		show_split_arrow:false,
 	}
 
-	constructor(public helper:HelperProvider, public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController) {
+	constructor(public helper:HelperProvider, public navCtrl: NavController, public navParams: NavParams, public events: Events, private dbLocalProvider: DbLocalProvider, private billProvider: BillProvider, private modalCtrl:ModalController, public viewCtrl:ViewController) {
 		this.receipts = []
 		this.taxqty = 10;
 
@@ -282,6 +285,68 @@ export class ReceiptPage {
 		modal.onDidDismiss(data => {
 			this.trigger_update_receipt();
 	   });
+	}
+
+
+	openFormNewMember(data:any={})
+	{
+		console.log(data.data)
+		let modal = this.modalCtrl.create(MemberNewFormPage, data.data)
+		modal.onDidDismiss(data => {
+			console.log(data)
+			this.callbackNewMember(data);
+	   	});
+		modal.present();
+	}
+	callbackNewMember(data)
+	{
+		if(data.data)
+		{
+			this.bill.visitor_name = data.data.member_name
+			this.billProvider.set_bill_component('member_id', data.data.member_id);
+			this.update_receipt();
+		}
+
+	}
+	openFormDataMember()
+	{
+		let modal = this.modalCtrl.create(MemberPage, {
+			event: "pick.member",
+			onClick: (member)=>{
+				this.viewCtrl.dismiss(member)
+			}
+		});
+
+		modal.onDidDismiss(data => {
+			console.log(data)
+			this.callbackNewMember(data);
+	   	});
+		modal.present();
+		
+	}
+	optionVisitor()
+	{
+		let visitor_name =  this.bill.visitor_name;
+		this.helper.actionSheet.create({
+			title: 'Opsi lanjutan',
+			buttons: [
+				{
+					text: 'Tambahkan Member',
+					handler: () => {
+						this.openFormNewMember({
+							data:{
+								member:{member_name : visitor_name}
+							}
+						})
+					}
+				},{
+					text: 'Pilih Member',
+					handler: () => {
+						this.openFormDataMember()
+					}
+				}
+			]
+		}).present()
 	}
 
 }

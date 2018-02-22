@@ -29,6 +29,10 @@ import { TotalPaymentEditorPage } from '../pages/total-payment-editor/total-paym
 import { TooltipProductPage } from '../pages/tooltip-product/tooltip-product';
 import { ErrorPage } from '../pages/error/error';
 import { SplitBillPage } from '../pages/split-bill/split-bill';
+import { MemberPage } from '../pages/member/member';
+import { MemberNewFormPage } from '../pages/member-new-form/member-new-form';
+import { MemberDetailPage } from '../pages/member-detail/member-detail';
+import { ModalPage } from '../pages/modal/modal';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -64,7 +68,11 @@ import { HelperProvider } from '../providers/helper/helper';
     TotalPaymentEditorPage,
     TooltipProductPage,
     ErrorPage,
-    SplitBillPage
+    SplitBillPage,
+    MemberPage,
+    MemberNewFormPage,
+    MemberDetailPage,
+    ModalPage
     // AbsoluteDragDirective
 
   ],
@@ -94,7 +102,11 @@ import { HelperProvider } from '../providers/helper/helper';
     TotalPaymentEditorPage,
     TooltipProductPage,
     ErrorPage,
-    SplitBillPage
+    SplitBillPage,
+    MemberPage,
+    MemberNewFormPage,
+    MemberDetailPage,
+    ModalPage
 
   ],
   providers: [

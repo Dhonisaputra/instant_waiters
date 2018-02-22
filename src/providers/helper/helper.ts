@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController, ToastController, ActionSheetController, Events} from 'ionic-angular';
+import { LoadingController, AlertController, ToastController, ActionSheetController, Events, PopoverController} from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { Storage } from '@ionic/storage';
@@ -28,7 +28,8 @@ export class HelperProvider {
     public local: DbLocalProvider, 
     public storage:Storage,
     public actionSheet: ActionSheetController,
-    public events:Events
+    public events:Events,
+    public popoverCtrl:PopoverController
     ) {
     console.log('Hello HelperProvider Provider');
   }

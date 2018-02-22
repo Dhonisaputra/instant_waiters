@@ -17,7 +17,7 @@
 				</ion-col>
 				<ion-col col-2></ion-col>
 				<ion-col col-5>
-					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer"  placeholder="Atas nama" [disabled]="can_edit_visitor_name" [(ngModel)]="bill.visitor_name" (input)="update_receipt()">
+					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer"  placeholder="Atas nama" [disabled]="can_edit_visitor_name" [(ngModel)]="bill.visitor_name" (input)="update_receipt()" (press)="optionVisitor()">
 				</ion-col>
 			</ion-row>	
 		</div>
@@ -28,6 +28,7 @@
 				<div style="width: 50%">ITEM</div>
 				<div style="width: 20%">HARGA</div>
 				<div style="width: 20%">JUMLAH</div>
+				<div style="width: 10%" *ngIf="receipt_page_params.show_split_arrow"></div>
 			</div>
 
 			<ion-list style="margin-top: 10px;">
@@ -57,7 +58,9 @@
 									<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0"> &nbsp; </p>
 									<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>
 								</div>
+
 								<div class="receipt-detail--component" style="width: 20%;">{{billProvider.helper.intToIDR(item.total)}}</div>
+								<div style="width: 10%;" *ngIf="receipt_page_params.show_split_arrow"> <ion-icon md="ios-arrow-forward" ios="ios-arrow-forward"></ion-icon></div>
 							</div>
 						</ion-item>
 

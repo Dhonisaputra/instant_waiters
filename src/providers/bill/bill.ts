@@ -606,14 +606,14 @@ export class BillProvider {
     check_nota_order(index:number, product:number, order_session:number)
     {
         let nota = this.get_nota(index);
-        let index = nota.orders.map((res)=>{
+        let indexNota = nota.orders.map((res)=>{
             if(res.order_session == order_session)
             {
                 return res.product
             }
         }).indexOf(product)
 
-        return index;
+        return indexNota;
     }
 
     new_nota_order(index:number, data:any)

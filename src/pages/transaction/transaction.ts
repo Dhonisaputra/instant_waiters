@@ -53,7 +53,7 @@ export class TransactionPage {
                 outlet: this.outlet,
                 page: 1,
                 join:['table','discount'],
-                fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders,table_name,payment_rest,discount_name,discount_percent,discount_nominal,payment_cancel_status,payment_cancel_note`
+                fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders,table_name,payment_rest,discount_name,discount_percent,discount_nominal,payment_cancel_status,payment_cancel_note,reference_counter`
             }
         }
 
@@ -408,7 +408,8 @@ export class TransactionPage {
                 can_edit_slide_item: false,
                 can_edit_bill_total: false,
                 can_edit_table:false, can_edit_visitor_name:false,
-                show_footer:false
+                show_footer:false,
+                show_split_arrow: true
             }
         })
     }
