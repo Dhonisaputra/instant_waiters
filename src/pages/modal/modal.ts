@@ -131,7 +131,7 @@ export class ModalPage {
         let params = {
         	outlet_id: this.outlet,
         	where: {
-        		'modal_date_only': this.helper.moment.format('YYYY-MM-DD'),
+        		'modal_date_only': this.helper.moment().format('YYYY-MM-DD'),
         		'outlet_id': this.outlet
         	}
         }

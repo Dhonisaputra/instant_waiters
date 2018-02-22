@@ -6,9 +6,14 @@
 -->
 <ion-header>
 
+  <ion-toolbar>
   <ion-navbar>
+  	<button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>modal</ion-title>
   </ion-navbar>
+  </ion-toolbar>
 
 </ion-header>
 
@@ -25,7 +30,7 @@
 
 				<ion-item>
 					<ion-label floating>Catatan</ion-label>
-					<textarea [(ngModel)]="modal.modal_note" style="height: 120px;"></textarea>
+					<ion-textarea [(ngModel)]="modal.modal_note" style="height: 120px;"></ion-textarea>
 				</ion-item>
 
 				<ion-item *ngIf="state=='new'">
