@@ -118,6 +118,11 @@ export class BillProvider {
         return this.get(data)
     }
 
+    get_bill()
+    {
+        return this.bill;
+    }
+
     set_bill_component(name:string, value:any, value_default:any='', also_save_temp:boolean=false)
     {
         this.bill[name] = this.bill[name]?this.bill[name]:value_default
@@ -137,10 +142,16 @@ export class BillProvider {
         }
         return get_temp? this.temp_bill[name] : this.bill[name];
     }
-    update_bill_component(data:object={}, update_db:boolean=false)
+    update_bill_component(data:object={}, update_db:boolean=false, merge:boolean=true)
     {
-        this.bill = Object.assign(this.bill, data)
-        console.log(this.bill)
+        console.log(data, this.bill, merge)
+        if(merge)
+        {
+            this.bill = Object.assign(this.bill, data)
+        }else
+        {
+            this.bill = Object.assign(data,{})
+        }
         this.temp_bill = this.bill
 
         this.detection_order_session_from_orders(this.bill.orders, true)
@@ -230,6 +241,26 @@ export class BillProvider {
         return {index: result, exist: result < 0? false : true}
     }
 
+    // only for bill that has been saved in database
+    public check_existences_product(product, order_session:number, event:string='add')
+    {
+        if(!product)
+        {
+            return {exist: false, index:-1}
+        }
+        let order = this.get_bill_component('orders');
+        
+
+        // search object array that contain event == event[add||reduce]
+        var result = order.map(function(res){
+            if(res.order_session == order_session)
+            {
+                return res.product
+            }
+        }).indexOf(product);
+        return {index: result, exist: result < 0? false : true}
+    }
+
 
     // METHOD
     insert_item(item, event:string='add')
@@ -238,7 +269,6 @@ export class BillProvider {
         let existence = this.check_existences_order(item.id, event)
         
         item.event = event;
-
         if(existence.exist && existence.index > -1)
         {
             let order = this.get_bill_component('orders');
@@ -258,7 +288,35 @@ export class BillProvider {
         }
         this.count_pricing()
         this.update_bill();
+    }
 
+    // only for bill that has been saved in database
+    insert_product(item, event:string='add')
+    {
+
+        let existence = this.check_existences_product(item.product, item.order_session, event)
+        
+        item.event = event;
+        console.log(item, existence, this.get_bill_component('orders'))
+        if(existence.exist && existence.index > -1)
+        {
+            let order = this.get_bill_component('orders');
+            order[existence.index].qty       = parseInt(order[existence.index].qty) + 1;
+            order[existence.index].total     = parseInt(order[existence.index].qty) * parseInt(order[existence.index].price);
+            order[existence.index].total     = (order[existence.index].discount_nominal)? parseInt(order[existence.index].total) - order[existence.index].discount_nominal : order[existence.index].total;
+
+            $('.receipt-product-'+item.product+'-'+event+' .product-amount').addClass('pulse')
+            setTimeout(function(){
+                $('.receipt-product-'+item.product+'-'+event+' .product-amount').removeClass('pulse')
+            },800)
+        }else{
+            item.qty = item.qty && event != 'add' ?item.qty:1;
+            item.total = item.price * item.qty;
+            item.total = item.discount_nominal? parseInt(item.discount_nominal) - item.total : item.total;
+            this.insert_order(item)
+        }
+        this.count_pricing()
+        this.update_bill();
     }
 
     count_pricing()
@@ -539,12 +597,36 @@ export class BillProvider {
         let nota = this.get_nota(index);
         return nota[property];
     }
-    set_nota_component(index:number, property:string, value:any='')
+    set_nota_property(index:number, property:string, value:any='')
     {
         let nota = this.get_nota(index);
         nota[property] = value;
     }
 
+    check_nota_order(index:number, product:number, order_session:number)
+    {
+        let nota = this.get_nota(index);
+        let index = nota.orders.map((res)=>{
+            if(res.order_session == order_session)
+            {
+                return res.product
+            }
+        }).indexOf(product)
+
+        return index;
+    }
+
+    new_nota_order(index:number, data:any)
+    {
+        let nota = this.get_nota(index);
+        nota['orders'].push(data);
+    }    
+
+    remove_nota_order(index:number, index_order:number)
+    {
+        let nota = this.get_nota(index);
+        nota['orders'].splice(index_order, 1)
+    }
     get_nota_order(index:number, order_index:number, property:any=undefined)
     {
         let nota = this.get_nota(index);
@@ -570,6 +652,105 @@ export class BillProvider {
         {
             nota['orders'][order_index] = value;        
         }
+    }
+
+    nota_count_pricing(nota:any)
+    {
+        nota = Object.assign({}, nota);
+
+        let payment_total     = nota['payment_total'];
+        let payment_bills     = nota['payment_bills'];
+        let tax_nominal       = nota['tax_nominal'];
+        let discount_nominal  = nota['discount_nominal'];
+        let discount_percent  = nota['discount_percent'];
+        let discount_id       = nota['discount_id'];
+
+        
+        console.log(discount_id, discount_percent, discount_nominal, payment_total)
+
+        tax_nominal = tax_nominal?parseInt(tax_nominal):0;
+        discount_nominal = discount_nominal?parseInt(discount_nominal):0;
+
+        let order = nota['orders'];
+
+        $.each(order, (i, val)=>{
+            if(!val.complement_status || parseInt(val.complement_status) < 1)
+            {
+                let total = order[i].qty * order[i].price    
+                let order_discount_nominal = parseInt(val.discount_nominal);
+                if(val.discount_percent)
+                {
+                    order_discount_nominal = this.helper.percentToNominal(val.discount_percent, total)
+                }
+                if(order_discount_nominal)
+                {
+                    total = total - order_discount_nominal;
+                }
+                nota['orders'][i]['total'] = total;
+                nota['orders'][i]['discount_nominal'] = order_discount_nominal;
+
+                order[i].total = total;
+                order[i].discount_nominal = order_discount_nominal;
+                
+            }else
+            {
+                if(val.complement_item < val.qty)
+                {
+                    let total = (order[i].qty - val.complement_item) * order[i].price    
+                    let order_discount_nominal = parseInt(val.discount_nominal);
+                    if(val.discount_percent)
+                    {
+                        order_discount_nominal = this.helper.percentToNominal(val.discount_percent, total)
+                    }
+
+                    if(order_discount_nominal)
+                    {
+                        total = total - order_discount_nominal;
+                    }
+                    nota['orders'][i]['total'] = total;
+                    nota['orders'][i]['discount_nominal'] = order_discount_nominal;
+
+                    order[i].total = total;
+                    order[i].discount_nominal = order_discount_nominal;
+
+                }else
+                {
+                    order[i].total = 0;
+                }
+            }
+
+        })
+
+
+        let RestotalPrice = order.map((res) => {
+            // lakukan pengechekan apakah order memiliki "complement_status";
+            if( !res.complement_status || parseInt(res.complement_status) < 1 || (parseInt(res.complement_status) > 0 && res.complement_item < res.qty) )
+            {
+                return res.total
+            }else
+            {
+                return 0;
+            }
+        })
+
+        for (var i = 0; i < RestotalPrice.length; ++i) {
+            payment_bills = payment_bills + parseInt(RestotalPrice[i]);
+        }
+
+        if(discount_id && discount_percent)
+        {
+            discount_nominal = this.helper.percentToNominal(discount_percent, payment_bills);
+        }
+
+        payment_total = payment_bills - discount_nominal + tax_nominal;
+
+        nota.payment_bills = payment_bills;
+        nota.payment_total = payment_total;
+        nota.discount_nominal = discount_nominal;
+
+        console.log(nota);
+        return nota;
+
     }
 
 }

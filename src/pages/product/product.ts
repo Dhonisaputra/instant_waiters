@@ -180,6 +180,18 @@ export class ProductPage
 
 					this.navParams.data = {event:'order.do'} // this code use to reset navParams. bcause, whenever a page pushed from this page and popped back, this data bill item always from the previous event. 
 					break;
+
+				case "transaction.split":
+					console.log(this.navParams.data.bill)
+
+					
+					this.billProvider.reset_bill();
+					this.billProvider.update_bill_component(this.navParams.data.bill,true,false)
+					this.billProvider.count_pricing();
+					this.events.publish('bill.update', {})
+
+					this.navParams.data = {event:'order.do'} // this code use to reset navParams. bcause, whenever a page pushed from this page and popped back, this data bill item always from the previous event. 
+					break;
 				
 				default:
 					// code...
