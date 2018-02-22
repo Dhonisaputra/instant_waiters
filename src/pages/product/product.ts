@@ -261,8 +261,7 @@ export class ProductPage
 				this.original_items = res.data;
 			}
 			// this.filter_product()
-		}).always( ()=>{
-		} )
+		})
 	}
 
 	refresh_data(refresher:any={})
@@ -438,6 +437,7 @@ export class ProductPage
 
 	pay_bill()
 	{
+		
 
 		let alertVisitor = this.alertCtrl.create({
 			title: 'Nama pembeli',

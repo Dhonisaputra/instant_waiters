@@ -22,8 +22,8 @@ export class ModalPage {
 	users_outlet: number;
 	state: string='new';
 	constructor(public navCtrl: NavController, public navParams: NavParams, public helper: HelperProvider) {
-        this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
-		this.users_outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id;
+        this.outlet = parseInt(this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id);
+		this.users_outlet = parseInt(this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id);
 	}
 
 	ionViewDidLoad() {
@@ -32,6 +32,11 @@ export class ModalPage {
 		this.get_modal();
 	}
 
+    reset_modal_form_data()
+    {
+        this.modal.modal_nominal = '';
+        this.modal.modal_note = '';
+    }
 	create_new_modal()
 	{
         let url = this.helper.config.base_url('admin/outlet/modal/add')
@@ -53,7 +58,7 @@ export class ModalPage {
         	if(res.code == 200)
         	{
         		this.get_modal();
-        		this.modal = {}
+        		this.reset_modal_form_data()
         	}
         })
         .always(()=>{
@@ -82,8 +87,9 @@ export class ModalPage {
         .done((res)=>{
         	if(res.code == 200)
         	{
-        		this.get_modal();
-	        	this.modal = {}
+                this.reset_modal_form_data()
+	        	// this.modal = {}
+                this.get_modal();
         	}
         })
         .always(()=>{
@@ -112,7 +118,8 @@ export class ModalPage {
         	if(res.code == 200)
         	{
         		this.get_modal();
-	        	this.modal = {}
+                this.reset_modal_form_data()
+	        	// this.modal = {}
         	}
         })
         .always(()=>{
@@ -122,7 +129,7 @@ export class ModalPage {
 
 	get_modal()
 	{
-        let url = this.helper.config.base_url('admin/outlet/modal/')
+        let url = this.helper.config.base_url('admin/outlet/modal/get')
 
 		let load = this.helper.loadingCtrl.create({
         	content: "Memeriksa data"
@@ -130,10 +137,12 @@ export class ModalPage {
 
         let params = {
         	outlet_id: this.outlet,
+            fields:'modal_id,users_outlet_id,outlet_id,modal_date,modal_nominal,modal_note,modal_date_only,users_fullname',
         	where: {
         		'modal_date_only': this.helper.moment().format('YYYY-MM-DD'),
         		'outlet_id': this.outlet
-        	}
+        	},
+            join:["users_outlet"]
         }
         load.present();
         this.helper.$.ajax({
@@ -152,5 +161,43 @@ export class ModalPage {
         	load.dismiss();
         })
 	}
+
+    advanceOptions(index, item)
+    {
+        this.helper.actionSheet.create({
+            title: 'Opsi Lanjutan',
+            buttons: [
+            {
+                text: 'Edit data modal',
+                handler: () => {
+                    this.state = 'update';
+                    this.modal = this.helper.clone_object(item);
+                }
+            },{
+                text: 'Hapus data modal',
+                handler: () => {
+                    this.helper.alertCtrl.create({
+                        title: "Hapus modal awal",
+                        "message": 'Aksi ini akan menghapus data modal. apakah anda akan tetap melanjutkan?',
+                        buttons: [
+                        {
+                            text: 'Cancel',
+                            handler: data => {
+                            }
+                        },
+                        {
+                            text: 'Hapus',
+                            handler: data => {
+                                this.modal = this.helper.clone_object(item);
+                                this.delete_modal()
+                            }
+                        }
+                        ]
+                    }).present();
+                }
+            }
+            ]
+        }).present();
+    }
 
 }

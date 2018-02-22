@@ -28,6 +28,7 @@ export class PaymentPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider: DbLocalProvider, private events: Events, private helper: HelperProvider, private billProvider: BillProvider) {
   	
   	this.numpad_type = 'numpad';
+
   }
 
   ionViewDidEnter()
@@ -94,6 +95,8 @@ export class PaymentPage {
   		alert("Not Enough Money!");
   		return false;
   	}
+  	
+
   	this.billProvider.save({
 		users_outlet 				: this.users_outlet,
 		outlet						: this.outlet,
@@ -132,6 +135,21 @@ export class PaymentPage {
 	.then((val)=>{
 		
 	})*/
+  }
+
+  ionViewWillEnter()
+  {
+  	// screenshot the bills
+  	this.helper.html2canvas($('.receipt-product')[0])
+	.then((canvas) => {
+	  	var img = canvas.toDataURL()
+	  	// img = this.helper.html_encode(img);
+	  	img = img.split(',')[1];
+		this.billProvider.set_bill_component('nota_screenshot', img);
+	})
+	.catch(err => {
+	  console.log("error canvas", err);
+	});
   }
 
   resetBillCounted()

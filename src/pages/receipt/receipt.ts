@@ -91,6 +91,15 @@ export class ReceiptPage {
 	update_receipt()
 	{
 		// let receipt = this.get_data_receipt();
+		/*if(this.billProvider.get_bill_component('member_id'))
+		{
+			this.billProvider.set_bill_component('member_id', undefined);
+
+			this.billProvider.set_bill_component('member', undefined);
+
+			this.billProvider.set_bill_component('nota_screenshot', undefined);
+		}*/
+
         this.billProvider.set_bill_component('visitor_name', this.bill.visitor_name);
         this.billProvider.update_bill_component({}, true);
 	}
@@ -293,7 +302,6 @@ export class ReceiptPage {
 		console.log(data.data)
 		let modal = this.modalCtrl.create(MemberNewFormPage, data.data)
 		modal.onDidDismiss(data => {
-			console.log(data)
 			this.callbackNewMember(data);
 	   	});
 		modal.present();
@@ -304,6 +312,17 @@ export class ReceiptPage {
 		{
 			this.bill.visitor_name = data.data.member_name
 			this.billProvider.set_bill_component('member_id', data.data.member_id);
+			this.billProvider.set_bill_component('member', data.data);
+			this.helper.html2canvas($('.receipt-product')[0])
+			.then((canvas) => {
+		      	var img = canvas.toDataURL()
+		      	// img = this.helper.html_encode(img);
+		      	img = img.split(',')[1];
+				this.billProvider.set_bill_component('nota_screenshot', img);
+		    })
+		    .catch(err => {
+		      console.log("error canvas", err);
+		    });
 			this.update_receipt();
 		}
 
@@ -318,7 +337,6 @@ export class ReceiptPage {
 		});
 
 		modal.onDidDismiss(data => {
-			console.log(data)
 			this.callbackNewMember(data);
 	   	});
 		modal.present();

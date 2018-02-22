@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import * as $ from "jquery"
 
 import * as moment from 'moment';
+import * as html2canvas from "html2canvas"
 
 /*
   Generated class for the HelperProvider provider.
@@ -19,6 +20,7 @@ import * as moment from 'moment';
 export class HelperProvider {
   public $:any=$;
   public moment:any=moment;
+  public html2canvas:any=html2canvas;
   constructor(
     public http: HttpClient, 
     public config: ConfigProvider, 
@@ -83,6 +85,21 @@ export class HelperProvider {
   toInt(text:any)
   {
     return parseInt(text)
+  }
+
+  clone_object(data)
+  {
+    return Object.assign({}, data)
+  }
+
+  html_encode(value)
+  {
+      return $('<div/>').text(value).html();
+  }
+
+  html_decode(value)
+  {
+      return $('<div/>').html(value).text();
   }
 
 }

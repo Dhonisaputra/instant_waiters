@@ -30,15 +30,15 @@
 
 				<ion-item>
 					<ion-label floating>Catatan</ion-label>
-					<ion-textarea [(ngModel)]="modal.modal_note" style="height: 120px;"></ion-textarea>
+					<ion-textarea [(ngModel)]="modal.modal_note" style="height: 100%"></ion-textarea>
 				</ion-item>
 
 				<ion-item *ngIf="state=='new'">
-					<button ion-button block (click)="create_new_modal()"> Buat data member </button>
+					<button ion-button block (click)="create_new_modal()"> Tambah modal </button>
 				</ion-item>
 
 				<ion-item *ngIf="state=='update'">
-					<button ion-button block (click)="update_modal()"> Perbarui data member </button>
+					<button ion-button block (click)="update_modal()"> Perbarui modal </button>
 				</ion-item>
 
 				<ion-item class="sr-only">
@@ -47,7 +47,12 @@
 			</ion-list>
 		</div>
 		<div class="col-md-9">
-			
+			<ion-list >
+				<ion-item *ngFor="let item of data_modal; let i = index;" (press)="advanceOptions(i, item)">
+					<h2>Rp.{{helper.intToIDR(item.modal_nominal)}}</h2>
+					<p>{{helper.moment(item.modal_date).format('HH:mm - DD/MM/YYYY')}} - {{item.users_fullname}}</p>
+				</ion-item>
+			</ion-list>
 		</div>
 	</div>
 </ion-content>

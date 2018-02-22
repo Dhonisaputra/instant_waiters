@@ -134,7 +134,7 @@ export class BillProvider {
         }
     }
 
-    public get_bill_component(name:any=undefined, get_temp:boolean=false)
+    get_bill_component(name:any=undefined, get_temp:boolean=false)
     {
         if(!name)
         {
