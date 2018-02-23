@@ -16,6 +16,7 @@ import { StocksPage } from '../pages/stocks/stocks';
 import { TransactionPage } from '../pages/transaction/transaction';
 import { MemberPage } from '../pages/member/member';
 import { ModalPage } from '../pages/modal/modal';
+import { SpendPage } from '../pages/spend/spend';
 
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
@@ -53,6 +54,7 @@ export class MyApp {
       { title: 'Transaksi', component: TransactionPage },
       { title: 'Member', component: MemberPage },
       { title: 'Modal', component: ModalPage },
+      { title: 'Pengeluaran', component: SpendPage },
       { title: 'Settings', component: SettingsPage },
     ];
     // this.storage.set('outlet', 1)

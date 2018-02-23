@@ -1,0 +1,105 @@
+<!--
+  Generated template for the SpendPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-toolbar color="main">
+	  <ion-navbar>
+	  	<button ion-button menuToggle>
+	      <ion-icon name="menu"></ion-icon>
+	    </button>
+	    <ion-title>Pengeluaran tak terduga</ion-title>
+	  </ion-navbar>
+	</ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<div *ngIf="state == 'list'">
+		<div class="text-align--center" *ngIf="data_spend.length < 1">
+			Data Tidak Ditemukan 
+		</div>
+		<ion-list *ngIf="data_spend.length > 0">
+			<ion-item *ngFor="let item of data_spend; let i = index;">
+				<h2>{{item.sp_supplier}}</h2>
+				<p>  
+					<span> Rp.{{helper.intToIDR(item.sp_total)}} </span>
+				</p>
+			</ion-item>
+		</ion-list>
+
+		<ion-fab right bottom>
+			<button ion-fab color="main" (click)="state = 'new_spend'"><ion-icon name="add"></ion-icon></button>
+		</ion-fab>
+	</div>
+
+	<div *ngIf="state == 'new_spend'">
+		<div class="row center">
+			<div class="col-md-5 col-lg-5 col-xs-12 col-sm-12">
+				<ion-list>
+					<ion-item>
+				  	</ion-item>
+				  
+				  <ion-item>
+				    <ion-label floating>Type</ion-label>
+				    <ion-input type="text" [(ngModel)]="spend.sp_type"></ion-input>
+				  </ion-item>
+
+				  <ion-item>
+				    <ion-label floating>Tanggal pengadaan</ion-label>
+				    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_date"> </ion-datetime>
+				  </ion-item>
+
+				  <ion-item>
+				    <ion-label floating>Supplier</ion-label>
+				    <ion-input type="text" [(ngModel)]="spend.sp_supplier"></ion-input>
+				  </ion-item>
+
+				  <ion-item>
+				    <ion-label floating>Pajak</ion-label>
+				    <ion-input type="text" [(ngModel)]="spend.tax_nominal"></ion-input>
+				  </ion-item>
+
+				  <ion-item>
+				    <ion-label floating>Diskon</ion-label>
+				    <ion-input type="text" [(ngModel)]="spend.disc_nominal"></ion-input>
+				  </ion-item>
+
+				  <ion-item>
+				    <ion-label floating>Jumlah total</ion-label>
+				    <ion-input type="text" [(ngModel)]="spend.sp_bill"></ion-input>
+				  </ion-item>
+
+
+				  <ion-item>
+				    <ion-label floating>Uang dibayarkan</ion-label>
+				    <ion-input type="text" [(ngModel)]="spend.sp_total"></ion-input>
+				  </ion-item>
+
+				  <ion-item>
+				    <ion-label floating>Tanggal dibayarkan</ion-label>
+				    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_paid"> </ion-datetime>
+				  </ion-item>
+
+
+				  <ion-item>
+				    <ion-label floating>Catatan</ion-label>
+				    <ion-textarea [(ngModel)]="spend.sp_note"></ion-textarea>
+				  </ion-item>
+
+				  <ion-item>
+				  	<button ion-button block large color="main" (click)="create_new_spend_data()">Simpan</button>
+				  	<button ion-button block large color="danger" (click)="state = 'list'">Batal</button>
+				  </ion-item>
+
+				  <ion-item>
+				  </ion-item>
+
+				</ion-list>
+			</div>
+		</div>
+	</div>
+</ion-content>

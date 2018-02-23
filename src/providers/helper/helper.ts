@@ -21,6 +21,8 @@ export class HelperProvider {
   public $:any=$;
   public moment:any=moment;
   public html2canvas:any=html2canvas;
+  public outlet:any;
+  public users_outlet:any;
   constructor(
     public http: HttpClient, 
     public config: ConfigProvider, 
@@ -34,6 +36,10 @@ export class HelperProvider {
     public popoverCtrl:PopoverController
     ) {
     console.log('Hello HelperProvider Provider');
+      this.outlet = this.local.get_params(config.variable.credential).data.outlet_id;
+
+      this.users_outlet = this.local.get_params(config.variable.credential).data.users_outlet_id;
+
   }
 
   /*

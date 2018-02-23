@@ -33,6 +33,8 @@ import { MemberPage } from '../pages/member/member';
 import { MemberNewFormPage } from '../pages/member-new-form/member-new-form';
 import { MemberDetailPage } from '../pages/member-detail/member-detail';
 import { ModalPage } from '../pages/modal/modal';
+import { SpendPage } from '../pages/spend/spend';
+import { SpendDetailPage } from '../pages/spend-detail/spend-detail';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -72,7 +74,9 @@ import { HelperProvider } from '../providers/helper/helper';
     MemberPage,
     MemberNewFormPage,
     MemberDetailPage,
-    ModalPage
+    ModalPage,
+    SpendPage,
+    SpendDetailPage
     // AbsoluteDragDirective
 
   ],
@@ -106,7 +110,9 @@ import { HelperProvider } from '../providers/helper/helper';
     MemberPage,
     MemberNewFormPage,
     MemberDetailPage,
-    ModalPage
+    ModalPage,
+    SpendPage,
+    SpendDetailPage
 
   ],
   providers: [

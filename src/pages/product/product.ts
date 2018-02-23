@@ -305,9 +305,7 @@ export class ProductPage
 			{
 				refresher.complete();
 			}
-		})
-		.always(()=>{
-    		loader.dismiss();
+			loader.dismiss();
 		})
 	}
 
