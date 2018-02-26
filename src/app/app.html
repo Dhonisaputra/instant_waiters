@@ -23,7 +23,7 @@
        <!-- <ion-item-divider>Menu</ion-item-divider> -->
       <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(this.helper.config.variable.settings) || helper.local.get_params(this.helper.config.variable.settings).choose_table_first"> Kasir </button>
       <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(this.helper.config.variable.settings) && !helper.local.get_params(this.helper.config.variable.settings).choose_table_first"> Kasir </button>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="{'sr-only': !p.options.status || this.helper.local.get_params(this.helper.config.variable.settings)[p.options.setting_name] == 'false'}" >
         {{p.title}}
       </button>
 

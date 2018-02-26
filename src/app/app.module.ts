@@ -35,6 +35,7 @@ import { MemberDetailPage } from '../pages/member-detail/member-detail';
 import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
 import { SpendDetailPage } from '../pages/spend-detail/spend-detail';
+import { DebtPage } from '../pages/debt/debt';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -77,7 +78,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MemberDetailPage,
     ModalPage,
     SpendPage,
-    SpendDetailPage
+    SpendDetailPage,
+    DebtPage
     // AbsoluteDragDirective
 
   ],
@@ -114,7 +116,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MemberDetailPage,
     ModalPage,
     SpendPage,
-    SpendDetailPage
+    SpendDetailPage,
+    DebtPage
 
   ],
   providers: [

@@ -17,6 +17,7 @@ import { TransactionPage } from '../pages/transaction/transaction';
 import { MemberPage } from '../pages/member/member';
 import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
+import { DebtPage } from '../pages/debt/debt';
 
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
@@ -31,7 +32,7 @@ export class MyApp {
   tablePage: any = TablePage;
   productPage: any = ProductPage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: any; //Array<{title: string, component: any, options:any}>
   lastTimeBackPress:number=0;
   timePeriodToExit:number=2000;
   users: any={}
@@ -50,12 +51,13 @@ export class MyApp {
       // { title: 'Kasir', component: ProductPage },
       // { title: 'Send Receipt', component: SendReceiptPage },
       // { title: 'Payment', component: PaymentPage },
-      { title: 'Stok', component: StocksPage },
-      { title: 'Transaksi', component: TransactionPage },
-      { title: 'Member', component: MemberPage },
-      { title: 'Modal', component: ModalPage },
-      { title: 'Pengeluaran', component: SpendPage },
-      { title: 'Settings', component: SettingsPage },
+      { title: 'Stok', component: StocksPage, options:{status:true} },
+      { title: 'Transaksi', component: TransactionPage, options:{status:true} },
+      { title: 'Member', component: MemberPage, options:{status:true} },
+      { title: 'Modal', component: ModalPage, options:{status:true} },
+      { title: 'Pengeluaran', component: SpendPage, options:{status:true} },
+      { title: 'Hutang', component: DebtPage, options:{type:'setting', setting_name: 'debt_mode', status:true} },
+      { title: 'Settings', component: SettingsPage, options:{status:true} },
     ];
     // this.storage.set('outlet', 1)
     this.routeHistory = [];

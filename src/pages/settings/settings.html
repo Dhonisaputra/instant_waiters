@@ -62,6 +62,11 @@
   				<ion-label> Pilih meja ketika order? </ion-label>
   				<ion-toggle checked="true" (ionChange)="update_settings()" [(ngModel)]="settings.choose_table_first"></ion-toggle>
 			</ion-item>
+
+			<ion-item>
+  				<ion-label> Aktifkan mode hutang? </ion-label>
+  				<ion-toggle checked="true" (ionChange)="update_settings()" [(ngModel)]="settings.debt_mode"></ion-toggle>
+			</ion-item>
 		</ion-list>
 	</div>
 

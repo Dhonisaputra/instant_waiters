@@ -1,0 +1,59 @@
+<!--
+  Generated template for the DebtPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	
+	<ion-toolbar color="main">
+		
+		<ion-navbar>
+			<button ion-button menuToggle *ngIf="state == 'list'">
+				<ion-icon name="menu"></ion-icon>
+			</button>
+			<ion-buttons left>
+			    
+			    <button ion-button icon-only clear color="light" *ngIf="state == 'detail'" (click)="outDetail()">
+			      <ion-icon name="arrow-back"></ion-icon>
+			    </button>
+			</ion-buttons>
+			<ion-title>Hutang</ion-title>
+			<ion-searchbar *ngIf="page_params.toggleSearchInput" class="searchbar-toolbar" (ionInput)="filter_hutang()" [(ngModel)]="filter_input" style="padding: 0px 5px; width:40%;"></ion-searchbar>
+			<ion-buttons class="center distributed">
+				<button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">
+					<ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>
+					<ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>
+				</button>
+			</ion-buttons>
+
+		</ion-navbar>
+	</ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	
+	<ion-list *ngIf="state == 'list'">
+
+		<ion-item *ngFor="let debt of debts; let i = index; " (press)="advanceOptions(i, debt)">
+			<h2>{{debt.member_name}}</h2>
+			<p>
+				<span> <strong>Total Hutang :</strong> {{helper.intToIDR(debt.total_debt_rest)}}</span>
+				<span> <strong>Email :</strong> {{debt.member_mail}}</span>
+				<span> <strong>Phone :</strong> {{debt.member_phone}}</span>
+			</p>
+		</ion-item>
+	</ion-list>
+
+	<ion-list *ngIf="state == 'detail'">
+		<ion-item *ngFor="let debt of debts; let i = index; " (press)="advanceOptions(i, debt)" [ngClass]="{'sr-only':debt.debt_rest <= 0 ?true : false}">
+			<h2><strong>{{debt.member_name}}</strong></h2>
+			<p>
+				<span><strong>Nota : </strong> {{helper.intToIDR(debt.pay_id)}}</span> &middot; 
+				<span><strong>Hutang : </strong> {{helper.intToIDR(debt.debt_rest)}}</span>
+			</p>
+		</ion-item>
+	</ion-list>
+</ion-content>

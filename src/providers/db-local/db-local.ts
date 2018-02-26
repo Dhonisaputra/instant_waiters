@@ -19,7 +19,8 @@ export class DbLocalProvider {
     params: any= {
         is_login:false, 
         settings:{
-            choose_table_first:true
+            choose_table_first:true,
+            debt_mode: false
         }
     } // variable to store temporary params || karena saya belum bisa ngirim / ganti page menggunakan parameters.
     
