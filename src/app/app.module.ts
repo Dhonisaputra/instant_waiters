@@ -46,6 +46,7 @@ import { DbLocalProvider } from '../providers/db-local/db-local';
 import { DbTableProvider } from '../providers/db-table/db-table';
 import { HelperProvider } from '../providers/helper/helper';  
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 
@@ -82,6 +83,7 @@ import { HelperProvider } from '../providers/helper/helper';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
