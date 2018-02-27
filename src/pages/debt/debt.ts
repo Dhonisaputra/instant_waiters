@@ -38,6 +38,10 @@ import { HelperProvider } from '../../providers/helper/helper';
 
  	filter_hutang()
  	{
+ 		if(this.filter_input.length > 0 && this.filter_input.length < 5)
+ 		{
+ 			return false;
+ 		}
  		let loading = this.helper.loadingCtrl.create({
  			content: "Memeriksa data"
  		})
@@ -80,7 +84,7 @@ import { HelperProvider } from '../../providers/helper/helper';
 
  		let url = this.helper.config.base_url('admin/outlet/debt/get/list')
  		let data = {
- 			fields: 'total_debt_rest,debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_phone',
+ 			fields: 'total_debt_rest,debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_code,member_phone',
  			outlet_id: this.outlet,
  			group_by: 'member_id',
  			where:{
@@ -186,7 +190,7 @@ import { HelperProvider } from '../../providers/helper/helper';
  		let url = this.helper.config.base_url('admin/outlet/debt/get/detail')
  		let data = {
  			outlet_id: this.outlet,
- 			fields: 'debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_phone',
+ 			fields: 'debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_phone,member_code',
  			where: {
  				member_id: item.member_id,
  			}
@@ -208,7 +212,6 @@ import { HelperProvider } from '../../providers/helper/helper';
  					this.debts = res.data;
  				}
  			}
- 			console.log(res);
  		})
  		.always(()=>{
  			loading.dismiss();
@@ -219,8 +222,7 @@ import { HelperProvider } from '../../providers/helper/helper';
  	{
  		this.helper.actionSheet.create({
  			title: 'Opsi lanjutan',
- 			buttons:[
- 			{
+ 			buttons:[{
  				text: "Lihat data hutang",
  				handler: ()=>{
  					this.state = 'detail'
@@ -232,8 +234,18 @@ import { HelperProvider } from '../../providers/helper/helper';
  				handler: ()=>{
  					this.cicilHutang(item)
  				}
- 			},
- 			]
+ 			},{
+ 				text: "Kirim email pengingat hutang",
+ 				handler: ()=>{
+ 					this.debtReminder(item)
+ 				}
+ 			},{
+ 				text: "Lihat kartu hutang",
+ 				handler: ()=>{
+ 					let url = this.helper.config.base_url('admin/outlet/debt/bill/'+this.outlet+'/'+item.member_id)
+					window.open(url,'_blank')
+ 				}
+ 			}]
  		}).present()
  	}
 
@@ -242,5 +254,92 @@ import { HelperProvider } from '../../providers/helper/helper';
  		this.state = 'list';
  		this.debts = []
  		this.get_data_debt();
+ 	}
+
+ 	filter_options()
+ 	{
+ 		this.helper.actionSheet.create({
+ 			title: "Filter lanjutan",
+ 			buttons:[
+ 				{
+ 					text: "Email member",
+ 					handler: ()=>{
+ 						this.filter_params = 'member_mail'
+ 					}
+ 				},{
+ 					text: "Nama member",
+ 					handler: ()=>{
+ 						this.filter_params = 'member_name'
+ 					}
+ 				},{
+ 					text: "Telephone member",
+ 					handler: ()=>{
+ 						this.filter_params = 'member_phone'
+ 					}
+ 				},{
+ 					text: "Kode unik member",
+ 					handler: ()=>{
+ 						this.filter_params = 'member_code'
+ 					}
+ 				},
+ 			]
+ 		}).present();
+ 	}
+
+ 	debtReminder(item)
+ 	{
+ 		let loading = this.helper.loadingCtrl.create({
+ 			content: "Mengirimkan email",
+ 		})
+ 		loading.present()
+ 		let url = this.helper.config.base_url('admin/outlet/debt/reminder')
+ 		let data = {
+ 			outlet_id: this.outlet,
+ 			where: {member_id: item.member_id},
+            fields : 'outlet_address,outlet_phone,outlet_logo,outlet_name,total_debt_rest,debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_phone',
+            item: item
+ 		}
+ 		this.helper.$.ajax({
+ 			url: url,
+ 			data:data,
+ 			type:"POST",
+ 			dataType:"json"
+ 		})
+ 		.done( (res)=>{
+ 			console.log(res)
+ 			switch (res.code) {
+ 				case 200:
+ 					this.helper.alertCtrl.create({
+ 						title: "Proses berhasil",
+	 					message: "Pengingat telah dikirimkan",
+	 					buttons: ["OK"]
+	 				}).present();
+ 					break;
+ 				
+ 				default:
+ 					this.helper.alertCtrl.create({
+ 						title: "Terjadi kesalahan",
+	 					message: "Pengingat gagal dikirimkan",
+	 					buttons: ["OK"]
+	 				}).present();
+ 					break;
+ 			}
+ 		} )
+ 		.fail(()=>{
+ 			this.helper.alertCtrl.create({
+				title: "Terjadi kesalahan code:500",
+				message: "Fatal Error. Silahkan laporkan kepada pengembang aplikasi. ",
+				buttons: ["OK"]
+			}).present();
+ 		})
+ 		.always(()=>{
+ 			loading.dismiss();
+ 		})
+ 	}
+
+ 	open_debt_card()
+ 	{
+ 		let url = this.helper.config.base_url('admin/outlet/debt/card/'+this.outlet)
+		window.open(url,'_blank')
  	}
  }

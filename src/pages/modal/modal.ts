@@ -39,6 +39,15 @@ export class ModalPage {
     }
 	create_new_modal()
 	{
+        if(this.modal.modal_nominal < 1  || !this.modal.modal_note )
+        {
+            this.helper.alertCtrl.create({
+                title: "Kesalahan",
+                message: "Silahkan lengkapi isian yang tersedia",
+                buttons: ["OK"]
+            }).present();
+            return false;
+        }
         let url = this.helper.config.base_url('admin/outlet/modal/add')
 
 		let load = this.helper.loadingCtrl.create({
@@ -59,7 +68,22 @@ export class ModalPage {
         	{
         		this.get_modal();
         		this.reset_modal_form_data()
-        	}
+        	}else
+            {
+                this.helper.alertCtrl.create({
+                    title: "Kesalahan code:"+res.code,
+                    message: res.message,
+                    buttons: ["OK"]
+                }).present();
+
+            }
+        })
+        .fail(()=>{
+            this.helper.alertCtrl.create({
+                title: "Kesalahan code:"+500,
+                message: "Terdapat kesalahan saat penginputan data. Silahkan laporkan pengembang sistem untuk tindak lanjut",
+                buttons: ["OK"]
+            }).present();
         })
         .always(()=>{
         	load.dismiss();

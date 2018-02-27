@@ -19,11 +19,24 @@
 			    </button>
 			</ion-buttons>
 			<ion-title>Hutang</ion-title>
+			
+			
+
 			<ion-searchbar *ngIf="page_params.toggleSearchInput" class="searchbar-toolbar" (ionInput)="filter_hutang()" [(ngModel)]="filter_input" style="padding: 0px 5px; width:40%;"></ion-searchbar>
-			<ion-buttons class="center distributed">
+			<ion-buttons class="center distributed" *ngIf="state == 'list'">
 				<button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">
 					<ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>
 					<ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>
+				</button>
+			</ion-buttons>
+			<ion-buttons class="center distributed" *ngIf="state == 'list'">
+				<button ion-button clear icon-right color="light" (click)="filter_options()">
+				  Filter <ion-icon name="funnel"></ion-icon>
+				</button>
+			</ion-buttons>
+			<ion-buttons class="center distributed" *ngIf="state == 'list'">
+				<button ion-button clear icon-right color="light" (click)="open_debt_card()">
+				  Download Kartu hutang
 				</button>
 			</ion-buttons>
 
@@ -40,7 +53,7 @@
 		<ion-item *ngFor="let debt of debts; let i = index; " (press)="advanceOptions(i, debt)">
 			<h2>{{debt.member_name}}</h2>
 			<p>
-				<span> <strong>Total Hutang :</strong> {{helper.intToIDR(debt.total_debt_rest)}}</span>
+				<span> <strong>Total Hutang :</strong> {{helper.intToIDR(debt.debt_rest)}}</span>
 				<span> <strong>Email :</strong> {{debt.member_mail}}</span>
 				<span> <strong>Phone :</strong> {{debt.member_phone}}</span>
 			</p>

@@ -167,6 +167,16 @@ export class MemberPage {
 						this.openDetailPage(index, item)
 					}
 				},{
+					text: 'Kirimkan email kartu member',
+					handler: () => {
+						this.openTheCard(index, item, 'email')
+					}
+				},{
+					text: 'Download PDF Kartu Email',
+					handler: () => {
+						this.openTheCard(index, item, 'pdf')
+					}
+				},{
 					text: 'Hapus Member',
 					handler: () => {
 						this.helper.alertCtrl.create({
@@ -183,5 +193,47 @@ export class MemberPage {
 				}
 			]
 		}).present()
+	}
+
+	openTheCard(index, item, type)
+	{
+		let url = this.helper.config.base_url('admin/outlet/member/card/'+this.outlet+'/'+item.member_id+'/'+type)
+		switch (type) {
+			case "email":
+				// code...
+				let loading = this.helper.loadingCtrl.create({
+					content: "Mengirimkan email"
+				});
+				loading.present();
+				this.helper.$.ajax({
+					url:url,
+					type:"POST",
+				})
+				.done((res)=>{
+					this.helper.alertCtrl.create({
+						title: "Kartu member terkirim",
+						message: "Kartu member berhasil dikirim",
+						buttons: ["OK"]
+					}).present()
+				})
+				.fail(()=>{
+					this.helper.alertCtrl.create({
+						title: "Kesalahan code : 500",
+						message: "Terjadi kesalahan saat mengirimkan email. Silahkan laporkan kepada pengembang aplikasi",
+						buttons: ["OK"]
+					}).present()
+				})
+
+				.always(()=>{
+					
+					loading.dismiss();
+				})
+				break;
+			
+			default:
+				// code...
+				window.open(url, '_blank')
+				break;
+		}
 	}
 }
