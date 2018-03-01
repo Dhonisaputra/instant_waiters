@@ -25,24 +25,26 @@
 			</div>
 
 			<div *ngIf="!helper.local.get_params('is_login')">
-				<ion-list >
-					<ion-item>
-						<ion-label floating>Email</ion-label>
-						<ion-input type="text" required [(ngModel)]="user.user_email_or_phone"></ion-input>
-					</ion-item>
+				<form (ngSubmit)="signIn($event)">
+					<ion-list >
+						<ion-item>
+							<ion-label floating>Email</ion-label>
+							<ion-input name="email" type="text" required [(ngModel)]="user.user_email_or_phone"></ion-input>
+						</ion-item>
 
-					<ion-item>
-						<ion-label floating>Password</ion-label>
-						<ion-input type="password" required [(ngModel)]="user.user_password"></ion-input>
-					</ion-item>
-					<ion-item style="display: none;">
-					</ion-item>
+						<ion-item>
+							<ion-label floating>Password</ion-label>
+							<ion-input name="password" type="password" required [(ngModel)]="user.user_password"></ion-input>
+						</ion-item>
+						<ion-item style="display: none;">
+						</ion-item>
 
-				</ion-list>
+					</ion-list>
 
-				<div padding style="padding-right: 0px;">
-					<button ion-button block color="main" large (click)="signIn($event)">Sign In</button>
-				</div>
+					<div padding style="padding-right: 0px;">
+						<button ion-button block color="main" large type="submit">Sign In</button>
+					</div>
+				</form>
 			</div>
 
 		</div>

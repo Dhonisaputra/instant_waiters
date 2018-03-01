@@ -95,7 +95,7 @@ export class LoginPage {
 	        	this.helper.local.set_params('is_login', true);
 				this.helper.local.set_params(this.helper.config.variable.credential, res);
 				this.helper.storage.set(this.helper.config.variable.credential, res);
-	        	alertSuccess.present();
+	        	// alertSuccess.present();
 				this.navCtrl.setRoot(TablePage);
 			}else
 			{
