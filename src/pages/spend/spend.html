@@ -41,7 +41,7 @@
 		    </button>
 		</ion-buttons>
 		<ion-buttons end *ngIf="state == 'new_spend'" >
-		    <button ion-button clear color="light" (click)="state='spend_item'">
+		    <button ion-button clear color="light" (click)="openSpendItem()">
 		      Selanjutnya &nbsp;
 		      <ion-icon name="arrow-forward"></ion-icon>
 		    </button>
@@ -165,11 +165,19 @@
 	 			
  					
 		 			<ion-list>
-		 				<ion-item *ngIf="spend.sp_type">
+		 				<ion-item *ngIf="spend.sp_type && helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 1 && helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 2 ">
 		 					<ion-label stacked>Product</ion-label>
 		 					<ion-select [(ngModel)]="spend_item_form.prod_id">
 		 						<ion-option selected>--Pilih Produk--</ion-option>
 		 						<ion-option *ngFor="let item of products; let i = index;" value="{{item.id}}">{{item.name}}</ion-option>
+		 					</ion-select >
+		 				</ion-item>
+
+		 				<ion-item *ngIf="spend.sp_type && (helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 2 )">
+		 					<ion-label stacked>Ingredient</ion-label>
+		 					<ion-select [(ngModel)]="spend_item_form.prod_id">
+		 						<ion-option selected>--Pilih Produk--</ion-option>
+		 						<ion-option *ngFor="let item of ingredients; let i = index;" value="{{item.ingd_id}}">{{item.ingd_name}}</ion-option>
 		 					</ion-select >
 		 				</ion-item>
 

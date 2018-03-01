@@ -21,6 +21,7 @@ import { HelperProvider } from '../../providers/helper/helper';
  	page_params:any={}
  	filter_input:any='';
  	filter_params:any='member_name';
+ 	detail_item:any;
  	constructor(public navCtrl: NavController, public navParams: NavParams, private helper: HelperProvider) {
  		this.page_params = {
  			toggleSearchInput:false
@@ -84,9 +85,10 @@ import { HelperProvider } from '../../providers/helper/helper';
 
  		let url = this.helper.config.base_url('admin/outlet/debt/get/list')
  		let data = {
- 			fields: 'total_debt_rest,debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_code,member_phone',
+ 			fields: 'debt_rest_pay_id,debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_code,member_phone',
  			outlet_id: this.outlet,
  			group_by: 'member_id',
+ 			order_by: 'pay_id DESC',
  			where:{
  			}
  		}
@@ -127,7 +129,7 @@ import { HelperProvider } from '../../providers/helper/helper';
  			}],
  			buttons: [
  			{
- 				text: 'Cancel',
+ 				text: 'Batal',
  				handler: data => {
  				}
  			},
@@ -161,6 +163,10 @@ import { HelperProvider } from '../../providers/helper/helper';
  		}
  		item.debt_out = cicilan;
  		item.debt_in = 0;
+ 		if(this.state == 'detail' || this.state == 'history')
+ 		{
+ 			item.pay_type = "PAY_BY_BILL";
+ 		}
 
  		this.helper.$.ajax({
  			url: url,
@@ -171,9 +177,40 @@ import { HelperProvider } from '../../providers/helper/helper';
  		.done((res)=>{
  			if(res.code == 200)
  			{
- 				this.openDetailDebt(item);
+ 				switch (this.state) {
+ 					default:
+ 					case "list":
+ 						// code...
+ 						this.get_data_debt();
+ 						break;
+
+ 					case "detail":
+ 						// code...
+ 						this.openDetailDebt(this.detail_item)
+ 						if(res.credit_rest > 0)
+ 						{
+ 							this.helper.alertCtrl.create({
+ 								title: "Kembalian cicilan",
+ 								message: "Terdapat kembalian cicilan sebesar <strong> "+res.credit_rest+" </strong>",
+ 								buttons: ["OK"]
+ 							}).present()
+ 						}
+ 						break;
+
+ 					case "history":
+ 						// code...
+ 						this.openLogDebt(this.detail_item);
+ 						if(res.credit_rest > 0)
+ 						{
+ 							this.helper.alertCtrl.create({
+ 								title: "Kembalian cicilan",
+ 								message: "Terdapat kembalian cicilan sebesar <strong> "+res.credit_rest+" </strong>",
+ 								buttons: ["OK"]
+ 							}).present()
+ 						}
+ 						break;
+ 				}
  			}
- 			console.log(res);
  		})
  		.always(()=>{
  			loading.dismiss();
@@ -182,6 +219,7 @@ import { HelperProvider } from '../../providers/helper/helper';
 
  	openDetailDebt(item)
  	{
+ 		this.detail_item = item;
  		let loading = this.helper.loadingCtrl.create({
  			content: "Memeriksa data"
  		})
@@ -190,10 +228,11 @@ import { HelperProvider } from '../../providers/helper/helper';
  		let url = this.helper.config.base_url('admin/outlet/debt/get/detail')
  		let data = {
  			outlet_id: this.outlet,
- 			fields: 'debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_phone,member_code',
+ 			fields: 'debt_rest_pay_id,total_debt_in,total_debt_out,debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_phone,member_code',
  			where: {
  				member_id: item.member_id,
- 			}
+ 			},
+ 			group_by: 'pay_id'
  		}
  		this.helper.$.ajax({
  			url: url,
@@ -218,6 +257,47 @@ import { HelperProvider } from '../../providers/helper/helper';
  		})
  	}	
 
+ 	openLogDebt(item)
+ 	{
+ 		this.detail_item = item;
+ 		let loading = this.helper.loadingCtrl.create({
+ 			content: "Memeriksa data"
+ 		})
+ 		loading.present();
+
+ 		let url = this.helper.config.base_url('admin/outlet/debt/get/detail')
+ 		let data = {
+ 			outlet_id: this.outlet,
+ 			fields: 'debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_phone,member_code',
+ 			where: {
+ 				member_id: item.member_id,
+ 				pay_id: item.pay_id,
+ 			},
+ 			order_by: 'debt_date DESC'
+ 		}
+ 		this.helper.$.ajax({
+ 			url: url,
+ 			type: 'POST',
+ 			data: data,
+ 			dataType: "json"
+ 		})
+ 		.done((res)=>{
+ 			if(res.code == 200)
+ 			{
+ 				if(res.data.length <= 0)
+ 				{
+ 					this.openDetailDebt(item);
+ 				}else
+ 				{
+ 					this.debts = res.data;
+ 				}
+ 			}
+ 		})
+ 		.always(()=>{
+ 			loading.dismiss();
+ 		})
+ 	}	
+
  	advanceOptions(index, item)
  	{
  		this.helper.actionSheet.create({
@@ -230,7 +310,7 @@ import { HelperProvider } from '../../providers/helper/helper';
  					this.openDetailDebt(item)
  				}
  			},{
- 				text: "Cicil hutang",
+ 				text: "Cicil hutang member",
  				handler: ()=>{
  					this.cicilHutang(item)
  				}
@@ -249,11 +329,50 @@ import { HelperProvider } from '../../providers/helper/helper';
  		}).present()
  	}
 
+ 	advanceOptionsDetail(index, item)
+ 	{
+ 		this.helper.actionSheet.create({
+ 			title: 'Opsi lanjutan',
+ 			buttons:[{
+ 				text: "Lihat log pembayaran",
+ 				handler: ()=>{
+ 					this.state = 'history'
+ 					this.debts = []
+ 					this.openLogDebt(item)
+ 				}
+ 			},{
+ 				text: "Cicil hutang nota",
+ 				handler: ()=>{
+ 					this.cicilHutang(item)
+ 				}
+ 			}/*,{
+ 				text: "Kirim email pengingat hutang",
+ 				handler: ()=>{
+ 					this.debtReminder(item)
+ 				}
+ 			},{
+ 				text: "Lihat kartu hutang",
+ 				handler: ()=>{
+ 					let url = this.helper.config.base_url('admin/outlet/debt/bill/'+this.outlet+'/'+item.member_id)
+					window.open(url,'_blank')
+ 				}
+ 			}*/]
+ 		}).present()
+ 	}
+
  	outDetail()
  	{
  		this.state = 'list';
  		this.debts = []
  		this.get_data_debt();
+ 	}
+
+ 	outFromLog()
+ 	{
+ 		this.state = 'detail';
+ 		this.debts = []
+
+ 		this.openDetailDebt(this.detail_item);
  	}
 
  	filter_options()
@@ -341,5 +460,15 @@ import { HelperProvider } from '../../providers/helper/helper';
  	{
  		let url = this.helper.config.base_url('admin/outlet/debt/card/'+this.outlet)
 		window.open(url,'_blank')
+ 	}
+
+ 	pay_as_nominal()
+ 	{
+
+ 	}
+
+ 	pay_as_pay_id()
+ 	{
+
  	}
  }

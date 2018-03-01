@@ -6,15 +6,17 @@
 -->
 <ion-header>
 
+  <ion-toolbar color="main">
   <ion-navbar>
     <ion-title>Edit product nota</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="closeModal()">
-      	<ion-icon name="close-circle"></ion-icon>
+      <button ion-button icon-only (click)="updateItem()">
+        Tutup
       </button>
     </ion-buttons>
 
   </ion-navbar>
+</ion-toolbar>
 
 </ion-header>
 
@@ -90,11 +92,11 @@
               </ion-col>
             </ion-row>
 
-            <ion-row class="row form-group center">
+            <!-- <ion-row class="row form-group center">
                 <button ion-button end (click)="updateItem()">Simpan</button>
 
                 <button ion-button color="danger" (click)="closeModal()">Batal</button>
-            </ion-row>
+            </ion-row> -->
 
       </ion-col>
     </ion-row>

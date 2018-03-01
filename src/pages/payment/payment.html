@@ -11,6 +11,11 @@
 	      <ion-icon name="menu"></ion-icon>
 	    </button>
 	    <ion-title>Pembayaran</ion-title>
+	    <ion-buttons class="center distributed">
+			<button ion-button clear icon-right color="light" (click)="payBill()">
+			  Bayar pesanan
+			</button>
+		</ion-buttons>
 	  </ion-navbar>
 	</ion-toolbar>
 </ion-header>
@@ -163,9 +168,8 @@
 							
 
 							<ion-row class="row form-group center">
-									<button ion-button end (click)="payBill()">Simpan</button>
+									<button ion-button block end (click)="payBill()">Bayar</button>
 
-									<button ion-button color="danger">Batal</button>
 							</ion-row>
 						
 						</ion-col>
@@ -203,9 +207,8 @@
 							</ion-row>
 
 							<ion-row class="row form-group center">
-									<button ion-button end (click)="payBill()">Simpan</button>
+									<button ion-button block end (click)="payBill()">Bayar</button>
 
-									<button ion-button color="danger">Batal</button>
 							</ion-row>
 						</ion-col>
 

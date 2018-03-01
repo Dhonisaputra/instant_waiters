@@ -92,7 +92,11 @@ export class PaymentPage {
   {
   	if(this.is_not_enough_money())
   	{
-  		alert("Not Enough Money!");
+  		this.helper.alertCtrl.create({
+  			title: "Kesalahan",
+  			"message": "Uang tidak cukup untuk melakukan pembayaran.",
+  			buttons: ["OK"]
+  		}).present();
   		return false;
   	}
   	

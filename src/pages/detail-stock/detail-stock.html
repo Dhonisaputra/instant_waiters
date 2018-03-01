@@ -9,7 +9,7 @@
 		<ion-navbar>
 			<ion-title>{{product.name}}</ion-title>
 			
-		    <ion-buttons end>
+		    <ion-buttons end *ngIf="page_params.show_history_stock == true">
 		      <a ion-button target="_blank" href="{{helper.config.base_url('admin/outlet/stock/export/download')}}/{{product.outlet}}/{{product.id}}">
 		      	Download kartu stok
 		      </a>
@@ -34,6 +34,9 @@
 			<ion-segment-button value="detail_product">
 				Detail
 			</ion-segment-button>
+			<ion-segment-button value="ingredients_product">
+				Bahan
+			</ion-segment-button>
 			<ion-segment-button value="history_stock" *ngIf="page_params.show_history_stock == true">
 				Stock History
 			</ion-segment-button>
@@ -44,11 +47,13 @@
 		<div *ngSwitchCase="'detail_product'">
 			<div class="col-md-4">
     			<div style="">
-    				<img src="{{product.image.url}}">
+    				<img src="{{helper.config.base_url(product.image.raw)}}">
+    			</div>
+    			<div style="" [innerHTML]="product.prod_description">
     			</div>
 			</div>
 			<div class="col-md-8">
-				<ion-list>
+				<ion-list inset>
 					<ion-item>
 						<h2>Nama</h2>
 		    			<p>{{product.name}}</p>
@@ -69,6 +74,21 @@
 				</ion-list>
 				
 			</div>
+		</div>
+
+		<div *ngSwitchCase="'ingredients_product'">
+
+				<ion-list inset>
+					
+					<ion-item *ngIf="!product.ingredients || product.ingredients.length < 1" class="text-align--center">
+						Tidak ada bahan
+					</ion-item>
+					<ion-item *ngFor="let ingd of product.ingredients">
+						<h2>{{ingd.ingd_name}}</h2>
+		    			<p>{{ingd.prod_ingd_qty}} {{ingd.ingd_unit}}</p>
+					</ion-item>
+				</ion-list>
+				
 		</div>
 
 		<ion-list *ngSwitchCase="'history_stock'">

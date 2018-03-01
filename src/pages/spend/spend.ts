@@ -41,6 +41,7 @@ export class SpendPage {
 
     spend_item:any=[];
     products:any=[]
+    ingredients:any=[]
     data_spend:any=[];
     outlet:number;
     spend_item_form_state:string='new';
@@ -55,18 +56,24 @@ export class SpendPage {
         }
         this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
 
-        this.product.get_product({data:{
-            outlet: this.outlet,
-            limit:1000,
-            page:1
-        }, online:true})
-        .then((res)=>{
-            res = JSON.parse(res)
-            if(res.code == 200)
-            {
-                this.products = res.data
-            }
-        })
+        if(helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 2)
+        {
+            this.get_ingredient_data()
+        }else
+        {
+            this.product.get_product({data:{
+                outlet: this.outlet,
+                limit:1000,
+                page:1
+            }, online:true})
+            .then((res)=>{
+                res = JSON.parse(res)
+                if(res.code == 200)
+                {
+                    this.products = res.data
+                }
+            })
+        }
     }
 
 
@@ -76,6 +83,54 @@ export class SpendPage {
     ionViewWillEnter()
     {
         this.get_data_spend();
+    }
+
+    openSpendItem()
+    {
+        if(!this.spend.sp_bill || this.spend.sp_bill > 1)
+        {
+            this.helper.alertCtrl.create({
+                title: "Data kurang lengkap",
+                "message": "Mohon untuk mengisi uang yang dibayarkan",
+                buttons: ["OK"]
+            }).present();
+            return false;
+        }
+        this.state='spend_item';
+    }
+
+    get_ingredient_data()
+    {
+        // serv_id
+        let loading = this.helper.loadingCtrl.create({
+            content: "Memeriksa data"
+        })
+        loading.present();
+        let url = this.helper.config.base_url('admin/outlet/ingredient/get');
+        this.helper.$.ajax({
+            url: url,
+            type: 'POST',
+            data: { 
+                limit:1000,
+                page:1,
+                outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id,
+
+                where:{
+                    outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id
+                }
+
+            },
+            dataType: 'json'
+        })
+        .done((res)=>{
+            if(res.code == 200)
+            {
+                this.ingredients = res.data;
+            }
+        })
+        .always(()=>{
+            loading.dismiss();
+        })
     }
 
     get_data_spend()

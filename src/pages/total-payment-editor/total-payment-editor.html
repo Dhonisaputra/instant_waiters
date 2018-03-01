@@ -10,8 +10,8 @@
 		<ion-navbar>
 			<ion-title>Edit total pembayaran</ion-title>
 			<ion-buttons end>
-				<button ion-button icon-only (click)="closeModal()" *ngIf="page_params.view_type == 'modal' ">
-					<ion-icon name="close-circle"></ion-icon>
+				<button ion-button icon-only (click)="updateItem()" *ngIf="page_params.view_type == 'modal' ">
+					Selesai
 				</button>
 			</ion-buttons>
 		</ion-navbar>
@@ -102,11 +102,11 @@
 					</ion-col>
 				</ion-row>
 
-				<ion-row class="row form-group center">
+				<!-- <ion-row class="row form-group center">
 						<button ion-button end (click)="updateItem()">Simpan</button>
 
 						<button ion-button color="danger" (click)="closeModal()">Batal</button>
-				</ion-row>
+				</ion-row> -->
 			
 			</ion-col>
 		</ion-row>				
