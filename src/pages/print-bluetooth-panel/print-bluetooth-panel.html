@@ -13,8 +13,8 @@
 			<ion-title *ngIf="state == 'search_print'">Cari Printer</ion-title>
 		
 			<ion-buttons end>
-				<button ion-button clear icon-right color="light" (click)="search_printer_page()">
-				  <ion-icon name="print"></ion-icon>
+				<button ion-button clear icon-left color="light" (click)="check_unpaired_device()">
+				  <ion-icon name="print"></ion-icon> Cari printer
 				</button>
 			</ion-buttons>
 
@@ -25,4 +25,16 @@
 
 <ion-content padding>
 	<div class="text-align--center" *ngIf="printer_connected.length < 1">Tidak ada printer ditemukan</div>
+	<ion-list>
+	  	<button ion-item *ngFor="let item of printer_connected" (click)="itemSelected(item)">
+			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>
+	    	{{ item.name }}
+	    	<span class="badge pull-right" *ngIf="item.address == default_printer.address">default</span>
+	  	</button>  
+	  	<ion-item-divider color="light" *ngIf="printer_unconnected.length > 0"> {{printer_unconnected.length}} perangkat ditemukan </ion-item-divider>
+	  	<button ion-item *ngFor="let item of printer_unconnected" (click)="itemSelected(item)">
+			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>
+	    	{{ item.name }}
+	  	</button>  
+	</ion-list>
 </ion-content>

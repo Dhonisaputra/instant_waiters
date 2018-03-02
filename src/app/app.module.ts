@@ -51,6 +51,7 @@ import { HelperProvider } from '../providers/helper/helper';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrinterServiceProvider } from '../providers/printer-service/printer-service';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 // import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 
@@ -140,7 +141,8 @@ import { PrinterServiceProvider } from '../providers/printer-service/printer-ser
     DbLocalProvider,
     DbTableProvider,
     HelperProvider,
-    PrinterServiceProvider
+    PrinterServiceProvider,
+    BluetoothSerial
   ]
 })
 export class AppModule {}
