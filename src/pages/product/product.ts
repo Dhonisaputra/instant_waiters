@@ -436,66 +436,71 @@ export class ProductPage
 	pay_bill()
 	{
 		
-
-		let alertVisitor = this.alertCtrl.create({
-			title: 'Nama pembeli',
-			inputs: [
-				{
-					name: 'visitor_name',
-					placeholder: 'Nama pembeli'
-				},
-			],
-			buttons: [
-		      {
-		        text: 'Cancel',
-		        role: 'cancel',
-		        handler: data => {
-		        }
-		      },
-		      {
-		        text: 'Selesai',
-		        handler: data => {
-		        	if(data.visitor_name == '' || !data.visitor_name)
-		        	{
-		        		alert("Nama pembeli tidak boleh kosong!");
-		        		return false;
-		        	}
-		          	this.billProvider.set_bill_component('visitor_name', data.visitor_name)
-					this.events.publish('bill.update', {})
-					setTimeout(() => {
-						alertVisitor.dismiss();
-						this.appCtrl.getRootNav().push(PaymentPage)
-					},300)
-		        }
-		      }
-		    ]
-		})
-		
-		this.error_product();
-		
-		/*LINE FOR REQUIRED TABLE ID
-		=========================================================================
-		*/
-		/*if(!this.billProvider.get_bill_component('table_id') )
+		if(this.error_product())
 		{
-			this.navCtrl.setRoot(TablePage, {
-				previous: 'product-page',
-				event: 'bill.changeTable',
-				trigger_event: 'table.change',
+
+
+			let alertVisitor = this.alertCtrl.create({
+				title: 'Nama pembeli',
+				inputs: [
+					{
+						name: 'visitor_name',
+						placeholder: 'Nama pembeli'
+					},
+				],
+				buttons: [
+			      {
+			        text: 'Cancel',
+			        role: 'cancel',
+			        handler: data => {
+			        }
+			      },
+			      {
+			        text: 'Selesai',
+			        handler: data => {
+			        	if(data.visitor_name == '' || !data.visitor_name)
+			        	{
+			        		alert("Nama pembeli tidak boleh kosong!");
+			        		return false;
+			        	}
+			          	this.billProvider.set_bill_component('visitor_name', data.visitor_name)
+						this.events.publish('bill.update', {})
+						setTimeout(() => {
+							alertVisitor.dismiss();
+							this.appCtrl.getRootNav().push(PaymentPage)
+						},300)
+			        }
+			      }
+			    ]
 			})
-			return false;
-		}*/
-		/*
-		===========================================================================
-		END OF LINE FOR REQUIRED TABLE ID*/
+			
+			
+			
+			/*LINE FOR REQUIRED TABLE ID
+			=========================================================================
+			*/
+			/*if(!this.billProvider.get_bill_component('table_id') )
+			{
+				this.navCtrl.setRoot(TablePage, {
+					previous: 'product-page',
+					event: 'bill.changeTable',
+					trigger_event: 'table.change',
+				})
+				return false;
+			}*/
+			/*
+			===========================================================================
+			END OF LINE FOR REQUIRED TABLE ID*/
 
-		if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
-		{
-			alertVisitor.present();
-		}else
-		{
-			this.appCtrl.getRootNav().push(PaymentPage)
+			if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
+			{
+				alertVisitor.present();
+			}else
+			{
+				this.appCtrl.getRootNav().push(PaymentPage)
+			}
 		}
+			
 		// this.events.publish('get.data.receipt', {pay:true})
 
 	}
@@ -553,7 +558,7 @@ export class ProductPage
 		return idr;
 	}
 
-	private error_product()
+	error_product()
 	{
 		let alertErrorProduct = this.alertCtrl.create({
 		    title: 'Kesalahan',
@@ -565,6 +570,7 @@ export class ProductPage
 			alertErrorProduct.present();
 			return false;
 		}
+		return true;
 	}
 
 	productOptions(item, index)
