@@ -8,7 +8,9 @@ import { Storage } from '@ionic/storage';
 import * as $ from "jquery"
 
 import * as moment from 'moment';
-import * as html2canvas from "html2canvas"
+import * as html2canvas from "html2canvas";
+
+
 
 /*
   Generated class for the HelperProvider provider.
@@ -40,7 +42,6 @@ export class HelperProvider {
     ) {
     this.win = window;
     console.log('Hello HelperProvider Provider');
-
     this.platform.ready().then(() => {
       if (this.win.cordova && !this.win.DatecsPrinter) {
         console.warn("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
@@ -64,6 +65,11 @@ export class HelperProvider {
     }
     return rev2.split('').reverse().join('');
  
+  }
+
+  nativeWindow()
+  {
+    return window;
   }
 
   IDRtoInt(angka:any)

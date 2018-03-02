@@ -86,7 +86,16 @@ export class PrintBluetoothPanelPage {
 
   	this.helper.local.setdb('printer_connected', item)
   	.then(()=>{
-  		this.bluetoothSerial.connect(item.address)
+  		console.log(this.helper.nativeWindow())
+  		this.printer.connect(item.address)
+  		.then(()=>{
+  			this.printer.printText("Print Test!", 'ISO-8859-1')
+  			.then(()=>{
+  				console.log("print success")
+  			})
+  		});
+  		
+  		/*this.bluetoothSerial.connect(item.address)
   		.subscribe(()=>{
 	  		this.bluetoothSerial.write('hello world').then(()=>{
 	  			console.log('printing')
@@ -94,7 +103,7 @@ export class PrintBluetoothPanelPage {
 
 	  			console.log('not printing')
 	  		});
-  		})
+  		})*/
   		// this.getDefaultPrinter();
   		this.default_printer = item;
   		this.helper.toast.create({

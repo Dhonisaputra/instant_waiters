@@ -16,17 +16,14 @@ export class PrinterServiceProvider {
 
   constructor(private platform: Platform) {
     this.win = window;
-    console.log( (window) , typeof DatecsPrinter)
-    this.platform.ready().then(() => {
-    	if(!this.win.cordova )
-    	{
-        	console.log("Cordova not available");
-    		
-    	}
-      if (this.win.cordova && !this.win.DatecsPrinter) {
-        console.log("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
-      }
-    });
+    if(!this.win.cordova )
+		{
+	    	console.log("Cordova not available");
+			
+		}
+	  if (this.win.cordova && !this.win.DatecsPrinter) {
+	    console.log("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
+	  }
   }
 
   listBluetoothDevices() {
