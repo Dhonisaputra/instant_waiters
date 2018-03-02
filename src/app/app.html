@@ -21,12 +21,32 @@
     </ion-list>
     <ion-list>
        <!-- <ion-item-divider>Menu</ion-item-divider> -->
-      <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(this.helper.config.variable.settings) || helper.local.get_params(this.helper.config.variable.settings).choose_table_first"> Kasir </button>
-      <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(this.helper.config.variable.settings) && !helper.local.get_params(this.helper.config.variable.settings).choose_table_first"> Kasir </button>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="{'sr-only': !p.options.status || this.helper.local.get_params(this.helper.config.variable.settings)[p.options.setting_name] == 'false'}" >
-        {{p.title}}
+      <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> Kasir </button>
+      <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> Kasir </button>
+      <button menuClose ion-item (click)="setRoot(stocksPage)">
+        Stok
       </button>
-
+      <button menuClose ion-item (click)="setRoot(transactionPage)">
+        Transaksi
+      </button>
+      <button menuClose ion-item (click)="setRoot(memberPage)">
+        Member
+      </button>
+      <button menuClose ion-item (click)="setRoot(modalPage)">
+        Modal
+      </button>
+      <button menuClose ion-item (click)="setRoot(spendPage)">
+        Pengeluaran
+      </button>
+      <button menuClose ion-item (click)="setRoot(debtPage)">
+        Hutang
+      </button>
+      <button menuClose ion-item (click)="setRoot(settingsPage)">
+        Settings
+      </button>
+      <!-- <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="{'sr-only': !helper.local.get_params(helper.config.variable.settings)[p.options.setting_name]}" >
+        {{p.title}}
+      </button> -->
       <!-- <button menuClose ion-item (click)="logout()">
         Logout
       </button> -->

@@ -17,9 +17,9 @@ page-table {
 			align-items: center;
 			margin-bottom: 15px;
 			margin-left: 10px;
-			border: 1px solid #03a02f;
+			border: 1px solid #c0392b;
 			margin-right: 7px;
-			color: #03a02f;
+			color: #c0392b;
 		}
 		.table-item:before
 		{
@@ -29,8 +29,8 @@ page-table {
 		}
 		.table-item.selected
 		{
-			background-color: #F39C12;
-			border-color: #F39C12;
+			background-color: #c0392b;
+			border-color: #c0392b;
 			color: white;
 
 		}

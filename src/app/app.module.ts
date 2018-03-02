@@ -37,6 +37,8 @@ import { SpendPage } from '../pages/spend/spend';
 import { SpendDetailPage } from '../pages/spend-detail/spend-detail';
 import { DebtPage } from '../pages/debt/debt';
 
+import { PrintBluetoothPanelPageModule } from '../pages/print-bluetooth-panel/print-bluetooth-panel.module';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ReceiptDataProvider } from '../providers/receipt-data/receipt-data';
@@ -48,6 +50,7 @@ import { DbTableProvider } from '../providers/db-table/db-table';
 import { HelperProvider } from '../providers/helper/helper';  
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrinterServiceProvider } from '../providers/printer-service/printer-service';
 
 // import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 
@@ -85,6 +88,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
+    PrintBluetoothPanelPageModule,
     BrowserAnimationsModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
@@ -135,7 +139,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BillProvider,
     DbLocalProvider,
     DbTableProvider,
-    HelperProvider
+    HelperProvider,
+    PrinterServiceProvider
   ]
 })
 export class AppModule {}

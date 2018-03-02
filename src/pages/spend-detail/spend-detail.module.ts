@@ -3,9 +3,6 @@ import { IonicPageModule } from 'ionic-angular';
 import { SpendDetailPage } from './spend-detail';
 
 @NgModule({
-  declarations: [
-    SpendDetailPage,
-  ],
   imports: [
     IonicPageModule.forChild(SpendDetailPage),
   ],

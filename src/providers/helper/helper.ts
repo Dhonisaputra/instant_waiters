@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController, ToastController, ActionSheetController, Events, PopoverController} from 'ionic-angular';
+import { Platform, LoadingController, AlertController, ToastController, ActionSheetController, Events, PopoverController} from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { Storage } from '@ionic/storage';
@@ -23,6 +23,8 @@ export class HelperProvider {
   public html2canvas:any=html2canvas;
   public outlet:any;
   public users_outlet:any;
+  public win: any;
+  private defaultTimeout: Number = 100;
   constructor(
     public http: HttpClient, 
     public config: ConfigProvider, 
@@ -33,11 +35,17 @@ export class HelperProvider {
     public storage:Storage,
     public actionSheet: ActionSheetController,
     public events:Events,
-    public popoverCtrl:PopoverController
+    public popoverCtrl:PopoverController,
+    public platform: Platform
     ) {
+    this.win = window;
     console.log('Hello HelperProvider Provider');
 
-
+    this.platform.ready().then(() => {
+      if (this.win.cordova && !this.win.DatecsPrinter) {
+        console.warn("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
+      }
+    });
   }
 
   /*

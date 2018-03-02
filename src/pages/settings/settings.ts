@@ -5,6 +5,7 @@ import { HelperProvider } from '../../providers/helper/helper';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ErrorPage } from '../../pages/error/error';
 import { LoginPage } from '../../pages/login/login';
+import { PrintBluetoothPanelPage } from '../../pages/print-bluetooth-panel/print-bluetooth-panel';
 
 /**
  * Generated class for the SettingsPage page.
@@ -58,6 +59,11 @@ export class SettingsPage {
     this.helper.local.set_params(this.helper.config.variable.credential,{users:{}, data:{}, outlet:{}, type_product:[]});
     this.helper.local.set_params('pinned_params',[]);
     this.navCtrl.setRoot(LoginPage);
+  }
+
+  openPrinterBluetoothPrinterSettings()
+  {
+    this.navCtrl.push(PrintBluetoothPanelPage);
   }
 
 }

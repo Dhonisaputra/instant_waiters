@@ -1,0 +1,28 @@
+<!--
+  Generated template for the PrintBluetoothPanelPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-toolbar color="main">
+		
+		<ion-navbar>
+			<ion-title *ngIf="state == 'index'">Printer</ion-title>
+			<ion-title *ngIf="state == 'search_print'">Cari Printer</ion-title>
+		
+			<ion-buttons end>
+				<button ion-button clear icon-right color="light" (click)="search_printer_page()">
+				  <ion-icon name="print"></ion-icon>
+				</button>
+			</ion-buttons>
+
+		</ion-navbar>
+	</ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+	<div class="text-align--center" *ngIf="printer_connected.length < 1">Tidak ada printer ditemukan</div>
+</ion-content>
