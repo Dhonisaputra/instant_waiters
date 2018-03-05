@@ -21,7 +21,9 @@ import * as $ from "jquery"
 })
 export class StocksPage {
 
-	items:any=[]
+  restaurant_mode:boolean=this.helper.local.get_params(this.helper.config.variable.credential).outlet.serv_id == 1 || this.helper.local.get_params(this.helper.config.variable.credential).outlet.serv_id == 2
+  items:any=[]
+	ingredients:any=[]
 	original_items:any=[]
   outlet:number;
   detailStockPage:any;
@@ -34,7 +36,13 @@ export class StocksPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private productProvider : ProductProvider, private helper:HelperProvider) {
     this.detailStockPage = DetailStockPage;
     this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
-    this.first_time_get_product();
+     if(this.restaurant_mode)
+      {
+          this.get_ingredient_data()
+      }else
+      {
+        this.first_time_get_product();    
+      }
 
     /*this.dbLocalProvider.opendb('outlet')
     .then((val)=>{
@@ -47,6 +55,40 @@ export class StocksPage {
       this.update_page_parameters(this.navParams.data.page_params);
     }
   }
+
+  get_ingredient_data()
+    {
+        // serv_id
+        let loading = this.helper.loadingCtrl.create({
+            content: "Memeriksa data"
+        })
+        loading.present();
+        let url = this.helper.config.base_url('admin/outlet/ingredient/get');
+        this.helper.$.ajax({
+            url: url,
+            type: 'POST',
+            data: { 
+                limit:1000,
+                page:1,
+                outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id,
+
+                where:{
+                    outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id
+                }
+
+            },
+            dataType: 'json'
+        })
+        .done((res)=>{
+            if(res.code == 200)
+            {
+                this.ingredients = res.data;
+            }
+        })
+        .always(()=>{
+            loading.dismiss();
+        })
+    }
 
   first_time_get_product(refresher:any={})
   {

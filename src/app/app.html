@@ -35,10 +35,13 @@
       <button menuClose ion-item (click)="setRoot(modalPage)">
         Modal
       </button>
-      <button menuClose ion-item (click)="setRoot(spendPage)">
+      <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:0})">
         Pengeluaran
       </button>
-      <button menuClose ion-item (click)="setRoot(debtPage)">
+      <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:1})">
+        Pengadaan
+      </button>
+      <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings).debt_mode">
         Hutang
       </button>
       <button menuClose ion-item (click)="setRoot(settingsPage)">

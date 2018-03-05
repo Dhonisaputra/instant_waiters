@@ -15,9 +15,10 @@ import { SettingsPage } from '../pages/settings/settings';
 import { StocksPage } from '../pages/stocks/stocks';
 import { TransactionPage } from '../pages/transaction/transaction';
 import { MemberPage } from '../pages/member/member';
-import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
 import { DebtPage } from '../pages/debt/debt';
+import { ModalPage } from '../pages/modal/modal';
+
 
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
@@ -47,6 +48,7 @@ export class MyApp {
 
 
   constructor(public toastCtrl: ToastController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public helper:HelperProvider) {
+    this.splashScreen.show();
 
     this.initializeApp();
     // console.log(helper.local.get_params(this.helper.config.variable.settings))
@@ -90,10 +92,10 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  setRoot(page) {
+  setRoot(page, params:any={}) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page);
+    this.nav.setRoot(page, params);
   }
 
   preventClose()
