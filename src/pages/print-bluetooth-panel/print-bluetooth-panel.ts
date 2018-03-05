@@ -60,7 +60,7 @@ export class PrintBluetoothPanelPage {
 
   	this.printer.listBluetoothDevices()
   	.then((res)=>{
-  		console.log(res)
+  		alert(JSON.stringify(res))
   		printLoading.dismiss()
   		if(Array.isArray(res) )
   		{
