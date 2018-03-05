@@ -35,6 +35,7 @@ import { transition, trigger, animate,state,style } from '@angular/animations';
 })
 export class SpendPage {
     state:any;
+    is_restaurant:boolean;
     
     spend:any={}
     spend_item_form:any={};
@@ -48,15 +49,15 @@ export class SpendPage {
     spend_item_form_index:number;
     view_state:any;
     constructor(public navCtrl: NavController, public navParams: NavParams, public helper:HelperProvider, public product:ProductProvider) {
+        this.is_restaurant = helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 2
         this.state = 'list';
-        console.log(this.helper.moment())
         this.spend = {
             sp_date: this.helper.moment().add(7,'hour').toISOString(),
             sp_paid: this.helper.moment().add(7,'hour').toISOString(),
         }
         this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
 
-        if(helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 2)
+        if(helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 2)
         {
             this.get_ingredient_data()
         }else
@@ -83,11 +84,13 @@ export class SpendPage {
     ionViewWillEnter()
     {
         this.get_data_spend();
+        // detect any params
+        this.spend.sp_type = this.navParams.get('sp_type');
     }
 
     openSpendItem()
     {
-        if(!this.spend.sp_bill || this.spend.sp_bill > 1)
+        /*if(!this.spend.sp_bill || this.spend.sp_bill > 1)
         {
             this.helper.alertCtrl.create({
                 title: "Data kurang lengkap",
@@ -95,7 +98,7 @@ export class SpendPage {
                 buttons: ["OK"]
             }).present();
             return false;
-        }
+        }*/
         this.state='spend_item';
     }
 
@@ -173,7 +176,7 @@ export class SpendPage {
         let data = this.spend;
         data.outlet_id= this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
         data.users_outlet_id = this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id;
-        data.items = this.spend_item;
+        // data.items = this.spend_item;
 
         let url:any;
         if(!this.spend.sp_id)
@@ -183,6 +186,7 @@ export class SpendPage {
         {
             url = this.helper.config.base_url('admin/outlet/spend/update');
         }
+
         this.helper.$.ajax({
             url: url,
             type: 'POST',
@@ -194,6 +198,7 @@ export class SpendPage {
             {
                 this.ResetItem()
                 this.reset_spend_item();
+                this.view_state = undefined
                 this.state = 'list'
                 this.get_data_spend();
             }
@@ -229,11 +234,21 @@ export class SpendPage {
     {
         if(this.spend.sp_type)
         {
+            let index:number=0;
+            if(this.is_restaurant)
+            {
+                index = this.ingredients.map(function(res){ return res.ingd_id }).indexOf(this.spend_item_form.ingd_id);
 
-            let index = this.products.map(function(res){ return res.id }).indexOf(this.spend_item_form.prod_id);
-            this.spend_item_form['product_item'] =  this.products[index];
+                this.spend_item_form['product_item'] =  this.ingredients[index];
+
+            }else
+            {
+                index = this.products.map(function(res){ return res.id }).indexOf(this.spend_item_form.prod_id);
+
+                this.spend_item_form['product_item'] =  this.products[index];
+            }
         }
-        if(!this.spend_item_form.sp_dt_desc || this.spend_item_form.sp_dt_desc == '')
+        if(this.spend.sp_type == 0 && (!this.spend_item_form.sp_dt_desc || this.spend_item_form.sp_dt_desc == '') )
         {
             this.helper.alertCtrl.create({
                 message: "Deskripsi tidak boleh kosong!",
@@ -280,10 +295,11 @@ export class SpendPage {
 
     EditItem(index, item)
     {
+        console.log(item)
         this.spend_item_form_state = 'edit';
         this.spend_item_form_index = index;
         this.spend_item_form = item;
-        
+
     }
 
     UpdateItem(index, item)
@@ -323,6 +339,7 @@ export class SpendPage {
         total = total - disc_nominal + tax_nominal;
 
         this.spend.sp_total = total;
+        this.spend.sp_bill = total;
 
     }
 
@@ -391,8 +408,13 @@ export class SpendPage {
                       item = Object.assign({}, item);
                       item.sp_type = item.sp_type == 1? false : true;
                       this.spend = item;
-                      this.spend_item = item.items;
+                      this.spend_item= item.items;
+                      this.helper.$.each(this.spend_item, (i, val)=>{
+                          this.spend_item[i].product_item = val;
+                      })
                       this.state = 'new_spend'
+
+                      console.log(this.spend_item)
                   }
             },
             {
@@ -420,10 +442,10 @@ export class SpendPage {
         .done((res)=>{
             if(res.code == 200)
             {
-                this.data_spend = res.data;
-                this.reset_spend_item();
+                // this.data_spend = res.data;
+                // this.reset_spend_item();
                 this.state = 'list'
-                this.get_data_spend();
+                // this.get_data_spend();
             }
         })
         .always(()=>{
