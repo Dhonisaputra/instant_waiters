@@ -1,0 +1,101 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cordova-plugin-datecs-printer@^0.8.2",
+        "scope": null,
+        "escapedName": "cordova-plugin-datecs-printer",
+        "name": "cordova-plugin-datecs-printer",
+        "rawSpec": "^0.8.2",
+        "spec": ">=0.8.2 <0.9.0",
+        "type": "range"
+      },
+      "C:\\wamp64\\www\\mobile\\temp\\folarpos_outlet"
+    ]
+  ],
+  "_from": "cordova-plugin-datecs-printer@>=0.8.2 <0.9.0",
+  "_id": "cordova-plugin-datecs-printer@0.8.2",
+  "_inCache": true,
+  "_location": "/cordova-plugin-datecs-printer",
+  "_nodeVersion": "6.11.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-datecs-printer-0.8.2.tgz_1512667699820_0.8924372505862266"
+  },
+  "_npmUser": {
+    "name": "giorgiofellipe",
+    "email": "giorgiofellipe@gmail.com"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cordova-plugin-datecs-printer@^0.8.2",
+    "scope": null,
+    "escapedName": "cordova-plugin-datecs-printer",
+    "name": "cordova-plugin-datecs-printer",
+    "rawSpec": "^0.8.2",
+    "spec": ">=0.8.2 <0.9.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-datecs-printer/-/cordova-plugin-datecs-printer-0.8.2.tgz",
+  "_shasum": "bb5b239ba390f7bdee784f9cd4928850ba4d4e1f",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-datecs-printer@^0.8.2",
+  "_where": "C:\\wamp64\\www\\mobile\\temp\\folarpos_outlet",
+  "author": {
+    "name": "Apache Software Foundation"
+  },
+  "bugs": {
+    "url": "https://github.com/giorgiofellipe/cordova-plugin-datecs-printer/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-datecs-printer",
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {},
+  "description": "Cordova Datecs Printer Plugin",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "bb5b239ba390f7bdee784f9cd4928850ba4d4e1f",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-datecs-printer/-/cordova-plugin-datecs-printer-0.8.2.tgz"
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.4.0"
+    }
+  ],
+  "gitHead": "279e7cfb925e4f288a95785315600c346ea0fa36",
+  "homepage": "https://github.com/giorgiofellipe/cordova-plugin-datecs-printer#readme",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
+    "datecs",
+    "printer",
+    "bluetooth"
+  ],
+  "license": "Apache 2.0",
+  "maintainers": [
+    {
+      "name": "giorgiofellipe",
+      "email": "giorgiofellipe@gmail.com"
+    }
+  ],
+  "name": "cordova-plugin-datecs-printer",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giorgiofellipe/cordova-plugin-datecs-printer.git"
+  },
+  "scripts": {},
+  "version": "0.8.2"
+}

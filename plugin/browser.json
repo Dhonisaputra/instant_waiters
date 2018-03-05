@@ -1,0 +1,49 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "ionic-plugin-keyboard": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-datecs-printer": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-bluetooth-serial": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "id.co.folarium.folarpos"
+    }
+  }
+}

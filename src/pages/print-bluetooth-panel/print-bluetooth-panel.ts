@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PrinterServiceProvider } from "../../providers/printer-service/printer-service"
 import { HelperProvider } from "../../providers/helper/helper";
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+
 /**
  * Generated class for the PrintBluetoothPanelPage page.
  *
@@ -26,6 +27,7 @@ export class PrintBluetoothPanelPage {
   	
   	this.search_printer_page()
   	this.getDefaultPrinter();
+  	console.log(this.printer)
   }
 
   ionViewDidLoad() {
@@ -38,13 +40,31 @@ export class PrintBluetoothPanelPage {
   		content: "Memeriksa printer"
   	})
   	printLoading.present();
-  	this.bluetoothSerial.list()
+  	/*this.bluetoothSerial.list()
   	.then((devices)=>{
   		console.log(JSON.stringify(devices))
   		printLoading.dismiss()
   		if(Array.isArray(devices) )
   		{
   			this.printer_connected = devices;
+  		}
+  	}, (err)=>{
+  		console.log(err)
+  		printLoading.dismiss()
+  		this.helper.alertCtrl.create({
+  			title: "Kesalahan saat memeriksa printer",
+  			message: "Terjadi kesalahan ketika memeriksa ketersediaan printer.",
+  			buttons: ["OK"]
+  		}).present();
+  	})*/
+
+  	this.printer.listBluetoothDevices()
+  	.then((res)=>{
+  		console.log(res)
+  		printLoading.dismiss()
+  		if(Array.isArray(res) )
+  		{
+  			this.printer_connected = res;
   		}
   	}, (err)=>{
   		console.log(err)
@@ -87,15 +107,17 @@ export class PrintBluetoothPanelPage {
   	this.helper.local.setdb('printer_connected', item)
   	.then(()=>{
   		console.log(this.helper.nativeWindow())
-  		this.printer.connect(item.address)
+  		/*this.printer.connect(item.address)
   		.then(()=>{
   			this.printer.printText("Print Test!", 'ISO-8859-1')
   			.then(()=>{
   				console.log("print success")
   			})
-  		});
-  		
-  		/*this.bluetoothSerial.connect(item.address)
+  		});*/
+  		console.log(this.printer)
+
+
+  		this.bluetoothSerial.connect(item.address)
   		.subscribe(()=>{
 	  		this.bluetoothSerial.write('hello world').then(()=>{
 	  			console.log('printing')
@@ -103,7 +125,7 @@ export class PrintBluetoothPanelPage {
 
 	  			console.log('not printing')
 	  		});
-  		})*/
+  		})
   		// this.getDefaultPrinter();
   		this.default_printer = item;
   		this.helper.toast.create({
