@@ -24,17 +24,20 @@
 
 
 <ion-content padding>
-	<div class="text-align--center" *ngIf="printer_connected.length < 1">Tidak ada printer ditemukan</div>
 	<ion-list>
-	  	<button ion-item *ngFor="let item of printer_connected" (click)="itemSelected(item)">
+	  	<button ion-item>
 			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>
-	    	{{ item.name }}
-	    	<span class="badge pull-right" *ngIf="item.address == default_printer.address">default</span>
+	    	{{ default_printer.aliasName }}
+	    	<span class="badge pull-right">default</span>
 	  	</button>  
-	  	<ion-item-divider color="light" *ngIf="printer_unconnected.length > 0"> {{printer_unconnected.length}} perangkat ditemukan </ion-item-divider>
-	  	<button ion-item *ngFor="let item of printer_unconnected" (click)="itemSelected(item)">
-			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>
-	    	{{ item.name }}
-	  	</button>  
+	
+		<div class="text-align--center" *ngIf="search_print && printer_unconnected.length < 1">Tidak ada printer ditemukan</div>
+	  	<ion-item-divider color="light" *ngIf="search_print && printer_unconnected.length > 0"> {{printer_unconnected.length}} perangkat ditemukan </ion-item-divider>
+	  	<div *ngFor="let item of printer_unconnected">
+		  	<button ion-item *ngIf="item.address != default_printer.address" (click)="itemSelected(item)">
+				<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>
+		    	{{ item.aliasName }}
+		  	</button>  
+	  	</div>
 	</ion-list>
 </ion-content>

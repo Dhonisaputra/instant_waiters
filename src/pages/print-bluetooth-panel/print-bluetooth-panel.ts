@@ -22,59 +22,13 @@ export class PrintBluetoothPanelPage {
 	printer_unconnected:any=[];
 	default_printer:any=[];
 	state: any='index';
-
+	search_print: boolean;
   constructor(private bluetoothSerial: BluetoothSerial, public navCtrl: NavController, public navParams: NavParams, private helper: HelperProvider, private printer:PrinterServiceProvider ) {
-  	
-  	this.search_printer_page()
+  	this.search_print = false	
   	this.getDefaultPrinter();
-  	console.log(this.printer)
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PrintBluetoothPanelPage');
-  }
-
-  search_printer_page()
-  {
-  	let printLoading = this.helper.loadingCtrl.create({
-  		content: "Memeriksa printer"
-  	})
-  	printLoading.present();
-  	/*this.bluetoothSerial.list()
-  	.then((devices)=>{
-  		console.log(JSON.stringify(devices))
-  		printLoading.dismiss()
-  		if(Array.isArray(devices) )
-  		{
-  			this.printer_connected = devices;
-  		}
-  	}, (err)=>{
-  		console.log(err)
-  		printLoading.dismiss()
-  		this.helper.alertCtrl.create({
-  			title: "Kesalahan saat memeriksa printer",
-  			message: "Terjadi kesalahan ketika memeriksa ketersediaan printer.",
-  			buttons: ["OK"]
-  		}).present();
-  	})*/
-
-  	this.printer.listBluetoothDevices()
-  	.then((res)=>{
-  		alert(JSON.stringify(res))
-  		printLoading.dismiss()
-  		if(Array.isArray(res) )
-  		{
-  			this.printer_connected = res;
-  		}
-  	}, (err)=>{
-  		console.log(err)
-  		printLoading.dismiss()
-  		this.helper.alertCtrl.create({
-  			title: "Kesalahan saat memeriksa printer",
-  			message: "Terjadi kesalahan ketika memeriksa ketersediaan printer.",
-  			buttons: ["OK"]
-  		}).present();
-  	})
   }
 
   checking_bluetooth_connection()
@@ -89,15 +43,28 @@ export class PrintBluetoothPanelPage {
 
   check_unpaired_device()
   {
+  	this.search_print = true;
   	let printLoading = this.helper.loadingCtrl.create({
   		content: "Memeriksa printer"
   	})
   	printLoading.present();
-  	this.bluetoothSerial.discoverUnpaired()
+  
+
+  	this.printer.listBluetoothDevices()
   	.then((devices)=>{
-  		console.log(JSON.stringify(devices))
-  		this.printer_unconnected = devices;
   		printLoading.dismiss()
+  		if(Array.isArray(devices) )
+  		{
+  			this.printer_unconnected = devices;
+  		}
+  	}, (err)=>{
+  		console.log(err)
+  		printLoading.dismiss()
+  		this.helper.alertCtrl.create({
+  			title: "Kesalahan saat memeriksa printer",
+  			message: "Terjadi kesalahan ketika memeriksa ketersediaan printer.",
+  			buttons: ["OK"]
+  		}).present();
   	})
   }
 
@@ -106,30 +73,16 @@ export class PrintBluetoothPanelPage {
 
   	this.helper.local.setdb('printer_connected', item)
   	.then(()=>{
-  		console.log(this.helper.nativeWindow())
-  		/*this.printer.connect(item.address)
+
+  		this.printer.connect(item.address)
   		.then(()=>{
-  			this.printer.printText("Print Test!", 'ISO-8859-1')
-  			.then(()=>{
-  				console.log("print success")
-  			})
-  		});*/
-  		console.log(this.printer)
 
 
-  		this.bluetoothSerial.connect(item.address)
-  		.subscribe(()=>{
-	  		this.bluetoothSerial.write('hello world').then(()=>{
-	  			console.log('printing')
-	  		}, ()=>{
-
-	  			console.log('not printing')
-	  		});
   		})
   		// this.getDefaultPrinter();
   		this.default_printer = item;
   		this.helper.toast.create({
-  			message: "Printer telah diset default",
+  			message: item.aliasname+" telah diset default",
   			duration: 2000
   		}).present();
   	})
