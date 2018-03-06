@@ -25,11 +25,12 @@
 
 <ion-content padding>
 	<ion-list>
-	  	<button ion-item>
+	  	<button ion-item *ngIf="default_printer && default_printer.aliasName">
 			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>
 	    	{{ default_printer.aliasName }}
 	    	<span class="badge pull-right">default</span>
 	  	</button>  
+		<div class="text-align--center" *ngIf="!default_printer && !default_printer.aliasName">Tidak ditemukan printer default</div>
 	
 		<div class="text-align--center" *ngIf="search_print && printer_unconnected.length < 1">Tidak ada printer ditemukan</div>
 	  	<ion-item-divider color="light" *ngIf="search_print && printer_unconnected.length > 0"> {{printer_unconnected.length}} perangkat ditemukan </ion-item-divider>

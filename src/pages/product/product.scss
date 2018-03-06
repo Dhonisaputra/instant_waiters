@@ -130,7 +130,10 @@ page-product {
 #section-left
 {
 	
-	.receipt-product
+	.receipt-product.printed
+	{
+	}
+	.receipt-product:not(.printed)
 	{
 		position: fixed;
 		width: 31.5%;

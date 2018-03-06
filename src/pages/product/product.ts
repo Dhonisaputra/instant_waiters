@@ -529,6 +529,52 @@ export class ProductPage
 
 	print_bill()
 	{
+		this.helper.local.opendb('printer_connected')
+	  	.then((device)=>{
+	  		console.log(device)
+	  		if(!device || !device.address)
+	  		{
+	  			this.helper.alertCtrl.create({
+	  				title: "Printer tidak ditemukan",
+	  				message: "Silahkan menuju settings dan pilih menu printer.",
+	  				buttons: ["OK"]
+	  			}).present();
+
+	  			return false;
+	  		}
+	  		this.helper.printer.connect(device.address)
+	  		.then(()=>{
+
+				let el = this.helper.$('.receipt');
+				this.helper.$('.receipt-container, .receipt-product').addClass('printed')
+				setTimeout( ()=>{
+
+					this.helper.html2canvas(el, {
+						background: '#fff',
+						onrendered: (canvas)=>{
+							let imgData = canvas.toDataURL('image/png');
+							var imageBase = imgData.replace(/^data:image\/(png|jpg|jpeg);base64,/,"");
+
+							console.log(imageBase, canvas.width, canvas.height, this.helper.$('.receipt-container'),this.helper.$('.receipt-product'), this.helper.$('.receipt-container, .receipt-product'));
+							this.helper.printer.printImage(
+						          imageBase, //base64
+						          canvas.width, 
+						          canvas.height, 
+						          1
+						      )
+							.then((res)=>{
+								console.info(res)
+								// this.helper.$('.receipt-container, .receipt-product').removeClass('printed')
+
+							},(error)=>{
+								console.error(error)
+							})
+						}
+					})
+			
+				}, 2000 ) // set timeout
+	  		})
+	  	})
 	}
 
 	filter_product()

@@ -52,6 +52,7 @@ export class PrintBluetoothPanelPage {
 
   	this.printer.listBluetoothDevices()
   	.then((devices)=>{
+  		console.log(devices)
   		printLoading.dismiss()
   		if(Array.isArray(devices) )
   		{
@@ -94,13 +95,18 @@ export class PrintBluetoothPanelPage {
   {
   	this.helper.local.opendb('printer_connected')
   	.then((device)=>{
-  		this.default_printer = device;
+  		this.default_printer = device?device:{};
   	})
   }
 
   pairDevice(item)
   {
 
+  }
+
+  resetDevices()
+  {
+  	this.helper.local.setdb('printer_connected', {})
   }
 
 }

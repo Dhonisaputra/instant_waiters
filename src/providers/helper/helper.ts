@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Platform, LoadingController, AlertController, ToastController, ActionSheetController, Events, PopoverController} from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
+import { PrinterServiceProvider } from '../../providers/printer-service/printer-service';
 import { Storage } from '@ionic/storage';
 
 import * as $ from "jquery"
@@ -38,7 +39,8 @@ export class HelperProvider {
     public actionSheet: ActionSheetController,
     public events:Events,
     public popoverCtrl:PopoverController,
-    public platform: Platform
+    public platform: Platform,
+    public printer: PrinterServiceProvider
     ) {
     this.win = window;
     console.log('Hello HelperProvider Provider');

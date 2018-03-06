@@ -2,7 +2,20 @@ page-receipt {
 
 }
 
-.receipt
+.receipt.printer
+{
+	padding: 5px;
+    position: relative;
+    background-color: white;
+    left: 0px;
+    top: 4px;
+    font-size: .8em;
+    display: flex;
+    flex-direction: column;
+	width: auto;
+	zoom: .4;
+}
+.receipt:not(.printed)
 {
 	height: calc(100vh - 85px);
 	min-height: calc(100vh - 113px);
@@ -25,7 +38,11 @@ page-receipt {
 		box-shadow: 0px 2px 3px 0px #ddd;
 		margin: 0px -5px;
 	}
-	.receipt-body
+	.receipt.printed .receipt-body
+	{
+		flex-grow: 1;
+	}
+	.receipt:not(.printed) .receipt-body
 	{
 		flex-grow: 1;
 		overflow-y: auto; 
