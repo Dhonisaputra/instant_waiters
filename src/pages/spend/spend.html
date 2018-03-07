@@ -301,7 +301,18 @@
 					<span *ngIf="!spend.sp_type">Pengeluaran</span>
 				</ion-note>
 			</ion-item>
+			<ion-item-divider color="main">Item pembelian</ion-item-divider>
+			<ion-item *ngFor="let item of spend_item; let i = index;" style="" (press)="advanceOptions(i, item)" (click)="advanceOptions(i, item)">
+				<h1 *ngIf="item.product_item">{{item.product_item.name}}</h1>
+				<h1 *ngIf="!item.product_item">Item {{i+1}}</h1>
+				<p>
+					<span style="font-weight: 700;">QTY: </span> <span>{{item.sp_dt_qty}}</span> &middot;
+					<span style="font-weight: 700;">Harga: </span> <span>{{item.sp_dt_price}}</span> &middot;
+					<span style="font-weight: 700;">Total: </span> <span>{{item.sp_dt_total}}</span>
+				</p>
+			</ion-item>
 
+			<ion-item-divider color="main">Detail pembayaran</ion-item-divider>
 			<ion-item>
 				Diskon
 				<ion-note item-end>
@@ -336,17 +347,7 @@
 				</ion-note>
 			</ion-item>
 
-			<ion-item-divider color="main">Item pembelian</ion-item-divider>
-			<ion-item *ngFor="let item of spend_item; let i = index;" style="" (press)="advanceOptions(i, item)" (click)="advanceOptions(i, item)">
-				<h1 *ngIf="item.product_item">{{item.product_item.name}}</h1>
-				<h1 *ngIf="!item.product_item">Item {{i+1}}</h1>
-				<p>
-					<span style="font-weight: 700;">QTY: </span> <span>{{item.sp_dt_qty}}</span> &middot;
-					<span style="font-weight: 700;">Harga: </span> <span>{{item.sp_dt_price}}</span> &middot;
-					<span style="font-weight: 700;">Total: </span> <span>{{item.sp_dt_total}}</span>
-				</p>
-			</ion-item>
-
+			
 		</ion-list>
 	</div>
 </ion-content>

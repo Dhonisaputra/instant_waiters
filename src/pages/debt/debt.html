@@ -64,21 +64,65 @@
 
 
 <ion-content padding>
-	
-	<ion-list *ngIf="state == 'list'">
 
-		<ion-item *ngFor="let debt of debts; let i = index; " (click)="advanceOptions(i, debt)">
+	<div *ngIf="state == 'list'">
+
+		<ion-row>
+	        <ion-col col-4 *ngFor="let debt of debts; let i = index;" (press)="advanceOptions(i, debt)">
+	          <ion-card padding>
+	          	<h2 class="text-main">{{debt.member_name}}</h2>
+	          	<div style="margin-top: 15px;" class="text-muted">
+	          		<div style="font-size: .7em;">  
+						<strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}
+	          		</div>
+	          		<div style="font-size: .7em;">  
+						<strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}
+	          		</div>
+	          		<div style="font-size: .7em;">  
+						<strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}
+	          		</div>
+	          	</div>
+	          </ion-card>
+	        </ion-col>
+	    </ion-row>
+	    <div *ngIf="!debts || debts.length < 1" class="text-align--center">
+			Tidak ada hutang ditemukan
+		</div>
+		<!-- <ion-item *ngFor="let debt of debts; let i = index; " (click)="advanceOptions(i, debt)">
 			<h2>{{debt.member_name}}</h2>
 			<p>
-				<span> <strong>Total Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}</span>
-				<span> <strong>Email :</strong> {{debt.member_mail}}</span>
-				<span> <strong>Phone :</strong> {{debt.member_phone}}</span>
+				<span> <strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}</span>
+				<span> <strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}</span>
+				<span> <strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}</span>
 			</p>
-		</ion-item>
-	</ion-list>
+		</ion-item> -->
+	</div>
 
-	<ion-list *ngIf="state == 'detail'">
-		<ion-item *ngFor="let debt of debts; let i = index; " (click)="advanceOptionsDetail(i, debt)" [ngClass]="{'sr-only':debt.debt_rest <= 0 ?true : false}">
+	<div *ngIf="state == 'detail'">
+		<div *ngIf="debts.length > 0" padding>
+			<div style="margin-top: 6px;"> <strong>Name :</strong> {{debts[0]['member_name']}} </div>
+			<div style="margin-top: 6px;"> <strong>Email :</strong> {{debts[0]['member_mail']}} </div>
+			<div style="margin-top: 6px;"> <strong>Phone :</strong> {{debts[0]['member_phone']}} </div>
+		</div>
+		<ion-row>
+	        <ion-col col-4 *ngFor="let debt of debts; let i = index;" (press)="advanceOptions(i, debt)">
+	          <ion-card padding>
+	          	<h2 class="text-main">Nota {{helper.get_initial_outlet_name(helper.local.get_params(helper.config.variable.credential).outlet.outlet_name,'.')}}/NT/000{{debt.debt_id}}</h2>
+	          	<div style="margin-top: 15px;" class="text-muted">
+	          		<div style="font-size: .7em;">  
+						<strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}
+	          		</div>
+	          		<div style="font-size: .7em;">  
+						<strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}
+	          		</div>
+	          		<div style="font-size: .7em;">  
+						<strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}
+	          		</div>
+	          	</div>
+	          </ion-card>
+	        </ion-col>
+	    </ion-row>
+		<!-- <ion-item *ngFor="let debt of debts; let i = index; " (click)="advanceOptionsDetail(i, debt)" [ngClass]="{'sr-only':debt.debt_rest <= 0 ?true : false}">
 			<h2><strong>{{debt.member_name}}</strong></h2>
 			<p>
 				<span><strong>Nota : </strong> {{helper.intToIDR(debt.pay_id)}}</span> &middot; 
@@ -86,8 +130,8 @@
 				<span><strong>Dibayar : </strong> Rp.{{helper.intToIDR(debt.total_debt_out)}}</span> &middot;
 				<span><strong>Sisa hutang : </strong> Rp.{{helper.intToIDR(debt.debt_rest_pay_id)}}</span>
 			</p>
-		</ion-item>
-	</ion-list>
+		</ion-item> -->
+	</div>
 
 	<ion-list *ngIf="state == 'history'">
 		<ion-item *ngFor="let debt of debts; let i = index; ">

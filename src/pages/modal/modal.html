@@ -20,7 +20,7 @@
 
 <ion-content padding>
 	<div class="row">
-		<div class="col-md-3" padding>
+		<div class="col-md-3 col-xs-5" >
 			<ion-card>
 
 			  <ion-card-header>
@@ -55,17 +55,20 @@
 
 			</ion-card>
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-9 col-xs-7" >
 
 			<div *ngIf="!data_modal || data_modal.length < 1" class="text-align--center">
 				Belum ada modal ditambahkan untuk hari ini.
 			</div>
-			
+
 			<ion-row>
 		        <ion-col col-6 *ngFor="let item of data_modal; let i = index;" (press)="advanceOptions(i, item)">
 		          <ion-card padding>
 		          	<h2>Rp.{{helper.intToIDR(item.modal_nominal)}}</h2>
-					<p>{{helper.moment(item.modal_date).format('HH:mm - DD/MM/YYYY')}} - {{item.users_fullname}}</p>
+		          	<div style="margin-top: 15px;" class="text-muted">
+		          		<div style="font-size: .7em;"> <ion-icon ios="ios-time" md="md-time"></ion-icon> {{helper.moment(item.modal_date).format('HH:mm - DD/MM/YYYY')}} </div>
+		          		<div style="font-size: .7em;"> <ion-icon ios="ios-contact" md="md-contact"></ion-icon> {{item.users_fullname}} </div>
+		          	</div>
 		          </ion-card>
 		        </ion-col>
 		    </ion-row>

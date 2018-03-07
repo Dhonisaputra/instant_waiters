@@ -85,7 +85,7 @@ import { HelperProvider } from '../../providers/helper/helper';
 
  		let url = this.helper.config.base_url('admin/outlet/debt/get/list')
  		let data = {
- 			fields: 'debt_rest_pay_id,debt_id,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_code,member_phone',
+ 			fields: 'debt_rest_pay_id,total_debt_out,debt_id,total_debt_in,pay_id,member_id,debt_date,debt_in,debt_out,debt_rest,outlet_id,member_name,member_mail,member_code,member_phone',
  			outlet_id: this.outlet,
  			group_by: 'member_id',
  			order_by: 'pay_id DESC',

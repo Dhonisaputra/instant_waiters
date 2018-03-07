@@ -18,18 +18,25 @@
 
 
 <ion-content padding>
-	<ion-list>
-		<ion-item *ngFor="let item of member; let i = index;" (press)="advanceOptions(i, item)" (click)="pickMember(i, item)">
-			<h2>{{item.member_name}}</h2>
-			<p>
-				<span *ngIf="item.member_id != ''">id : {{item.member_id}}&middot;</span>
-				<span *ngIf="item.member_mail != ''">{{item.member_mail}} &middot;</span>
-				<span *ngIf="item.member_phone != ''">{{item.member_phone}}</span>
-			</p>
-		</ion-item>
-	</ion-list>
+	<ion-row>
+        <ion-col col-4 *ngFor="let item of member; let i = index;" (press)="advanceOptions(i, item)" (click)="pickMember(i, item)">
+          <ion-card padding>
+          	<h2 class="text-main">{{item.member_name}}</h2>
+          	<div style="margin-top: 15px;" class="text-muted">
+          		<div style="font-size: .7em;"> <ion-icon ios="ios-time" md="md-time"></ion-icon> <span *ngIf="item.member_registered">{{helper.moment(item.member_registered).format('YYYY MMM DD')}}</span> <span *ngIf="!item.member_registered">Tanggal pendaftaran tidak ditemukan</span>   </div>
+          		<div style="font-size: .7em;"> <ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon> {{helper.get_initial_outlet_name(helper.local.get_params(helper.config.variable.credential).outlet.outlet_name,'.')}}/000-{{item.member_id}} </div>
+          		<div style="font-size: .7em;"> <ion-icon ios="ios-call" md="md-call"></ion-icon> {{item.member_phone}}</div>
+          		<div style="font-size: .7em;"> <ion-icon ios="logo-usd" md="logo-usd"></ion-icon> <span *ngIf="item.last_transaction"> {{helper.moment(item.last_transaction).format('YYYY MMM DD HH:mm')}} </span> <span *ngIf="!item.last_transaction">Tidak ada transaksi</span> </div>
+          	</div>
+          </ion-card>
+        </ion-col>
+    </ion-row>
+    <div *ngIf="!member || member.length < 1" class="text-align--center">
+		Anda belum memiliki member
+	</div>
+	
 
 	<ion-fab bottom right>
-		<button ion-fab (tap)="openFormPopover()"><ion-icon name="add"></ion-icon></button>
+		<button ion-fab color="main" (tap)="openFormPopover()"><ion-icon name="add"></ion-icon></button>
 	</ion-fab>
 </ion-content>

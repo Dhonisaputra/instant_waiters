@@ -41,6 +41,7 @@ export class MemberPage {
 			type: "POST",
 			url: this.helper.config.base_url('admin/outlet/member/get'),
 			data: {
+				fields:"last_transaction,member_id,outlet_id,member_name,member_code,member_phone,member_mail,member_registered",
 				outlet_id: this.outlet
 			},
 			dataType: 'json'
