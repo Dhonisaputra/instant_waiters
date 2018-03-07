@@ -76,7 +76,9 @@ export class BillProvider {
         let billdata = this.data_bill(data)
         billdata = Object.assign(billdata, data)
         billdata.complement_status = data.complement_status == 'true'? 1 : 0;
-        console.log(billdata)
+
+        this.bill = billdata;
+
         return $.post(url, billdata)
         .done((res) => {
             res = !this.helper.isJSON(res)? res : JSON.parse(res);
@@ -750,6 +752,135 @@ export class BillProvider {
 
         console.log(nota);
         return nota;
+
+    }
+
+    print_bill(nota:any='')
+    {
+        let outletName = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
+        let outletAddress = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:'ADDRESS';
+        let outletPhone = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:'PHONE';
+        let orders = this.get_bill_component('orders');
+        let b = this.get_bill();
+        let initialName = this.helper.get_initial_outlet_name(outletName).join('.');
+        let divider = "\n________________\n";
+        nota = nota?initialName+'/0000'+nota:'-';
+        let visitorTable = b.table_name?b.table_name+'/':'';
+        let visitorName = b.visitor_name?b.visitor_name:'-';
+        let visitor = "Nomor Nota : "+nota+"\nMeja/Pelanggan: "+visitorTable+visitorName+"\n"+"Kasir: "+this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname+"\nTanggal : "+this.helper.moment().format('DD MMM YYYY HH:mm')+"\n";
+        let textPrintHeader = "{center}"+outletName+"\n{s}"+outletAddress+"\n"+outletPhone+"{s}"+divider+"{left}\n\n"+visitor;
+        let textPrint = textPrintHeader;
+        if(b.member_id)
+        {
+
+            textPrint += "Member : "+initialName+'/000'+b.member_id+"\n";
+        }        
+        textPrint += "{left}"+divider;
+
+        $.each(orders, (i, item)=>{
+           textPrint += "{s}{left}"+item.qty+" "+item.name+" x "+this.helper.intToIDR(item.price)+"{/s}  {s}{b}"+this.helper.intToIDR(item.price * item.qty)+"{/b} {/s}{reset}\n";
+            if(item.complement_status > 0)
+            {
+                let kompl_item = item.complement_status > 0 && item.complement_item < item.qty? item.complement_item : '';
+                textPrint += "{left} {s}{i}"+kompl_item+"{i} komplimen{s}\n";
+            }
+            if(this.helper.IDRtoInt(item.discount_nominal) > 0 && (this.helper.toInt(item.complement_status) != 1 || this.helper.toInt(item.complement_item) < this.helper.toInt(item.qty) ) )
+            {
+                textPrint += "{left} {s}Diskon "+ this.helper.toInt(item.discount_percent)+"% {b}(-"+this.helper.intToIDR(item.discount_nominal)+"){/b} \n";
+            }
+
+            
+        })
+        textPrint += "________________\n\n{right}";
+        /*if(this.get_bill_component('tax_nominal')>0 || this.get_bill_component('discount_nominal')>0 )
+        {
+            textPrint += "Bill :      "+this.helper.intToIDR(this.bill.payment_bills)+"\n";
+        }*/
+
+        // if(this.get_bill_component('tax_nominal')>0 )
+        // {
+        //     textPrint += "Pajak "+this.get_bill_component('tax_percent')+"% :      "+this.helper.intToIDR(this.get_bill_component('tax_nominal'))+"\n";
+        // }
+
+        // if(this.get_bill_component('discount_nominal')>0 )
+        // {
+        //     let discountPercent = this.helper.toInt(this.get_bill_component('discount_percent')) > 0? this.get_bill_component('discount_percent')+'%':''
+        //     textPrint += "Diskon "+discountPercent+":      "+this.helper.intToIDR(this.get_bill_component('discount_nominal'))+"\n";
+        // }
+
+        textPrint += "Total :      "+this.helper.intToIDR(this.get_bill_component('payment_total'))+"{/s}\n";
+        textPrint += "\n\n{center}{s}Bila ada pelayanan/produk yang kurang \nberkenan, Hub. 0857 1272 2217 \nTerima Kasih\nPowered by folarpos.co.id{/s}\n\n\n\n\n";
+        return textPrint
+
+    }
+
+    print_nota(nota:any='')
+    {
+        let outletName = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
+        let outletAddress = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:'ADDRESS';
+        let outletPhone = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:'PHONE';
+        let orders = this.get_bill_component('orders');
+        let b = this.get_bill();
+        let initialName = this.helper.get_initial_outlet_name(outletName).join('.');
+        let divider = "\n________________\n";
+        nota = nota?initialName+'/0000'+nota:'-';
+        
+        let visitorTable = b.table_name?b.table_name+'/':'';
+        let visitorName = b.visitor_name?b.visitor_name:'-';
+        let visitor = "Nomor Nota : "+nota+"\nMeja/Pelanggan: "+visitorTable+visitorName+"\n"+"Kasir: "+this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname+"\nTanggal : "+this.helper.moment().format('DD MMM YYYY HH:mm')+"\n";
+        let textPrintHeader = "{center}"+outletName+"\n{s}"+outletAddress+"\n"+outletPhone+"{s}"+divider+"{left}\n"+visitor;
+        let textPrint = textPrintHeader;
+        if(b.member_id)
+        {
+
+            textPrint += "Member : "+initialName+'/000'+b.member_id+"";
+        }        
+        textPrint += "{right}"+divider;
+
+        $.each(orders, (i, item)=>{
+           textPrint += "{s}{right}"+item.qty+" "+item.name+" x "+this.helper.intToIDR(item.price)+"{/s}  {s}{b}"+this.helper.intToIDR(item.price * item.qty)+"{/b} {/s}{reset}\n";
+            if(item.complement_status > 0)
+            {
+                let kompl_item = item.complement_status > 0 && item.complement_item < item.qty? item.complement_item : '';
+                textPrint += "{right} {s}{i}"+kompl_item+"{i} komplimen{s}\n";
+            }
+            if(this.helper.IDRtoInt(item.discount_nominal) > 0 && (this.helper.toInt(item.complement_status) != 1 || this.helper.toInt(item.complement_item) < this.helper.toInt(item.qty) ) )
+            {
+                textPrint += "{right} {s}Diskon "+ this.helper.toInt(item.discount_percent)+"% {i}(-"+this.helper.intToIDR(item.discount_nominal)+"){/i} \n";
+            }
+
+            
+        })
+        textPrint += "________________\n\n{right}";
+        if(this.get_bill_component('tax_nominal')>0 || this.get_bill_component('discount_nominal')>0 )
+        {
+            textPrint += "Bill :      "+this.helper.intToIDR(this.bill.payment_bills)+"\n";
+        }
+
+        if(this.get_bill_component('tax_nominal')>0 )
+        {
+            textPrint += "Pajak "+this.get_bill_component('tax_percent')+"% :      (-"+this.helper.intToIDR(this.get_bill_component('tax_nominal'))+")\n";
+        }
+
+        if(this.get_bill_component('discount_nominal')>0 )
+        {
+            let discountPercent = this.helper.toInt(this.get_bill_component('discount_percent')) > 0? this.get_bill_component('discount_percent')+'%':''
+            textPrint += "Diskon "+discountPercent+":      (+"+this.helper.intToIDR(this.get_bill_component('discount_nominal'))+")\n";
+        }
+        textPrint += "{s}Total :      "+this.helper.intToIDR(this.get_bill_component('payment_total'))+"{/s}\n";
+        textPrint += "{s}Tunai :      "+this.helper.intToIDR(this.get_bill_component('payment_nominal'))+"{/s}\n";
+        if(this.get_bill_component('paid_with_bank_nominal') > 0 )
+        {
+            if(this.get_bill_component('payment_bank_charge_percent') > 0 )
+            {
+                let charge = this.get_bill_component('payment_bank_charge_percent');
+                textPrint += "{s}Charge Non-tunai "+charge+":      (+"+this.helper.intToIDR(this.get_bill_component('payment_bank_charge_nominal'))+"){s}\n";
+            }
+            textPrint += "{s}Non-tunai :      "+this.helper.intToIDR(this.get_bill_component('paid_with_bank_nominal'))+"{/s}\n";
+        }
+        textPrint += "{s}Kembali :      "+this.helper.intToIDR(this.get_bill_component('payment_rest'))+"{/s}\n";
+        textPrint += "{center}{s}\n\nTerima kasih. Selamat belanja kembali\nBila ada pelayanan/produk yang kurang \nberkenan, Hub."+outletPhone+" \nTerima Kasih\nPowered by folarpos.co.id{/s}\n\n\n\n\n";
+        return textPrint
 
     }
 

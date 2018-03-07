@@ -13,6 +13,7 @@ import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { HelperProvider } from '../../providers/helper/helper';
 import { ErrorPage } from '../../pages/error/error';
 import { LoginPage } from '../../pages/login/login';
+import { PrintBluetoothPanelPage } from '../../pages/print-bluetooth-panel/print-bluetooth-panel';
 /**
  * Generated class for the SettingsPage page.
  *
@@ -55,6 +56,9 @@ var SettingsPage = /** @class */ (function () {
         this.helper.local.set_params(this.helper.config.variable.credential, { users: {}, data: {}, outlet: {}, type_product: [] });
         this.helper.local.set_params('pinned_params', []);
         this.navCtrl.setRoot(LoginPage);
+    };
+    SettingsPage.prototype.openPrinterBluetoothPrinterSettings = function () {
+        this.navCtrl.push(PrintBluetoothPanelPage);
     };
     SettingsPage = __decorate([
         IonicPage(),

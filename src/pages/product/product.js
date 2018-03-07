@@ -348,59 +348,60 @@ var ProductPage = /** @class */ (function () {
     };
     ProductPage.prototype.pay_bill = function () {
         var _this = this;
-        var alertVisitor = this.alertCtrl.create({
-            title: 'Nama pembeli',
-            inputs: [
-                {
-                    name: 'visitor_name',
-                    placeholder: 'Nama pembeli'
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: function (data) {
-                    }
-                },
-                {
-                    text: 'Selesai',
-                    handler: function (data) {
-                        if (data.visitor_name == '' || !data.visitor_name) {
-                            alert("Nama pembeli tidak boleh kosong!");
-                            return false;
+        if (this.error_product()) {
+            var alertVisitor_1 = this.alertCtrl.create({
+                title: 'Nama pembeli',
+                inputs: [
+                    {
+                        name: 'visitor_name',
+                        placeholder: 'Nama pembeli'
+                    },
+                ],
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: function (data) {
                         }
-                        _this.billProvider.set_bill_component('visitor_name', data.visitor_name);
-                        _this.events.publish('bill.update', {});
-                        setTimeout(function () {
-                            alertVisitor.dismiss();
-                            _this.appCtrl.getRootNav().push(PaymentPage);
-                        }, 300);
+                    },
+                    {
+                        text: 'Selesai',
+                        handler: function (data) {
+                            if (data.visitor_name == '' || !data.visitor_name) {
+                                alert("Nama pembeli tidak boleh kosong!");
+                                return false;
+                            }
+                            _this.billProvider.set_bill_component('visitor_name', data.visitor_name);
+                            _this.events.publish('bill.update', {});
+                            setTimeout(function () {
+                                alertVisitor_1.dismiss();
+                                _this.appCtrl.getRootNav().push(PaymentPage);
+                            }, 300);
+                        }
                     }
-                }
-            ]
-        });
-        this.error_product();
-        /*LINE FOR REQUIRED TABLE ID
-        =========================================================================
-        */
-        /*if(!this.billProvider.get_bill_component('table_id') )
-        {
-            this.navCtrl.setRoot(TablePage, {
-                previous: 'product-page',
-                event: 'bill.changeTable',
-                trigger_event: 'table.change',
-            })
-            return false;
-        }*/
-        /*
-        ===========================================================================
-        END OF LINE FOR REQUIRED TABLE ID*/
-        if (!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1) {
-            alertVisitor.present();
-        }
-        else {
-            this.appCtrl.getRootNav().push(PaymentPage);
+                ]
+            });
+            /*LINE FOR REQUIRED TABLE ID
+            =========================================================================
+            */
+            /*if(!this.billProvider.get_bill_component('table_id') )
+            {
+                this.navCtrl.setRoot(TablePage, {
+                    previous: 'product-page',
+                    event: 'bill.changeTable',
+                    trigger_event: 'table.change',
+                })
+                return false;
+            }*/
+            /*
+            ===========================================================================
+            END OF LINE FOR REQUIRED TABLE ID*/
+            if (!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1) {
+                alertVisitor_1.present();
+            }
+            else {
+                this.appCtrl.getRootNav().push(PaymentPage);
+            }
         }
         // this.events.publish('get.data.receipt', {pay:true})
     };
@@ -424,6 +425,60 @@ var ProductPage = /** @class */ (function () {
         });
     };
     ProductPage.prototype.print_bill = function () {
+        var _this = this;
+        if (!this.helper.printer.isAvailable()) {
+            this.helper.alertCtrl.create({
+                title: "Kesalahan",
+                message: "Layanan printer tidak tersedia untuk perangkat ini",
+                buttons: ["OK"]
+            }).present();
+            console.log(this.helper.html2canvas);
+            return false;
+        }
+        this.helper.local.opendb('printer_connected')
+            .then(function (device) {
+            console.log(device);
+            if (!device || !device.address) {
+                _this.helper.alertCtrl.create({
+                    title: "Printer tidak ditemukan",
+                    message: "Silahkan menuju settings dan pilih menu printer.",
+                    buttons: ["OK"]
+                }).present();
+                return false;
+            }
+            _this.helper.printer.connect(device.address)
+                .then(function () {
+                var el = _this.helper.$('.receipt');
+                _this.helper.$('.receipt-container, .receipt-product').addClass('printed');
+                console.log(_this.billProvider);
+                setTimeout(function () {
+                    var t = _this.billProvider.print();
+                    console.log(t);
+                    _this.helper.printer.printText(t);
+                    /*this.helper.html2canvas(el, {
+                        background: '#fff',
+                        onrendered: (canvas)=>{
+                            let imgData = canvas.toDataURL('image/png');
+                            var imageBase = imgData.replace(/^data:image\/(png|jpg|jpeg);base64,/,"");
+
+                            this.helper.printer.printImage(
+                                  imageBase, //base64
+                                  canvas.width,
+                                  canvas.height,
+                                  1
+                              )
+                            .then((res)=>{
+                                console.info(res)
+                                // this.helper.$('.receipt-container, .receipt-product').removeClass('printed')
+
+                            },(error)=>{
+                                console.error(error)
+                            })
+                        }
+                    })*/
+                }, 2000); // set timeout
+            });
+        });
     };
     ProductPage.prototype.filter_product = function () {
         var _this = this;
@@ -453,6 +508,7 @@ var ProductPage = /** @class */ (function () {
             alertErrorProduct.present();
             return false;
         }
+        return true;
     };
     ProductPage.prototype.productOptions = function (item, index) {
         var _this = this;

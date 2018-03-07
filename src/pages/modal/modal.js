@@ -38,6 +38,14 @@ var ModalPage = /** @class */ (function () {
     };
     ModalPage.prototype.create_new_modal = function () {
         var _this = this;
+        if (this.modal.modal_nominal < 1 || !this.modal.modal_note) {
+            this.helper.alertCtrl.create({
+                title: "Kesalahan",
+                message: "Silahkan lengkapi isian yang tersedia",
+                buttons: ["OK"]
+            }).present();
+            return false;
+        }
         var url = this.helper.config.base_url('admin/outlet/modal/add');
         var load = this.helper.loadingCtrl.create({
             content: "Menyimpan data"
@@ -56,6 +64,20 @@ var ModalPage = /** @class */ (function () {
                 _this.get_modal();
                 _this.reset_modal_form_data();
             }
+            else {
+                _this.helper.alertCtrl.create({
+                    title: "Kesalahan code:" + res.code,
+                    message: res.message,
+                    buttons: ["OK"]
+                }).present();
+            }
+        })
+            .fail(function () {
+            _this.helper.alertCtrl.create({
+                title: "Kesalahan code:" + 500,
+                message: "Terdapat kesalahan saat penginputan data. Silahkan laporkan pengembang sistem untuk tindak lanjut",
+                buttons: ["OK"]
+            }).present();
         })
             .always(function () {
             load.dismiss();

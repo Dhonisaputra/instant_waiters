@@ -12,9 +12,6 @@ var ErrorPageModule = /** @class */ (function () {
     }
     ErrorPageModule = __decorate([
         NgModule({
-            declarations: [
-                ErrorPage,
-            ],
             imports: [
                 IonicPageModule.forChild(ErrorPage),
             ],

@@ -35,7 +35,14 @@ var DbLocalProvider = /** @class */ (function () {
         this.params = {
             is_login: false,
             settings: {
-                choose_table_first: true
+                choose_table_first: true,
+                debt_mode: false,
+                stok: true,
+                transaksi: true,
+                member: true,
+                modal: true,
+                pengeluaran: true,
+                settings: true
             }
         }; // variable to store temporary params || karena saya belum bisa ngirim / ganti page menggunakan parameters.
         this.credential = {

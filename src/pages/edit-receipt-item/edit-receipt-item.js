@@ -172,6 +172,7 @@ var EditReceiptItemPage = /** @class */ (function () {
         var alertErrorProduct = this.alertCtrl.create({
             title: 'Kesalahan',
             subTitle: 'Mohon untuk mengisi catatan complement!',
+            buttons: ["OK"]
         });
         if (this.item.complement_status > 0 && (!this.item.complement_note || this.item.complement_note.toString().length < 1)) {
             alertErrorProduct.present();

@@ -77,9 +77,59 @@ var PaymentPage = /** @class */ (function () {
     PaymentPage.prototype.payBill = function () {
         var _this = this;
         if (this.is_not_enough_money()) {
-            alert("Not Enough Money!");
-            return false;
+            if (this.billProvider.bill.member_id && this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first) {
+                this.helper.alertCtrl.create({
+                    title: "Uang tidak cukup",
+                    "message": "Apakah anda ingin menambahkan hutang kepada pelanggan ini?",
+                    buttons: [{
+                            text: "Ya, Tambahkan hutang",
+                            handler: function () {
+                                _this.addPaymentToDebt();
+                            }
+                        }, "Batal"]
+                }).present();
+            }
+            else {
+                this.helper.alertCtrl.create({
+                    title: "Kesalahan",
+                    "message": "Uang tidak cukup untuk melakukan pembayaran.",
+                    buttons: ["OK"]
+                }).present();
+                return false;
+            }
         }
+        else {
+            this.billProvider.save({
+                users_outlet: this.users_outlet,
+                outlet: this.outlet,
+                bank_id: this.bank_id,
+                event: 'make_a_payment',
+                payment_nominal: this.helper.IDRtoInt(this.bill.payment_nominal),
+                payment_rest: this.helper.IDRtoInt(this.bill.payment_rest),
+                paid_with_bank_nominal: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt(this.bill.paid_with_bank_nominal) > 0 ? this.helper.IDRtoInt(this.bill.paid_with_bank_nominal) : 0,
+                payment_bank_charge_nominal: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt(this.bill.payment_bank_charge_nominal) > 0 ? this.helper.IDRtoInt(this.bill.payment_bank_charge_nominal) : 0,
+                payment_bank_charge_percent: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt(this.bill.payment_bank_charge_percent) > 0 ? this.helper.IDRtoInt(this.bill.payment_bank_charge_percent) : 0,
+                payment_method: this.payment_method,
+            })
+                .done(function (res) {
+                res = !_this.helper.isJSON(res) ? res : JSON.parse(res);
+                if (res.code == 200) {
+                    _this.bill = {};
+                    _this.navCtrl.setRoot(ProductPage, {
+                        previous: 'payment-page',
+                        event: 'payment.cashier',
+                        trigger_event: "order.new",
+                        message: "Nota telah dibayarkan"
+                    });
+                }
+                else {
+                    console.error('Error when saving the bill');
+                }
+            });
+        }
+    };
+    PaymentPage.prototype.addPaymentToDebt = function () {
+        var _this = this;
         this.billProvider.save({
             users_outlet: this.users_outlet,
             outlet: this.outlet,
@@ -94,13 +144,36 @@ var PaymentPage = /** @class */ (function () {
         })
             .done(function (res) {
             res = !_this.helper.isJSON(res) ? res : JSON.parse(res);
+            console.log(res);
             if (res.code == 200) {
                 _this.bill = {};
-                _this.navCtrl.setRoot(ProductPage, {
-                    previous: 'payment-page',
-                    event: 'payment.cashier',
-                    trigger_event: "order.new",
-                    message: "Nota telah dibayarkan"
+                _this.helper.$.ajax({
+                    data: {
+                        member_id: _this.billProvider.bill.member_id,
+                        debt_date: _this.helper.moment().format('YYYY-MM-DD HH:mm:ss'),
+                        debt_in: _this.billProvider.bill.payment_total,
+                        debt_out: 0,
+                        pay_id: res.data.pay_id
+                    },
+                    type: "POST",
+                    url: _this.helper.config.base_url('admin/outlet/debt/save')
+                })
+                    .done(function (res) {
+                    _this.helper.alertCtrl.create({
+                        title: "Proses sukses",
+                        message: "Hutang telah ditambahkan",
+                        buttons: [{
+                                text: "OK",
+                                handler: function () {
+                                    _this.navCtrl.setRoot(ProductPage, {
+                                        previous: 'payment-page',
+                                        event: 'payment.cashier',
+                                        trigger_event: "order.new",
+                                        message: "Nota telah dibayarkan"
+                                    });
+                                }
+                            }]
+                    }).present();
                 });
             }
             else {

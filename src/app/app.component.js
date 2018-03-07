@@ -23,8 +23,9 @@ import { SettingsPage } from '../pages/settings/settings';
 import { StocksPage } from '../pages/stocks/stocks';
 import { TransactionPage } from '../pages/transaction/transaction';
 import { MemberPage } from '../pages/member/member';
-import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
+import { DebtPage } from '../pages/debt/debt';
+import { ModalPage } from '../pages/modal/modal';
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { HelperProvider } from '../providers/helper/helper';
 var MyApp = /** @class */ (function () {
@@ -37,9 +38,17 @@ var MyApp = /** @class */ (function () {
         this.rootPage = LoginPage;
         this.tablePage = TablePage;
         this.productPage = ProductPage;
+        this.stocksPage = StocksPage;
+        this.transactionPage = TransactionPage;
+        this.memberPage = MemberPage;
+        this.modalPage = ModalPage;
+        this.spendPage = SpendPage;
+        this.debtPage = DebtPage;
+        this.settingsPage = SettingsPage;
         this.lastTimeBackPress = 0;
         this.timePeriodToExit = 2000;
         this.users = {};
+        this.splashScreen.show();
         this.initializeApp();
         // console.log(helper.local.get_params(this.helper.config.variable.settings))
         // let default_page = !this.helper.local.get_params(this.helper.config.variable.settings) || this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first?  TablePage : ProductPage ;
@@ -50,12 +59,13 @@ var MyApp = /** @class */ (function () {
             // { title: 'Kasir', component: ProductPage },
             // { title: 'Send Receipt', component: SendReceiptPage },
             // { title: 'Payment', component: PaymentPage },
-            { title: 'Stok', component: StocksPage },
-            { title: 'Transaksi', component: TransactionPage },
-            { title: 'Member', component: MemberPage },
-            { title: 'Modal', component: ModalPage },
-            { title: 'Pengeluaran', component: SpendPage },
-            { title: 'Settings', component: SettingsPage },
+            { title: 'Stok', component: StocksPage, options: { type: 'setting', setting_name: 'stok', status: true } },
+            { title: 'Transaksi', component: TransactionPage, options: { type: 'setting', setting_name: 'transaksi', status: true } },
+            { title: 'Member', component: MemberPage, options: { type: 'setting', setting_name: 'member', status: true } },
+            { title: 'Modal', component: ModalPage, options: { type: 'setting', setting_name: 'modal', status: true } },
+            { title: 'Pengeluaran', component: SpendPage, options: { type: 'setting', setting_name: 'pengeluaran', status: true } },
+            { title: 'Hutang', component: DebtPage, options: { type: 'setting', setting_name: 'debt_mode', status: true } },
+            { title: 'Settings', component: SettingsPage, options: { type: 'setting', setting_name: 'settings', status: true } },
         ];
         // this.storage.set('outlet', 1)
         this.routeHistory = [];
@@ -77,10 +87,11 @@ var MyApp = /** @class */ (function () {
         // we wouldn't want the back button to show in this scenario
         this.nav.setRoot(page.component);
     };
-    MyApp.prototype.setRoot = function (page) {
+    MyApp.prototype.setRoot = function (page, params) {
+        if (params === void 0) { params = {}; }
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
-        this.nav.setRoot(page);
+        this.nav.setRoot(page, params);
     };
     MyApp.prototype.preventClose = function () {
         var toast = this.toastCtrl.create({

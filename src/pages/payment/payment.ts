@@ -4,6 +4,8 @@ import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { HelperProvider } from '../../providers/helper/helper'; 
 import { BillProvider } from '../../providers/bill/bill';
 import { ProductPage } from '../product/product';
+import { SendReceiptPage } from '../send-receipt/send-receipt';
+
 import * as $ from "jquery"
 
 /**
@@ -24,6 +26,8 @@ export class PaymentPage {
 	payment_method:number= 1;
 	users_outlet:number=1;
 	bank_id:number=1;
+	latest_bill_id:number;
+	state:string = 'payment';
 	numpad_type:string='numpad';
   constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider: DbLocalProvider, private events: Events, private helper: HelperProvider, private billProvider: BillProvider) {
   	
@@ -136,13 +140,9 @@ export class PaymentPage {
 			if(res.code == 200)
 			{
 
-				this.bill = {}
-				this.navCtrl.setRoot(ProductPage, {
-	  				previous: 'payment-page',
-	  				event: 'payment.cashier',
-	  				trigger_event: "order.new",
-	  				message: "Nota telah dibayarkan"
-	  			})
+				this.latest_bill_id = res.data.pay_id;
+
+				this.state = 'afterPayment';
 			}else
 			{
 				console.error('Error when saving the bill')	
@@ -151,6 +151,84 @@ export class PaymentPage {
 		})
   	}
   }
+
+  print_nota()
+  {
+  	let loadingPrint = this.helper.loadingCtrl.create({
+		content: "Mencetak nota",
+	})
+	loadingPrint.present()
+	this.process_print_nota(this.latest_bill_id)
+	.then(()=>{
+		loadingPrint.dismiss()
+	}, ()=>{
+		loadingPrint.dismiss()
+	})
+  }
+
+  back_to_cashier()
+  {
+  	this.bill = {}
+	this.navCtrl.setRoot(ProductPage, {
+		previous: 'payment-page',
+		event: 'payment.cashier',
+		trigger_event: "order.new",
+		message: "Nota telah dibayarkan"
+	})
+  }
+
+  email_panel()
+  {
+  	let bill = Object.assign({}, this.bill);
+	this.navCtrl.push('SendReceiptPage', {bill:bill})
+	this.bill = {}
+  }
+
+  	process_print_nota(nota:any=null)
+	{
+		return new Promise((resolve, reject) => {
+
+
+			if( !this.helper.printer.isAvailable() )
+			{
+				this.helper.alertCtrl.create({
+					title: "Kesalahan",
+					message: "Layanan printer tidak tersedia untuk perangkat ini",
+					buttons:["OK"]
+				}).present()
+				return false;
+			}
+			
+			this.helper.local.opendb('printer_connected')
+		  	.then((device)=>{
+		  		console.log(device)
+		  		if(!device || !device.address)
+		  		{
+		  			this.helper.alertCtrl.create({
+		  				title: "Printer tidak ditemukan",
+		  				message: "Silahkan menuju settings dan pilih menu printer.",
+		  				buttons: ["OK"]
+		  			}).present();
+
+		  			return false;
+		  		}
+		  		this.helper.printer.connect(device.address)
+		  		.then(()=>{
+
+					setTimeout( ()=>{
+						let t = this.billProvider.print_nota(nota);
+						this.helper.printer.printText(t)
+						.then(()=>{
+							resolve()
+						}, ()=>{
+							reject();
+						})
+					}, 2000 ) // set timeout
+		  		})
+		  	})
+
+		}) // end of promise
+	}
 
   addPaymentToDebt()
   {

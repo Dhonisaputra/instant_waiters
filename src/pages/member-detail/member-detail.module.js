@@ -12,9 +12,6 @@ var MemberDetailPageModule = /** @class */ (function () {
     }
     MemberDetailPageModule = __decorate([
         NgModule({
-            declarations: [
-                MemberDetailPage,
-            ],
             imports: [
                 IonicPageModule.forChild(MemberDetailPage),
             ],

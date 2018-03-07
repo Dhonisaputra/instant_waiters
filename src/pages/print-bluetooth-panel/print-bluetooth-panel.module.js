@@ -6,18 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { SpendDetailPage } from './spend-detail';
-var SpendDetailPageModule = /** @class */ (function () {
-    function SpendDetailPageModule() {
+import { PrintBluetoothPanelPage } from './print-bluetooth-panel';
+var PrintBluetoothPanelPageModule = /** @class */ (function () {
+    function PrintBluetoothPanelPageModule() {
     }
-    SpendDetailPageModule = __decorate([
+    PrintBluetoothPanelPageModule = __decorate([
         NgModule({
+            declarations: [
+                PrintBluetoothPanelPage,
+            ],
             imports: [
-                IonicPageModule.forChild(SpendDetailPage),
+                IonicPageModule.forChild(PrintBluetoothPanelPage),
             ],
         })
-    ], SpendDetailPageModule);
-    return SpendDetailPageModule;
+    ], PrintBluetoothPanelPageModule);
+    return PrintBluetoothPanelPageModule;
 }());
-export { SpendDetailPageModule };
-//# sourceMappingURL=spend-detail.module.js.map
+export { PrintBluetoothPanelPageModule };
+//# sourceMappingURL=print-bluetooth-panel.module.js.map

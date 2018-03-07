@@ -122,4 +122,15 @@ export class HelperProvider {
       return $('<div/>').html(value).text();
   }
 
+  get_initial_outlet_name(name:string)
+  {
+    let nameArr = name.replace(/[^A-Za-z0-9]/g, ' ').split(' ');
+    let initialName:any=[];
+    $.each(nameArr, (i, val)=>{
+      initialName.push(val[0])
+    })
+
+    return initialName;
+  }
+
 }

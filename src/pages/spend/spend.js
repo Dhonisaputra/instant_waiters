@@ -29,31 +29,81 @@ var SpendPage = /** @class */ (function () {
         this.spend_item_form = {};
         this.spend_item = [];
         this.products = [];
+        this.ingredients = [];
         this.data_spend = [];
         this.spend_item_form_state = 'new';
+        this.is_restaurant = helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 2;
         this.state = 'list';
-        console.log(this.helper.moment());
         this.spend = {
             sp_date: this.helper.moment().add(7, 'hour').toISOString(),
             sp_paid: this.helper.moment().add(7, 'hour').toISOString(),
         };
         this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
-        this.product.get_product({ data: {
-                outlet: this.outlet,
-                limit: 1000,
-                page: 1
-            }, online: true })
-            .then(function (res) {
-            res = JSON.parse(res);
-            if (res.code == 200) {
-                _this.products = res.data;
-            }
-        });
+        if (helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 2) {
+            this.get_ingredient_data();
+        }
+        else {
+            this.product.get_product({ data: {
+                    outlet: this.outlet,
+                    limit: 1000,
+                    page: 1
+                }, online: true })
+                .then(function (res) {
+                res = JSON.parse(res);
+                if (res.code == 200) {
+                    _this.products = res.data;
+                }
+            });
+        }
     }
     SpendPage.prototype.ionViewDidLoad = function () {
     };
     SpendPage.prototype.ionViewWillEnter = function () {
         this.get_data_spend();
+        // detect any params
+        this.spend.sp_type = this.navParams.get('sp_type');
+    };
+    SpendPage.prototype.openSpendItem = function () {
+        /*if(!this.spend.sp_bill || this.spend.sp_bill > 1)
+        {
+            this.helper.alertCtrl.create({
+                title: "Data kurang lengkap",
+                "message": "Mohon untuk mengisi uang yang dibayarkan",
+                buttons: ["OK"]
+            }).present();
+            return false;
+        }*/
+        this.state = 'spend_item';
+    };
+    SpendPage.prototype.get_ingredient_data = function () {
+        var _this = this;
+        // serv_id
+        var loading = this.helper.loadingCtrl.create({
+            content: "Memeriksa data"
+        });
+        loading.present();
+        var url = this.helper.config.base_url('admin/outlet/ingredient/get');
+        this.helper.$.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                limit: 1000,
+                page: 1,
+                outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id,
+                where: {
+                    outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id
+                }
+            },
+            dataType: 'json'
+        })
+            .done(function (res) {
+            if (res.code == 200) {
+                _this.ingredients = res.data;
+            }
+        })
+            .always(function () {
+            loading.dismiss();
+        });
     };
     SpendPage.prototype.get_data_spend = function () {
         var _this = this;
@@ -91,7 +141,7 @@ var SpendPage = /** @class */ (function () {
         var data = this.spend;
         data.outlet_id = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
         data.users_outlet_id = this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id;
-        data.items = this.spend_item;
+        // data.items = this.spend_item;
         var url;
         if (!this.spend.sp_id) {
             url = this.helper.config.base_url('admin/outlet/spend/add');
@@ -109,6 +159,7 @@ var SpendPage = /** @class */ (function () {
             if (res.code == 200) {
                 _this.ResetItem();
                 _this.reset_spend_item();
+                _this.view_state = undefined;
                 _this.state = 'list';
                 _this.get_data_spend();
             }
@@ -134,10 +185,17 @@ var SpendPage = /** @class */ (function () {
     };
     SpendPage.prototype.SaveItem = function () {
         if (this.spend.sp_type) {
-            var index = this.products.map(function (res) { return res.id; }).indexOf(this.spend_item_form.prod_id);
-            this.spend_item_form['product_item'] = this.products[index];
+            var index = 0;
+            if (this.is_restaurant) {
+                index = this.ingredients.map(function (res) { return res.ingd_id; }).indexOf(this.spend_item_form.ingd_id);
+                this.spend_item_form['product_item'] = this.ingredients[index];
+            }
+            else {
+                index = this.products.map(function (res) { return res.id; }).indexOf(this.spend_item_form.prod_id);
+                this.spend_item_form['product_item'] = this.products[index];
+            }
         }
-        if (!this.spend_item_form.sp_dt_desc || this.spend_item_form.sp_dt_desc == '') {
+        if (this.spend.sp_type == 0 && (!this.spend_item_form.sp_dt_desc || this.spend_item_form.sp_dt_desc == '')) {
             this.helper.alertCtrl.create({
                 message: "Deskripsi tidak boleh kosong!",
                 buttons: ["OK"]
@@ -171,6 +229,7 @@ var SpendPage = /** @class */ (function () {
         this.spend_item.splice(index, 1);
     };
     SpendPage.prototype.EditItem = function (index, item) {
+        console.log(item);
         this.spend_item_form_state = 'edit';
         this.spend_item_form_index = index;
         this.spend_item_form = item;
@@ -203,6 +262,7 @@ var SpendPage = /** @class */ (function () {
         }
         total = total - disc_nominal + tax_nominal;
         this.spend.sp_total = total;
+        this.spend.sp_bill = total;
     };
     SpendPage.prototype.advanceOptions = function (index, item) {
         var _this = this;
@@ -263,7 +323,11 @@ var SpendPage = /** @class */ (function () {
                         item.sp_type = item.sp_type == 1 ? false : true;
                         _this.spend = item;
                         _this.spend_item = item.items;
+                        _this.helper.$.each(_this.spend_item, function (i, val) {
+                            _this.spend_item[i].product_item = val;
+                        });
                         _this.state = 'new_spend';
+                        console.log(_this.spend_item);
                     }
                 },
                 {
@@ -289,10 +353,10 @@ var SpendPage = /** @class */ (function () {
         })
             .done(function (res) {
             if (res.code == 200) {
-                _this.data_spend = res.data;
-                _this.reset_spend_item();
+                // this.data_spend = res.data;
+                // this.reset_spend_item();
                 _this.state = 'list';
-                _this.get_data_spend();
+                // this.get_data_spend();
             }
         })
             .always(function () {

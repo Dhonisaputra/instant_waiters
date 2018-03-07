@@ -40,6 +40,8 @@ import { MemberDetailPage } from '../pages/member-detail/member-detail';
 import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
 import { SpendDetailPage } from '../pages/spend-detail/spend-detail';
+import { DebtPage } from '../pages/debt/debt';
+import { PrintBluetoothPanelPageModule } from '../pages/print-bluetooth-panel/print-bluetooth-panel.module';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ReceiptDataProvider } from '../providers/receipt-data/receipt-data';
@@ -50,6 +52,8 @@ import { DbLocalProvider } from '../providers/db-local/db-local';
 import { DbTableProvider } from '../providers/db-table/db-table';
 import { HelperProvider } from '../providers/helper/helper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrinterServiceProvider } from '../providers/printer-service/printer-service';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 // import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -82,11 +86,13 @@ var AppModule = /** @class */ (function () {
                 MemberDetailPage,
                 ModalPage,
                 SpendPage,
-                SpendDetailPage
+                SpendDetailPage,
+                DebtPage
                 // AbsoluteDragDirective
             ],
             imports: [
                 BrowserModule,
+                PrintBluetoothPanelPageModule,
                 BrowserAnimationsModule,
                 HttpClientModule,
                 IonicModule.forRoot(MyApp),
@@ -118,7 +124,8 @@ var AppModule = /** @class */ (function () {
                 MemberDetailPage,
                 ModalPage,
                 SpendPage,
-                SpendDetailPage
+                SpendDetailPage,
+                DebtPage
             ],
             providers: [
                 StatusBar,
@@ -135,7 +142,9 @@ var AppModule = /** @class */ (function () {
                 BillProvider,
                 DbLocalProvider,
                 DbTableProvider,
-                HelperProvider
+                HelperProvider,
+                PrinterServiceProvider,
+                BluetoothSerial
             ]
         })
     ], AppModule);

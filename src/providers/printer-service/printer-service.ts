@@ -26,6 +26,11 @@ export class PrinterServiceProvider {
 	  }
   }
 
+  public isAvailable()
+  {
+  	return this.win.DatecsPrinter
+  }
+
   public listBluetoothDevices(){
         return new Promise((resolve, reject) => {
             this.win.DatecsPrinter.listBluetoothDevices( function (success) {

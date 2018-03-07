@@ -154,6 +154,16 @@ var MemberPage = /** @class */ (function () {
                         _this.openDetailPage(index, item);
                     }
                 }, {
+                    text: 'Kirimkan email kartu member',
+                    handler: function () {
+                        _this.openTheCard(index, item, 'email');
+                    }
+                }, {
+                    text: 'Download PDF Kartu Email',
+                    handler: function () {
+                        _this.openTheCard(index, item, 'pdf');
+                    }
+                }, {
                     text: 'Hapus Member',
                     handler: function () {
                         _this.helper.alertCtrl.create({
@@ -170,6 +180,44 @@ var MemberPage = /** @class */ (function () {
                 }
             ]
         }).present();
+    };
+    MemberPage.prototype.openTheCard = function (index, item, type) {
+        var _this = this;
+        var url = this.helper.config.base_url('admin/outlet/member/card/' + this.outlet + '/' + item.member_id + '/' + type);
+        switch (type) {
+            case "email":
+                // code...
+                var loading_1 = this.helper.loadingCtrl.create({
+                    content: "Mengirimkan email"
+                });
+                loading_1.present();
+                this.helper.$.ajax({
+                    url: url,
+                    type: "POST",
+                })
+                    .done(function (res) {
+                    _this.helper.alertCtrl.create({
+                        title: "Kartu member terkirim",
+                        message: "Kartu member berhasil dikirim",
+                        buttons: ["OK"]
+                    }).present();
+                })
+                    .fail(function () {
+                    _this.helper.alertCtrl.create({
+                        title: "Kesalahan code : 500",
+                        message: "Terjadi kesalahan saat mengirimkan email. Silahkan laporkan kepada pengembang aplikasi",
+                        buttons: ["OK"]
+                    }).present();
+                })
+                    .always(function () {
+                    loading_1.dismiss();
+                });
+                break;
+            default:
+                // code...
+                window.open(url, '_blank');
+                break;
+        }
     };
     MemberPage = __decorate([
         IonicPage(),

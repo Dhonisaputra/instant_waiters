@@ -9,9 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController, ToastController, ActionSheetController, Events, PopoverController } from 'ionic-angular';
+import { Platform, LoadingController, AlertController, ToastController, ActionSheetController, Events, PopoverController } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
+import { PrinterServiceProvider } from '../../providers/printer-service/printer-service';
 import { Storage } from '@ionic/storage';
 import * as $ from "jquery";
 import * as moment from 'moment';
@@ -23,7 +24,8 @@ import * as html2canvas from "html2canvas";
   and Angular DI.
 */
 var HelperProvider = /** @class */ (function () {
-    function HelperProvider(http, config, toast, alertCtrl, loadingCtrl, local, storage, actionSheet, events, popoverCtrl) {
+    function HelperProvider(http, config, toast, alertCtrl, loadingCtrl, local, storage, actionSheet, events, popoverCtrl, platform, printer) {
+        var _this = this;
         this.http = http;
         this.config = config;
         this.toast = toast;
@@ -34,10 +36,19 @@ var HelperProvider = /** @class */ (function () {
         this.actionSheet = actionSheet;
         this.events = events;
         this.popoverCtrl = popoverCtrl;
+        this.platform = platform;
+        this.printer = printer;
         this.$ = $;
         this.moment = moment;
         this.html2canvas = html2canvas;
+        this.defaultTimeout = 100;
+        this.win = window;
         console.log('Hello HelperProvider Provider');
+        this.platform.ready().then(function () {
+            if (_this.win.cordova && !_this.win.DatecsPrinter) {
+                console.warn("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
+            }
+        });
     }
     /*
       Source
@@ -53,6 +64,9 @@ var HelperProvider = /** @class */ (function () {
             }
         }
         return rev2.split('').reverse().join('');
+    };
+    HelperProvider.prototype.nativeWindow = function () {
+        return window;
     };
     HelperProvider.prototype.IDRtoInt = function (angka) {
         angka = angka ? angka.toString() : '0';
@@ -85,6 +99,14 @@ var HelperProvider = /** @class */ (function () {
     HelperProvider.prototype.html_decode = function (value) {
         return $('<div/>').html(value).text();
     };
+    HelperProvider.prototype.get_initial_outlet_name = function (name) {
+        var nameArr = name.replace(/[^A-Za-z0-9]/g, ' ').split(' ');
+        var initialName = [];
+        $.each(nameArr, function (i, val) {
+            initialName.push(val[0]);
+        });
+        return initialName;
+    };
     HelperProvider = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [HttpClient,
@@ -96,7 +118,9 @@ var HelperProvider = /** @class */ (function () {
             Storage,
             ActionSheetController,
             Events,
-            PopoverController])
+            PopoverController,
+            Platform,
+            PrinterServiceProvider])
     ], HelperProvider);
     return HelperProvider;
 }());

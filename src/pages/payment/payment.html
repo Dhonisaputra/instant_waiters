@@ -7,12 +7,12 @@
 <ion-header>
 	<ion-toolbar color="main">
 	  <ion-navbar>
-	    <button ion-button menuToggle>
+	    <button ion-button menuToggle *ngIf="state == 'payment'">
 	      <ion-icon name="menu"></ion-icon>
 	    </button>
 	    <ion-title>Pembayaran</ion-title>
 	    <ion-buttons class="center distributed">
-			<button ion-button clear icon-right color="light" (click)="payBill()">
+			<button ion-button clear icon-right color="light" *ngIf="state == 'payment'" (click)="payBill()">
 			  Bayar pesanan
 			</button>
 		</ion-buttons>
@@ -23,7 +23,7 @@
 
 <ion-content id="payment-box" >
 
-	<ion-grid>
+	<ion-grid *ngIf="state == 'payment'">
 		<ion-row class="relative">
 			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">
 				<div class="receipt-product">
@@ -61,7 +61,7 @@
 					<ion-row class="center">
 						<ion-col col-12 col-xs-12 col-sm-12 col-md-12 *ngIf="payment_method == 1">
 							<div class="row center" style="margin-bottom: 10px;">
-								<div class="col-md-7">
+								<div class="col-xs-7">
 									  <ion-segment color="main">
 									    <ion-segment-button color="main" value="numpad" [ngClass]="{'segment-activated':numpad_type == 'numpad'}" (click)="numpad_type = 'numpad' ">
 									      Manual
@@ -219,4 +219,18 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+	<div class="r" *ngIf="state == 'afterPayment'">
+		<div class="text-align--center">
+			<ion-icon ios="ios-print" md="ios-print" color="main" style="font-size: 10.5em;"></ion-icon>
+		</div>
+		<div class="text-align--center row" style="margin-top: 25px; ">
+				
+			<div class="text-align--center col-xs-7" style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; margin:auto;">
+				<button ion-button block color="main" (click)="print_nota()">Cetak nota</button>
+				<button ion-button block color="secondary" (click)="email_panel()">Kirimkan nota ke email</button>
+				<button ion-button block (click)="back_to_cashier()">Kembali ke kasir</button>
+			</div>
+
+		</div>
+	</div>
 </ion-content>

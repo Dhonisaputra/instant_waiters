@@ -10,7 +10,7 @@
 			<ion-title>{{product.name}}</ion-title>
 			
 		    <ion-buttons end *ngIf="page_params.show_history_stock == true">
-		      <a ion-button target="_blank" href="{{helper.config.base_url('admin/outlet/stock/export/download')}}/{{product.outlet}}/{{product.id}}">
+		      <a ion-button target="_blank" href="{{helper.config.base_url('admin/outlet/stock/export/download')}}/{{product.outlet||product.outlet_id}}/{{product.id}}">
 		      	Download kartu stok
 		      </a>
 		    </ion-buttons>
@@ -45,34 +45,66 @@
 
 	<div [ngSwitch]="tab">
 		<div *ngSwitchCase="'detail_product'">
-			<div class="col-md-4">
-    			<div style="">
-    				<img src="{{helper.config.base_url(product.image.raw)}}">
-    			</div>
-    			<div style="" [innerHTML]="product.prod_description">
-    			</div>
-			</div>
-			<div class="col-md-8">
-				<ion-list inset>
-					<ion-item>
-						<h2>Nama</h2>
-		    			<p>{{product.name}}</p>
-					</ion-item>
-					<ion-item>
-						<h2>Harga</h2>
-		    			<p>Rp. {{product.price_idr}}</p>
-					</ion-item>
-					<ion-item>
-						<h2>Stok</h2>
-		    			<p>{{product.stock}} {{product.unit}}</p>
-					</ion-item>
-
-					<ion-item>
-						<h2>Stok Opname</h2>
-		    			<p>{{product.stock_opname}} {{product.unit}}</p>
-					</ion-item>
-				</ion-list>
+			<div *ngIf="product.id">
 				
+				<div class="col-md-4">
+	    			<div style="">
+	    				<img src="{{helper.config.base_url(product.image.raw)}}">
+	    			</div>
+	    			<div style="" [innerHTML]="product.prod_description">
+	    			</div>
+				</div>
+				<div class="col-md-8">
+					<ion-list inset>
+						<ion-item>
+							<h2>Nama</h2>
+			    			<p>{{product.name}}</p>
+						</ion-item>
+						<ion-item>
+							<h2>Harga</h2>
+			    			<p>Rp. {{product.price_idr}}</p>
+						</ion-item>
+						<ion-item>
+							<h2>Stok</h2>
+			    			<p>{{product.stock}} {{product.unit}}</p>
+						</ion-item>
+
+						<ion-item>
+							<h2>Stok Opname</h2>
+			    			<p>{{product.stock_opname}} {{product.unit}}</p>
+						</ion-item>
+					</ion-list>
+					
+				</div>
+			</div>
+			<div *ngIf="product.ingd_id">
+				<div class="col-md-6">
+	    			<div style="">
+	    			</div>
+	    			
+				</div>
+				<div class="col-md-6">
+					<ion-list inset>
+						<ion-item>
+							<h2>Nama</h2>
+			    			<p>{{product.ingd_name}}</p>
+						</ion-item>
+						<ion-item>
+							<h2>Harga</h2>
+			    			<p>Rp. {{product.ingd_price}}</p>
+						</ion-item>
+						<ion-item>
+							<h2>Unit</h2>
+			    			<p>{{product.stock}} {{product.ingd_unit}}</p>
+						</ion-item>
+
+						<ion-item>
+							<h2>Stok</h2>
+			    			<p>{{product.ingd_stock}} {{product.ingd_unit}}</p>
+						</ion-item>
+					</ion-list>
+					
+				</div>
 			</div>
 		</div>
 

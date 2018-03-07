@@ -12,9 +12,6 @@ var TooltipProductPageModule = /** @class */ (function () {
     }
     TooltipProductPageModule = __decorate([
         NgModule({
-            declarations: [
-                TooltipProductPage,
-            ],
             imports: [
                 IonicPageModule.forChild(TooltipProductPage),
             ],

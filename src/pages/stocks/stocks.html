@@ -56,11 +56,11 @@
             <ion-item *ngIf="items.length < 1" class="text-align--center"  style="padding: 6px 0px;">
                 Tidak ditemukan produk
             </ion-item>
-            <button ion-item *ngFor="let item of items" style="padding: 6px 0px;" (click)="openDetailStock(item)">
-                {{item.name}}
-                <span class="bs-label pull-right"  [ngClass]="{'label-primary': item.stock > 0, 'label-warning': item.stock == 0, 'label-danger': item.stock < 0 }"> {{item.stock}}</span>
-                <!-- <span class="bs-label label-warning" *ngIf="item.stock == 0"> {{item.stock}}</span> -->
-                <!-- <span class="bs-label label-danger" *ngIf="item.stock < 0"> {{item.stock}}</span> -->
+            <button ion-item *ngFor="let item of ingredients" style="padding: 6px 0px;" (click)="openDetailStock(item)">
+                {{item.ingd_name}}
+                <span class="bs-label pull-right"  [ngClass]="{'label-primary': item.ingd_stock > 0, 'label-warning': item.ingd_stock == 0, 'label-danger': item.ingd_stock < 0 }"> {{item.ingd_stock}}</span>
+                <span class="bs-label label-warning" *ngIf="item.ingd_stock == 0"> {{item.ingd_stock}}</span>
+                <span class="bs-label label-danger" *ngIf="item.ingd_stock < 0"> {{item.ingd_stock}}</span>
                 <ion-icon name="arrow-forward" item-end></ion-icon>
             </button>
         </div>

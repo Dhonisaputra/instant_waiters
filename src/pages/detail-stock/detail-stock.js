@@ -32,13 +32,20 @@ var DetailStockPage = /** @class */ (function () {
             show_segment: true,
             show_detail_product: true,
         };
+        this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
         if (!this.navParams.data) {
             this.navCtrl.pop({});
         }
         console.log(this.navParams.data);
         this.product = this.navParams.data;
         this.product.price_idr = this.helper.intToIDR(this.product.price);
-        this.process_get_stock(this.product.id);
+        if (this.product.ingd_id) {
+            this.process_get_linked_product();
+            this.process_get_stock(this.product.ingd_id);
+        }
+        else {
+            this.process_get_stock(this.product.id);
+        }
         if (this.navParams.data.page_params) {
             this.update_page_parameters(this.navParams.data.page_params);
         }
@@ -53,13 +60,28 @@ var DetailStockPage = /** @class */ (function () {
     DetailStockPage.prototype.process_get_stock = function (idproduct) {
         var _this = this;
         var url = this.helper.config.base_url('admin/outlet/stock/log/get');
-        $.post(url, { product: this.product.id, outlet: 1, limit: 10, page: 1, order_by: 'stock_date DESC' })
+        var data_request = { outlet: this.outlet, limit: 10, page: 1, order_by: 'stock_date DESC' };
+        if (this.product.id) {
+            data_request.product = this.product.id;
+        }
+        else {
+            data_request.ingd = this.product.ingd_id;
+        }
+        $.post(url, data_request)
             .then(function (res) {
             res = _this.helper.isJSON(res) ? JSON.parse(res) : res;
-            console.log(res);
             _this.log_stock = res.data;
             var stock = _this.log_stock[0] ? _this.log_stock[0].stock_rest : 0;
             _this.product.stock_opname = _this.product.stock < 1 ? _this.product.stock - _this.log_stock[0].stock_rest : stock;
+        });
+    };
+    DetailStockPage.prototype.process_get_linked_product = function () {
+        var _this = this;
+        var url = this.helper.config.base_url('admin/outlet/ingredient/related_product');
+        $.post(url, { outlet_id: this.outlet, ingredients: [this.product.ingd_id] })
+            .then(function (res) {
+            res = _this.helper.isJSON(res) ? JSON.parse(res) : res;
+            console.log(res);
         });
     };
     DetailStockPage.prototype.closeModal = function () {

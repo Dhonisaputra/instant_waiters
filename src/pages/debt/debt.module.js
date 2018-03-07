@@ -12,9 +12,6 @@ var DebtPageModule = /** @class */ (function () {
     }
     DebtPageModule = __decorate([
         NgModule({
-            declarations: [
-                DebtPage,
-            ],
             imports: [
                 IonicPageModule.forChild(DebtPage),
             ],

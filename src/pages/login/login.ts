@@ -107,7 +107,13 @@ export class LoginPage {
 	        	alert.present();
 			}
 
-		} )	
+		}, (err)=>{
+			this.helper.alertCtrl.create({
+				title: "Login gagal",
+				message: "SIlahkan check data login anda",
+				buttons: ["OK"]
+			}).present();
+		})	
 		.always( ()=>{
 			loader.dismiss();
 		}) 

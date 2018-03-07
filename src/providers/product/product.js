@@ -30,7 +30,7 @@ var ProductProvider = /** @class */ (function () {
         var _this = this;
         if (options.online == true) {
             options.data = Object.assign({
-                fields: 'id,outlet,type,price,name,unit,stock,image,charge_nominal,charge_percent,status,discount_nominal,discount_percent,status_text,can_be_removed,favorite',
+                fields: 'id,outlet,type,price,name,unit,stock,image,charge_nominal,charge_percent,status,discount_nominal,discount_percent,status_text,can_be_removed,favorite,prod_description,ingredients',
                 limit: 25,
                 page: 1,
             }, options.data);

@@ -20,6 +20,7 @@ import * as $ from "jquery"
      tab:string = 'detail_product';
      product:any = {};
      log_stock:any;
+     outlet:number;
      page_params  :object={
         action:'default', // [default, edit, pay]
         view_type: 'page', // [page, modal],
@@ -28,6 +29,8 @@ import * as $ from "jquery"
         show_detail_product: true, // boolean [true-false]
     }
     constructor(public navCtrl: NavController, private viewCtrl: ViewController, public navParams: NavParams, private helper:HelperProvider) {
+        this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
+        
         if(!this.navParams.data)
         {
             this.navCtrl.pop({});
@@ -36,7 +39,14 @@ import * as $ from "jquery"
         this.product = this.navParams.data
         this.product.price_idr = this.helper.intToIDR(this.product.price)
 
-        this.process_get_stock(this.product.id);
+        if(this.product.ingd_id)
+        {
+            this.process_get_linked_product();
+            this.process_get_stock(this.product.ingd_id);
+        }else
+        {
+            this.process_get_stock(this.product.id);
+        }
 
         if(this.navParams.data.page_params)
         {
@@ -55,13 +65,30 @@ import * as $ from "jquery"
     process_get_stock(idproduct:number)
     {
         let url = this.helper.config.base_url('admin/outlet/stock/log/get')
-        $.post(url, {product: this.product.id, outlet:1, limit:10, page:1, order_by:'stock_date DESC'})
+        let data_request:any = {outlet:this.outlet, limit:10, page:1, order_by:'stock_date DESC'};
+        if(this.product.id)
+        {
+            data_request.product = this.product.id
+        }else
+        {
+            data_request.ingd = this.product.ingd_id
+        }
+        $.post(url, data_request)
         .then((res)=>{
             res = this.helper.isJSON(res)? JSON.parse(res):res;
-            console.log(res)
             this.log_stock = res.data;
             let stock = this.log_stock[0]?this.log_stock[0].stock_rest : 0;
             this.product.stock_opname = this.product.stock < 1? this.product.stock - this.log_stock[0].stock_rest : stock;
+        })
+    }
+
+    process_get_linked_product()
+    {
+        let url = this.helper.config.base_url('admin/outlet/ingredient/related_product')
+        $.post(url, {outlet_id: this.outlet, ingredients: [this.product.ingd_id] })
+        .then((res)=>{
+            res = this.helper.isJSON(res)? JSON.parse(res):res;
+            console.log(res)
         })
     }
     closeModal()

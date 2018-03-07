@@ -24,7 +24,9 @@ var StocksPage = /** @class */ (function () {
         this.navParams = navParams;
         this.productProvider = productProvider;
         this.helper = helper;
+        this.restaurant_mode = this.helper.local.get_params(this.helper.config.variable.credential).outlet.serv_id == 1 || this.helper.local.get_params(this.helper.config.variable.credential).outlet.serv_id == 2;
         this.items = [];
+        this.ingredients = [];
         this.original_items = [];
         this.page_params = {
             action: 'default',
@@ -33,7 +35,12 @@ var StocksPage = /** @class */ (function () {
         };
         this.detailStockPage = DetailStockPage;
         this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
-        this.first_time_get_product();
+        if (this.restaurant_mode) {
+            this.get_ingredient_data();
+        }
+        else {
+            this.first_time_get_product();
+        }
         /*this.dbLocalProvider.opendb('outlet')
         .then((val)=>{
           this.outlet = val;
@@ -43,6 +50,36 @@ var StocksPage = /** @class */ (function () {
             this.update_page_parameters(this.navParams.data.page_params);
         }
     }
+    StocksPage.prototype.get_ingredient_data = function () {
+        var _this = this;
+        // serv_id
+        var loading = this.helper.loadingCtrl.create({
+            content: "Memeriksa data"
+        });
+        loading.present();
+        var url = this.helper.config.base_url('admin/outlet/ingredient/get');
+        this.helper.$.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                limit: 1000,
+                page: 1,
+                outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id,
+                where: {
+                    outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id
+                }
+            },
+            dataType: 'json'
+        })
+            .done(function (res) {
+            if (res.code == 200) {
+                _this.ingredients = res.data;
+            }
+        })
+            .always(function () {
+            loading.dismiss();
+        });
+    };
     StocksPage.prototype.first_time_get_product = function (refresher) {
         if (refresher === void 0) { refresher = {}; }
         this.get_product({

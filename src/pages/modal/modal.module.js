@@ -12,9 +12,6 @@ var ModalPageModule = /** @class */ (function () {
     }
     ModalPageModule = __decorate([
         NgModule({
-            declarations: [
-                ModalPage,
-            ],
             imports: [
                 IonicPageModule.forChild(ModalPage),
             ],

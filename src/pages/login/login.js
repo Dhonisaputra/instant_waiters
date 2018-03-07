@@ -84,7 +84,7 @@ var LoginPage = /** @class */ (function () {
                 _this.helper.local.set_params('is_login', true);
                 _this.helper.local.set_params(_this.helper.config.variable.credential, res);
                 _this.helper.storage.set(_this.helper.config.variable.credential, res);
-                alertSuccess.present();
+                // alertSuccess.present();
                 _this.navCtrl.setRoot(TablePage);
             }
             else {
@@ -94,6 +94,12 @@ var LoginPage = /** @class */ (function () {
                 }
                 alert.present();
             }
+        }, function (err) {
+            _this.helper.alertCtrl.create({
+                title: "Login gagal",
+                message: "SIlahkan check data login anda",
+                buttons: ["OK"]
+            }).present();
         })
             .always(function () {
             loader.dismiss();
