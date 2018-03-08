@@ -816,33 +816,32 @@ export class BillProvider {
 
     print_nota(nota:any='')
     {
-        let outletName = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
-        let outletAddress = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:'ADDRESS';
-        let outletPhone = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:'PHONE';
-        let orders = this.get_bill_component('orders');
-        let b = this.get_bill();
-        let initialName = this.helper.get_initial_outlet_name(outletName).join('.');
-        let divider = "\n________________\n";
-        nota = nota?initialName+'/0000'+nota:'-';
+        let outletName      = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
+        let outletAddress   = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:'ADDRESS';
+        let outletPhone     = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:'PHONE';
+        let orders          = this.get_bill_component('orders');
+        let b               = this.get_bill();
+        let initialName     = this.helper.get_initial_outlet_name(outletName).join('.');
+        let divider         = "\n________________\n";
+        nota                = nota?initialName+'/0000'+nota:'-';
         
-        let visitorTable = b.table_name?b.table_name+'/':'';
-        let visitorName = b.visitor_name?b.visitor_name:'-';
-        let visitor = "Nomor Nota : "+nota+"\nMeja/Pelanggan: "+visitorTable+visitorName+"\n"+"Kasir: "+this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname+"\nTanggal : "+this.helper.moment().format('DD MMM YYYY HH:mm')+"\n";
+        let visitorTable    = b.table_name?b.table_name+'/':'';
+        let visitorName     = b.visitor_name?b.visitor_name:'-';
+        let visitor         = "Nomor Nota : "+nota+"\nMeja/Pelanggan: "+visitorTable+visitorName+"\n"+"Kasir: "+this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname+"\nTanggal : "+this.helper.moment().format('DD MMM YYYY HH:mm')+"\n";
         let textPrintHeader = "{center}"+outletName+"\n{s}"+outletAddress+"\n"+outletPhone+"{s}"+divider+"{left}\n"+visitor;
-        let textPrint = textPrintHeader;
+        let textPrint       = textPrintHeader;
         if(b.member_id)
         {
-
             textPrint += "Member : "+initialName+'/000'+b.member_id+"";
         }        
-        textPrint += "{right}"+divider;
+        textPrint     += "{right}"+divider;
 
         $.each(orders, (i, item)=>{
            textPrint += "{s}{right}"+item.qty+" "+item.name+" x "+this.helper.intToIDR(item.price)+"{/s}  {s}{b}"+this.helper.intToIDR(item.price * item.qty)+"{/b} {/s}{reset}\n";
             if(item.complement_status > 0)
             {
                 let kompl_item = item.complement_status > 0 && item.complement_item < item.qty? item.complement_item : '';
-                textPrint += "{right} {s}{i}"+kompl_item+"{i} komplimen{s}\n";
+                textPrint     += "{right} {s}{i}"+kompl_item+"{i} komplimen{s}\n";
             }
             if(this.helper.IDRtoInt(item.discount_nominal) > 0 && (this.helper.toInt(item.complement_status) != 1 || this.helper.toInt(item.complement_item) < this.helper.toInt(item.qty) ) )
             {
@@ -865,8 +864,9 @@ export class BillProvider {
         if(this.get_bill_component('discount_nominal')>0 )
         {
             let discountPercent = this.helper.toInt(this.get_bill_component('discount_percent')) > 0? this.get_bill_component('discount_percent')+'%':''
-            textPrint += "Diskon "+discountPercent+":      (+"+this.helper.intToIDR(this.get_bill_component('discount_nominal'))+")\n";
+            textPrint           += "Diskon "+discountPercent+":      (+"+this.helper.intToIDR(this.get_bill_component('discount_nominal'))+")\n";
         }
+
         textPrint += "{s}Total :      "+this.helper.intToIDR(this.get_bill_component('payment_total'))+"{/s}\n";
         textPrint += "{s}Tunai :      "+this.helper.intToIDR(this.get_bill_component('payment_nominal'))+"{/s}\n";
         if(this.get_bill_component('paid_with_bank_nominal') > 0 )

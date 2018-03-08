@@ -20,7 +20,7 @@ import { DebtPage } from '../pages/debt/debt';
 import { ModalPage } from '../pages/modal/modal';
 
 
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { HelperProvider } from '../providers/helper/helper'; 
 @Component({
@@ -47,7 +47,7 @@ export class MyApp {
   public routeHistory: Array<any>;
 
 
-  constructor(public toastCtrl: ToastController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public helper:HelperProvider) {
+  constructor(public toastCtrl: ToastController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public helper:HelperProvider, private screenOrientation: ScreenOrientation) {
     this.splashScreen.show();
 
     this.initializeApp();
@@ -78,7 +78,14 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      // this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+      if( this.platform.is('android') )
+      {
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
+        .catch(()=>{
+        })
+        
+      }
+
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -101,7 +108,7 @@ export class MyApp {
   preventClose()
   {
     let toast = this.toastCtrl.create({
-      message: "Press Again to Confirm Exit",
+      message: "Silahkan tutup aplikasi melalui sidebar menu!",
       duration: 3000
     });
     toast.present(); 
@@ -115,6 +122,20 @@ export class MyApp {
     this.helper.local.set_params(this.helper.config.variable.credential,{users:{}, data:{}, outlet:{}, type_product:[]});
     this.helper.local.set_params('pinned_params',[]);
     this.nav.setRoot(LoginPage);
+  }
+
+  closeApp()
+  {
+    this.helper.alertCtrl.create({
+      title: "Tutup aplikasi",
+      message: "Apakah anda yakin ingin menutup aplikasi?",
+      buttons: ["Tidak", {
+        text: "Tutup",
+        handler: ()=>{    
+          this.platform.exitApp()
+        }
+      }]
+    }).present();
   }
 
 }

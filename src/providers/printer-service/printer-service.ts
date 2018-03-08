@@ -28,7 +28,7 @@ export class PrinterServiceProvider {
 
   public isAvailable()
   {
-  	return this.win.DatecsPrinter
+  	return !this.platform.is('mobileweb') && this.win.DatecsPrinter;
   }
 
   public listBluetoothDevices(){

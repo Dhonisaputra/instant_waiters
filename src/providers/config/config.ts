@@ -27,5 +27,4 @@ export class ConfigProvider {
 		url = url?url+'/' : '';
 		return this.host + url;
 	}
-
 }

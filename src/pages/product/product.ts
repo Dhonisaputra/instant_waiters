@@ -99,7 +99,11 @@ export class ProductPage
 			if(!res.visitor_name || !res.visitor_table || res.receipts.length < 1)
 			{
 				console.error('Please fill table and name');
-				alert('Please make sure table number, visitor name and product is filled');
+				this.helper.alertCtrl.create({
+        			title: "Kesalahan",
+        			message: "Mohon untuk mengisi nama atau meja pembeli",
+        			buttons: ["OK"]
+        		}).present();
 				return false;
 			}
 			if(res._passed_data.pay == false)
@@ -460,7 +464,11 @@ export class ProductPage
 			        handler: data => {
 			        	if(data.visitor_name == '' || !data.visitor_name)
 			        	{
-			        		alert("Nama pembeli tidak boleh kosong!");
+			        		this.helper.alertCtrl.create({
+			        			title: "Kesalahan",
+			        			message: "Nama pembeli tidak boleh kosong!",
+			        			buttons: ["OK"]
+			        		}).present();
 			        		return false;
 			        	}
 			          	this.billProvider.set_bill_component('visitor_name', data.visitor_name)
@@ -529,6 +537,17 @@ export class ProductPage
 
 	print_bill()
 	{
+		if( !this.helper.printer.isAvailable() )
+		{
+			this.helper.alertCtrl.create({
+				title: "Kesalahan",
+				message: "Layanan printer tidak tersedia untuk perangkat ini",
+				buttons:["OK"]
+			}).present()
+			console.log(this.helper.html2canvas)
+			return false;
+		}
+
 		if(this.error_product())
 		{
 
@@ -553,7 +572,11 @@ export class ProductPage
 			        handler: data => {
 			        	if(data.visitor_name == '' || !data.visitor_name)
 			        	{
-			        		alert("Nama pembeli tidak boleh kosong!");
+			        		this.helper.alertCtrl.create({
+			        			title: "Kesalahan",
+			        			message: "Silahkan pilih salah satu produk",
+			        			buttons: ["OK"]
+			        		}).present();
 			        		return false;
 			        	}
 			          	this.billProvider.set_bill_component('visitor_name', data.visitor_name)
@@ -683,6 +706,7 @@ export class ProductPage
 		let alertErrorProduct = this.alertCtrl.create({
 		    title: 'Kesalahan',
 		    subTitle: 'Silahkan pilih salah satu produk',
+		    buttons: ["OK"]
 		});
 
 		if(this.billProvider.get_bill_component('orders').length < 1)

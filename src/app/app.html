@@ -15,37 +15,41 @@
         <h2>{{helper.local.get_params(helper.config.variable.credential).users.users_fullname}}</h2>
         <p>Cashier</p>
         <p>
-          <button ion-button small color="main" menuClose (click)="logout()">Log Out</button>
+          <button ion-button small color="main" menuClose (click)="logout()"> <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon> &nbsp; Log Out</button>
         </p>
       </ion-item>
     </ion-list>
     <ion-list>
        <!-- <ion-item-divider>Menu</ion-item-divider> -->
-      <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> Kasir </button>
-      <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> Kasir </button>
+      <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> <ion-icon ios="ios-cash" md="md-cash"></ion-icon> Kasir </button>
+      <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> <ion-icon ios="ios-cash" md="md-cash"></ion-icon> Kasir </button>
       <button menuClose ion-item (click)="setRoot(stocksPage)">
-        Stok
+        <ion-icon ios="ios-cube" md="md-cube"></ion-icon> Stok
       </button>
       <button menuClose ion-item (click)="setRoot(transactionPage)">
-        Transaksi
+        <ion-icon ios="ios-trending-up" md="md-trending-up"></ion-icon> Transaksi
       </button>
       <button menuClose ion-item (click)="setRoot(memberPage)">
-        Member
+        <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon> Member
       </button>
       <button menuClose ion-item (click)="setRoot(modalPage)">
-        Modal
+        <ion-icon ios="logo-usd" md="logo-usd"></ion-icon> Modal
       </button>
       <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:0})">
-        Pengeluaran
+        <ion-icon ios="ios-cube" md="md-cube" class="text-danger"></ion-icon> Pengeluaran
       </button>
       <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:1})">
-        Pengadaan
+        <ion-icon ios="ios-cube" md="md-cube" class="text-success"></ion-icon> Pengadaan
       </button>
       <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && helper.local.get_params(helper.config.variable.settings).debt_mode">
-        Hutang
+        <ion-icon ios="ios-list-box" md="md-list-box"></ion-icon> Hutang
       </button>
       <button menuClose ion-item (click)="setRoot(settingsPage)">
-        Settings
+        <ion-icon ios="ios-construct" md="md-construct"></ion-icon> Settings
+      </button>
+
+      <button menuClose ion-item (click)="closeApp()">
+        <span class="text-danger"><ion-icon ios="ios-exit" md="md-exit"></ion-icon> Tutup Aplikasi</span>
       </button>
       <!-- <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="{'sr-only': !helper.local.get_params(helper.config.variable.settings)[p.options.setting_name]}" >
         {{p.title}}

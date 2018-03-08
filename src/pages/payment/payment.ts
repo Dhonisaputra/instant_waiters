@@ -141,8 +141,8 @@ export class PaymentPage {
 			{
 
 				this.latest_bill_id = res.data.pay_id;
-
-				this.state = 'afterPayment';
+				this.navCtrl.setRoot(SendReceiptPage, {data: this.latest_bill_id})
+				// this.state = 'afterPayment';
 			}else
 			{
 				console.error('Error when saving the bill')	

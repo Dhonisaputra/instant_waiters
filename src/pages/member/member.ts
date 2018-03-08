@@ -21,6 +21,9 @@ export class MemberPage {
 	segment_member:string='member_list'	
 	member:any = []
 	outlet: any;
+	page_params:any={
+		toggleSearchInput:false
+	}
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, public helper:HelperProvider, public modalCtrl:ModalController, public viewCtrl:ViewController) {
 		this.segment_member='member_list';
@@ -31,7 +34,37 @@ export class MemberPage {
 		console.log('ionViewDidLoad MemberPage');
 	}
 
-	fetching_member()
+	filter_member($event)
+	{
+    	let val = $event.target.value;
+    	if(val && val.length < 3)
+    	{
+    		return false;
+    	}
+		let load = this.helper.loadingCtrl.create({
+			content: "Memeriksa data"
+		})
+		load.present();
+		this.helper.$.ajax({
+			type: "POST",
+			url: this.helper.config.base_url('admin/outlet/member/get'),
+			data: {
+				fields:"last_transaction,member_id,outlet_id,member_name,member_code,member_phone,member_mail,member_registered",
+				outlet_id: this.outlet,
+				like: [['member_name', val]]
+			},
+			dataType: 'json'
+		})
+		.done((res)=>{
+
+			this.member = res.data
+		})
+		.always( ()=>{
+			load.dismiss();
+		} )
+	}
+
+	fetching_member($event:any={})
 	{
 		let load = this.helper.loadingCtrl.create({
 			content: "Memeriksa data"
@@ -49,6 +82,10 @@ export class MemberPage {
 		.done((res)=>{
 
 			this.member = res.data
+			if(typeof $event.complete == 'function')
+			{
+				$event.complete();
+			}
 		})
 		.always( ()=>{
 			load.dismiss();
