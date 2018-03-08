@@ -76,12 +76,20 @@
   		<ion-list>
 
   			<ion-item>
-  				<ion-label floating>Password</ion-label>
-  				<ion-input type="password"></ion-input>
+  				<ion-label floating>Password lama</ion-label>
+  				<ion-input type="password" [(ngModel)]="users.old_password"></ion-input>
+  			</ion-item>
+  			<ion-item>
+  				<ion-label floating>Password baru</ion-label>
+  				<ion-input type="password" [(ngModel)]="users.new_password"></ion-input>
+  			</ion-item>
+  			<ion-item>
+  				<ion-label floating>Ulangi Password</ion-label>
+  				<ion-input type="password" [(ngModel)]="users.rePassword"></ion-input>
   			</ion-item>
 
   			<ion-item>
-  				<button ion-button block>Update</button>
+  				<button ion-button block (click)="updateUser()">Update</button>
   			</ion-item>
 
   		</ion-list>

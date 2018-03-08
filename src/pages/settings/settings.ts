@@ -25,6 +25,7 @@ export class SettingsPage {
   settings:any={
     choose_table_first:true
   };
+  users:any={}
   constructor(public navCtrl: NavController, public navParams: NavParams, private db: DbLocalProvider, public helper: HelperProvider) {
     this.settings = Object.assign(this.settings, this.helper.local.get_params(this.helper.config.variable.settings) )
   }
@@ -64,6 +65,66 @@ export class SettingsPage {
   openPrinterBluetoothPrinterSettings()
   {
     this.navCtrl.push(PrintBluetoothPanelPage);
+  }
+
+  updateUser()
+  {
+    if(this.users.new_password != this.users.rePassword)
+    {
+      this.helper.alertCtrl.create({
+        title: "Kesalahan",
+        message: "password tidak sama",
+        buttons: ["OK"]
+      }).present()
+      return false;
+    }
+    let url = this.helper.config.base_url('sign/mobile_change_password')
+
+    let users_id = this.helper.local.get_params(this.helper.config.variable.credential).users.users_id;
+    this.helper.$.post(url, {users_id: users_id, new_password: this.users.new_password, old_password: this.users.old_password })
+    .done((res)=>{
+      res = JSON.parse(res);
+      switch (res.code) {
+        case 200:
+          this.helper.toast.create({
+            message: "password sudah diganti",
+            duration: 2000
+          }).present();
+          break;
+
+         case 404:
+          this.helper.alertCtrl.create({
+            title: "Kesalahan",
+            message: "Pengguna tidak ditemukan",
+            buttons: ["OK"]
+          }).present();
+          break;
+
+        default:
+        case 500:
+          this.helper.alertCtrl.create({
+            title: "Kesalahan Fatal",
+            message: "System tidak dapat mengolah permintaan anda. Silahkan laporkan kepada pengembang sistem",
+            buttons: ["OK"]
+          }).present();
+          break;
+        case 304:
+          this.helper.alertCtrl.create({
+            title: "Tidak ada perubahan",
+            message: "Password yang anda isikan sama dengan sebelumnya, tidak dapat melakukan perubahan",
+            buttons: ["OK"]
+          }).present();
+          break;       
+       }
+      
+    })
+    .fail(()=>{
+      this.helper.alertCtrl.create({
+            title: "Kesalahan Fatal",
+            message: "System tidak dapat mengolah permintaan anda. Silahkan laporkan kepada pengembang sistem",
+            buttons: ["OK"]
+          }).present();
+    })
   }
 
 }

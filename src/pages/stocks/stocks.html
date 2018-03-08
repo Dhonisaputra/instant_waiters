@@ -34,7 +34,7 @@
     <ion-list style="margin-top: 10px;">
         <ion-item style="padding: 6px 0px;">
             <span class="pull-right">
-                <strong>{{items.length}}</strong> produk ditemukan. 
+                <strong>{{items.length||ingredients.length}}</strong> produk ditemukan. 
             </span>
         </ion-item>
         <div *ngIf="!restaurant_mode">
@@ -53,7 +53,7 @@
 
         <div *ngIf="restaurant_mode">
             
-            <ion-item *ngIf="items.length < 1" class="text-align--center"  style="padding: 6px 0px;">
+            <ion-item *ngIf="ingredients.length < 1" class="text-align--center"  style="padding: 6px 0px;">
                 Tidak ditemukan produk
             </ion-item>
             <button ion-item *ngFor="let item of ingredients" style="padding: 6px 0px;" (click)="openDetailStock(item)">

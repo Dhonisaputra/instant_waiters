@@ -176,7 +176,7 @@ export class SpendPage {
         let data = this.spend;
         data.outlet_id= this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
         data.users_outlet_id = this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id;
-        // data.items = this.spend_item;
+        data.items = this.spend_item;
 
         let url:any;
         if(!this.spend.sp_id)
@@ -201,6 +201,10 @@ export class SpendPage {
                 this.view_state = undefined
                 this.state = 'list'
                 this.get_data_spend();
+                this.spend = {
+                    sp_supplier: '',
+                    sp_note: ''
+                }
             }
         })
         .always(()=>{
@@ -273,6 +277,7 @@ export class SpendPage {
  
     ResetItem()
     {
+        
         this.spend_item_form_state = 'new';
         this.spend_item_form_index = undefined;
         this.spend_item_form = {
