@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { HelperProvider } from '../../providers/helper/helper'; 
 import { TablePage } from '../table/table'; 
 import { ProductPage } from '../product/product'; 
@@ -19,40 +19,67 @@ import * as $ from "jquery"
 })
 export class LoginPage {
 	user:any={}
-	constructor(public navCtrl: NavController, public navParams: NavParams, private helper: HelperProvider) {
-		this.check_credential();
+	win:any=window
+	constructor(public navCtrl: NavController, public navParams: NavParams, private helper: HelperProvider, private platform:Platform) {
+		
+		document.addEventListener("deviceready", ()=>{
+			this.win.plugins.screensize.get((res) => {
+				let wi = Math.pow(res.width/res.xdpi, 2)
+				let hi = Math.pow(res.height/res.ydpi, 2)
+				let dim = Math.sqrt(hi+wi);
+				if(dim < 6)
+				{
+					this.helper.alertCtrl.create({
+				      	title: 'Gagal masuk sistem',
+				      	subTitle: 'Ukuran layar anda tidak memenuhi syarat instalasi aplikasi.',
+				      	message: "Aplikasi hanya berjalan pada layar smartphone minimal 6 Inches",
+				      	enableBackdropDismiss:false,
+				      	buttons: [{
+				      		text: 'OK',
+				      		handler: ()=>{
+				      			this.platform.exitApp();
+				      		}
+				      	}]
+				    }).present();
+				}else
+				{
+					this.check_credential()
+				}
+			}, false);
+	    })
+
 	}
 
 	check_credential()
 	{
-		let loader = this.helper.loadingCtrl.create({
-			content: 'Melakukan pengecheckan pengguna. Silahkan tunggu..'
-		})
-		loader.present();
-		
-		this.helper.storage.get(this.helper.config.variable.credential)
-		.then((val) => {
-			if(!val || !val.outlet)
-			{
-				this.helper.local.set_params('is_login', false);
-				loader.dismiss();
-
-			}else
-			{
-
-				this.helper.storage.get(this.helper.config.variable.settings)
-				.then( (resSettings)=>{
-					this.helper.local.set_params(this.helper.config.variable.credential, val);
-					this.helper.local.set_params('is_login', true);
-					this.helper.local.set_params(this.helper.config.variable.settings, resSettings);
-					let default_page = resSettings && !resSettings.choose_table_first?  ProductPage : TablePage ;
-					this.navCtrl.setRoot(default_page);
+			let loader = this.helper.loadingCtrl.create({
+				content: 'Melakukan pengecheckan pengguna. Silahkan tunggu..'
+			})
+			loader.present();
+			
+			this.helper.storage.get(this.helper.config.variable.credential)
+			.then((val) => {
+				if(!val || !val.outlet)
+				{
+					this.helper.local.set_params('is_login', false);
 					loader.dismiss();
-				})
+
+				}else
+				{
+
+					this.helper.storage.get(this.helper.config.variable.settings)
+					.then( (resSettings)=>{
+						this.helper.local.set_params(this.helper.config.variable.credential, val);
+						this.helper.local.set_params('is_login', true);
+						this.helper.local.set_params(this.helper.config.variable.settings, resSettings);
+						let default_page = resSettings && !resSettings.choose_table_first?  ProductPage : TablePage ;
+						this.navCtrl.setRoot(default_page);
+						loader.dismiss();
+					})
 
 
-			}
-		})
+				}
+			})
 
 
 	}

@@ -43,6 +43,7 @@ export class HelperProvider {
     public printer: PrinterServiceProvider
     ) {
     this.win = window;
+    
     console.log('Hello HelperProvider Provider');
     this.platform.ready().then(() => {
       if (this.win.cordova && !this.win.DatecsPrinter) {
