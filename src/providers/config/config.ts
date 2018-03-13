@@ -15,11 +15,11 @@ export class ConfigProvider {
 		settings: 'settings'
 	} 
 	constructor() {
-		this.host = 'http://instant.folarpos.co.id/';
+		// this.host = 'http://instant.folarpos.co.id/';
 		// this.host = 'http://localhost/folarpos-instant/';
 		// this.host = 'http://192.168.1.38/folarpos-instant/';
 		// this.host = 'http://192.168.1.14/folarpos-instant/';
-		// this.host = 'http://192.168.100.31/folarpos-instant/';
+		this.host = 'http://192.168.100.31/folarpos-instant/';
 	}
 
 	base_url(url:any)

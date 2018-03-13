@@ -10,7 +10,7 @@
 			<ion-title>{{product.name}}</ion-title>
 			
 		    <ion-buttons end *ngIf="page_params.show_history_stock == true">
-		      <a ion-button target="_blank" href="{{helper.config.base_url('admin/outlet/stock/export/download')}}/{{product.outlet||product.outlet_id}}/{{product.id}}">
+		      <a ion-button target="_blank" href="{{helper.config.base_url('admin/outlet/stock/export/download')}}{{product.outlet||product.outlet_id}}/{{product.id||product.ingd_id}}">
 		      	Download kartu stok
 		      </a>
 		    </ion-buttons>
