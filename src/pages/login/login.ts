@@ -21,37 +21,45 @@ export class LoginPage {
 	user:any={}
 	win:any=window
 	constructor(public navCtrl: NavController, public navParams: NavParams, private helper: HelperProvider, private platform:Platform) {
-		
-		document.addEventListener("deviceready", ()=>{
-			this.win.plugins.screensize.get((res) => {
-				let wi = Math.pow(res.width/res.xdpi, 2)
-				let hi = Math.pow(res.height/res.ydpi, 2)
-				let dim = Math.sqrt(hi+wi);
-				if(dim < 6)
-				{
-					this.helper.alertCtrl.create({
-				      	title: 'Gagal masuk sistem',
-				      	subTitle: 'Ukuran layar anda tidak memenuhi syarat instalasi aplikasi.',
-				      	message: "Aplikasi hanya berjalan pada layar smartphone minimal 6 Inches",
-				      	enableBackdropDismiss:false,
-				      	buttons: [{
-				      		text: 'OK',
-				      		handler: ()=>{
-				      			this.platform.exitApp();
-				      		}
-				      	}]
-				    }).present();
-				}else
-				{
-					this.check_credential()
-				}
-			}, false);
-	    })
+		console.log(this.win.plugins)
+		if(this.win.plugins && typeof this.win.plugins.screensize == 'function')
+		{
+
+			document.addEventListener("deviceready", ()=>{
+				this.win.plugins.screensize.get((res) => {
+					let wi = Math.pow(res.width/res.xdpi, 2)
+					let hi = Math.pow(res.height/res.ydpi, 2)
+					let dim = Math.sqrt(hi+wi);
+					if(dim < 6)
+					{
+						this.helper.alertCtrl.create({
+					      	title: 'Gagal masuk sistem',
+					      	subTitle: 'Ukuran layar anda tidak memenuhi syarat instalasi aplikasi.',
+					      	message: "Aplikasi hanya berjalan pada layar smartphone minimal 6 Inches",
+					      	enableBackdropDismiss:false,
+					      	buttons: [{
+					      		text: 'OK',
+					      		handler: ()=>{
+					      			this.platform.exitApp();
+					      		}
+					      	}]
+					    }).present();
+					}else
+					{
+						this.check_credential()
+					}
+				}, false);
+		    })
+		}else
+		{
+			this.check_credential()
+		}
 
 	}
 
 	check_credential()
 	{
+				console.log('login')
 			let loader = this.helper.loadingCtrl.create({
 				content: 'Melakukan pengecheckan pengguna. Silahkan tunggu..'
 			})
