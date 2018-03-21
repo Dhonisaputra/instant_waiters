@@ -36,6 +36,7 @@ import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
 import { SpendDetailPage } from '../pages/spend-detail/spend-detail';
 import { DebtPage } from '../pages/debt/debt';
+import { OutletListPageModule } from '../pages/outlet-list/outlet-list.module';
 
 import { PrintBluetoothPanelPageModule } from '../pages/print-bluetooth-panel/print-bluetooth-panel.module';
 
@@ -52,7 +53,8 @@ import { HelperProvider } from '../providers/helper/helper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrinterServiceProvider } from '../providers/printer-service/printer-service';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
-
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { HTTP } from '@ionic-native/http';
 // import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 
 @NgModule({
@@ -91,6 +93,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
     BrowserModule,
     PrintBluetoothPanelPageModule,
     BrowserAnimationsModule,
+    OutletListPageModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
@@ -142,7 +145,9 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
     DbTableProvider,
     HelperProvider,
     PrinterServiceProvider,
-    BluetoothSerial
+    BluetoothSerial,
+    UniqueDeviceID,
+    HTTP
   ]
 })
 export class AppModule {}

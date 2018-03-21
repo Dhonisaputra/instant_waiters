@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // import { ListPage } from '../pages/list/list';
 import { TablePage } from '../pages/table/table';
 import { LoginPage } from '../pages/login/login';
+import { OutletListPage } from '../pages/outlet-list/outlet-list';
 // import { SendReceiptPage } from '../pages/send-receipt/send-receipt';
 // import { PaymentPage } from '../pages/payment/payment';
 // import { ReceiptPage } from '../pages/receipt/receipt';
@@ -29,21 +30,22 @@ import { HelperProvider } from '../providers/helper/helper';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
-  tablePage: any = TablePage;
-  productPage: any = ProductPage;
+  rootPage         : any = LoginPage;
+  tablePage        : any = TablePage;
+  productPage      : any = ProductPage;
   
-  stocksPage:any=StocksPage;
-  transactionPage:any=TransactionPage;
-  memberPage:any=MemberPage;
-  modalPage:any=ModalPage;
-  spendPage:any=SpendPage;
-  debtPage:any=DebtPage;
-  settingsPage:any=SettingsPage;
-  pages: any; //Array<{title: string, component: any, options:any}>
+  stocksPage       :any=StocksPage;
+  transactionPage  :any=TransactionPage;
+  memberPage       :any=MemberPage;
+  modalPage        :any=ModalPage;
+  spendPage        :any=SpendPage;
+  debtPage         :any=DebtPage;
+  settingsPage     :any=SettingsPage;
+  outletListPage   :any=OutletListPage;
+  pages            : any; //Array<{title: string, component: any, options:any}>
   lastTimeBackPress:number=0;
-  timePeriodToExit:number=2000;
-  users: any={}
+  timePeriodToExit :number=2000;
+  users            : any={}
   public routeHistory: Array<any>;
 
 
@@ -83,7 +85,6 @@ export class MyApp {
         this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
         .catch(()=>{
         })
-        
       }
 
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);

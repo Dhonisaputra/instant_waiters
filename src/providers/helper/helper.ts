@@ -5,6 +5,7 @@ import { ConfigProvider } from '../../providers/config/config';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { PrinterServiceProvider } from '../../providers/printer-service/printer-service';
 import { Storage } from '@ionic/storage';
+import { HTTP } from '@ionic-native/http';
 
 import * as $ from "jquery"
 
@@ -40,7 +41,9 @@ export class HelperProvider {
     public events:Events,
     public popoverCtrl:PopoverController,
     public platform: Platform,
-    public printer: PrinterServiceProvider
+    public printer: PrinterServiceProvider,
+    public ajax: HTTP,
+
     ) {
     this.win = window;
     

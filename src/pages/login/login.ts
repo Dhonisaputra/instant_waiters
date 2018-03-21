@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { HelperProvider } from '../../providers/helper/helper'; 
 import { TablePage } from '../table/table'; 
 import { ProductPage } from '../product/product'; 
+import { OutletListPage } from '../outlet-list/outlet-list'; 
 import * as $ from "jquery"
 
 /**
@@ -67,6 +68,7 @@ export class LoginPage {
 			
 			this.helper.storage.get(this.helper.config.variable.credential)
 			.then((val) => {
+				console.log(val)
 				if(!val || !val.outlet)
 				{
 					this.helper.local.set_params('is_login', false);
@@ -81,7 +83,7 @@ export class LoginPage {
 						this.helper.local.set_params('is_login', true);
 						this.helper.local.set_params(this.helper.config.variable.settings, resSettings);
 						let default_page = resSettings && !resSettings.choose_table_first?  ProductPage : TablePage ;
-						this.navCtrl.setRoot(default_page);
+						this.navCtrl.setRoot(OutletListPage);
 						loader.dismiss();
 					})
 
@@ -131,7 +133,7 @@ export class LoginPage {
 				this.helper.local.set_params(this.helper.config.variable.credential, res);
 				this.helper.storage.set(this.helper.config.variable.credential, res);
 	        	// alertSuccess.present();
-				this.navCtrl.setRoot(TablePage);
+				this.navCtrl.setRoot(OutletListPage);
 			}else
 			{
 	        	this.helper.local.set_params('is_login', false);
