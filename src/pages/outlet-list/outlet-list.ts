@@ -62,15 +62,18 @@ export class OutletListPage {
 
   selectOutlet(item)
   {
-  	if(item.device_status_confirmation && item.device_status_confirmation == 1)
+    let pending_devices = item.pending_devices? item.pending_devices.split(',') : [];
+    let active_devices = item.connected_devices? item.connected_devices.split(','): [];
+  	if(pending_devices.indexOf(this.uid) >= 0)
   	{
   		this.helper.alertCtrl.create({
-			title: "Menunggu konfirmasi",
-			message: "Anda telah melakukan permintaan hak akses, silahkan menunggu konfirmasi dari outlet",
-			buttons: ["OK"]
-		}).present();
+		  	title: "Menunggu konfirmasi",
+			  message: "Anda telah melakukan permintaan hak akses, silahkan menunggu konfirmasi dari outlet",
+		  	buttons: ["OK"]
+		  }).present();
   		return false;
-  	}else if(!item.device_status_confirmation)
+  	
+    }else if(!item.device_status_confirmation || active_devices.indexOf(this.uid) < 0 )
   	{
   		this.helper.alertCtrl.create({
   			title: "",
