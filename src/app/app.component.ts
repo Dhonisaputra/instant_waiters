@@ -19,6 +19,7 @@ import { MemberPage } from '../pages/member/member';
 import { SpendPage } from '../pages/spend/spend';
 import { DebtPage } from '../pages/debt/debt';
 import { ModalPage } from '../pages/modal/modal';
+import { AboutPage } from '../pages/about/about';
 
 
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -42,6 +43,7 @@ export class MyApp {
   debtPage         :any=DebtPage;
   settingsPage     :any=SettingsPage;
   outletListPage   :any=OutletListPage;
+  aboutPage        :any=AboutPage;
   pages            : any; //Array<{title: string, component: any, options:any}>
   lastTimeBackPress:number=0;
   timePeriodToExit :number=2000;
@@ -137,6 +139,12 @@ export class MyApp {
         }
       }]
     }).present();
+  }
+
+  signOutOutlet()
+  {
+    this.helper.local.reset_params('login_outlet_device');
+    this.nav.setRoot(OutletListPage)
   }
 
 }

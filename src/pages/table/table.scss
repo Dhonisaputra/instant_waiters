@@ -10,7 +10,8 @@ page-table {
 	}
 		.table-item
 		{
-			width: 100%;
+			width: 100px;
+			height: 100px;
 			border-radius: 50%;
 			display: flex;
 			justify-content: center;
@@ -20,6 +21,7 @@ page-table {
 			border: 1px solid #c0392b;
 			margin-right: 7px;
 			color: #c0392b;
+			text-align: center;
 		}
 		.table-item:before
 		{
@@ -35,3 +37,13 @@ page-table {
 
 		}
 
+.table-square
+{
+	border-radius: 0px !important;
+}
+
+.table-rectangle
+{
+	border-radius: 0px !important;
+	width: 150px;
+}

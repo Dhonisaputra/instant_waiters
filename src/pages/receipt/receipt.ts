@@ -168,8 +168,8 @@ export class ReceiptPage {
 		this.events.publish('bill.table.change', {})
 
 
-		if(this.receipt_page_params.can_edit_table)
-		{
+		// if(this.receipt_page_params.can_edit_table)
+		// {
 			let index:number=-1;
 			let isFound:boolean= false;
 			let navCtrlLen:number=this.navCtrl.length();
@@ -180,7 +180,7 @@ export class ReceiptPage {
 				trigger_event: 'table.change',
 				data: this.event_handler['table.pick']
 			})
-		}
+		// }
 
 	}
 

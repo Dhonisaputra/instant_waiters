@@ -36,9 +36,10 @@ import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
 import { SpendDetailPage } from '../pages/spend-detail/spend-detail';
 import { DebtPage } from '../pages/debt/debt';
-import { OutletListPageModule } from '../pages/outlet-list/outlet-list.module';
 
+import { OutletListPageModule } from '../pages/outlet-list/outlet-list.module';
 import { PrintBluetoothPanelPageModule } from '../pages/print-bluetooth-panel/print-bluetooth-panel.module';
+import { AboutPageModule } from '../pages/about/about.module';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -85,7 +86,7 @@ import { HTTP } from '@ionic-native/http';
     ModalPage,
     SpendPage,
     SpendDetailPage,
-    DebtPage
+    DebtPage,
     // AbsoluteDragDirective
 
   ],
@@ -95,6 +96,7 @@ import { HTTP } from '@ionic-native/http';
     BrowserAnimationsModule,
     OutletListPageModule,
     HttpClientModule,
+    AboutPageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],

@@ -79,6 +79,7 @@ export class LoginPage {
 
 					this.helper.storage.get(this.helper.config.variable.settings)
 					.then( (resSettings)=>{
+						val.outlet_device = {};
 						this.helper.local.set_params(this.helper.config.variable.credential, val);
 						this.helper.local.set_params('is_login', true);
 						this.helper.local.set_params(this.helper.config.variable.settings, resSettings);

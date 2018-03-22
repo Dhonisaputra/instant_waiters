@@ -42,7 +42,7 @@
   </div>
 	
 	<div class="table-box">
-		<div col-1 col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 class="table-item" *ngFor="let item of tableNum; let i = index" (click)="selectTable(i, item.tab_id)" [ngClass]="{'selected': is_selected(i)}"> {{item.tab_name}} </div>
+		<div class="table-item" absolute-drag *ngFor="let item of tableNum; let i = index" (click)="selectTable(i, item.tab_id)" [ngClass]="{'table-square':helper.local.get_params('configure_table') && item.tab_type == 2,'table-rectangle':helper.local.get_params('configure_table') && item.tab_type == 3, 'selected': is_selected(i)}"> {{item.tab_name}} </div>
 	</div>
   <div class="center">
       <!-- <button ion-button >Selanjutnya >> </button> -->
