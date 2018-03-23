@@ -40,10 +40,10 @@
           <ion-icon ios="logo-usd" md="logo-usd"></ion-icon> Modal
         </button>
         <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:0})">
-          <ion-icon ios="ios-cube" md="md-cube" class="text-danger"></ion-icon> Pengeluaran
+          <ion-icon ios="ios-cube" md="md-cube"></ion-icon> Pengeluaran
         </button>
         <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:1})">
-          <ion-icon ios="ios-cube" md="md-cube" class="text-success"></ion-icon> Pengadaan
+          <ion-icon ios="ios-cube" md="md-cube"></ion-icon> Pengadaan
         </button>
         <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && helper.local.get_params(helper.config.variable.settings).debt_mode">
           <ion-icon ios="ios-list-box" md="md-list-box"></ion-icon> Hutang
@@ -60,7 +60,7 @@
         <span class="text-danger"><ion-icon ios="ios-exit" md="md-exit"></ion-icon> keluar outlet</span>
       </button>
       <button menuClose ion-item (click)="closeApp()">
-        <span class="text-danger"><ion-icon ios="ios-exit" md="md-exit"></ion-icon> Tutup Aplikasi</span>
+        <span class="text-danger"><ion-icon ios="ios-close-circle" md="md-close-circle"></ion-icon> Tutup Aplikasi</span>
       </button>
       <!-- <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="{'sr-only': !helper.local.get_params(helper.config.variable.settings)[p.options.setting_name]}" >
         {{p.title}}

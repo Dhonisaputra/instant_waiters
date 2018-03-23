@@ -44,10 +44,10 @@ export class OutletListPage {
 			})
 		}else
 		{
-
 		  	this.device_id.get()
 		  	.then((uuid: any)=>{
-		  		this.uid = uuid;
+
+		  		this.uid = uuid? uuid: val.outlet.outlet_id+'-'+this.helper.moment().valueOf()+'-'+val.users.users_id;
 			  	this.get_outlet()
 				this.helper.local.set_params('uuid', this.uid)
 		  	});

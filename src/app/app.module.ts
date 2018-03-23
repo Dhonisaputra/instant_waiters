@@ -56,6 +56,7 @@ import { PrinterServiceProvider } from '../providers/printer-service/printer-ser
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { HTTP } from '@ionic-native/http';
+import { AiRemoteProvider } from '../providers/ai-remote/ai-remote';
 // import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 
 @NgModule({
@@ -149,7 +150,8 @@ import { HTTP } from '@ionic-native/http';
     PrinterServiceProvider,
     BluetoothSerial,
     UniqueDeviceID,
-    HTTP
+    HTTP,
+    AiRemoteProvider
   ]
 })
 export class AppModule {}
