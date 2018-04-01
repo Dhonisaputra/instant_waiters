@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Platform, LoadingController, AlertController, ToastController, ActionSheetController, Events, PopoverController} from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
@@ -43,6 +44,7 @@ export class HelperProvider {
     public platform: Platform,
     public printer: PrinterServiceProvider,
     public ajax: HTTP,
+    public localNotifications: LocalNotifications,
 
     ) {
     this.win = window;

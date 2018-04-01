@@ -15,7 +15,15 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-
+#menu-list button .label
+{
+  display: flex;
+  align-items:center;
+}
+#menu-list button .label img
+{
+  margin-right: 14px;
+}
 .sr-only
 {
 	display: none;
