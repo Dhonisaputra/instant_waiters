@@ -92,6 +92,12 @@ export class MyApp {
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.helper.events.subscribe('outlet.signout', () => {
+        // user and time are the same arguments passed in `events.publish(user, time)`
+        this.signOutOutlet();
+      });
+
       // this.users = this.helper.local.get_params(this.helper.config.variable.credential).users;
     });
   } 

@@ -6,6 +6,7 @@ import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { PrinterServiceProvider } from '../../providers/printer-service/printer-service';
 import { Storage } from '@ionic/storage';
 import { HTTP } from '@ionic-native/http';
+import { AiRemoteProvider } from '../../providers/ai-remote/ai-remote';
 
 import * as $ from "jquery"
 
@@ -43,6 +44,7 @@ export class HelperProvider {
     public platform: Platform,
     public printer: PrinterServiceProvider,
     public ajax: HTTP,
+    public airemote: AiRemoteProvider,
 
     ) {
     this.win = window;
