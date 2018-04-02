@@ -248,10 +248,26 @@ export class ProductPage
 		})
     }
 
-
+    get_categories()
+    {
+    	let url = this.helper.config.base_url('admin/outlet/product/categories');
+    	let data = {
+    		outlet_id: this.outlet
+    	}
+    	this.helper.$.post(url, data)
+    	.done((res) => {
+			res = !this.helper.isJSON(res)? res : JSON.parse(res);
+    		if(res.code == 200)
+    		{
+				let variable = this.helper.local.get_params(this.helper.config.variable.credential)
+				variable['type_product'] = res.data;
+				this.helper.local.set_params(this.helper.config.variable.credential, variable)
+    		}
+    	})
+    }
 	get_product(data:any)
 	{
-		
+		this.get_categories();
 		return this.productProvider.get_product(data)
 		.then((res) => {
 			res = !this.helper.isJSON(res)? res : JSON.parse(res);
@@ -271,7 +287,7 @@ export class ProductPage
 	refresh_data(refresher:any={})
 	{
 		let loader = this.loadingCtrl.create({
-	      content: "Please wait...",
+	      content: "Mengambil data. Silahkan tunggu",
 	    });
 	    loader.present();
 	    

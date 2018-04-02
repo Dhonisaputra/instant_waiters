@@ -55,6 +55,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
     ];
+
     // this.storage.set('outlet', 1)
     this.routeHistory = [];
     
@@ -75,6 +76,12 @@ export class MyApp {
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.helper.events.subscribe('outlet.signout', () => {
+        // user and time are the same arguments passed in `events.publish(user, time)`
+        this.signOutOutlet();
+      });
+
       // this.users = this.helper.local.get_params(this.helper.config.variable.credential).users;
     });
   } 
@@ -127,6 +134,7 @@ export class MyApp {
   signOutOutlet()
   {
     this.helper.local.reset_params('login_outlet_device');
+        this.helper.local.set_params('login_outlet_device', false)
     this.nav.setRoot(OutletListPage)
   }
 

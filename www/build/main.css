@@ -35218,6 +35218,55 @@ page-modal [cards] .card p {
   font-size: 1.5rem;
 }
 
+<<<<<<< HEAD
+=======
+.outlet-list ion-card {
+  position: relative;
+  text-align: center;
+  height: 180px;
+}
+
+.outlet-list .card-container {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.outlet-list .card-container .card-title {
+  top: 36%;
+  font-size: 2.0em;
+  width: 100%;
+  font-weight: bold;
+  color: #fff;
+}
+
+.outlet-list .card-container .card-subtitle {
+  font-size: 1.0em;
+  top: 52%;
+  width: 100%;
+  color: #fff;
+}
+
+>>>>>>> 55c40adcb98fa8457e8cb9822be12daee8d6bce7
 #payment-box {
   background-color: #eee;
 }

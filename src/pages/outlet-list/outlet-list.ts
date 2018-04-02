@@ -25,7 +25,16 @@ export class OutletListPage {
 	uid:any='';
 	outlets:any=[];
   constructor(private splashScreen : SplashScreen, public navCtrl: NavController, public navParams: NavParams, public device_id: UniqueDeviceID, private helper:HelperProvider, public platform: Platform) {
-  	this.helper.storage.get(this.helper.config.variable.credential)
+  	
+  this.helper.local.set_params('login_outlet_device', false)
+
+	this.helper.airemote.initialize({}, ()=>{
+    this.helper.airemote.subscribe('outlet_list.refresh', ()=>{
+      this.get_outlet();
+    })
+  })
+  
+  this.helper.storage.get(this.helper.config.variable.credential)
 	.then((val) => {
 		if(!this.platform.is('cordova'))
 		{
@@ -48,8 +57,10 @@ export class OutletListPage {
 		  	.then((uuid: any)=>{
 
 		  		this.uid = uuid? uuid: val.outlet.outlet_id+'-'+this.helper.moment().valueOf()+'-'+val.users.users_id;
+          this.helper.local.set_params('uuid', this.uid)
 			  	this.get_outlet()
-				this.helper.local.set_params('uuid', this.uid)
+          this.helper.airemote.socket_listener_general()
+
 		  	});
 		}
 	})
@@ -75,13 +86,25 @@ export class OutletListPage {
   		this.navCtrl.setRoot(LoginPage)
   		return false;
   	}
-	let users_id = this.helper.local.get_params(this.helper.config.variable.credential).users.users_id;
+
+  	let loading = this.helper.loadingCtrl.create({
+  		content: "Mengambil data outlet"
+  	})
+  	loading.present();
+
+	  let users_id = this.helper.local.get_params(this.helper.config.variable.credential).users.users_id;
   	let url = this.helper.config.base_url('admin/outlet/employee');
-  	return this.helper.$.post(url, {users_id:users_id, smartphone:true, uuid:this.uid})
-  	.then((res)=>{
+  	let ajax = this.helper.$.post(url, {users_id:users_id, smartphone:true, uuid:this.uid})
+  	.done((res)=>{
+  		loading.dismiss()
   		res = JSON.parse(res)
   		this.outlets = res
   	})
+  	.always(()=>{
+  		loading.dismiss()
+  	})
+
+    return ajax;
   }
 
   selectOutlet(item)
@@ -102,7 +125,7 @@ export class OutletListPage {
   		this.helper.alertCtrl.create({
   			title: "",
   			message: "Device anda belum terdaftar dalam outlet "+item.outlet_name+' pilih "Kirim permintaan akses" untuk mengirimkan permintaan akses kepada outlet.',
-  			buttons: [{
+  			buttons: ["Tutup", {
   				text: "Kirim permintaan akses",
   				handler: ()=>{
   					let loading = this.helper.loadingCtrl.create({
@@ -158,20 +181,28 @@ export class OutletListPage {
   						loading.dismiss();
   					})
   				}
-  			}, "Tutup"]
+  			}]
   		}).present();
   	}else
   	{
   		let data = this.helper.local.get_params(this.helper.config.variable.credential);
+  		data.outlet = Object.assign(data.outlet, item);
+  		data.data = Object.assign(data.data, item);
   		data.outlet_device = item;
   		data.outlet_device.uuid = this.uid;
-		this.helper.storage.set(this.helper.config.variable.credential, data);
-		this.helper.storage.get(this.helper.config.variable.settings)
-		.then( (resSettings)=>{
-			let default_page = resSettings && !resSettings.choose_table_first?  ProductPage : TablePage ;
-			this.navCtrl.setRoot(default_page);
-			this.helper.local.set_params('login_outlet_device', true)
-		})
+
+  		this.helper.storage.set(this.helper.config.variable.credential, data);
+  		this.helper.local.set_params(this.helper.config.variable.credential, data);
+  		this.helper.storage.get(this.helper.config.variable.settings)
+  		.then( (resSettings)=>{
+  			let default_page = resSettings && !resSettings.choose_table_first?  ProductPage : TablePage ;
+  			this.navCtrl.setRoot(default_page);
+  			this.helper.local.set_params('login_outlet_device', true)
+          this.helper.airemote.socket_listener()
+
+  			this.helper.airemote.send(item.outlet_id+'.notif.ring','',{toast: true, title:"Pemberitahuan perangkat terhubung", text: data.users.users_fullname+" tersambung kedalam sistem."}, function(){
+  			})
+  		})
 
   	}
   }

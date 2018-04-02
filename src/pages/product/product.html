@@ -51,12 +51,12 @@
 				<div class="box" id="box-product">
 					<div class="box-header">
 						<ion-row class="center-distributed">
-							<ion-col col-10 col-xs-10 col-sm-10 col-md-10 class="tab">
+							<ion-col col-10 col-xs-10 col-sm-10 col-md-10 class="tab" style="justify-content:unset; overflow-x: auto;">
 								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == 0}" col--33 color="main">
 									<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All 
 								</label>
-								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == item.type_id}" col--33 color="main" *ngFor="let item of helper.local.get_params(this.helper.config.variable.credential).type_product; let i = index;">
-									<input type="radio" class="sr-only" name="type_product" value="{{item.type_id}}" [(ngModel)]="filter_type_selected" (change)="refresh_data()"> {{item.type_name}}
+								<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == item.type}" col--33 color="main" *ngFor="let item of helper.local.get_params(helper.config.variable.credential).type_product; let i = index;" >
+									<input type="radio" class="sr-only" name="type_product" value="{{item.type}}" [(ngModel)]="filter_type_selected" (change)="refresh_data()"> {{item.alt_type_name}}
 								</label>
 								<!-- <label class="tab-item relative" col--33 [ngClass]="{'active': filter_type_selected == 2}" color="main">
 									<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman
