@@ -22,7 +22,7 @@
     <ion-list id="menu-list">
        <!-- <ion-item-divider>Menu</ion-item-divider> -->
        <button menuClose ion-item *ngIf="!helper.local.get_params('login_outlet_device')" (click)="setRoot(outletListPage)">
-        <span class=""><ion-icon ios="ios-log-in" md="md-log-in"></ion-icon> Pilih outlet</span>
+        <img src="../../assets/imgs/icons/outlet.png" style="width:25px; height: 25px;"> Pilih outlet 
       </button>
       <div *ngIf="helper.local.get_params('login_outlet_device')">
         <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> 
@@ -61,7 +61,7 @@
           <img src="../../assets/imgs/icons/about.png" style="width:25px; height: 25px;"> Tentang System
       </button>
       <button menuClose ion-item *ngIf="helper.local.get_params('login_outlet_device')" (click)="signOutOutlet()">
-        <img src="../../assets/imgs/icons/outlet.png" style="width:25px; height: 25px;"> keluar outlet
+        <img src="../../assets/imgs/icons/out.png" style="width:25px; height: 25px;"> keluar outlet
       </button>
       <button menuClose ion-item (click)="closeApp()">
         <img src="../../assets/imgs/icons/close.png" style="width:25px; height: 25px;"> Tutup Aplikasi
