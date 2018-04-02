@@ -99,7 +99,7 @@
 
 				  <ion-item style="height: 85px;">
 				    <ion-label stacked>Supplier</ion-label>
-				    <ion-input type="text" [(ngModel)]="spend.sp_supplier"></ion-input>
+				    <ion-input type="text" [(ngModel)]="spend.sp_supplier" style="margin-top: 9px;"></ion-input>
 				  </ion-item>
 
 				  
@@ -110,7 +110,7 @@
 					<div class="col-md-6 col-sm-12 col-xs-12">
 						<ion-item style="height: 85px;">
 						    <ion-label stacked>Tanggal pengadaan</ion-label>
-						    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_date"> </ion-datetime>
+						    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_date" style="padding-bottom: 22px;"> </ion-datetime>
 						</ion-item>
 						
 					</div>
@@ -118,7 +118,7 @@
 						
 						<ion-item style="height: 85px;">
 						    <ion-label stacked>Tanggal dibayarkan</ion-label>
-						    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_paid"> </ion-datetime>
+						    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_paid" style="padding-bottom: 22px;"> </ion-datetime>
 						</ion-item>
 						
 					</div>
@@ -138,18 +138,19 @@
 		<div class="row">
 	 		<div class="col-md-4">
 	 			
+				<ion-card>
  					
 		 			<ion-list>
-		 				<ion-item *ngIf="spend.sp_type && helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 1 && helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 2 ">
-		 					<ion-label stacked>Product</ion-label>
+		 				<ion-item *ngIf="spend.sp_type && helper.local.get_params(helper.config.variable.credential).data.serv_id != 1 && helper.local.get_params(helper.config.variable.credential).data.serv_id != 2 ">
+		 					<ion-label class="text-greensea" stacked>Product</ion-label>
 		 					<ion-select [(ngModel)]="spend_item_form.prod_id">
 		 						<ion-option selected>--Pilih Produk--</ion-option>
 		 						<ion-option *ngFor="let item of products; let i = index;" value="{{item.id}}">{{item.name}}</ion-option>
 		 					</ion-select >
 		 				</ion-item>
 
-		 				<ion-item *ngIf="spend.sp_type && (helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 2 )">
-		 					<ion-label stacked>Ingredient</ion-label>
+		 				<ion-item *ngIf="spend.sp_type && (helper.local.get_params(helper.config.variable.credential).data.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id == 2 )">
+		 					<ion-label class="text-greensea" stacked>Ingredient</ion-label>
 		 					<ion-select [(ngModel)]="spend_item_form.ingd_id">
 		 						<ion-option selected>--Pilih Produk--</ion-option>
 		 						<ion-option *ngFor="let item of ingredients; let i = index;" value="{{item.ingd_id}}">{{item.ingd_name}}</ion-option>
@@ -157,23 +158,23 @@
 		 				</ion-item>
 		 				
 		 				<ion-item *ngIf="spend.sp_type == 0">
-		 					<ion-label stacked>Deskripsi</ion-label>
-		 					<ion-textarea name="desc" type="text" [(ngModel)]="spend_item_form.sp_dt_desc" style="height: 100px;"></ion-textarea>
+		 					<ion-label class="text-greensea" stacked>Deskripsi</ion-label>
+		 					<ion-textarea name="desc" type="text" [(ngModel)]="spend_item_form.sp_dt_desc" style="height: 100px;" placeholder="Deskripsi tentang pengeluaran barang"></ion-textarea>
 		 				</ion-item>
 
 		 				<ion-item>
-		 					<ion-label stacked>Jumlah</ion-label>
-		 					<ion-input name="qty" type="number" [(ngModel)]="spend_item_form.sp_dt_qty" (input)="countTotal($event)"> </ion-input>
+		 					<ion-label class="text-greensea" stacked>Jumlah</ion-label>
+		 					<ion-input name="qty" type="number" [(ngModel)]="spend_item_form.sp_dt_qty" (input)="countTotal($event)" placeholder="Jumlah yang dikeluarkan"> </ion-input>
 		 				</ion-item>
 
 		 				<ion-item>
-		 					<ion-label stacked>Harga per-item</ion-label>
-		 					<ion-input type="number" [(ngModel)]="spend_item_form.sp_dt_price" (input)="countTotal($event)"> </ion-input>
+		 					<ion-label class="text-greensea" stacked>Harga per-item</ion-label>
+		 					<ion-input type="number" [(ngModel)]="spend_item_form.sp_dt_price" (input)="countTotal($event)" placeholder="Harga barang per-itemm"> </ion-input>
 		 				</ion-item>
 
 		 				<ion-item>
-		 					<ion-label stacked>Total</ion-label>
-		 					<ion-input name="total" type="text" [(ngModel)]="spend_item_form.sp_dt_total" disabled></ion-input>
+		 					<ion-label class="text-greensea" stacked>Total</ion-label>
+		 					<ion-input name="total" type="text" [(ngModel)]="spend_item_form.sp_dt_total" disabled placeholder="Total harga barang yang dikeluarkan"></ion-input>
 		 				</ion-item>
 
 		 				
@@ -184,21 +185,28 @@
 		 				</ion-item>
 
 		 				<ion-item>
-			 				<button ion-button  block type="button" color="main" (click)="SaveItem()" *ngIf="spend_item_form_state=='new'">
-			 					Tambahkan item 
-							</button>
-							<button ion-button  block type="button" color="main" (click)="UpdateItem()" *ngIf="spend_item_form_state=='edit'">
-			 					Perbarui data
-							</button>
-							<button ion-button block  type="reset" color="dark" (click)="ResetItem()">
-			 					Reset
-							</button>
+		 					<div class="row">
+		 						<div class="col-md-6 col-xs-6"> 
+					 				<button ion-button  block type="button" class="btn-round" color="greensea" (click)="SaveItem()" *ngIf="spend_item_form_state=='new'">
+					 					Tambahkan
+									</button>
+									<button ion-button  block type="button" class="btn-round" color="greensea" (click)="UpdateItem()" *ngIf="spend_item_form_state=='edit'">
+					 					Perbarui
+									</button>
+		 						</div>
+		 						<div class="col-md-6 col-xs-6"> 
+									<button ion-button block  type="reset" class="btn-round" color="danger" (click)="ResetItem()">
+					 					Reset
+									</button>
+		 						</div>
+		 					</div>
 		 				</ion-item>
 
 		 				<ion-item>
 		 				</ion-item>
 
 	 				</ion-list>
+				</ion-card>
 
 	 			
 	 		</div>

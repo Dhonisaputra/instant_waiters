@@ -76,6 +76,7 @@ export class MyApp {
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.helper.preload('audio', 'assets/audio/intuition.mp3');
 
       this.helper.events.subscribe('outlet.signout', () => {
         // user and time are the same arguments passed in `events.publish(user, time)`
@@ -93,6 +94,7 @@ export class MyApp {
   }
 
   setRoot(page, params:any={}) {
+    this.helper.play('audio');
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page, params);

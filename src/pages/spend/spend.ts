@@ -49,7 +49,7 @@ export class SpendPage {
     spend_item_form_index:number;
     view_state:any;
     constructor(public navCtrl: NavController, public navParams: NavParams, public helper:HelperProvider, public product:ProductProvider) {
-        this.is_restaurant = helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 2
+        this.is_restaurant = helper.local.get_params(helper.config.variable.credential).data.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id != 2
         this.state = 'list';
         this.spend = {
             sp_date: this.helper.moment().add(7,'hour').toISOString(),
@@ -57,7 +57,7 @@ export class SpendPage {
         }
         this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
 
-        if(helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 2)
+        if(helper.local.get_params(helper.config.variable.credential).data.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id == 2)
         {
             this.get_ingredient_data()
         }else
@@ -177,7 +177,6 @@ export class SpendPage {
         data.outlet_id= this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
         data.users_outlet_id = this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id;
         data.items = this.spend_item;
-
         let url:any;
         if(!this.spend.sp_id)
         {
@@ -187,6 +186,7 @@ export class SpendPage {
             url = this.helper.config.base_url('admin/outlet/spend/update');
         }
 
+        console.log(data)
         this.helper.$.ajax({
             url: url,
             type: 'POST',

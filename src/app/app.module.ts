@@ -8,6 +8,7 @@ import { SQLite } from '@ionic-native/sqlite';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -139,7 +140,7 @@ import { AiRemoteProvider } from '../providers/ai-remote/ai-remote';
     File,
     FileTransfer,
     ScreenOrientation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    NativeAudio,
     ReceiptDataProvider,
     ConfigProvider,
     ProductProvider,
@@ -151,7 +152,8 @@ import { AiRemoteProvider } from '../providers/ai-remote/ai-remote';
     BluetoothSerial,
     UniqueDeviceID,
     HTTP,
-    AiRemoteProvider
+    AiRemoteProvider,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
 export class AppModule {}

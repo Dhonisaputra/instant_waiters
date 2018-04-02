@@ -349,6 +349,7 @@ export class ProductPage
 	}
 	add_to_bill(item)
 	{
+    	this.helper.play('audio');
 		// check is this bill have been saved before.
 		item = Object.assign({},item)
 		

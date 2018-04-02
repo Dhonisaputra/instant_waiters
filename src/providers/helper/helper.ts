@@ -8,6 +8,7 @@ import { PrinterServiceProvider } from '../../providers/printer-service/printer-
 import { Storage } from '@ionic/storage';
 import { HTTP } from '@ionic-native/http';
 import { AiRemoteProvider } from '../../providers/ai-remote/ai-remote';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 import * as $ from "jquery"
 
@@ -31,6 +32,8 @@ export class HelperProvider {
   public users_outlet:any;
   public win: any;
   private defaultTimeout: Number = 100;
+  audioType: string = 'html5';
+  sounds: any = [];
   constructor(
     public http: HttpClient, 
     public config: ConfigProvider, 
@@ -45,21 +48,22 @@ export class HelperProvider {
     public platform: Platform,
     public printer: PrinterServiceProvider,
     public ajax: HTTP,
-<<<<<<< HEAD
     public localNotifications: LocalNotifications,
-=======
     public airemote: AiRemoteProvider,
->>>>>>> 55c40adcb98fa8457e8cb9822be12daee8d6bce7
+    public nativeAudio: NativeAudio,
 
     ) {
-    this.win = window;
-    
-    console.log('Hello HelperProvider Provider');
-    this.platform.ready().then(() => {
-      if (this.win.cordova && !this.win.DatecsPrinter) {
-        console.warn("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
+      this.win = window;
+      
+      console.log('Hello HelperProvider Provider');
+      this.platform.ready().then(() => {
+        if (this.win.cordova && !this.win.DatecsPrinter) {
+          console.warn("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
+        }
+      });
+      if(platform.is('cordova')){
+          this.audioType = 'native';
       }
-    });
   }
 
   /*
@@ -146,5 +150,56 @@ export class HelperProvider {
     }
     return initialName;
   }
+
+  // audio
+  preload(key, asset) {
+ 
+        if(this.audioType === 'html5'){
+ 
+            let audio = {
+                key: key,
+                asset: asset,
+                type: 'html5'
+            };
+ 
+            this.sounds.push(audio);
+ 
+        } else {
+ 
+            this.nativeAudio.preloadSimple(key, asset);
+ 
+            let audio = {
+                key: key,
+                asset: key,
+                type: 'native'
+            };
+ 
+            this.sounds.push(audio);
+        }      
+ 
+    }
+ 
+    play(key){
+ 
+        let audio = this.sounds.find((sound) => {
+            return sound.key === key;
+        });
+ 
+        if(audio.type === 'html5'){
+ 
+            let audioAsset = new Audio(audio.asset);
+            audioAsset.play();
+ 
+        } else {
+ 
+            this.nativeAudio.play(audio.asset).then((res) => {
+                console.log(res);
+            }, (err) => {
+                console.log(err);
+            });
+ 
+        }
+ 
+    }
 
 }

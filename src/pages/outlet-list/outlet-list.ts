@@ -109,6 +109,8 @@ export class OutletListPage {
 
   selectOutlet(item)
   {
+    this.helper.play('audio');
+    
     let pending_devices = item.pending_devices? item.pending_devices.split(',') : [];
     let active_devices = item.connected_devices? item.connected_devices.split(','): [];
   	if(pending_devices.indexOf(this.uid) >= 0)

@@ -14,19 +14,19 @@
 			<ion-searchbar *ngIf="searchinput" end (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" class="searchbar-toolbar" style="padding: 0px;width: 40%;"></ion-searchbar>
 			
 			<ion-buttons class="center distributed">
-				<button ion-button icon-only color="light" (click)="toggleSearchInput()">
+				<button ion-button icon-only color="light" (tap)="toggleSearchInput()">
 					<ion-icon name="search" *ngIf="!searchinput"></ion-icon>
 					<ion-icon name="close" *ngIf="searchinput"></ion-icon>
 				</button>
 			</ion-buttons>
 			<ion-buttons end>
-				<button ion-button (click)="openSavedBill()">
+				<button ion-button (tap)="openSavedBill()">
 					Nota tersimpan &nbsp; <ion-badge item-end color="light">{{unpaid_bill_length}}</ion-badge>
 				</button>
 			</ion-buttons>
 
 			<ion-buttons end>
-				<button ion-button clear icon-right color="light" (click)="tooltip_present($event)">
+				<button ion-button clear icon-right color="light" (tap)="tooltip_present($event)">
 				  <ion-icon name="more"></ion-icon>
 				</button>
 			</ion-buttons>
@@ -63,7 +63,7 @@
 								</label> -->
 							</ion-col>
 							<ion-col col-2 col-xs-2 col-sm-2 col-md-2>
-								<button ion-button clear icon-right color="main" (click)="product_sort()">
+								<button ion-button clear icon-right color="main" (tap)="product_sort()">
 								  Sort <ion-icon name="funnel"></ion-icon>
 								</button>
 							</ion-col>
@@ -72,7 +72,7 @@
 					<div *ngIf="!this.helper.local.get_params('pinned_product') || this.helper.local.get_params('pinned_product').length > 0" style="margin-bottom:10px;">
 						<strong style="font-size: .9em;margin-left: 5px;">Produk di Pin</strong>		
 						<ion-row class="box-body" id="">
-							<ion-col class="pinned_post col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of this.helper.local.get_params('pinned_product'); let i = index" (click)="add_to_bill(item)" (press)="pinnedProductOptions(item, index)">
+							<ion-col class="pinned_post col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of this.helper.local.get_params('pinned_product'); let i = index" (tap)="add_to_bill(item)" (press)="pinnedProductOptions(item, index)">
 								<div class="product-body">
 									<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
 										
@@ -90,7 +90,7 @@
 						<strong style="font-size: .9em;margin-left: 5px;" *ngIf="!this.helper.local.get_params('pinned_product') || this.helper.local.get_params('pinned_product').length > 0">Produk</strong>
 						<ion-row class="box-body" id="">
 
-							<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (click)="add_to_bill(item)" (press)="productOptions(item, index)">
+							<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (tap)="add_to_bill(item)" (press)="productOptions(item, index)">
 								<div class="product-body">
 									<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
 										
@@ -115,7 +115,7 @@
 								
 								<!-- <ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>
 								
-									<button ion-button block color="main" (click)="infinite_product()">Load More</button>
+									<button ion-button block color="main" (tap)="infinite_product()">Load More</button>
 								</ion-col> -->
 					<ion-infinite-scroll (ionInfinite)="infinite_product($event)">
 					   <ion-infinite-scroll-content></ion-infinite-scroll-content>
@@ -129,10 +129,10 @@
 	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30">
     <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>
     <ion-fab-list side="top" #fab>
-      <button ion-fab ion-fab-item color="main" (click)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>
-      <button ion-fab ion-fab-item color="main" (click)="pay_bill()"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow">Bayar Pesanan</span> </button>
-      <button ion-fab ion-fab-item color="main" (click)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>
-      <button ion-fab ion-fab-item color="main" (click)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>
+      <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>
+      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow">Bayar Pesanan</span> </button>
+      <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>
+      <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>
     </ion-fab-list>
   </ion-fab>
 

@@ -23,8 +23,7 @@
   	</ion-refresher>
 	<ion-row class="outlet-list">
         <ion-col col-4 *ngFor="let item of outlets; let i = index;" (click)="selectOutlet(item)">
-          <ion-card>
-      		<img src="{{helper.config.base_url()}}{{item.outlet_logo}}">
+          <ion-card [style.backgroundImage]="'url('+helper.config.base_url()+item.outlet_logo+')'" style="background-size:cover; background-position: center; ">
       		<div class="card-container">
 	          	<div class="card-title">{{item.outlet_name}}</div>
 	          	<div class="card-subtitle"><ion-icon ios="ios-contact" md="ios-contact"></ion-icon> <span>{{item.outlet_roles_name}}</span> </div>

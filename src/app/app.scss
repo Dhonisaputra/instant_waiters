@@ -1601,6 +1601,12 @@ a.text-danger:focus {
   color: #843534;
 }
 
+.text-greensea,
+.text-greensea:hover,
+.text-greensea:focus {
+  color: rgba(22,160,133,1) !important;
+}
+
 // Bootstrap button
 
 ion-page.modal {
@@ -1624,3 +1630,12 @@ ion-page.modal {
   {
     border-bottom: none !important;
   }
+
+button.btn-round,
+a.btn-round,
+{
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  height: 37px !important;
+  border-radius: 20px;
+}
