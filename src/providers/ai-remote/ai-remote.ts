@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Events, AlertController} from 'ionic-angular';
+import { Events, AlertController, ToastController} from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { ConfigProvider } from '../../providers/config/config';
@@ -19,12 +19,11 @@ export class AiRemoteProvider {
 	isInitialize:boolean=false;
   isListen:boolean=false;
 	isListenGeneral:boolean=false;
-  constructor(public http: HttpClient, public localNotifications: LocalNotifications, private alert: AlertController, private local: DbLocalProvider, private config: ConfigProvider, private events: Events) {
-  	console.log(io)
+  constructor(public http: HttpClient,public toast: ToastController, public localNotifications: LocalNotifications, private alert: AlertController, private local: DbLocalProvider, private config: ConfigProvider, private events: Events) {
   	this.options = this.default_params();
   }
 
-  initialize(params)
+  initialize(params, connect)
   {
   	if(!this.isInitialize)
   	{
@@ -33,6 +32,10 @@ export class AiRemoteProvider {
 	  	this.socket = this.io(this.options.url)
 	  	this.isInitialize = true;
 	  	this.socket.on('connect', ()=>{
+        if(typeof connect == 'function')
+        {
+          connect();
+        }
 	  	})
   	}
   }
@@ -78,6 +81,7 @@ export class AiRemoteProvider {
       this.subscribe('app.'+uuid+'.'+outlet_id+'.authority.revoke', ()=>{
         if(!isLogin)
         {
+          this.events.publish('outlet_list.refresh')
           return false;
         }
         this.alert.create({
@@ -93,7 +97,6 @@ export class AiRemoteProvider {
       })
 
       this.subscribe('app.'+uuid+'.authority.accepted', ()=>{
-        console.log('trigger', uuid, data, this.localNotifications)
         this.localNotifications.schedule({
           id: 1,
           text: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
@@ -116,17 +119,23 @@ export class AiRemoteProvider {
 	    let data = this.local.get_params(this.config.variable.credential).data;
 	    let uuid = this.local.get_params("uuid");
 
-      console.log(data, uuid)
       this.subscribe('app.'+uuid+'.authority.accepted', ()=>{
-        console.log('trigger', uuid, data, this.localNotifications)
-	    	this.localNotifications.schedule({
+        if(isLogin)
+        {
+          return false;
+        }
+        this.localNotifications.schedule({
           id: 1,
           text: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
           sound: 'file://assets/audio/notification.mp3',
           data: { secret: uuid }
         });
-        this.events.publish('outlet_list.refresh')
-	    })
+        this.toast.create({
+          message: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
+          duration: 2000
+        }).present();
+        
+      })
 
 	    this.isListenGeneral = true;
   	}

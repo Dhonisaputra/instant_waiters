@@ -26,13 +26,12 @@ export class OutletListPage {
 	outlets:any=[];
   constructor(private splashScreen : SplashScreen, public navCtrl: NavController, public navParams: NavParams, public device_id: UniqueDeviceID, private helper:HelperProvider, public platform: Platform) {
   	
-  this.helper.local.get_params('login_outlet_device', false)
+  this.helper.local.set_params('login_outlet_device', false)
 
 	this.helper.airemote.initialize({}, ()=>{
-  })
-
-  this.helper.events.subscribe('outlet_list.refresh', ()=>{
-    this.get_outlet();
+    this.helper.airemote.subscribe('outlet_list.refresh', ()=>{
+      this.get_outlet();
+    })
   })
   
   this.helper.storage.get(this.helper.config.variable.credential)
@@ -95,8 +94,8 @@ export class OutletListPage {
 
 	  let users_id = this.helper.local.get_params(this.helper.config.variable.credential).users.users_id;
   	let url = this.helper.config.base_url('admin/outlet/employee');
-  	return this.helper.$.post(url, {users_id:users_id, smartphone:true, uuid:this.uid})
-  	.then((res)=>{
+  	let ajax = this.helper.$.post(url, {users_id:users_id, smartphone:true, uuid:this.uid})
+  	.done((res)=>{
   		loading.dismiss()
   		res = JSON.parse(res)
   		this.outlets = res
@@ -104,6 +103,8 @@ export class OutletListPage {
   	.always(()=>{
   		loading.dismiss()
   	})
+
+    return ajax;
   }
 
   selectOutlet(item)
