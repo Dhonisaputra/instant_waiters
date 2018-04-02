@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { ConfigProvider } from '../../providers/config/config';
 import * as io from 'socket.io-client';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 /*
   Generated class for the AiRemoteProvider provider.
 
@@ -16,8 +17,9 @@ export class AiRemoteProvider {
 	options:any={}
 	socket:any;
 	isInitialize:boolean=false;
-	isListen:boolean=false;
-  constructor(public http: HttpClient, private alert: AlertController, private local: DbLocalProvider, private config: ConfigProvider, private events: Events) {
+  isListen:boolean=false;
+	isListenGeneral:boolean=false;
+  constructor(public http: HttpClient, public localNotifications: LocalNotifications, private alert: AlertController, private local: DbLocalProvider, private config: ConfigProvider, private events: Events) {
   	console.log(io)
   	this.options = this.default_params();
   }
@@ -64,24 +66,69 @@ export class AiRemoteProvider {
 
   socket_listener()
   {
-  	if(!this.isListen)
+    let isLogin = this.local.get_params('login_outlet_device')
+    
+    if(!this.isListen)
+    {
+
+      let outlet_id = this.local.get_params(this.config.variable.credential).data.outlet_id;
+      let data = this.local.get_params(this.config.variable.credential).data;
+      let uuid = this.local.get_params(this.config.variable.credential).outlet_device.uuid;
+      
+      this.subscribe('app.'+uuid+'.'+outlet_id+'.authority.revoke', ()=>{
+        if(!isLogin)
+        {
+          return false;
+        }
+        this.alert.create({
+          title: "Anda telah dikeluarkan oleh admin",
+          subTitle: "Hak akses Anda telah dicabut oleh admin dari outlet ini. Silahkan hubungi admin outlet anda untuk keterangan lebih lanjut!",
+          buttons: [{
+            text: "Tutup",
+            handler: ()=>{
+              this.events.publish('outlet.signout')
+            }
+          }]
+        }).present();
+      })
+
+      this.subscribe('app.'+uuid+'.authority.accepted', ()=>{
+        console.log('trigger', uuid, data, this.localNotifications)
+        this.localNotifications.schedule({
+          id: 1,
+          text: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
+          sound: 'file://assets/audio/notification.mp3',
+          data: { secret: uuid }
+        });
+      })
+
+      this.isListen = true;
+    }
+  }  
+
+  socket_listener_general()
+  {
+    let isLogin = this.local.get_params('login_outlet_device')
+    
+  	if(!this.isListenGeneral)
   	{
 
-	    let outlet = this.local.get_params(this.config.variable.credential).data.outlet_id;
-	    let uuid = this.local.get_params(this.config.variable.credential).outlet_device.uuid;
-	    this.subscribe('app.'+uuid+'.'+outlet+'.authority.revoke', ()=>{
-	    	this.alert.create({
-	    		title: "Anda telah dikeluarkan oleh admin",
-	    		subTitle: "Hak akses Anda telah dicabut oleh admin dari outlet ini. Silahkan hubungi admin outlet anda untuk keterangan lebih lanjut!",
-	    		buttons: [{
-	    			text: "Tutup",
-	    			handler: ()=>{
-				    	this.events.publish('outlet.signout')
-	    			}
-	    		}]
-	    	}).present();
+	    let data = this.local.get_params(this.config.variable.credential).data;
+	    let uuid = this.local.get_params("uuid");
+
+      console.log(data, uuid)
+      this.subscribe('app.'+uuid+'.authority.accepted', ()=>{
+        console.log('trigger', uuid, data, this.localNotifications)
+	    	this.localNotifications.schedule({
+          id: 1,
+          text: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
+          sound: 'file://assets/audio/notification.mp3',
+          data: { secret: uuid }
+        });
+        this.events.publish('outlet_list.refresh')
 	    })
-	    this.isListen = true;
+
+	    this.isListenGeneral = true;
   	}
   }
 }

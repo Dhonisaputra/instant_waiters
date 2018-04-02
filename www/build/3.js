@@ -1,1 +1,39 @@
-webpackJsonp([3],{523:function(a,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var t=n(0),_=(n(1),n(15),n(76)),r=function(){return function(){}}(),o=n(400),u=n(401),c=n(402),i=n(403),b=n(404),d=n(405),f=n(406),s=n(407),l=n(408),p=n(430),v=n(11),g=n(20),j=n(209),k=n(75);n.d(e,"TablePageModuleNgFactory",function(){return q});var q=t.W(r,[],function(a){return t._10([t._11(512,t.i,t.S,[[8,[o.a,u.a,c.a,i.a,b.a,d.a,f.a,s.a,l.a,p.a]],[3,t.i],t.s]),t._11(4608,v.k,v.j,[t.r,[2,v.s]]),t._11(4608,g.t,g.t,[]),t._11(4608,g.d,g.d,[]),t._11(512,v.b,v.b,[]),t._11(512,g.q,g.q,[]),t._11(512,g.e,g.e,[]),t._11(512,g.o,g.o,[]),t._11(512,j.a,j.a,[]),t._11(512,j.b,j.b,[]),t._11(512,r,r,[]),t._11(256,k.a,_.a,[])])})}});
+webpackJsonp([3],{
+
+/***/ 520:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TablePageModule", function() { return TablePageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__table__ = __webpack_require__(45);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var TablePageModule = (function () {
+    function TablePageModule() {
+    }
+    TablePageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__table__["a" /* TablePage */]),
+            ],
+        })
+    ], TablePageModule);
+    return TablePageModule;
+}());
+
+//# sourceMappingURL=table.module.js.map
+
+/***/ })
+
+});
+//# sourceMappingURL=3.js.map

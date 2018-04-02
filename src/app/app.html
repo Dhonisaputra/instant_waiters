@@ -19,48 +19,52 @@
         </p>
       </ion-item>
     </ion-list>
-    <ion-list>
+    <ion-list id="menu-list">
        <!-- <ion-item-divider>Menu</ion-item-divider> -->
        <button menuClose ion-item *ngIf="!helper.local.get_params('login_outlet_device')" (click)="setRoot(outletListPage)">
-        <span class=""><ion-icon ios="ios-log-in" md="md-log-in"></ion-icon> Pilih outlet</span>
+        <img src="assets/imgs/icons/outlet.png" style="width:25px; height: 25px;"> Pilih outlet 
       </button>
       <div *ngIf="helper.local.get_params('login_outlet_device')">
-        <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> <ion-icon ios="ios-cash" md="md-cash"></ion-icon> Kasir </button>
-        <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> <ion-icon ios="ios-cash" md="md-cash"></ion-icon> Kasir </button>
+        <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> 
+          <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir 
+        </button>
+        <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> 
+          <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir 
+        </button>
         <button menuClose ion-item (click)="setRoot(stocksPage)">
-          <ion-icon ios="ios-cube" md="md-cube"></ion-icon> Stok
+          <img src="assets/imgs/icons/product.png" style="width:25px; height: 25px;"> Stok
         </button>
         <button menuClose ion-item (click)="setRoot(transactionPage)">
-          <ion-icon ios="ios-trending-up" md="md-trending-up"></ion-icon> Transaksi
+          <img src="assets/imgs/icons/transaction.png" style="width:25px; height: 25px;"> Transaksi
         </button>
         <button menuClose ion-item (click)="setRoot(memberPage)">
-          <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon> Member
+          <img src="assets/imgs/icons/member.png" style="width:25px; height: 25px;"> Member
         </button>
         <button menuClose ion-item (click)="setRoot(modalPage)">
-          <ion-icon ios="logo-usd" md="logo-usd"></ion-icon> Modal
+          <img src="assets/imgs/icons/modal.png" style="width:25px; height: 25px;"> Modal
         </button>
         <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:0})">
-          <ion-icon ios="ios-cube" md="md-cube"></ion-icon> Pengeluaran
+          <img src="assets/imgs/icons/stock_out.png" style="width:25px; height: 25px;"> Pengeluaran
         </button>
         <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:1})">
-          <ion-icon ios="ios-cube" md="md-cube"></ion-icon> Pengadaan
+          <img src="assets/imgs/icons/stock_in.png" style="width:25px; height: 25px;"> Pengadaan
         </button>
         <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && helper.local.get_params(helper.config.variable.settings).debt_mode">
-          <ion-icon ios="ios-list-box" md="md-list-box"></ion-icon> Hutang
+          <img src="assets/imgs/icons/debt.png" style="width:25px; height: 25px;"> Hutang
         </button>
         <button menuClose ion-item (click)="setRoot(settingsPage)">
-          <ion-icon ios="ios-construct" md="md-construct"></ion-icon> Settings
+          <img src="assets/imgs/icons/settings.png" style="width:25px; height: 25px;"> Settings
         </button>
       </div>
 
       <button menuClose ion-item (click)="setRoot(aboutPage)">
-          <ion-icon ios="ios-help" md="md-help"></ion-icon> Tentang System
+          <img src="assets/imgs/icons/about.png" style="width:25px; height: 25px;"> Tentang System
       </button>
       <button menuClose ion-item *ngIf="helper.local.get_params('login_outlet_device')" (click)="signOutOutlet()">
-        <span class="text-danger"><ion-icon ios="ios-exit" md="md-exit"></ion-icon> keluar outlet</span>
+        <img src="assets/imgs/icons/out.png" style="width:25px; height: 25px;"> keluar outlet
       </button>
       <button menuClose ion-item (click)="closeApp()">
-        <span class="text-danger"><ion-icon ios="ios-close-circle" md="md-close-circle"></ion-icon> Tutup Aplikasi</span>
+        <img src="assets/imgs/icons/close.png" style="width:25px; height: 25px;"> Tutup Aplikasi
       </button>
       <!-- <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="{'sr-only': !helper.local.get_params(helper.config.variable.settings)[p.options.setting_name]}" >
         {{p.title}}
