@@ -1,15 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<<<<<<< HEAD
 <widget id="id.co.folarpos.instant.cashier.dev" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Folarpos_instant</name>
     <description>Folarpos Instant</description>
     <author email="dhoni.p.saputra@gmail.com" href="http://ionicframework.com/">Folarpos Developer Team</author>
-=======
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>folarium_cashier</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
->>>>>>> 81cf7e01b64760509f378d307e428fdac4f321e3
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -26,11 +19,8 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
-<<<<<<< HEAD
     <preference name="Fullscreen" value="true" />
     <preference name="loadUrlTimeoutValue" value="700000" />
-=======
->>>>>>> 81cf7e01b64760509f378d307e428fdac4f321e3
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -88,7 +78,6 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
-<<<<<<< HEAD
     <allow-navigation href="*" />
     <plugin name="cordova-sqlite-storage" spec="^2.2.1" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
@@ -106,13 +95,8 @@
     <allow-navigation href="http://192.168.1.38:8100" />
     <plugin name="cordova-plugin-uniquedeviceid" spec="^1.3.2" />
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.0" />
+    <allow-navigation href="http://192.168.100.31:8100" />
+    <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
     <engine name="browser" spec="~5.0.3" />
     <engine name="android" spec="~6.3.0" />
-=======
-    <plugin name="cordova-plugin-whitelist" spec="1.3.1" />
-    <plugin name="cordova-plugin-device" spec="1.1.4" />
-    <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.11" />
-    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
->>>>>>> 81cf7e01b64760509f378d307e428fdac4f321e3
 </widget>

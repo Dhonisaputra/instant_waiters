@@ -1,0 +1,44 @@
+<!--
+  Generated template for the PrintBluetoothPanelPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-toolbar color="main">
+		
+		<ion-navbar>
+			<ion-title *ngIf="state == 'index'">Printer</ion-title>
+			<ion-title *ngIf="state == 'search_print'">Cari Printer</ion-title>
+		
+			<ion-buttons end>
+				<button ion-button clear icon-left color="light" (click)="check_unpaired_device()">
+				  <ion-icon name="print"></ion-icon> Cari printer
+				</button>
+			</ion-buttons>
+
+		</ion-navbar>
+	</ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list>
+	  	<button ion-item *ngIf="default_printer && default_printer.aliasName">
+			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>
+	    	{{ default_printer.aliasName }}
+	    	<span class="badge pull-right">default</span>
+	  	</button>  
+		<div class="text-align--center" *ngIf="!default_printer && !default_printer.aliasName">Tidak ditemukan printer default</div>
+	
+		<div class="text-align--center" *ngIf="search_print && printer_unconnected.length < 1">Tidak ada printer ditemukan</div>
+	  	<ion-item-divider color="light" *ngIf="search_print && printer_unconnected.length > 0"> {{printer_unconnected.length}} perangkat ditemukan </ion-item-divider>
+	  	<div *ngFor="let item of printer_unconnected">
+		  	<button ion-item *ngIf="item.address != default_printer.address" (click)="itemSelected(item)">
+				<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>
+		    	{{ item.aliasName }}
+		  	</button>  
+	  	</div>
+	</ion-list>
+</ion-content>

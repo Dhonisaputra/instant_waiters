@@ -1,0 +1,29 @@
+<!--
+  Generated template for the SendReceiptPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-toolbar color="main">
+	  <ion-navbar>
+	    <ion-title>Send Receipt</ion-title>
+	  </ion-navbar>
+	</ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+	<div class="sendreceipt-box">
+		<div class="" style="margin-bottom: 35px;">Bagaimana anda menyerahkan struk ini kepada pelanggan?</div>
+		<div style="width: 60%">
+			<div style="display: flex;" class="btn-action">
+				<input type="email" name="" class="input-send-email-inline" placeholder="Email pelanggan" [(ngModel)]="email">
+				<button class="flat btn-send-email-inline" ion-button color="secondary" (click)="sendReceiptToEmail()"> Kirim </button>
+			</div>
+			<button class="btn-action" ion-button block color="secondary" (click)="printReceipt()">Cetak Struk ini</button>
+			<button class="btn-action" ion-button block color="secondary" (click)="sendAndPrint()">Cetak dan Email struk ini</button>
+			<button class="btn-action" ion-button block color="danger" (click)="backToCashier()">Kembali ke cashier.</button>
+		</div>
+	</div>
+</ion-content>

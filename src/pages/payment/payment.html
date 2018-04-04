@@ -1,0 +1,236 @@
+<!--
+  Generated template for the PaymentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-toolbar color="main">
+	  <ion-navbar>
+	    <button ion-button menuToggle *ngIf="state == 'payment'">
+	      <ion-icon name="menu"></ion-icon>
+	    </button>
+	    <ion-title>Pembayaran</ion-title>
+	    <ion-buttons class="center distributed">
+			<button ion-button clear icon-right color="light" *ngIf="state == 'payment'" (click)="payBill()">
+			  Bayar pesanan
+			</button>
+		</ion-buttons>
+	  </ion-navbar>
+	</ion-toolbar>
+</ion-header>
+
+
+<ion-content id="payment-box" >
+
+	<ion-grid *ngIf="state == 'payment'">
+		<ion-row class="relative">
+			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">
+				<div class="receipt-product">
+					<page-receipt></page-receipt> 
+				</div>
+			</div>
+
+			<ion-col col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">
+				<div class="payment-method ">
+						
+					<ion-row padding class="center-distributed">
+						<ion-col col-7 col-xs-12 col-sm-12 col-md-8 class="tab">
+							<label class="tab-item relative" [ngClass]="{'active': payment_method == 1}" col--33>
+								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="1" (change)="resetBillCounted()"> Tunai
+							</label>
+							<label class="tab-item relative" [ngClass]="{'active': payment_method == 2}" col--33>
+								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="2" (change)="resetBillCounted()"> kartu
+							</label>
+							<label class="tab-item relative" [ngClass]="{'active': payment_method == 3}" col--33>
+								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="3" (change)="resetBillCounted()"> Campuran
+							</label>
+						</ion-col>
+					</ion-row>
+					
+						
+					<ion-row class="center" *ngIf="payment_method == 1">
+						<ion-col col-12 col-xs-12 col-sm-12 col-md-4>
+							<input type="text" class="form-control--lg" id="paid" name="" [(ngModel)]="bill.payment_nominal" (input)="sumReturn(true)" placeholder="Uang dibayarkan">				
+						</ion-col>
+						<ion-col col-12 col-xs-12 col-sm-12 col-md-4>
+							<input type="text" class="form-control--lg" disabled name="" [(ngModel)]="bill.payment_rest" value="0" placeholder="Kembalian">				
+						</ion-col>
+					</ion-row>
+
+					<ion-row class="center">
+						<ion-col col-12 col-xs-12 col-sm-12 col-md-12 *ngIf="payment_method == 1">
+							<div class="row center" style="margin-bottom: 10px;">
+								<div class="col-xs-7">
+									  <ion-segment color="main">
+									    <ion-segment-button color="main" value="numpad" [ngClass]="{'segment-activated':numpad_type == 'numpad'}" (click)="numpad_type = 'numpad' ">
+									      Manual
+									    </ion-segment-button>
+									    <ion-segment-button color="main" value="suggest" [ngClass]="{'segment-activated':numpad_type == 'suggest'}" (click)="numpad_type = 'suggest' ">
+									      Suggest bayar
+									    </ion-segment-button>
+									  </ion-segment>
+								</div>
+							</div>
+
+							<div>
+								<div class="row center" *ngIf="numpad_type == 'numpad'">
+									<div id="container" class="center">
+									    <div class="numpad">
+									    	<div class="numpad-col numpad-number">
+												<div class="numpad-key bg-main" color="main" value="1" (click)="calculate($event, 'numeric', '1')" rel="1">1</div>
+												<div class="numpad-key bg-main" color="main" value="2" (click)="calculate($event, 'numeric', '2')" rel="2">2</div>
+												<div class="numpad-key bg-main" color="main" value="3" (click)="calculate($event, 'numeric', '3')" rel="3">3</div>
+									    		<div class="numpad-key bg-main" color="main" value="4" (click)="calculate($event, 'numeric', '4')" rel="4">4</div>
+											    <div class="numpad-key bg-main" color="main" value="5" (click)="calculate($event, 'numeric', '5')" rel="5">5</div>
+											    <div class="numpad-key bg-main" color="main" value="6" (click)="calculate($event, 'numeric', '6')" rel="6">6</div>
+											    <div class="numpad-key bg-main" color="main" value="7" (click)="calculate($event, 'numeric', '7')" rel="7">7</div>
+												<div class="numpad-key bg-main" color="main" value="8" (click)="calculate($event, 'numeric', '8')" rel="8">8</div>
+												<div class="numpad-key bg-main" color="main" value="9" (click)="calculate($event, 'numeric', '9')" rel="9">9</div>
+												<div class="numpad-key bg-main" color="main" value="," (click)="calculate($event, 'numeric', ',')" rel=",">,</div>
+												<div class="numpad-key bg-main" color="main" value="0" (click)="calculate($event, 'numeric', '0')" rel="0">0</div>
+									      		<div class="numpad-key bg-main" color="main" value="C" (click)="calculate($event, 'action', 'clear')" rel="0">C</div>
+									    	</div>
+									    	<div class="numpad-col numpad-action">
+										      <div class="numpad-key bg-main" color="main" value="rm" (click)="calculate($event, 'action', 'rm')" rel="rm" style="font-size: 1.7em;"> <ion-icon name="backspace"></ion-icon> </div>
+										      <div class="numpad-key bg-main" color="main" value="pas" (click)="calculate($event, 'action', 'pas')" rel="pas" style="font-size: 1.3em;"> uang Pas </div>
+										      <div class="numpad-key bg-main" color="main" value="simpan" (click)="calculate($event, 'action', 'simpan')" rel="pas" style="font-size: 1.3em; flex-grow: 1;"> Bayar </div>
+										      
+									    		
+									    	</div>
+									      
+									    </div>
+									</div>
+								</div>
+									
+								<div class="row center" *ngIf="numpad_type == 'suggest'">
+									<div class="col-md-8">
+										
+										<div class="center" style="flex-wrap: wrap;">
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '10000')"> 10.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '20000')"> 20.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '30000')"> 30.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '50000')"> 50.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '70000')"> 70.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '100000')"> 100.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '150000')"> 150.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '200000')"> 200.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'value', '500000')"> 500.000</button>
+										</div>
+										<div class="center" style="flex-wrap: wrap;">
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'substract', '10000')"> -10.000</button>
+											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, 'sum', '10000')"> +10.000</button>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</ion-col>
+						<ion-col col-8 col-xs-12 col-sm-12 col-md-8 *ngIf="payment_method == 3">
+							
+						
+							<ion-row class="row form-group">
+								<ion-col col-3 class="">Total Belanja</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.payment_total">
+								</ion-col>
+							</ion-row>
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Tunai</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.payment_nominal" (input)="sumReturn()">
+								</ion-col>
+							</ion-row>
+
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Kartu (Masuk ke)</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<input type="text" class="form-control--lg" name="" >
+									<span class="input-group-addon" id="basic-addon1"> Edit </span>
+								</ion-col>
+							</ion-row>
+							
+							<ion-row class="row form-group">
+								<ion-col col-3 class="">Charge</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.payment_bank_charge_percent" (input)="countChargePercent($event)">
+									<span class="input-group-addon" id="basic-addon1"> % </span>
+									<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.payment_bank_charge_nominal" (input)="countChargeNominal()">
+								</ion-col>
+							</ion-row>
+							
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Kartu</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="text" class="form-control--lg" name="" readonly [(ngModel)]="bill.paid_with_bank_nominal">
+								</ion-col>
+							</ion-row>
+							
+
+							<ion-row class="row form-group center">
+									<button ion-button block end color="main" (click)="payBill()">Bayar</button>
+
+							</ion-row>
+						
+						</ion-col>
+
+						<ion-col col-8 col-xs-12 col-sm-12 col-md-8 *ngIf="payment_method == 2">
+							<ion-row class="row form-group">
+								<ion-col col-3 class="">Total Belanja</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<span class="input-group-addon" id="basic-addon1">@</span>
+									<input type="text" class="form-control form-control--lg" name="" [(ngModel)]="bill.payment_total">
+								</ion-col>
+							</ion-row>
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Masuk ke</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<input type="text" class="form-control--lg" name="" >
+									<span class="input-group-addon" id="basic-addon1"> Edit </span>
+								</ion-col>
+							</ion-row>
+							
+							<ion-row class="row form-group">
+								<ion-col col-3 class="">Charge</ion-col>
+								<ion-col col-9 class=" input-box input-group">
+									<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.payment_bank_charge_percent" (input)="countChargePercent($event)">
+									<span class="input-group-addon" id="basic-addon1"> % </span>
+									<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.payment_bank_charge_nominal" (input)="countChargeNominal()">
+								</ion-col>
+							</ion-row>
+
+							<ion-row class="form-group">
+								<ion-col col-3 class="">Total</ion-col>
+								<ion-col col-9 class=" input-box">
+									<input type="text" readonly class="form-control--lg" name="" [(ngModel)]="bill.paid_with_bank_nominal">
+								</ion-col>
+							</ion-row>
+
+							<ion-row class="row form-group center">
+									<button ion-button block end color="main" (click)="payBill()">Bayar</button>
+
+							</ion-row>
+						</ion-col>
+
+					</ion-row>
+
+				
+				</div> <!--  End of payment method -->
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<div class="r" *ngIf="state == 'afterPayment'">
+		<div class="text-align--center">
+			<ion-icon ios="ios-print" md="ios-print" color="main" style="font-size: 10.5em;"></ion-icon>
+		</div>
+		<div class="text-align--center row" style="margin-top: 25px; ">
+				
+			<div class="text-align--center col-xs-7" style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; margin:auto;">
+				<button ion-button block color="main" (click)="print_nota()">Cetak nota</button>
+				<button ion-button block color="secondary" (click)="email_panel()">Kirimkan nota ke email</button>
+				<button ion-button block (click)="back_to_cashier()">Kembali ke kasir</button>
+			</div>
+
+		</div>
+	</div>
+</ion-content>

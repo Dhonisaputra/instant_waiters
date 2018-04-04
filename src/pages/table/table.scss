@@ -1,0 +1,49 @@
+page-table {
+
+}
+	.table-box
+	{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+
+	}
+		.table-item
+		{
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 15px;
+			margin-left: 10px;
+			border: 1px solid #c0392b;
+			margin-right: 7px;
+			color: #c0392b;
+			text-align: center;
+		}
+		.table-item:before
+		{
+			content: "";
+			padding-top: 100%;
+			position: relative;
+		}
+		.table-item.selected
+		{
+			background-color: #c0392b;
+			border-color: #c0392b;
+			color: white;
+
+		}
+
+.table-square
+{
+	border-radius: 0px !important;
+}
+
+.table-rectangle
+{
+	border-radius: 0px !important;
+	width: 150px;
+}
