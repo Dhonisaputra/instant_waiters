@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "folarpos_instant",
+=======
+  "name": "folarium_cashier",
+>>>>>>> 81cf7e01b64760509f378d307e428fdac4f321e3
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
@@ -12,15 +16,23 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@angular/animations": "~5.0.3",
     "@angular/common": "~5.0.3",
     "@angular/compiler": "~5.0.3",
     "@angular/compiler-cli": "~5.0.3",
     "@angular/core": "~5.0.3",
+=======
+    "@angular/common": "5.0.3",
+    "@angular/compiler": "5.0.3",
+    "@angular/compiler-cli": "5.0.3",
+    "@angular/core": "5.0.3",
+>>>>>>> 81cf7e01b64760509f378d307e428fdac4f321e3
     "@angular/forms": "5.0.3",
     "@angular/http": "5.0.3",
     "@angular/platform-browser": "5.0.3",
     "@angular/platform-browser-dynamic": "5.0.3",
+<<<<<<< HEAD
     "@ionic-native/bluetooth-serial": "^4.5.3",
     "@ionic-native/core": "4.4.0",
     "@ionic-native/device": "^4.5.3",
@@ -62,6 +74,14 @@
     "ionicons": "3.0.0",
     "jquery": "^3.3.1",
     "moment": "^2.20.1",
+=======
+    "@ionic-native/core": "4.4.0",
+    "@ionic-native/splash-screen": "4.4.0",
+    "@ionic-native/status-bar": "4.4.0",
+    "@ionic/storage": "2.1.3",
+    "ionic-angular": "3.9.2",
+    "ionicons": "3.0.0",
+>>>>>>> 81cf7e01b64760509f378d307e428fdac4f321e3
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
@@ -70,6 +90,7 @@
     "@ionic/app-scripts": "3.1.8",
     "typescript": "2.4.2"
   },
+<<<<<<< HEAD
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
@@ -96,3 +117,7 @@
     ]
   }
 }
+=======
+  "description": "An Ionic project"
+}
+>>>>>>> 81cf7e01b64760509f378d307e428fdac4f321e3
