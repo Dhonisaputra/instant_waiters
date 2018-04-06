@@ -140,4 +140,10 @@ export class MyApp {
     this.nav.setRoot(OutletListPage)
   }
 
+  filteringTypeCategories(item)
+  {
+    let selectedType = this.helper.$('.typeCategories:checked').serializeArray().map((res)=>{return res.value});
+    this.helper.events.publish('product:filter-type', { item: selectedType })
+  }
+
 }

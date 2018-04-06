@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" side="left" id="menu1">
     <ion-header color="main">
       <ion-toolbar color="main">
           <ion-title>Menu</ion-title>
@@ -77,6 +77,29 @@
 
 </ion-menu>
 
+
+
+<ion-menu [content]="content" side="right" id="menu2" enabled="false">
+  <ion-content>
+    <div class=" fluid content center distributed" *ngIf="!helper.local.get_params('activeCategoriesProduct') || helper.local.get_params('activeCategoriesProduct').categories_children.length < 1">
+      <span class="text-center"><ion-icon class="text-warning" ios="ios-warning" md="md-warning" style="font-size: 3em;"></ion-icon><br>Tidak ada data kategori<br>untuk ditampilkan</span>
+    </div>
+    <ion-list *ngIf="helper.local.get_params('activeCategoriesProduct')">
+      <ion-item *ngFor="let item of helper.local.get_params('activeCategoriesProduct').categories_children">
+        
+        <!-- <ion-label> {{item.type_name}} </ion-label>
+        <ion-checkbox color="dark" checked="true"></ion-checkbox> -->
+        
+        <label class="control control--checkbox"> 
+          {{item.type_name}} 
+          <input type="checkbox" checked="checked" name="typeCategories" class="typeCategories" value="{{item.type_id}}" (change)="filteringTypeCategories(item)">
+          <div class="control__indicator"></div>
+        </label>
+
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

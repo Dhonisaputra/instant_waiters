@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, IonicPage, NavController, NavParams, Events , ModalController, LoadingController, AlertController, ActionSheetController, FabContainer, PopoverController  } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams, MenuController, Events , ModalController, LoadingController, AlertController, ActionSheetController, FabContainer, PopoverController  } from 'ionic-angular';
 import { ReceiptPage } from '../receipt/receipt';
 import { PaymentPage } from '../payment/payment';
 import { TransactionPage } from '../transaction/transaction';
@@ -13,6 +13,7 @@ import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { HelperProvider } from '../../providers/helper/helper'; 
 
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import {BillSavedPage} from '../bill-saved/bill-saved';
 // import {KeysPipe} from '../../pipes/keys/keys';
@@ -42,6 +43,7 @@ export class ProductPage
 	filter_type_selected: number = 0;
 	filter_product_name: string = '';
 	filter_sort_product: string = '';
+	filter_category_product: any = false;
 	page_params:any={
 		use_temporary_data:false,
 		product_width: {
@@ -69,7 +71,9 @@ export class ProductPage
 		private loadingCtrl		 	: LoadingController, 
 		private alertCtrl			: AlertController,
 		private actionSheetCtrl		: ActionSheetController,
-		private popoverController 	: PopoverController
+		private popoverController 	: PopoverController,
+		private screenOrientation 	: ScreenOrientation,
+		private menuController 		: MenuController
 	) {
 		
 
@@ -152,7 +156,7 @@ export class ProductPage
 	ionViewDidLoad() {
 
 		this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
-	
+		
 		this.refresh_data({});
 		this.billProvider.count_pricing();
 		this.get_unpaid_bill();
@@ -168,9 +172,33 @@ export class ProductPage
         this.page_params = Object.assign(this.page_params, data)
     }
 
+	ionViewWillLeave()
+	{
+		this.menuController.enable(false, 'menu2')
+		this.helper.events.unsubscribe('product:filter-type')
+		if(this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3)
+    	{
+	        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
+	        .catch(()=>{
+        	})
+    	}
+	}
 	ionViewWillEnter()
     {
-    	
+    	if(this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3)
+    	{
+	        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+	        .catch(()=>{
+        	})
+    	}
+
+		this.get_categories();
+    	this.helper.events.subscribe('product:filter-type', (res)=>{
+    		this.filter_category_product = res.item;
+    		this.refresh_data()
+    	})
+
+    	this.menuController.enable(true, 'menu2')
     	var index;
 		this.billProvider.pull_data_bill()
 		.then( ()=>{
@@ -267,7 +295,6 @@ export class ProductPage
     }
 	get_product(data:any)
 	{
-		this.get_categories();
 		return this.productProvider.get_product(data)
 		.then((res) => {
 			res = !this.helper.isJSON(res)? res : JSON.parse(res);
@@ -286,6 +313,8 @@ export class ProductPage
 
 	refresh_data(refresher:any={})
 	{
+		let variable = this.helper.local.get_params(this.helper.config.variable.credential);
+		
 		let loader = this.loadingCtrl.create({
 	      content: "Mengambil data. Silahkan tunggu",
 	    });
@@ -297,8 +326,23 @@ export class ProductPage
 			data.order_by = this.filter_sort_product;
 		}
 
+		if(this.filter_category_product)
+		{
+			data.in = [['category_id', this.filter_category_product]];
+		}
+
 		if(this.filter_type_selected > 0)
 		{	
+
+			let type_product = variable['type_product'];
+			let indexTypeProduct = type_product.map((res)=>{
+				return res.type;
+			}).indexOf(this.filter_type_selected);
+
+			let activeCategoriesProduct = type_product[indexTypeProduct];
+			
+			this.helper.local.set_params("activeCategoriesProduct", activeCategoriesProduct);
+
 			data.where = data.where? data.where : {}
 			data.where.type = this.filter_type_selected;
 		}else
