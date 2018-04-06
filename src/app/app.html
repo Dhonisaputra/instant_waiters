@@ -20,8 +20,8 @@
       </ion-item>
     </ion-list>
     <ion-list id="menu-list">
-       <!-- <ion-item-divider>Menu</ion-item-divider> -->
-       <button menuClose ion-item *ngIf="!helper.local.get_params('login_outlet_device')" (click)="setRoot(outletListPage)">
+      <!-- <ion-item-divider>Menu</ion-item-divider> -->
+      <button menuClose ion-item *ngIf="!helper.local.get_params('login_outlet_device')" (click)="setRoot(outletListPage)">
         <img src="assets/imgs/icons/outlet.png" style="width:25px; height: 25px;"> Pilih outlet 
       </button>
       <div *ngIf="helper.local.get_params('login_outlet_device')">
@@ -76,6 +76,7 @@
   </ion-content>
 
 </ion-menu>
+
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
