@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController, AlertController  }
 import { BillProvider } from '../../providers/bill/bill';
 import { ReceiptPage } from '../receipt/receipt';
 import { ProductPage } from '../product/product';
+import { HelperProvider } from '../../providers/helper/helper'; 
 import * as $ from "jquery"
 
 /**
@@ -20,8 +21,11 @@ import * as $ from "jquery"
 export class EditReceiptItemPage {
 
   item: any;
+  itemTemp:any;
+  isChange:boolean=false;
+  isUpdated:boolean=false;
 
-  constructor( public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public billProvider:BillProvider, private alertCtrl: AlertController) {
+  constructor( public helper : HelperProvider, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public billProvider:BillProvider, private alertCtrl: AlertController) {
     this.item = {}
     
   }
@@ -36,16 +40,44 @@ export class EditReceiptItemPage {
     // this.billProvider.update_data_bill()
     console.log(this.navParams.data.index)
     let item = this.billProvider.get_order(this.navParams.data.index);
+
     this.item = item?item:{}
+    this.itemTemp = Object.assign({}, this.item);
+
   }
 
   closeModal()
   {
-  	this.viewCtrl.dismiss();
+      this.helper.play('audio');
+    if(this.isChange)
+    {
+      this.helper.alertCtrl.create({
+        title: "Anda telah mengubah data, apakah anda ingin keluar?",
+        subTitle: "Data anda tidak akan tersimpan.",
+        buttons: [{
+          text: "Keluar",
+          handler: ()=>{
+            this.isChange=false;
+            this.cancelUpdate();
+  	        this.viewCtrl.dismiss();
+          },
+        }, "Batal"]
+      }).present();
+    }
+  }
+  cancelUpdate()
+  {
+      this.helper.play('audio');
+    console.log(this.itemTemp)
+    this.billProvider.set_order(this.navParams.data.index, this.itemTemp);
+    this.billProvider.update_bill()
+    this.billProvider.count_pricing()
+    this.viewCtrl.dismiss();
   }
 
   countChargeNominal(el:any={})
   {
+    this.isChange = true;
     let product_price = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
     let qty = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
 
@@ -62,13 +94,14 @@ export class EditReceiptItemPage {
     
     this.item.totalWithCharge = this.billProvider.helper.intToIDR( price + chargeNominal );
     this.item.discount_nominal = this.billProvider.helper.intToIDR( chargeNominal )
-    this.billProvider.update_order_item(this.item.index, 'discount_nominal', chargeNominal)
+    // this.billProvider.update_order_item(this.item.index, 'discount_nominal', chargeNominal)
 
-    this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-chargeNominal)
+    // this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-chargeNominal)
   }
 
   countChargePercent(el:any={})
   {
+    this.isChange = true;
     let product_price = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
     let qty = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
     let val = this.billProvider.helper.IDRtoInt( this.item.discount_nominal )
@@ -85,26 +118,30 @@ export class EditReceiptItemPage {
 
     this.item.discount_percent = ((val/price)*100).toFixed(1); // to make 1 digit after comma
     this.item.totalWithCharge = this.billProvider.helper.intToIDR( price + val );
-    this.billProvider.update_order_item(this.item.index, 'discount_percent', this.item.discount_percent)
-    this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-val)
+    // this.billProvider.update_order_item(this.item.index, 'discount_percent', this.item.discount_percent)
+    // this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-val)
   }
 
   changeNotes()
   {
+    this.isChange = true;
     this.item.note = this.item.note?this.item.note:'';
-    this.billProvider.update_order_item(this.item.index, 'notes', this.item.note)
+    // this.billProvider.update_order_item(this.item.index, 'notes', this.item.note)
     // this.ionViewWillEnter()
   }
 
   changeComplementNotes()
   {
+    this.isChange = true;
     this.item.complement_note = this.item.complement_note?this.item.complement_note:'';
-    this.billProvider.update_order_item(this.item.index, 'complement_note', this.item.complement_note)
+    // this.billProvider.update_order_item(this.item.index, 'complement_note', this.item.complement_note)
     // this.ionViewWillEnter()
   }
 
   changeComplementItems(type:string='input', el:any={})
   {
+      this.helper.play('audio');
+    this.isChange = true;
     let qty;
     switch (type) {
       case "input":
@@ -145,6 +182,7 @@ export class EditReceiptItemPage {
   }
   changeComplementStatus()
   {
+    this.isChange = true;
     let product_price = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'price') )
     let qty = this.billProvider.helper.IDRtoInt( this.billProvider.get_order_item(this.item.index, 'qty') )
     let complement_status = this.item.complement_status? 1 : 0;
@@ -190,26 +228,32 @@ export class EditReceiptItemPage {
 
   reduceItem()
   {
+      this.helper.play('audio');
+    this.isChange = true;
     var dataitem = this.billProvider.get_order(this.item.index);
     if(dataitem.qty <= 1)
     {
       return false;
     }else
     {
-      this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) - 1)
-      this.billProvider.count_pricing()
-      this.ionViewWillEnter()
+      this.item.qty = parseInt(this.item.qty) - 1
+      // this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) - 1)
+      // this.billProvider.count_pricing()
+      // this.ionViewWillEnter()
       // this.trigger_update_receipt();
     }
 
   }
   addItem()
   {
+    this.helper.play('audio');
+    this.isChange = true;
     var dataitem = this.billProvider.get_order(this.item.index);
+    this.item.qty = parseInt(this.item.qty) + 1
     
-      this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) + 1)
-      this.billProvider.count_pricing()
-      this.ionViewWillEnter()
+      // this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) + 1)
+      // this.billProvider.count_pricing()
+      // this.ionViewWillEnter()
       // this.trigger_update_receipt();
     
   }
@@ -228,11 +272,15 @@ export class EditReceiptItemPage {
         return false;
       }
 
+      this.billProvider.set_order(this.navParams.data.index, this.item);
       this.changeComplementStatus();
       this.billProvider.update_bill()
       this.billProvider.count_pricing()
+      this.isChange = false;
+      this.isUpdated=true;
+      this.viewCtrl.dismiss();
       // this.closeModal();
-      this.navCtrl.pop({})
+      // this.navCtrl.pop({})
       /*this.navCtrl.setRoot(ProductPage,{
         event: 'order.return',
         trigger_event: 'order.return',

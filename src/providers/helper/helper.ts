@@ -202,4 +202,10 @@ export class HelperProvider {
  
     }
 
+    zoom(type:string="in")
+    {
+      // this.navParams.data.zoom('out')
+      this.events.publish('zoom.controller', {event: type})
+    }
+
 }

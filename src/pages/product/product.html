@@ -130,7 +130,7 @@
     <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>
     <ion-fab-list side="top" #fab>
       <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>
-      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow">Bayar Pesanan</span> </button>
+      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow" >Bayar Pesanan</span> </button>
       <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>
       <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>
     </ion-fab-list>

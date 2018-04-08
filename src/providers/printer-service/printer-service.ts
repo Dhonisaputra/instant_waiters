@@ -221,4 +221,96 @@ export class PrinterServiceProvider {
             });
         });
     }
+
+    padStart(text, targetLength,padString:any='') {
+        targetLength = targetLength>>0; //truncate if number or convert non-number to 0;
+        padString = String((typeof padString !== 'undefined' ? padString : ' '));
+        if (text.length > targetLength) {
+            return String(text);
+        }
+        else {
+            targetLength = targetLength-text.length;
+            if (targetLength > padString.length) {
+                padString += padString.repeat(targetLength/padString.length); //append to original to ensure we are longer than needed
+            }
+            return padString.slice(0,targetLength) + String(text);
+        }
+    };
+     
+    padEnd(text, targetLength, padString:any='') {
+        targetLength = targetLength>>0; //floor if number or convert non-number to 0;
+        padString = String((typeof padString !== 'undefined' ? padString : ' '));
+        if (text.length > targetLength) {
+            return String(text);
+        }
+        else {
+            targetLength = targetLength-text.length;
+            if (targetLength > padString.length) {
+                padString += padString.repeat(targetLength/padString.length); //append to original to ensure we are longer than needed
+            }
+            return String(text) + padString.slice(0,targetLength);
+        }
+    };
+
+
+    countConfiguration(len, gutter)
+    {
+        var conf:any = {}
+        gutter = gutter == undefined? 4 : gutter
+        conf.numSection = Math.round((20/100)*len)
+        conf.menuSection = Math.round((30/100)*len)
+        conf.qtySection = Math.round((20/100)*len)
+        conf.gap = Math.round((7/100)*len)
+        conf.totalSection = Math.round((30/100)*len) - gutter
+        return {format: conf, gutter: gutter};
+    }
+     
+    convert(data,conf)
+    {
+        let content = this.truncateEachLength(data.name, (conf.format.menuSection < data.name.length ? conf.format.menuSection : data.name.length));
+        let ntext = '';
+     
+        content.forEach((val, i)=>{
+            let gutter = " ".repeat(conf.gutter)
+            let num = this.padEnd(data.qty.toString(), conf.format.numSection);
+            let a = this.padStart(data.price.toString(), conf.format.qtySection - 1);
+            let b = this.padEnd(val.toString(), conf.format.menuSection);
+            let c = this.padStart((data.price * data.qty).toString(), conf.format.totalSection);
+            if(i == 0)
+            {
+                ntext +=gutter+num+b+' '+a+c+gutter+"\n";
+            }else
+            {
+                let rmSpace = b[0] == ' '? true : false;
+                b = b[0] == ' '? b.substr(1) : b;
+                let e = " ".repeat(conf.format.qtySection+conf.format.totalSection+1);
+                let f = " ".repeat(conf.format.numSection);
+                b = f+b+e;
+                ntext += gutter+b+gutter+(rmSpace?' ':'')+"\n";
+            }
+        })
+        ntext += "\n"
+        return ntext;
+    }
+
+    truncateEachLength(content, every)
+    {
+        let len = content.toString().length
+        let calc = Math.floor(len / every);
+        let rec = [];
+        for (var i = 0; i < calc; i++) {
+            let nchar = content.substr(i*every, every)
+            rec.push(nchar);
+        }
+        return rec;
+     
+    }
+     
+    padCenter(data, pad)
+    {
+        pad = pad/2;
+        data = data.toString()
+        return data.padStart(pad).padEnd((pad*2)-data.length);
+    }
+
 }

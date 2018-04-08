@@ -31,32 +31,37 @@
         <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> 
           <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir 
         </button>
-        <button menuClose ion-item (click)="setRoot(stocksPage)">
-          <img src="assets/imgs/icons/product.png" style="width:25px; height: 25px;"> Stok
-        </button>
-        <button menuClose ion-item (click)="setRoot(transactionPage)">
-          <img src="assets/imgs/icons/transaction.png" style="width:25px; height: 25px;"> Transaksi
-        </button>
-        <button menuClose ion-item (click)="setRoot(memberPage)">
-          <img src="assets/imgs/icons/member.png" style="width:25px; height: 25px;"> Member
-        </button>
-        <button menuClose ion-item (click)="setRoot(modalPage)">
-          <img src="assets/imgs/icons/modal.png" style="width:25px; height: 25px;"> Modal
-        </button>
-        <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:0})">
-          <img src="assets/imgs/icons/stock_out.png" style="width:25px; height: 25px;"> Pengeluaran
-        </button>
-        <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:1})">
-          <img src="assets/imgs/icons/stock_in.png" style="width:25px; height: 25px;"> Pengadaan
-        </button>
-        <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && helper.local.get_params(helper.config.variable.settings).debt_mode">
-          <img src="assets/imgs/icons/debt.png" style="width:25px; height: 25px;"> Hutang
-        </button>
-        <button menuClose ion-item (click)="setRoot(settingsPage)">
-          <img src="assets/imgs/icons/settings.png" style="width:25px; height: 25px;"> Settings
+        <div *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3">
+          <button menuClose ion-item (click)="setRoot(stocksPage)">
+            <img src="assets/imgs/icons/product.png" style="width:25px; height: 25px;"> Stok
+          </button>
+          <button menuClose ion-item (click)="setRoot(transactionPage)">
+            <img src="assets/imgs/icons/transaction.png" style="width:25px; height: 25px;"> Transaksi
+          </button>
+          <button menuClose ion-item (click)="setRoot(memberPage)">
+            <img src="assets/imgs/icons/member.png" style="width:25px; height: 25px;"> Member
+          </button>
+          <button menuClose ion-item (click)="setRoot(modalPage)">
+            <img src="assets/imgs/icons/modal.png" style="width:25px; height: 25px;"> Modal
+          </button>
+          <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:0})">
+            <img src="assets/imgs/icons/stock_out.png" style="width:25px; height: 25px;"> Pengeluaran
+          </button>
+          <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:1})">
+            <img src="assets/imgs/icons/stock_in.png" style="width:25px; height: 25px;"> Pengadaan
+          </button>
+          <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && helper.local.get_params(helper.config.variable.settings).debt_mode">
+            <img src="assets/imgs/icons/debt.png" style="width:25px; height: 25px;"> Hutang
+          </button>
+          <button menuClose ion-item (click)="setRoot(settingsPage)">
+            <img src="assets/imgs/icons/settings.png" style="width:25px; height: 25px;"> Settings
+          </button>
+        </div>
+        
+        <button menuClose ion-item (click)="setRoot(printerPage)">
+          <img src="assets/imgs/icons/printer.png" style="width:25px; height: 25px;"> Printer
         </button>
       </div>
-
       <button menuClose ion-item (click)="setRoot(aboutPage)">
           <img src="assets/imgs/icons/about.png" style="width:25px; height: 25px;"> Tentang System
       </button>
@@ -80,7 +85,26 @@
 
 
 <ion-menu [content]="content" side="right" id="menu2" enabled="false">
+  <button class="">Dame</button>
   <ion-content>
+    <ion-list>
+      <ion-item >
+        <div style="
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        ">
+          <button ion-button color="main" round (click)="helper.zoom('out')">
+            <ion-icon name="remove"></ion-icon>
+          </button>
+             Zoom product
+          <button ion-button color="main" round (click)="helper.zoom()">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </div>
+      </ion-item>
+    </ion-list>
+    <hr>
     <div class=" fluid content center distributed" *ngIf="!helper.local.get_params('activeCategoriesProduct') || helper.local.get_params('activeCategoriesProduct').categories_children.length < 1">
       <span class="text-center"><ion-icon class="text-warning" ios="ios-warning" md="md-warning" style="font-size: 3em;"></ion-icon><br>Tidak ada data kategori<br>untuk ditampilkan</span>
     </div>

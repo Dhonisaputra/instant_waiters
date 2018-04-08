@@ -41369,8 +41369,6 @@ h6 .small,
   font-size: 80%;
 }
 
-<<<<<<< HEAD
-=======
 .fluid.content.center.distributed {
   display: -webkit-box;
   display: -webkit-flex;
@@ -41388,7 +41386,6 @@ h6 .small,
   align-items: center;
 }
 
->>>>>>> 6df0d5f02ef8089842b5759159c286d38a233831
 .fab {
   contain: layout;
 }
@@ -41613,14 +41610,12 @@ ion-page.modal {
 
 button.btn-round,
 a.btn-round {
-  padding-left: 10px !important;
-  padding-right: 10px !important;
+  padding-left: 50px !important;
+  padding-right: 50px !important;
   height: 37px !important;
   border-radius: 20px;
 }
 
-<<<<<<< HEAD
-=======
 .control-group {
   display: inline-block;
   vertical-align: top;
@@ -41779,7 +41774,6 @@ a.btn-round {
   border-top-color: #ccc;
 }
 
->>>>>>> 6df0d5f02ef8089842b5759159c286d38a233831
 #product-box-detail {
   background-color: #eee !important;
 }

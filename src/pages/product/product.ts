@@ -185,6 +185,9 @@ export class ProductPage
 	}
 	ionViewWillEnter()
     {
+    	this.menuController.enable(true, 'menu2')
+    	var index;
+
     	if(this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3)
     	{
 	        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
@@ -193,13 +196,12 @@ export class ProductPage
     	}
 
 		this.get_categories();
+
     	this.helper.events.subscribe('product:filter-type', (res)=>{
     		this.filter_category_product = res.item;
     		this.refresh_data()
     	})
 
-    	this.menuController.enable(true, 'menu2')
-    	var index;
 		this.billProvider.pull_data_bill()
 		.then( ()=>{
 
@@ -226,6 +228,7 @@ export class ProductPage
 					break;
 				
 				default:
+					this.events.publish('bill.update', {})
 					// code...
 					break;
 			}
@@ -857,7 +860,7 @@ export class ProductPage
 
 	product_sort() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Modify your album',
+      title: 'Urutkan...',
       buttons: [
         {
           text: 'Favorit',

@@ -15,6 +15,7 @@ import { SpendPage } from '../pages/spend/spend';
 import { DebtPage } from '../pages/debt/debt';
 import { ModalPage } from '../pages/modal/modal';
 import { AboutPage } from '../pages/about/about';
+import { PrintBluetoothPanelPage } from '../pages/print-bluetooth-panel/print-bluetooth-panel';
 
 
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -39,6 +40,7 @@ export class MyApp {
   settingsPage     :any=SettingsPage;
   outletListPage   :any=OutletListPage;
   aboutPage        :any=AboutPage;
+  printerPage      :any=PrintBluetoothPanelPage;
   pages            : any; //Array<{title: string, component: any, options:any}>
   lastTimeBackPress:number=0;
   timePeriodToExit :number=2000;

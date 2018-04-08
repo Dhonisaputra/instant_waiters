@@ -120,7 +120,7 @@
 				
 				<ion-item-options side="right">
 			      	
-					<button ion-button color="primary" class="center distributed" *ngIf=" helper.IDRtoInt(item.payment_nominal) + helper.IDRtoInt(item.paid_with_bank_nominal) < helper.IDRtoInt(item.payment_total) && item.payment_cancel_status == 0" (click)="pay_transaction(i, item)"> 
+					<button ion-button color="primary" class="center distributed" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3 && ( helper.IDRtoInt(item.payment_nominal) + helper.IDRtoInt(item.paid_with_bank_nominal) < helper.IDRtoInt(item.payment_total) && item.payment_cancel_status == 0 )" (click)="pay_transaction(i, item)"> 
 						<ion-icon name="logo-usd" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
 					</button>
 					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action=='edit' || item.payment_nominal + item.paid_with_bank_nominal >= item.payment_total" (click)="edit_transaction(i, item)">

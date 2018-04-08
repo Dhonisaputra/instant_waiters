@@ -83,6 +83,7 @@ export class ReceiptPage {
 	trigger_update_receipt()
 	{
 		let data = this.billProvider.data_bill();
+		console.log(data)
 		this.set_receipts(data);
 		this.billProvider.detection_order_session_from_orders(data.orders)
 
