@@ -1,1 +1,39 @@
-webpackJsonp([16],{507:function(a,e,t){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=t(0),_=(t(1),t(14),t(156)),r=function(){return function(){}}(),o=t(398),u=t(399),i=t(400),c=t(401),b=t(402),d=t(403),f=t(404),s=t(405),l=t(406),p=t(415),v=t(11),M=t(20),g=t(210),j=t(78);t.d(e,"MemberDetailPageModuleNgFactory",function(){return k});var k=n.W(r,[],function(a){return n._10([n._11(512,n.i,n.S,[[8,[o.a,u.a,i.a,c.a,b.a,d.a,f.a,s.a,l.a,p.a]],[3,n.i],n.s]),n._11(4608,v.k,v.j,[n.r,[2,v.s]]),n._11(4608,M.t,M.t,[]),n._11(4608,M.d,M.d,[]),n._11(512,v.b,v.b,[]),n._11(512,M.q,M.q,[]),n._11(512,M.e,M.e,[]),n._11(512,M.o,M.o,[]),n._11(512,g.a,g.a,[]),n._11(512,g.b,g.b,[]),n._11(512,r,r,[]),n._11(256,j.a,_.a,[])])})}});
+webpackJsonp([16],{
+
+/***/ 508:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MemberNewFormPageModule", function() { return MemberNewFormPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__member_new_form__ = __webpack_require__(76);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var MemberNewFormPageModule = (function () {
+    function MemberNewFormPageModule() {
+    }
+    MemberNewFormPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__member_new_form__["a" /* MemberNewFormPage */]),
+            ],
+        })
+    ], MemberNewFormPageModule);
+    return MemberNewFormPageModule;
+}());
+
+//# sourceMappingURL=member-new-form.module.js.map
+
+/***/ })
+
+});
+//# sourceMappingURL=16.js.map

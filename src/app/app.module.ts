@@ -37,6 +37,7 @@ import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
 import { SpendDetailPage } from '../pages/spend-detail/spend-detail';
 import { DebtPage } from '../pages/debt/debt';
+import { WaitersPage } from '../pages/waiters/waiters';
 
 import { OutletListPageModule } from '../pages/outlet-list/outlet-list.module';
 import { PrintBluetoothPanelPageModule } from '../pages/print-bluetooth-panel/print-bluetooth-panel.module';
@@ -89,6 +90,7 @@ import { AiRemoteProvider } from '../providers/ai-remote/ai-remote';
     SpendPage,
     SpendDetailPage,
     DebtPage,
+    WaitersPage
     // AbsoluteDragDirective
 
   ],
@@ -129,7 +131,9 @@ import { AiRemoteProvider } from '../providers/ai-remote/ai-remote';
     ModalPage,
     SpendPage,
     SpendDetailPage,
-    DebtPage
+    DebtPage,
+    WaitersPage
+    
 
   ],
   providers: [

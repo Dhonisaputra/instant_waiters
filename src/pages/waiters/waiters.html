@@ -1,0 +1,160 @@
+<!--
+  Generated template for the ProductPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+	<ion-toolbar color="main" class="center distributed">
+		<ion-navbar class="center distributed">
+			<button ion-button menuToggle>
+				<ion-icon name="menu"></ion-icon>
+			</button>
+			<ion-title>Waiters</ion-title>
+			
+
+			<ion-buttons end>
+				<button ion-button clear icon-right color="light" (tap)="tooltip_present($event)">
+				  <ion-icon name="more"></ion-icon>
+				</button>
+			</ion-buttons>
+			
+		</ion-navbar>
+	</ion-toolbar>
+	<ion-toolbar *ngIf=" waiter_state=='product' ">
+		<div style="display: flex; flex-direction: column;width: 100%;">
+				
+			<ion-row class="center-distributed" style="width: 100%;">
+				<ion-col col-12 col-xs-12 col-sm-12 col-md-12 class="tab" style="justify-content:unset; overflow-x: auto;">
+					<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == 0}" col--33 color="main">
+						<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All 
+					</label>
+					<label class="tab-item relative" [ngClass]="{'active': filter_type_selected == item.type}" col--33 color="main" *ngFor="let item of helper.local.get_params(helper.config.variable.credential).type_product; let i = index;" >
+						<input type="radio" class="sr-only" name="type_product" value="{{item.type}}" [(ngModel)]="filter_type_selected" (change)="refresh_data()"> {{item.alt_type_name}}
+					</label>
+					<!-- <label class="tab-item relative" col--33 [ngClass]="{'active': filter_type_selected == 2}" color="main">
+						<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman
+					</label> -->
+				</ion-col>
+				<!-- <ion-col col-2 col-xs-2 col-sm-2 col-md-2>
+					<button ion-button clear icon-right color="main" (tap)="product_sort()">
+					  Sort <ion-icon name="funnel"></ion-icon>
+					</button>
+				</ion-col> -->
+			</ion-row>
+			<ion-row>
+				<ion-col col-10 col-xs-10 col-sm-10 col-md-10>
+					<ion-searchbar (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" style="width: 100%;"></ion-searchbar>
+				</ion-col>
+				<ion-col col-auto>
+					<button small ion-button clear icon-only color="main" (tap)="product_sort()">
+					  <ion-icon name="funnel"></ion-icon>
+					</button>
+				</ion-col>
+			</ion-row>
+		</div>
+  	</ion-toolbar>
+</ion-header>
+
+<ion-content id="product-box" has-header="true" has-tabs="true" class="" [ngClass]="{'noGapTop': waiter_state=='bill'}">
+	<ion-refresher (ionRefresh)="refresh_data($event)">
+    	<ion-refresher-content></ion-refresher-content>
+  	</ion-refresher>
+	<ion-grid>
+		<ion-row class="relative" id="product-content-body">
+			<div  col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 id="" *ngIf=" waiter_state=='bill' ">
+				<div class="receipt-product">
+					<page-receipt></page-receipt> 
+				</div>
+			</div>
+			<ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column" *ngIf=" waiter_state=='product' ">
+
+				<div class="box" id="box-product">
+					
+
+					<div *ngIf="!this.helper.local.get_params('pinned_product') || this.helper.local.get_params('pinned_product').length > 0" style="margin-bottom:10px;">
+						<strong style="font-size: .9em;margin-left: 5px;">Produk di Pin</strong>		
+						<ion-row class="box-body" id="">
+							<ion-col class="pinned_post col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of this.helper.local.get_params('pinned_product'); let i = index" (tap)="add_to_bill(item)" (press)="pinnedProductOptions(item, index)">
+								<div class="product-body">
+									<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
+										
+										<div class="product-name">{{item.name}}</div>
+									</div>
+									<div class="product-detail">
+										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>
+										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->
+									</div>
+								</div>
+							</ion-col>
+						</ion-row>
+					</div>
+					<div>
+						<strong style="font-size: .9em;margin-left: 5px;" *ngIf="!this.helper.local.get_params('pinned_product') || this.helper.local.get_params('pinned_product').length > 0">Produk</strong>
+						<ion-row class="box-body" id="">
+
+							<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (tap)="add_to_bill(item)" (press)="productOptions(item, index)">
+								<div class="product-body">
+									<div class="product-image" [style.backgroundImage]="'url('+item.image.thumb+')'">
+										
+										<div class="product-name">{{item.name}}</div>
+									</div>
+									<div class="product-detail">
+										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>
+										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->
+									</div>
+								</div>
+							</ion-col>
+						</ion-row>
+					</div>
+
+								<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">
+									<div class="product-body" style="background-color: white;">
+										<div class="product-name">
+											<ion-icon name="add" style="color:white; font-size: -webkit-xxx-large;"></ion-icon>
+										</div>
+									</div>
+								</ion-col> -->
+								
+								<!-- <ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>
+								
+									<button ion-button block color="main" (tap)="infinite_product()">Load More</button>
+								</ion-col> -->
+					<ion-infinite-scroll (ionInfinite)="infinite_product($event)">
+					   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+					 </ion-infinite-scroll>
+				</div> <!--  End of payment method -->
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	
+	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30" *ngIf=" waiter_state=='product' ">
+    <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>
+    <ion-fab-list side="top" #fab>
+      <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>
+      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow" >Bayar Pesanan</span> </button>
+      <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>
+      <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="main">
+	<button ion-button color="light" clear small icon-left (tap)="waiter_state='product'">
+	  	<ion-icon name="home"></ion-icon>
+	  	Produk
+	</button>
+    <button ion-button color="light" clear small icon-left (tap)="waiter_state='bill'">
+	  	<ion-icon ios="ios-document" md="md-document"></ion-icon>
+	  	Nota &nbsp; <ion-badge item-end color="light">{{billProvider.get_bill_component('orders').length}}</ion-badge>
+	</button>
+	<ion-buttons end>
+	    <button end ion-button color="light" clear small>
+	    	Rp {{ helper.intToIDR(billProvider.get_bill_component('payment_total')) }}
+	    </button>
+	</ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>

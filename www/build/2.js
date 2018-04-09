@@ -1,1 +1,39 @@
-webpackJsonp([2],{523:function(a,t,e){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=e(0),o=(e(1),e(14),e(153)),_=function(){return function(){}}(),r=e(398),u=e(399),c=e(400),i=e(401),d=e(402),b=e(403),f=e(404),s=e(405),l=e(406),p=e(430),v=e(11),P=e(20),g=e(210),j=e(78);e.d(t,"TooltipProductPageModuleNgFactory",function(){return k});var k=n.W(_,[],function(a){return n._10([n._11(512,n.i,n.S,[[8,[r.a,u.a,c.a,i.a,d.a,b.a,f.a,s.a,l.a,p.a]],[3,n.i],n.s]),n._11(4608,v.k,v.j,[n.r,[2,v.s]]),n._11(4608,P.t,P.t,[]),n._11(4608,P.d,P.d,[]),n._11(512,v.b,v.b,[]),n._11(512,P.q,P.q,[]),n._11(512,P.e,P.e,[]),n._11(512,P.o,P.o,[]),n._11(512,g.a,g.a,[]),n._11(512,g.b,g.b,[]),n._11(512,_,_,[]),n._11(256,j.a,o.a,[])])})}});
+webpackJsonp([2],{
+
+/***/ 525:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TotalPaymentEditorPageModule", function() { return TotalPaymentEditorPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__total_payment_editor__ = __webpack_require__(139);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var TotalPaymentEditorPageModule = (function () {
+    function TotalPaymentEditorPageModule() {
+    }
+    TotalPaymentEditorPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__total_payment_editor__["a" /* TotalPaymentEditorPage */]),
+            ],
+        })
+    ], TotalPaymentEditorPageModule);
+    return TotalPaymentEditorPageModule;
+}());
+
+//# sourceMappingURL=total-payment-editor.module.js.map
+
+/***/ })
+
+});
+//# sourceMappingURL=2.js.map

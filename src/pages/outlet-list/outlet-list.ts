@@ -6,6 +6,7 @@ import { LoginPage } from '../login/login';
 import { TablePage } from '../table/table'; 
 import { ProductPage } from '../product/product'; 
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { WaitersPage } from '../waiters/waiters'; 
 
 
 
@@ -198,12 +199,20 @@ export class OutletListPage {
   		this.helper.storage.get(this.helper.config.variable.settings)
   		.then( (resSettings)=>{
   			let default_page = resSettings && !resSettings.choose_table_first?  ProductPage : TablePage ;
-  			this.navCtrl.setRoot(default_page);
   			this.helper.local.set_params('login_outlet_device', true)
-          this.helper.airemote.socket_listener()
+        this.helper.airemote.socket_listener()
 
-  			this.helper.airemote.send(item.outlet_id+'.notif.ring','',{toast: true, title:"Pemberitahuan perangkat terhubung", text: data.users.users_fullname+" tersambung kedalam sistem."}, function(){
-  			})
+  			this.helper.airemote.send(item.outlet_id+'.notif.ring','',{toast: true, title:"Pemberitahuan perangkat terhubung", text: data.users.users_fullname+" tersambung kedalam sistem."}, () => {
+          console.log(item)
+          if(item.outlet_roles_id == 3)
+          {
+            this.navCtrl.setRoot(WaitersPage);
+            
+          }else{
+
+            this.navCtrl.setRoot(default_page);
+          }
+			  })
   		})
 
   	}

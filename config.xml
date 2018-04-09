@@ -3,7 +3,7 @@
     <name>Folarpos</name>
     <description>Folarpos Instant</description>
     <author email="dhoni.p.saputra@gmail.com" href="http://ionicframework.com/">Folarpos Developer Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.38:8101" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

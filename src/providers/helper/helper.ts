@@ -183,7 +183,7 @@ export class HelperProvider {
  
         let audio = this.sounds.find((sound) => {
             return sound.key === key;
-        });
+        })
  
         if(audio.type === 'html5'){
  
@@ -196,7 +196,10 @@ export class HelperProvider {
                 console.log(res);
             }, (err) => {
                 console.log(err);
-            });
+            })
+            .catch(()=>{
+
+            })
  
         }
  
