@@ -202,6 +202,10 @@ export class ProductPage
     		this.refresh_data()
     	})
 
+    	this.helper.events.subscribe('transaction:refresh', (res)=>{
+			this.get_unpaid_bill();
+    	})
+
 		this.billProvider.pull_data_bill()
 		.then( ()=>{
 
@@ -473,13 +477,13 @@ export class ProductPage
 		})
 
 
-			if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
-			{
-				alertVisitor.present();
-			}else
-			{
-				this.process_save_bill()
-			}
+		if(!this.billProvider.get_bill_component('visitor_name') || this.billProvider.get_bill_component('visitor_name').length < 1)
+		{
+			alertVisitor.present();
+		}else
+		{
+			this.process_save_bill()
+		}
 
 		// this.events.publish('get.data.receipt', {pay:false})
 		
@@ -581,9 +585,9 @@ export class ProductPage
 	private process_save_bill()
 	{
 		return this.billProvider.save({
-			users_outlet: 1,
+			users_outlet: this.helper.local.get_params(this.helper.config.variable.credential).outlet.users_outlet_id,
 			outlet: this.outlet,
-			bank_id: 1,
+			bank_id: 0,
 			payment_method: 1,
 			payment_nominal: 0,
 		})
@@ -651,11 +655,28 @@ export class ProductPage
 								content: "Mencetak bill",
 							})
 							loadingPrint.present()
-							this.process_print_bill()
-							.then(()=>{
-								loadingPrint.dismiss();
-							}, ()=>{
-								loadingPrint.dismiss();
+							this.billProvider.save({
+								users_outlet: this.helper.local.get_params(this.helper.config.variable.credential).outlet.users_outlet_id,
+								outlet: this.outlet,
+								bank_id: 0,
+								payment_method: 1,
+								payment_nominal: 0,
+							})
+							.done((res)=>{
+								res = JSON.parse(res)
+								if(res.code == 200)
+								{
+
+									this.process_print_bill()
+									.then(()=>{
+										this.events.publish('reset.data.receipt',{})
+										this.get_unpaid_bill();
+										loadingPrint.dismiss();
+									}, ()=>{
+										loadingPrint.dismiss();
+									})
+									
+								}
 							})
 						},300)
 			        }
@@ -692,7 +713,21 @@ export class ProductPage
 	}
 	process_print_bill()
 	{
+		let printer = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer;
+		let printer_rule = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer_rule;
+		
+  		let nota_printer = printer_rule.filter((res)=>{
+  			return res.printer_page_id == 5; //--> 5 is constanta from database;
+  		})
+  		
 		return new Promise((resolve, reject) => {
+
+			if(nota_printer.length < 1)
+			{
+				reject();
+				return false;
+			}
+
 			if( !this.helper.printer.isAvailable() )
 			{
 				this.helper.alertCtrl.create({
@@ -700,24 +735,76 @@ export class ProductPage
 					message: "Layanan printer tidak tersedia untuk perangkat ini",
 					buttons:["OK"]
 				}).present()
-				console.log(this.helper.html2canvas)
+				reject();
 				return false;
 			}
 			
-			this.helper.local.opendb('printer_connected')
-		  	.then((device)=>{
-		  		console.log(device)
-		  		if(!device || !device.address)
-		  		{
-		  			this.helper.alertCtrl.create({
-		  				title: "Printer tidak ditemukan",
-		  				message: "Silahkan menuju settings dan pilih menu printer.",
-		  				buttons: ["OK"]
-		  			}).present();
+	  		/*if(!device || !device.address)
+	  		{
+	  			this.helper.alertCtrl.create({
+	  				title: "Printer tidak ditemukan",
+	  				message: "Silahkan menuju settings dan pilih menu printer.",
+	  				buttons: ["OK"]
+	  			}).present();
 
-		  			return false;
+				reject();
+	  			return false;
+	  		}*/
+
+	  		let group_printer = nota_printer[0].group_outlet_printer_id.split(',');
+
+	  		this.helper.$.each(group_printer, (i, val)=>{
+		  		let printer_filter = printer.filter((res)=>{
+		  			return res.outlet_printer_id == val;
+		  		})
+		  		console.log(printer_filter)
+
+				// var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+
+		  		if(printer_filter.length > 0)
+		  		{
+		  			switch (printer_filter[0].outlet_printer_connect_with) {
+		  				case "wifi":
+							var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+		  					this.helper.printer.connectWifi(printer_filter[0].outlet_printer_address)
+		  					this.helper.printer.printWifi(t);
+		  					this.helper.printer.cutpaper();
+							resolve()
+
+		  					break;
+		  				case "bluetooth":
+
+							var t = this.billProvider.print_bill('', printer_filter[0]);
+		  					this.helper.printer.connect(printer_filter[0].outlet_printer_address)
+					  		.then(()=>{
+								let el = this.helper.$('.receipt');
+								setTimeout( ()=>{
+
+									// let t = this.billProvider.print_bill(printer_filter[0]);
+									this.helper.printer.printText(t)
+									.then(()=>{
+										resolve();
+									}, ()=>{
+										reject();
+									})
+								}, 2000 ) // set timeout
+					  		}, (err)=>{
+									reject()
+					  		})
+							resolve()
+		  					break;
+
+		  				default:
+		  					// code...
+							reject();
+		  					break;
+		  			}
+		  		}else
+		  		{		
+					reject();
 		  		}
-		  		this.helper.printer.connect(device.address)
+
+		  		/*this.helper.printer.connect(device.address)
 		  		.then(()=>{
 
 					let el = this.helper.$('.receipt');
@@ -733,7 +820,12 @@ export class ProductPage
 					}, 2000 ) // set timeout
 		  		}, (err)=>{
 						reject()
-		  		})
+		  		})*/
+
+	  		})
+
+			this.helper.local.opendb('printer_connected')
+		  	.then((device)=>{
 		  	})
 		}) // end of promise
 	}

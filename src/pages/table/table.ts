@@ -5,6 +5,7 @@ import { ProductPage } from "../../pages/product/product";
 import { DbTableProvider } from "../../providers/db-table/db-table";
 import { HelperProvider } from '../../providers/helper/helper'; 
 import { BillProvider } from '../../providers/bill/bill';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 declare let DatecsPrinter:any;
 
 
@@ -31,7 +32,7 @@ export class TablePage {
   tableChoosen:any = {};
   choose_type_order:number = 1;
   event_handler:any={};
-  constructor(public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider, private events:Events, private billProvider:BillProvider) {
+  constructor(public screenOrientation: ScreenOrientation,public navCtrl: NavController, private appCtrl: App, public navParams: NavParams, private local : DbLocalProvider, private dbTableProvider: DbTableProvider, private helper: HelperProvider, private events:Events, private billProvider:BillProvider) {
     // this.helstorage.set('outlet', 1)
     // this.local.setdb('outlet', 1)
     console.log(this.helper.local.get_params(this.helper.config.variable.credential));
@@ -48,11 +49,16 @@ export class TablePage {
   		}
 	  })*/
 }	
-
   ionViewWillEnter()
   {
     this.detect_parameters();
-    
+    if(this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3)
+      {
+          this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+          .catch(()=>{
+          })
+      }
+
     if(!this.navParams.data.trigger_event || this.navParams.data.trigger_event != 'table.change' )
     {
 

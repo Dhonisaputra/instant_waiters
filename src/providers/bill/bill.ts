@@ -55,6 +55,7 @@ export class BillProvider {
 
     save(data:any={})
     {
+        let item = this.helper.local.get_params(this.helper.config.variable.credential).outlet;
         let loader = this.loadingCtrl.create({
           content: "Memproses permintaan...",
         });
@@ -62,7 +63,7 @@ export class BillProvider {
 
         let alertData = this.alertCont.create({
             title: "Process gagal",
-            message: "Terdapat galat ketika menyimpan nota. Silahkan laporkan pengembang sistem.",
+            message: "Terdapat kesalahan ketika menyimpan nota. Silahkan laporkan pengembang sistem.",
             buttons : ["Ok"]
         })
 
@@ -85,6 +86,8 @@ export class BillProvider {
             
             if(res.code == 200)
             {
+
+                this.helper.airemote.send(item.outlet_id+'.app.cashier','',{title:"Terdapat pesanan baru"}, function(){})
                 successData.present();
 
             }else
@@ -754,9 +757,9 @@ export class BillProvider {
         return nota;
 
     }
-
-    print_bill(nota:any='')
+    print_bill_wifi(data_print:any={}, nota:any='')
     {
+        data_print.print_type = parseInt(data_print.print_type)
         let outletName = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
         let outletAddress = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:'ADDRESS';
         let outletPhone = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:'PHONE';
@@ -768,7 +771,61 @@ export class BillProvider {
         let visitorTable = b.table_name?b.table_name+'/':'';
         let visitorName = b.visitor_name?b.visitor_name:'-';
         let visitor = "Nomor Nota : "+nota+"\nMeja/Pelanggan: "+visitorTable+visitorName+"\n"+"Kasir: "+this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname+"\nTanggal : "+this.helper.moment().format('DD MMM YYYY HH:mm')+"\n";
-        let textPrintHeader = "{center}"+outletName+"\n{s}"+outletAddress+"\n"+outletPhone+"{s}"+divider+"{left}\n\n"+visitor;
+        let textPrintHeader = outletName+"\n"+outletAddress+"\n"+outletPhone+''+divider+""+visitor;
+        let textPrint = textPrintHeader;
+        if(b.member_id)
+        {
+
+            textPrint += "Member : "+initialName+'/000'+b.member_id+"\n";
+        }        
+        textPrint += ""+divider;
+
+        let conf_print = this.helper.printer.countConfiguration(this.helper.printer.print_type(data_print.print_type),0);
+
+        let data_item = [];
+
+        $.each(orders, (i, item)=>{
+            var ditem = {
+                qty: item.qty,
+                name: item.name,
+                price: this.helper.intToIDR(item.price),
+                totalPrice: this.helper.intToIDR(item.price*item.qty)
+            };
+            textPrint += this.helper.printer.convert(ditem, conf_print);  
+            /* if(item.complement_status > 0)
+            {
+                let kompl_item = item.complement_status > 0 && item.complement_item < item.qty? item.complement_item : '';
+                textPrint += kompl_item+" komplimen\n";
+            }
+            if(this.helper.IDRtoInt(item.discount_nominal) > 0 && (this.helper.toInt(item.complement_status) != 1 || this.helper.toInt(item.complement_item) < this.helper.toInt(item.qty) ) )
+            {
+                textPrint += "Diskon "+ this.helper.toInt(item.discount_percent)+"% (-"+this.helper.intToIDR(item.discount_nominal)+") \n";
+            }*/
+        })
+        textPrint += "________________\n";
+        
+        textPrint += "Total :      "+this.helper.intToIDR(this.get_bill_component('payment_total'))+"\n";
+        textPrint += "\n\n Bila ada pelayanan/produk yang kurang \nberkenan, Hub. 0857 1272 2217 \nTerima Kasih\nPowered by folarpos.co.id\n";
+        return textPrint
+           
+    }
+
+    print_bill(nota:any='', data_print:any={})
+    {
+        data_print.print_type = parseInt(data_print.print_type)
+      
+        let outletName = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
+        let outletAddress = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:'ADDRESS';
+        let outletPhone = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:'PHONE';
+        let orders = this.get_bill_component('orders');
+        let b = this.get_bill();
+        let initialName = this.helper.get_initial_outlet_name(outletName).join('.');
+        let divider = "\n________________\n";
+        nota = nota?initialName+'/0000'+nota:'-';
+        let visitorTable = b.table_name?b.table_name+'/':'';
+        let visitorName = b.visitor_name?b.visitor_name:'-';
+        let visitor = "Nomor Nota : "+nota+"\nMeja/Pelanggan: "+visitorTable+visitorName+"\n"+"Kasir: "+this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname+"\nTanggal : "+this.helper.moment().format('DD MMM YYYY HH:mm')+"\n";
+        let textPrintHeader = "{center}"+outletName+"\n{s}"+outletAddress+"\n"+outletPhone+"{s}"+divider+"{left}"+visitor;
         let textPrint = textPrintHeader;
         if(b.member_id)
         {
@@ -776,9 +833,18 @@ export class BillProvider {
             textPrint += "Member : "+initialName+'/000'+b.member_id+"\n";
         }        
         textPrint += "{left}"+divider;
+        let conf_print = this.helper.printer.countConfiguration(this.helper.printer.print_type(data_print.print_type),0);
 
         $.each(orders, (i, item)=>{
-           textPrint += "{s}{left}"+item.qty+" "+item.name+" x "+this.helper.intToIDR(item.price)+"{/s}  {s}{b}"+this.helper.intToIDR(item.price * item.qty)+"{/b} {/s}{reset}\n";
+           // textPrint += "{s}{left}"+item.qty+" "+item.name+" x "+this.helper.intToIDR(item.price)+"{/s}  {s}{b}"+this.helper.intToIDR(item.price * item.qty)+"{/b} {/s}{reset}\n";
+           var ditem = {
+                qty: item.qty,
+                name: item.name,
+                price: this.helper.intToIDR(item.price),
+                totalPrice: this.helper.intToIDR(item.price*item.qty)
+            };
+            textPrint += "{s}"+this.helper.printer.convert(ditem, conf_print);  
+
             if(item.complement_status > 0)
             {
                 let kompl_item = item.complement_status > 0 && item.complement_item < item.qty? item.complement_item : '';
@@ -786,12 +852,12 @@ export class BillProvider {
             }
             if(this.helper.IDRtoInt(item.discount_nominal) > 0 && (this.helper.toInt(item.complement_status) != 1 || this.helper.toInt(item.complement_item) < this.helper.toInt(item.qty) ) )
             {
-                textPrint += "{left} {s}Diskon "+ this.helper.toInt(item.discount_percent)+"% {b}(-"+this.helper.intToIDR(item.discount_nominal)+"){/b} \n";
+                textPrint += "{left} {s}Diskon "+ this.helper.toInt(item.discount_percent)+"% {b}(-"+this.helper.intToIDR(item.discount_nominal)+"){/b} \n\n";
             }
 
             
         })
-        textPrint += "________________\n\n{right}";
+        textPrint += "________________\n{right}";
         /*if(this.get_bill_component('tax_nominal')>0 || this.get_bill_component('discount_nominal')>0 )
         {
             textPrint += "Bill :      "+this.helper.intToIDR(this.bill.payment_bills)+"\n";
@@ -808,8 +874,8 @@ export class BillProvider {
         //     textPrint += "Diskon "+discountPercent+":      "+this.helper.intToIDR(this.get_bill_component('discount_nominal'))+"\n";
         // }
 
-        textPrint += "Total :      "+this.helper.intToIDR(this.get_bill_component('payment_total'))+"{/s}\n";
-        textPrint += "\n\n{center}{s}Bila ada pelayanan/produk yang kurang \nberkenan, Hub. 0857 1272 2217 \nTerima Kasih\nPowered by folarpos.co.id{/s}\n\n\n\n\n";
+        textPrint += "{s}Total :      "+this.helper.intToIDR(this.get_bill_component('payment_total'))+"{/s}\n";
+        textPrint += "\n{center}{s}Bila ada pelayanan/produk yang kurang \nberkenan, Hub. 0857 1272 2217 \nTerima Kasih\nPowered by folarpos.co.id{/s}\n\n\n";
         return textPrint
 
     }
