@@ -406,19 +406,19 @@ var PrinterServiceProvider = (function () {
 
 /***/ }),
 
-/***/ 112:
+/***/ 111:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OutletListPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_unique_device_id__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_unique_device_id__ = __webpack_require__(343);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__table_table__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__product_product__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__waiters_waiters__ = __webpack_require__(144);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -621,7 +621,7 @@ var OutletListPage = (function () {
     };
     OutletListPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-outlet-list',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\outlet-list\outlet-list.html"*/'<!--\n\n  Generated template for the OutletListPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n	  <ion-navbar>\n\n	  	<button ion-button menuToggle start>\n\n	      <ion-icon name="menu"></ion-icon>\n\n	    </button>\n\n	    <ion-title>Outlet anda</ion-title>\n\n	  	<button ion-button menuToggle="right" end>\n\n	      <ion-icon name="menu"></ion-icon>\n\n	    </button>\n\n	  </ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<ion-refresher (ionRefresh)="get_outlet_refresh($event)">\n\n    	<ion-refresher-content></ion-refresher-content>\n\n  	</ion-refresher>\n\n	<ion-row class="outlet-list">\n\n        <ion-col col-md-4 col-lg-3 col-xs-12  *ngFor="let item of outlets; let i = index;" (click)="selectOutlet(item)">\n\n          <ion-card [style.backgroundImage]="\'url(\'+helper.config.base_url()+item.outlet_logo+\')\'" style="background-size:cover; background-position: center; ">\n\n      		<div class="card-container">\n\n	          	<div class="card-title">{{item.outlet_name}}</div>\n\n	          	<div class="card-subtitle"><ion-icon ios="ios-contact" md="ios-contact"></ion-icon> <span>{{item.outlet_roles_name}}</span> </div>\n\n      		</div>\n\n          </ion-card>\n\n        </ion-col>\n\n    </ion-row>\n\n    <div *ngIf="!outlets || outlets.length < 1" class="text-align--center">\n\n		Anda tidak memiliki outlet untuk dikelola\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\outlet-list\outlet-list.html"*/,
+            selector: 'page-outlet-list',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\outlet-list\outlet-list.html"*/'<!--\n\n  Generated template for the OutletListPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n	  <ion-navbar>\n\n	  	<button ion-button menuToggle start>\n\n	      <ion-icon name="menu"></ion-icon>\n\n	    </button>\n\n	    <ion-title>Outlet anda</ion-title>\n\n	  	<button ion-button menuToggle="right" end>\n\n	      <ion-icon name="menu"></ion-icon>\n\n	    </button>\n\n	  </ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<ion-refresher (ionRefresh)="get_outlet_refresh($event)">\n\n    	<ion-refresher-content></ion-refresher-content>\n\n  	</ion-refresher>\n\n	<ion-row class="outlet-list">\n\n        <ion-col col-md-4 col-lg-3 col-xs-12  *ngFor="let item of outlets; let i = index;" (click)="selectOutlet(item)">\n\n          <ion-card [style.backgroundImage]="\'url(\'+helper.config.base_url()+item.outlet_logo+\')\'" style="background-size:cover; background-position: center; ">\n\n      		<div class="card-container">\n\n	          	<div class="card-title">{{item.outlet_name}}</div>\n\n	          	<div class="card-subtitle"><ion-icon ios="ios-contact" md="ios-contact"></ion-icon> <span>{{item.outlet_roles_name}}</span> </div>\n\n      		</div>\n\n          </ion-card>\n\n        </ion-col>\n\n    </ion-row>\n\n    <div *ngIf="!outlets || outlets.length < 1" class="text-align--center">\n\n		Anda tidak memiliki outlet untuk dikelola\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\outlet-list\outlet-list.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_unique_device_id__["a" /* UniqueDeviceID */], __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* Platform */]])
     ], OutletListPage);
@@ -632,7 +632,7 @@ var OutletListPage = (function () {
 
 /***/ }),
 
-/***/ 114:
+/***/ 113:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -641,7 +641,7 @@ var OutletListPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_printer_service_printer_service__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_bluetooth_serial__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_bluetooth_serial__ = __webpack_require__(345);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -738,7 +738,7 @@ var PrintBluetoothPanelPage = (function () {
     };
     PrintBluetoothPanelPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-print-bluetooth-panel',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\print-bluetooth-panel\print-bluetooth-panel.html"*/'<!--\n\n  Generated template for the PrintBluetoothPanelPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n	<ion-toolbar color="main">\n\n		\n\n		<ion-navbar>\n\n			<button ion-button menuToggle>\n\n				<ion-icon name="menu"></ion-icon>\n\n			</button>\n\n			<ion-title *ngIf="state == \'index\'">Printer</ion-title>\n\n			<ion-title *ngIf="state == \'search_print\'">Cari Printer</ion-title>\n\n		\n\n			<ion-buttons end>\n\n				<button ion-button clear icon-left color="light" (click)="check_unpaired_device()">\n\n				  <ion-icon name="print"></ion-icon> Cari printer\n\n				</button>\n\n			</ion-buttons>\n\n\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<ion-list>\n\n	  	<button ion-item *ngIf="default_printer && default_printer.aliasName">\n\n			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>\n\n	    	{{ default_printer.aliasName }}\n\n	    	<span class="badge pull-right">default</span>\n\n	  	</button>  \n\n		<div class="text-align--center" *ngIf="!default_printer && !default_printer.aliasName">Tidak ditemukan printer default</div>\n\n	\n\n		<div class="text-align--center" *ngIf="search_print && printer_unconnected.length < 1">Tidak ada printer ditemukan</div>\n\n	  	<ion-item-divider color="light" *ngIf="search_print && printer_unconnected.length > 0"> {{printer_unconnected.length}} perangkat ditemukan </ion-item-divider>\n\n	  	<div *ngFor="let item of printer_unconnected">\n\n		  	<button ion-item *ngIf="item.address != default_printer.address" (click)="itemSelected(item)">\n\n				<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>\n\n		    	{{ item.aliasName }}\n\n		  	</button>  \n\n	  	</div>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\print-bluetooth-panel\print-bluetooth-panel.html"*/,
+            selector: 'page-print-bluetooth-panel',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\print-bluetooth-panel\print-bluetooth-panel.html"*/'<!--\n\n  Generated template for the PrintBluetoothPanelPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n	<ion-toolbar color="main">\n\n		\n\n		<ion-navbar>\n\n			<button ion-button menuToggle>\n\n				<ion-icon name="menu"></ion-icon>\n\n			</button>\n\n			<ion-title *ngIf="state == \'index\'">Printer</ion-title>\n\n			<ion-title *ngIf="state == \'search_print\'">Cari Printer</ion-title>\n\n		\n\n			<ion-buttons end>\n\n				<button ion-button clear icon-left color="light" (click)="check_unpaired_device()">\n\n				  <ion-icon name="print"></ion-icon> Cari printer\n\n				</button>\n\n			</ion-buttons>\n\n\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<ion-list>\n\n	  	<button ion-item *ngIf="default_printer && default_printer.aliasName">\n\n			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>\n\n	    	{{ default_printer.aliasName }}\n\n	    	<span class="badge pull-right">default</span>\n\n	  	</button>  \n\n		<div class="text-align--center" *ngIf="!default_printer && !default_printer.aliasName">Tidak ditemukan printer default</div>\n\n	\n\n		<div class="text-align--center" *ngIf="search_print && printer_unconnected.length < 1">Tidak ada printer ditemukan</div>\n\n	  	<ion-item-divider color="light" *ngIf="search_print && printer_unconnected.length > 0"> {{printer_unconnected.length}} perangkat ditemukan </ion-item-divider>\n\n	  	<div *ngFor="let item of printer_unconnected">\n\n		  	<button ion-item *ngIf="item.address != default_printer.address" (click)="itemSelected(item)">\n\n				<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>\n\n		    	{{ item.aliasName }}\n\n		  	</button>  \n\n	  	</div>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\print-bluetooth-panel\print-bluetooth-panel.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__ionic_native_bluetooth_serial__["a" /* BluetoothSerial */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_printer_service_printer_service__["a" /* PrinterServiceProvider */]])
     ], PrintBluetoothPanelPage);
@@ -746,6 +746,64 @@ var PrintBluetoothPanelPage = (function () {
 }());
 
 //# sourceMappingURL=print-bluetooth-panel.js.map
+
+/***/ }),
+
+/***/ 136:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillItemEditorPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_bill_bill__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__ = __webpack_require__(8);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the BillItemEditorPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var BillItemEditorPage = (function () {
+    function BillItemEditorPage(navCtrl, navParams, billProvider, helper, events) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.billProvider = billProvider;
+        this.helper = helper;
+        this.events = events;
+        this.bill = {};
+        // this.navParams.data = {} // this code use to reset navParams. bcause, whenever a page pushed from this page and popped back, this data bill item always from the previous event. 
+    }
+    BillItemEditorPage.prototype.ionViewWillEnter = function () {
+        this.bill = this.navParams.data.bill;
+        console.log(this.bill);
+        this.billProvider.update_bill_component(this.navParams.data.bill, false);
+        this.billProvider.count_pricing();
+        this.events.publish('bill.update', {});
+    };
+    BillItemEditorPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-bill-item-editor',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\bill-item-editor\bill-item-editor.html"*/'<!--\n\n  Generated template for the BillItemEditorPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n	<ion-toolbar color="main">\n\n		<ion-navbar>\n\n			<ion-title>Nota {{bill.pay_id}}</ion-title>\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content id="product-box-detail">\n\n	<ion-grid>\n\n		<ion-row class="relative" id="product-content-body">\n\n			\n\n			<div  col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-left">\n\n				<div class="receipt-product">\n\n					<page-receipt></page-receipt> \n\n				</div>\n\n			</div>\n\n			<ion-col col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-right" class="column">\n\n\n\n				<div class="box" id="box-product">\n\n					\n\n					<div class="bs-row">\n\n						<div class="col-md-12">\n\n							<ion-list>\n\n								<ion-item>\n\n									No. Nota\n\n									<ion-note item-end>\n\n										{{bill.pay_id}}\n\n									</ion-note>\n\n								</ion-item>\n\n\n\n								<ion-item>\n\n									Nama pelanggan\n\n									<ion-note item-end>\n\n										{{bill.visitor_name}}\n\n									</ion-note>\n\n								</ion-item>\n\n								<ion-item>\n\n									Nomor meja\n\n									<ion-note item-end>\n\n										<span *ngIf="bill.table_id && bill.table_name">{{bill.table_name}}</span>\n\n										<span *ngIf="!bill.table_id || !bill.table_name"> - </span>\n\n									</ion-note>\n\n								</ion-item>\n\n\n\n								\n\n								<ion-item>\n\n									Total Bill\n\n									<ion-note item-end>\n\n										Rp.{{ helper.intToIDR(bill.payment_bills) }}\n\n									</ion-note>\n\n								</ion-item>\n\n\n\n								<ion-item>\n\n									Pajak\n\n									<ion-note item-end>\n\n										<span *ngIf="bill.tax_nominal"> Rp.{{helper.intToIDR(bill.tax_nominal)}} </span>\n\n										<span *ngIf="!bill.tax_nominal"> - </span>\n\n									</ion-note>\n\n								</ion-item>\n\n\n\n								<ion-item>\n\n									Discount\n\n									<ion-note item-end>\n\n										<span *ngIf="bill.discount_id"> {{bill.discount_percent}} %,  Rp.{{helper.intToIDR(helper.percentToNominal(bill.discount_percent, bill.payment_bills)) }} </span>\n\n										<span *ngIf="!bill.discount_id"> - </span>\n\n									</ion-note>\n\n								</ion-item>\n\n\n\n								<ion-item>\n\n									Total Pembayaran\n\n									<ion-note item-end>\n\n										Rp.{{ helper.intToIDR(bill.payment_total) }}\n\n									</ion-note>\n\n								</ion-item>\n\n\n\n								<ion-item>\n\n									Bayar Tunai\n\n									<ion-note item-end>\n\n										<span *ngIf="bill.payment_nominal > 0">Rp. {{ helper.intToIDR(bill.payment_nominal) }}</span>\n\n										<span *ngIf="bill.payment_nominal <= 0">-</span>\n\n									</ion-note>\n\n								</ion-item>\n\n\n\n							</ion-list>\n\n						</div>\n\n					</div>\n\n				</div>	\n\n			</ion-col>\n\n			\n\n\n\n		</ion-row>\n\n	</ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\bill-item-editor\bill-item-editor.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_bill_bill__["a" /* BillProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
+    ], BillItemEditorPage);
+    return BillItemEditorPage;
+}());
+
+//# sourceMappingURL=bill-item-editor.js.map
 
 /***/ }),
 
@@ -1181,7 +1239,7 @@ var DebtPage = (function () {
     };
     DebtPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-debt',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\debt\debt.html"*/'<!--\n  Generated template for the DebtPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	\n	<ion-toolbar color="main">\n		\n		<ion-navbar>\n			<button ion-button menuToggle *ngIf="state == \'list\'">\n				<ion-icon name="menu"></ion-icon>\n			</button>\n			<ion-buttons left>\n			    \n			    <button ion-button icon-only clear color="light" *ngIf="state == \'detail\'" (click)="outDetail()">\n			      <ion-icon name="arrow-back"></ion-icon>\n			    </button>\n			</ion-buttons>\n\n			<ion-buttons left>    \n			    <button ion-button icon-only clear color="light" *ngIf="state == \'history\'" (click)="outFromLog()">\n			      <ion-icon name="arrow-back"></ion-icon>\n			    </button>\n			</ion-buttons>\n			<ion-title *ngIf="state == \'list\'">Hutang</ion-title>\n			<ion-title *ngIf="state == \'detail\'">Detail Hutang </ion-title>\n			<ion-title *ngIf="state == \'history\'">Log Hutang</ion-title>\n			\n			\n\n			<ion-searchbar *ngIf="page_params.toggleSearchInput" class="searchbar-toolbar" (ionInput)="filter_hutang()" [(ngModel)]="filter_input" style="padding: 0px 5px; width:40%;"></ion-searchbar>\n			<ion-buttons class="center distributed" *ngIf="state == \'list\'">\n				<button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">\n					<ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>\n					<ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>\n				</button>\n			</ion-buttons>\n			<ion-buttons class="center distributed" *ngIf="state == \'list\'">\n				<button ion-button clear icon-right color="light" (click)="filter_options()">\n				  Filter <ion-icon name="funnel"></ion-icon>\n				</button>\n			</ion-buttons>\n			<ion-buttons class="center distributed" *ngIf="state == \'list\'">\n				<button ion-button clear icon-right color="light" (click)="open_debt_card()">\n				  Download Kartu hutang\n				</button>\n			</ion-buttons>\n			<ion-buttons class="center distributed" *ngIf="state == \'detail\'">\n				<button ion-button clear icon-right color="light" (click)="cicilHutang(detail_item)">\n				  Cicil berdasarkan nominal\n				</button>\n			</ion-buttons>\n			<ion-buttons class="center distributed" *ngIf="state == \'history\'">\n				<button ion-button clear icon-right color="light" (click)="pay_as_pay_id(detail_item)">\n				  Cicil berdasarkan nota\n				</button>\n			</ion-buttons>\n		</ion-navbar>\n	</ion-toolbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n	<div *ngIf="state == \'list\'">\n\n		<ion-row>\n	        <ion-col col-4 *ngFor="let debt of debts; let i = index;" (press)="advanceOptions(i, debt)">\n	          <ion-card padding>\n	          	<h2 class="text-main">{{debt.member_name}}</h2>\n	          	<div style="margin-top: 15px;" class="text-muted">\n	          		<div style="font-size: .7em;">  \n						<strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}\n	          		</div>\n	          		<div style="font-size: .7em;">  \n						<strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}\n	          		</div>\n	          		<div style="font-size: .7em;">  \n						<strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}\n	          		</div>\n	          	</div>\n	          </ion-card>\n	        </ion-col>\n	    </ion-row>\n	    <div *ngIf="!debts || debts.length < 1" class="text-align--center">\n			Tidak ada hutang ditemukan\n		</div>\n		<!-- <ion-item *ngFor="let debt of debts; let i = index; " (click)="advanceOptions(i, debt)">\n			<h2>{{debt.member_name}}</h2>\n			<p>\n				<span> <strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}</span>\n				<span> <strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}</span>\n				<span> <strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}</span>\n			</p>\n		</ion-item> -->\n	</div>\n\n	<div *ngIf="state == \'detail\'">\n		<div *ngIf="debts.length > 0" padding>\n			<div style="margin-top: 6px;"> <strong>Name :</strong> {{debts[0][\'member_name\']}} </div>\n			<div style="margin-top: 6px;"> <strong>Email :</strong> {{debts[0][\'member_mail\']}} </div>\n			<div style="margin-top: 6px;"> <strong>Phone :</strong> {{debts[0][\'member_phone\']}} </div>\n		</div>\n		<ion-row>\n	        <ion-col col-4 *ngFor="let debt of debts; let i = index;" (press)="advanceOptions(i, debt)">\n	          <ion-card padding>\n	          	<h2 class="text-main">Nota {{helper.get_initial_outlet_name(helper.local.get_params(helper.config.variable.credential).outlet.outlet_name,\'.\')}}/NT/000{{debt.debt_id}}</h2>\n	          	<div style="margin-top: 15px;" class="text-muted">\n	          		<div style="font-size: .7em;">  \n						<strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}\n	          		</div>\n	          		<div style="font-size: .7em;">  \n						<strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}\n	          		</div>\n	          		<div style="font-size: .7em;">  \n						<strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}\n	          		</div>\n	          	</div>\n	          </ion-card>\n	        </ion-col>\n	    </ion-row>\n		<!-- <ion-item *ngFor="let debt of debts; let i = index; " (click)="advanceOptionsDetail(i, debt)" [ngClass]="{\'sr-only\':debt.debt_rest <= 0 ?true : false}">\n			<h2><strong>{{debt.member_name}}</strong></h2>\n			<p>\n				<span><strong>Nota : </strong> {{helper.intToIDR(debt.pay_id)}}</span> &middot; \n				<span><strong>Hutang : </strong> Rp.{{helper.intToIDR(debt.total_debt_in)}}</span> &middot;\n				<span><strong>Dibayar : </strong> Rp.{{helper.intToIDR(debt.total_debt_out)}}</span> &middot;\n				<span><strong>Sisa hutang : </strong> Rp.{{helper.intToIDR(debt.debt_rest_pay_id)}}</span>\n			</p>\n		</ion-item> -->\n	</div>\n\n	<ion-list *ngIf="state == \'history\'">\n		<ion-item *ngFor="let debt of debts; let i = index; ">\n			<h2><strong>{{helper.moment(debt.debt_date).format(\'DD MMM YYYY - HH:MM\')}}</strong></h2> <span *ngIf="debt.debt_out > 0" class="bs-label label-success">Pembayaran</span> <span *ngIf="debt.debt_in > 0" class="bs-label label-main">Pengadaan hutang</span>\n			\n			<div style="margin-top: 5px;">\n				<span>Nominal : </span> <span *ngIf="debt.debt_out > 0">{{helper.intToIDR(debt.debt_out)}}</span> <span *ngIf="debt.debt_in > 0">{{helper.intToIDR(debt.debt_in)}}</span>\n			</div>\n		</ion-item>\n	</ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\debt\debt.html"*/,
+            selector: 'page-debt',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\debt\debt.html"*/'<!--\n\n  Generated template for the DebtPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	\n\n	<ion-toolbar color="main">\n\n		\n\n		<ion-navbar>\n\n			<button ion-button menuToggle *ngIf="state == \'list\'">\n\n				<ion-icon name="menu"></ion-icon>\n\n			</button>\n\n			<ion-buttons left>\n\n			    \n\n			    <button ion-button icon-only clear color="light" *ngIf="state == \'detail\'" (click)="outDetail()">\n\n			      <ion-icon name="arrow-back"></ion-icon>\n\n			    </button>\n\n			</ion-buttons>\n\n\n\n			<ion-buttons left>    \n\n			    <button ion-button icon-only clear color="light" *ngIf="state == \'history\'" (click)="outFromLog()">\n\n			      <ion-icon name="arrow-back"></ion-icon>\n\n			    </button>\n\n			</ion-buttons>\n\n			<ion-title *ngIf="state == \'list\'">Hutang</ion-title>\n\n			<ion-title *ngIf="state == \'detail\'">Detail Hutang </ion-title>\n\n			<ion-title *ngIf="state == \'history\'">Log Hutang</ion-title>\n\n			\n\n			\n\n\n\n			<ion-searchbar *ngIf="page_params.toggleSearchInput" class="searchbar-toolbar" (ionInput)="filter_hutang()" [(ngModel)]="filter_input" style="padding: 0px 5px; width:40%;"></ion-searchbar>\n\n			<ion-buttons class="center distributed" *ngIf="state == \'list\'">\n\n				<button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">\n\n					<ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>\n\n					<ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			<ion-buttons class="center distributed" *ngIf="state == \'list\'">\n\n				<button ion-button clear icon-right color="light" (click)="filter_options()">\n\n				  Filter <ion-icon name="funnel"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			<ion-buttons class="center distributed" *ngIf="state == \'list\'">\n\n				<button ion-button clear icon-right color="light" (click)="open_debt_card()">\n\n				  Download Kartu hutang\n\n				</button>\n\n			</ion-buttons>\n\n			<ion-buttons class="center distributed" *ngIf="state == \'detail\'">\n\n				<button ion-button clear icon-right color="light" (click)="cicilHutang(detail_item)">\n\n				  Cicil berdasarkan nominal\n\n				</button>\n\n			</ion-buttons>\n\n			<ion-buttons class="center distributed" *ngIf="state == \'history\'">\n\n				<button ion-button clear icon-right color="light" (click)="pay_as_pay_id(detail_item)">\n\n				  Cicil berdasarkan nota\n\n				</button>\n\n			</ion-buttons>\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n	<div *ngIf="state == \'list\'">\n\n\n\n		<ion-row>\n\n	        <ion-col col-4 *ngFor="let debt of debts; let i = index;" (press)="advanceOptions(i, debt)">\n\n	          <ion-card padding>\n\n	          	<h2 class="text-main">{{debt.member_name}}</h2>\n\n	          	<div style="margin-top: 15px;" class="text-muted">\n\n	          		<div style="font-size: .7em;">  \n\n						<strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}\n\n	          		</div>\n\n	          		<div style="font-size: .7em;">  \n\n						<strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}\n\n	          		</div>\n\n	          		<div style="font-size: .7em;">  \n\n						<strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}\n\n	          		</div>\n\n	          	</div>\n\n	          </ion-card>\n\n	        </ion-col>\n\n	    </ion-row>\n\n	    <div *ngIf="!debts || debts.length < 1" class="text-align--center">\n\n			Tidak ada hutang ditemukan\n\n		</div>\n\n		<!-- <ion-item *ngFor="let debt of debts; let i = index; " (click)="advanceOptions(i, debt)">\n\n			<h2>{{debt.member_name}}</h2>\n\n			<p>\n\n				<span> <strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}</span>\n\n				<span> <strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}</span>\n\n				<span> <strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}</span>\n\n			</p>\n\n		</ion-item> -->\n\n	</div>\n\n\n\n	<div *ngIf="state == \'detail\'">\n\n		<div *ngIf="debts.length > 0" padding>\n\n			<div style="margin-top: 6px;"> <strong>Name :</strong> {{debts[0][\'member_name\']}} </div>\n\n			<div style="margin-top: 6px;"> <strong>Email :</strong> {{debts[0][\'member_mail\']}} </div>\n\n			<div style="margin-top: 6px;"> <strong>Phone :</strong> {{debts[0][\'member_phone\']}} </div>\n\n		</div>\n\n		<ion-row>\n\n	        <ion-col col-4 *ngFor="let debt of debts; let i = index;" (press)="advanceOptions(i, debt)">\n\n	          <ion-card padding>\n\n	          	<h2 class="text-main">Nota {{helper.get_initial_outlet_name(helper.local.get_params(helper.config.variable.credential).outlet.outlet_name,\'.\')}}/NT/000{{debt.debt_id}}</h2>\n\n	          	<div style="margin-top: 15px;" class="text-muted">\n\n	          		<div style="font-size: .7em;">  \n\n						<strong>Hutang terbayar:</strong> {{helper.intToIDR(debt.total_debt_out)}}\n\n	          		</div>\n\n	          		<div style="font-size: .7em;">  \n\n						<strong>Sisa Hutang :</strong> {{helper.intToIDR(debt.debt_rest_pay_id)}}\n\n	          		</div>\n\n	          		<div style="font-size: .7em;">  \n\n						<strong>Total hutang:</strong> {{helper.intToIDR(debt.total_debt_in)}}\n\n	          		</div>\n\n	          	</div>\n\n	          </ion-card>\n\n	        </ion-col>\n\n	    </ion-row>\n\n		<!-- <ion-item *ngFor="let debt of debts; let i = index; " (click)="advanceOptionsDetail(i, debt)" [ngClass]="{\'sr-only\':debt.debt_rest <= 0 ?true : false}">\n\n			<h2><strong>{{debt.member_name}}</strong></h2>\n\n			<p>\n\n				<span><strong>Nota : </strong> {{helper.intToIDR(debt.pay_id)}}</span> &middot; \n\n				<span><strong>Hutang : </strong> Rp.{{helper.intToIDR(debt.total_debt_in)}}</span> &middot;\n\n				<span><strong>Dibayar : </strong> Rp.{{helper.intToIDR(debt.total_debt_out)}}</span> &middot;\n\n				<span><strong>Sisa hutang : </strong> Rp.{{helper.intToIDR(debt.debt_rest_pay_id)}}</span>\n\n			</p>\n\n		</ion-item> -->\n\n	</div>\n\n\n\n	<ion-list *ngIf="state == \'history\'">\n\n		<ion-item *ngFor="let debt of debts; let i = index; ">\n\n			<h2><strong>{{helper.moment(debt.debt_date).format(\'DD MMM YYYY - HH:MM\')}}</strong></h2> <span *ngIf="debt.debt_out > 0" class="bs-label label-success">Pembayaran</span> <span *ngIf="debt.debt_in > 0" class="bs-label label-main">Pengadaan hutang</span>\n\n			\n\n			<div style="margin-top: 5px;">\n\n				<span>Nominal : </span> <span *ngIf="debt.debt_out > 0">{{helper.intToIDR(debt.debt_out)}}</span> <span *ngIf="debt.debt_in > 0">{{helper.intToIDR(debt.debt_in)}}</span>\n\n			</div>\n\n		</ion-item>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\debt\debt.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */]])
     ], DebtPage);
@@ -1444,7 +1502,7 @@ var EditReceiptItemPage = (function () {
     };
     EditReceiptItemPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-edit-receipt-item',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\edit-receipt-item\edit-receipt-item.html"*/'<!--\n\n  Generated template for the EditReceiptItemPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-toolbar color="main">\n\n  <ion-navbar>\n\n    <ion-title>Edit item order</ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="closeModal()">\n\n        Tutup\n\n      </button>\n\n    </ion-buttons>\n\n\n\n  </ion-navbar>\n\n</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <ion-grid>\n\n    <ion-row class="relative center " id="product-content-body">\n\n     \n\n      <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 id="section-right" class="column">\n\n            \n\n            <ion-row class="row form-group">\n\n              <ion-col col-3 class="">Jumlah Pembelian</ion-col>\n\n              <ion-col col-9 class=" input-box input-group">\n\n                <button class="" ion-button color="light" icon-only id="" round (click)="reduceItem()" style="margin-right: 10px;">\n\n                  <ion-icon name="remove"></ion-icon>\n\n                </button>\n\n                <input type="number" class="form-control form-control--lg" name="" [(ngModel)]="item.qty">\n\n                <button class="" ion-button color="light" icon-only id="" round (click)="addItem()"  style="margin-left: 10px;">\n\n                  <ion-icon name="add"></ion-icon>\n\n                </button>\n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="form-group">\n\n              <ion-col col-3 class="">Harga</ion-col>\n\n              <ion-col col-9 class=" input-box input-group">\n\n                <b class="" style="font-size: 1.1em;">Rp {{helper.intToIDR(item.price)}}</b>\n\n              </ion-col>\n\n            </ion-row>\n\n            \n\n            <ion-row class="row form-group">\n\n              <ion-col col-3 class="">Diskon</ion-col>\n\n              <ion-col col-9 class=" input-box input-group">\n\n                <input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="item.discount_percent" (input)="countChargeNominal($event)">\n\n                <span class="input-group-addon" id="basic-addon1"> % </span>\n\n                <input type="number" class="form-control--lg form-control" name="" [(ngModel)]="item.discount_nominal" (input)="countChargePercent($event)">\n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="form-group">\n\n              <ion-col col-3 class="">Keterangan</ion-col>\n\n              <ion-col col-9 class=" input-box">\n\n                <textarea class="form-control" [(ngModel)]="item.note" (input)="changeNotes()" style="height: 100px;"></textarea>\n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="form-group">\n\n             \n\n              <ion-col col-3 class="">Complement?</ion-col>\n\n              <ion-col col-9 class=" input-box">\n\n                  <ion-toggle checked="false" value="1" [(ngModel)]="item.complement_status" (ionChange)="changeComplementStatus()"></ion-toggle>\n\n              </ion-col>\n\n            </ion-row>\n\n  \n\n            <ion-row class="form-group" *ngIf="item.complement_status > 0">\n\n              <ion-col col-3 class="">Complement Item</ion-col>\n\n              <ion-col col-9 class=" input-box input-group">\n\n                 <button class="" ion-button color="light" icon-only id="" round (click)="changeComplementItems(\'reduce\')" style="margin-right: 10px;">\n\n                  <ion-icon name="remove"></ion-icon>\n\n                </button>\n\n                <input type="number" min="1" max="{{item.qty}}" class="form-control" [(ngModel)]="item.complement_item" (input)="changeComplementItems(\'input\', $event)">\n\n                <button class="" ion-button color="light" icon-only id="" round (click)="changeComplementItems(\'add\')"  style="margin-left: 10px;">\n\n                  <ion-icon name="add"></ion-icon>\n\n                </button>\n\n                \n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="form-group" *ngIf="item.complement_status > 0">\n\n              <ion-col col-3 class="">Complement Note</ion-col>\n\n              <ion-col col-9 class=" input-box">\n\n                <textarea class="form-control" [(ngModel)]="item.complement_note" (input)="changeComplementNotes()" style="height: 100px;" placeholder="Isikan alasan komplimen"></textarea>\n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="row form-group center">\n\n                <button class="btn-round" ion-button end (click)="updateItem()">Simpan</button>\n\n\n\n                <button class="btn-round" ion-button color="danger" (click)="cancelUpdate()">Batal</button>\n\n            </ion-row>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\edit-receipt-item\edit-receipt-item.html"*/,
+            selector: 'page-edit-receipt-item',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\edit-receipt-item\edit-receipt-item.html"*/'<!--\n\n  Generated template for the EditReceiptItemPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-toolbar color="main">\n\n  <ion-navbar>\n\n    <ion-title>Edit item order</ion-title>\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="closeModal()">\n\n        Tutup\n\n      </button>\n\n    </ion-buttons>\n\n\n\n  </ion-navbar>\n\n</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <ion-grid>\n\n    <ion-row class="relative center " id="product-content-body">\n\n     \n\n      <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 id="section-right" class="column">\n\n            \n\n            <ion-row class="row form-group">\n\n              <ion-col col-3 class="">Jumlah Pembelian</ion-col>\n\n              <ion-col col-9 class=" input-box input-group">\n\n                <button class="" ion-button color="light" icon-only id="" round (click)="reduceItem()" style="margin-right: 10px;">\n\n                  <ion-icon name="remove"></ion-icon>\n\n                </button>\n\n                <input type="number" class="form-control form-control--lg" name="" [(ngModel)]="item.qty">\n\n                <button class="" ion-button color="light" icon-only id="" round (click)="addItem()"  style="margin-left: 10px;">\n\n                  <ion-icon name="add"></ion-icon>\n\n                </button>\n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="form-group">\n\n              <ion-col col-3 class="">Harga</ion-col>\n\n              <ion-col col-9 class=" input-box input-group">\n\n                <b class="" style="font-size: 1.1em;">Rp {{helper.intToIDR(item.price)}}</b>\n\n              </ion-col>\n\n            </ion-row>\n\n            \n\n            <ion-row class="row form-group">\n\n              <ion-col col-3 class="">Diskon</ion-col>\n\n              <ion-col col-9 class=" input-box input-group">\n\n                <input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="item.discount_percent" (input)="countChargeNominal($event)">\n\n                <span class="input-group-addon" id="basic-addon1"> % </span>\n\n                <input type="number" class="form-control--lg form-control" name="" [(ngModel)]="item.discount_nominal" (input)="countChargePercent($event)">\n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="form-group">\n\n              <ion-col col-3 class="">Keterangan</ion-col>\n\n              <ion-col col-9 class=" input-box">\n\n                <textarea class="form-control" [(ngModel)]="item.note" (input)="changeNotes()" style="height: 100px;"></textarea>\n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="form-group">\n\n             \n\n              <ion-col col-3 class="">Complement?</ion-col>\n\n              <ion-col col-9 class=" input-box">\n\n                  <ion-toggle checked="false" value="1" [(ngModel)]="item.complement_status" (ionChange)="changeComplementStatus()"></ion-toggle>\n\n              </ion-col>\n\n            </ion-row>\n\n  \n\n            <ion-row class="form-group" *ngIf="item.complement_status > 0">\n\n              <ion-col col-3 class="">Complement Item</ion-col>\n\n              <ion-col col-9 class=" input-box input-group">\n\n                 <button class="" ion-button color="light" icon-only id="" round (click)="changeComplementItems(\'reduce\')" style="margin-right: 10px;">\n\n                  <ion-icon name="remove"></ion-icon>\n\n                </button>\n\n                <input type="number" min="1" max="{{item.qty}}" class="form-control" [(ngModel)]="item.complement_item" (input)="changeComplementItems(\'input\', $event)">\n\n                <button class="" ion-button color="light" icon-only id="" round (click)="changeComplementItems(\'add\')"  style="margin-left: 10px;">\n\n                  <ion-icon name="add"></ion-icon>\n\n                </button>\n\n                \n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="form-group" *ngIf="item.complement_status > 0">\n\n              <ion-col col-3 class="">Complement Note</ion-col>\n\n              <ion-col col-9 class=" input-box">\n\n                <textarea class="form-control" [(ngModel)]="item.complement_note" (input)="changeComplementNotes()" style="height: 100px;" placeholder="Isikan alasan komplimen"></textarea>\n\n              </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row class="row form-group center">\n\n                <button class="btn-round" ion-button end (click)="updateItem()">Simpan</button>\n\n\n\n                <button class="btn-round" ion-button color="danger" (click)="cancelUpdate()">Batal</button>\n\n            </ion-row>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\edit-receipt-item\edit-receipt-item.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_bill_bill__["a" /* BillProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
     ], EditReceiptItemPage);
@@ -1456,6 +1514,54 @@ var EditReceiptItemPage = (function () {
 /***/ }),
 
 /***/ 139:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ErrorPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the ErrorPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ErrorPage = (function () {
+    function ErrorPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.page_params = { code: 500, message: "Page not found" };
+        this.page_params = Object.assign(this.page_params, this.navParams.data);
+        console.log(this.page_params);
+    }
+    ErrorPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ErrorPage');
+    };
+    ErrorPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-error',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\error\error.html"*/'<!--\n\n  Generated template for the ErrorPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	\n\n	<ion-toolbar color="main">\n\n		<ion-navbar>\n\n			<button ion-button menuToggle>\n\n				<ion-icon name="menu"></ion-icon>\n\n			</button>\n\n			<ion-title>Error {{page_params.code}}</ion-title>\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding style="" >\n\n	<div class="center distributed" style="height: 90vh;flex-direction: column;">\n\n		<div class="col-md-7 col-xs-12 col-sm-8 col-lg-6" style="text-align: center;">\n\n				\n\n			<h1 style="font-size: 15rem;">{{page_params.code}}</h1>\n\n			<p style="font-size: 3rem;">{{page_params.message}}</p>\n\n		</div>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\error\error.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
+    ], ErrorPage);
+    return ErrorPage;
+}());
+
+//# sourceMappingURL=error.js.map
+
+/***/ }),
+
+/***/ 140:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1636,7 +1742,7 @@ var TotalPaymentEditorPage = (function () {
     };
     TotalPaymentEditorPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-total-payment-editor',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\total-payment-editor\total-payment-editor.html"*/'<!--\n  Generated template for the TotalPaymentEditorPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	<ion-toolbar color="main">\n\n		<ion-navbar>\n			<ion-title>Edit total pembayaran</ion-title>\n			<ion-buttons end>\n				<button ion-button icon-only (click)="updateItem()" *ngIf="page_params.view_type == \'modal\' ">\n					Selesai\n				</button>\n			</ion-buttons>\n		</ion-navbar>\n\n	</ion-toolbar>\n</ion-header>\n\n\n<ion-content padding>\n	<ion-grid>\n		<ion-row>\n			<ion-col offset-2 col-7 col-xs-12 col-sm-10 col-md-7 >\n				<ion-row class="row form-group">\n					<ion-col col-3 class="">Total Belanja</ion-col>\n					<ion-col col-9 class=" input-box">\n						<input type="text" class="form-control--lg" name="" disabled value="Rp. {{helper.intToIDR(billProvider.get_bill_component(\'payment_bills\'))}}">\n					</ion-col>\n				</ion-row>\n\n				<ion-row class="row form-group ion-checkbox-no-bordered">\n					<ion-col col-3 class=""></ion-col>\n					<ion-col col-9 class=" input-box input-group">\n						<ion-item style="padding-left: 0px;">\n							<ion-label style="border-bottom: none;">Tambahkan diskon</ion-label>\n						  	<ion-checkbox color="primary" checked="true" value="1" [(ngModel)]="bill.is_discount" (ionChange)="toggleDiscount()"></ion-checkbox>\n						</ion-item>\n					</ion-col>\n				</ion-row>\n\n				\n				<ion-row class="row form-group" *ngIf="bill.is_discount">\n					<ion-col col-3 class=""></ion-col>\n					<ion-col col-3 class="">\n						<div>\n							<ion-toggle checked="false" [(ngModel)]="bill.discount_type_fill"></ion-toggle>\n						</div>\n						<!-- <ion-select [(ngModel)]="bill.discount_type_fill" style="max-width:100%; width: 100%;">\n						    <ion-option value="0" selected>Pilih Type</ion-option>\n						    <ion-option value="1">Manual</ion-option>\n						    <ion-option value="2">Master Data</ion-option>\n						</ion-select> -->\n					</ion-col>\n\n					<ion-col col-6 class="" *ngIf="bill.discount_type_fill">\n						<ion-select [(ngModel)]="bill.discount_id" (ionChange)="change_discount()" style="max-width:100%; width: 100%;">\n							<ion-option value="0"  selected> Pilih Diskon </ion-option>\n							<ion-option value="{{item.discount_id}}" *ngFor="let item of bill.discounts" > {{item.discount_name}} - {{item.discount_percent}} % </ion-option>\n					    </ion-select>\n					</ion-col>\n					<ion-col col-6 class=" input-box input-group" *ngIf="!bill.discount_type_fill">\n						<input type="number" class="form-control--lg form-control" max="99" min="1" name="" style="width: 20%;" [(ngModel)]="bill.discount_percent" (input)="countDiscountNominal($event)" >\n						<span class="input-group-addon" id="basic-addon1"> % </span>\n						<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.discount_nominal" (input)="countDiscountPercent($event)">\n					</ion-col>\n				</ion-row>\n\n				\n				<!-- <ion-row class="row form-group" *ngIf="bill.is_discount">\n					<ion-col col-3 class="">Discount</ion-col>\n					<ion-col col-9 class=" input-box input-group">\n						\n					</ion-col>\n				</ion-row> -->\n				\n				<ion-row class="row form-group ion-checkbox-no-bordered">\n					<ion-col col-3 class=""></ion-col>\n					<ion-col col-9 class=" input-box input-group">\n						<ion-item style="padding-left: 0px;">\n							<ion-label style="border-bottom: none;">Tambahkan Pajak</ion-label>\n						  	<ion-checkbox color="primary" checked value="1" [(ngModel)]="bill.is_tax" (ionChange)="toggleTax($event)"></ion-checkbox>\n						</ion-item>\n					</ion-col>\n				</ion-row>\n\n				<ion-row class="row form-group">\n					<ion-col col-3 class="">Pajak</ion-col>\n					<ion-col col-9 class=" input-box input-group">\n						<input type="number" min="1" max="99"  class="form-control--lg form-control" disabled="" name="" style="width: 18%;" [(ngModel)]="bill.tax_percent"  (input)="countTaxNominal()" value="10">\n						<span class="input-group-addon" id="basic-addon1"> % </span>\n						<input type="" class="form-control--lg form-control" name="" disabled="" [(ngModel)]="bill.tax_nominal" (input)="countTaxPercent()">\n					</ion-col>\n				</ion-row>\n\n				<ion-row class="form-group">\n					<ion-col col-3 class="">Total </ion-col>\n					<ion-col col-9 class=" input-box">\n						<input type="text" disabled class="form-control--lg" name="" value="Rp. {{ helper.intToIDR(billProvider.get_bill_component(\'payment_total\')) }}">\n					</ion-col>\n				</ion-row>\n\n				<!-- <ion-row class="row form-group center">\n						<button ion-button end (click)="updateItem()">Simpan</button>\n\n						<button ion-button color="danger" (click)="closeModal()">Batal</button>\n				</ion-row> -->\n			\n			</ion-col>\n		</ion-row>				\n	</ion-grid>\n\n						\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\total-payment-editor\total-payment-editor.html"*/,
+            selector: 'page-total-payment-editor',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\total-payment-editor\total-payment-editor.html"*/'<!--\n\n  Generated template for the TotalPaymentEditorPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n\n\n		<ion-navbar>\n\n			<ion-title>Edit total pembayaran</ion-title>\n\n			<ion-buttons end>\n\n				<button ion-button icon-only (click)="updateItem()" *ngIf="page_params.view_type == \'modal\' ">\n\n					Selesai\n\n				</button>\n\n			</ion-buttons>\n\n		</ion-navbar>\n\n\n\n	</ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<ion-grid>\n\n		<ion-row>\n\n			<ion-col offset-2 col-7 col-xs-12 col-sm-10 col-md-7 >\n\n				<ion-row class="row form-group">\n\n					<ion-col col-3 class="">Total Belanja</ion-col>\n\n					<ion-col col-9 class=" input-box">\n\n						<input type="text" class="form-control--lg" name="" disabled value="Rp. {{helper.intToIDR(billProvider.get_bill_component(\'payment_bills\'))}}">\n\n					</ion-col>\n\n				</ion-row>\n\n\n\n				<ion-row class="row form-group ion-checkbox-no-bordered">\n\n					<ion-col col-3 class=""></ion-col>\n\n					<ion-col col-9 class=" input-box input-group">\n\n						<ion-item style="padding-left: 0px;">\n\n							<ion-label style="border-bottom: none;">Tambahkan diskon</ion-label>\n\n						  	<ion-checkbox color="primary" checked="true" value="1" [(ngModel)]="bill.is_discount" (ionChange)="toggleDiscount()"></ion-checkbox>\n\n						</ion-item>\n\n					</ion-col>\n\n				</ion-row>\n\n\n\n				\n\n				<ion-row class="row form-group" *ngIf="bill.is_discount">\n\n					<ion-col col-3 class=""></ion-col>\n\n					<ion-col col-3 class="">\n\n						<div>\n\n							<ion-toggle checked="false" [(ngModel)]="bill.discount_type_fill"></ion-toggle>\n\n						</div>\n\n						<!-- <ion-select [(ngModel)]="bill.discount_type_fill" style="max-width:100%; width: 100%;">\n\n						    <ion-option value="0" selected>Pilih Type</ion-option>\n\n						    <ion-option value="1">Manual</ion-option>\n\n						    <ion-option value="2">Master Data</ion-option>\n\n						</ion-select> -->\n\n					</ion-col>\n\n\n\n					<ion-col col-6 class="" *ngIf="bill.discount_type_fill">\n\n						<ion-select [(ngModel)]="bill.discount_id" (ionChange)="change_discount()" style="max-width:100%; width: 100%;">\n\n							<ion-option value="0"  selected> Pilih Diskon </ion-option>\n\n							<ion-option value="{{item.discount_id}}" *ngFor="let item of bill.discounts" > {{item.discount_name}} - {{item.discount_percent}} % </ion-option>\n\n					    </ion-select>\n\n					</ion-col>\n\n					<ion-col col-6 class=" input-box input-group" *ngIf="!bill.discount_type_fill">\n\n						<input type="number" class="form-control--lg form-control" max="99" min="1" name="" style="width: 20%;" [(ngModel)]="bill.discount_percent" (input)="countDiscountNominal($event)" >\n\n						<span class="input-group-addon" id="basic-addon1"> % </span>\n\n						<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.discount_nominal" (input)="countDiscountPercent($event)">\n\n					</ion-col>\n\n				</ion-row>\n\n\n\n				\n\n				<!-- <ion-row class="row form-group" *ngIf="bill.is_discount">\n\n					<ion-col col-3 class="">Discount</ion-col>\n\n					<ion-col col-9 class=" input-box input-group">\n\n						\n\n					</ion-col>\n\n				</ion-row> -->\n\n				\n\n				<ion-row class="row form-group ion-checkbox-no-bordered">\n\n					<ion-col col-3 class=""></ion-col>\n\n					<ion-col col-9 class=" input-box input-group">\n\n						<ion-item style="padding-left: 0px;">\n\n							<ion-label style="border-bottom: none;">Tambahkan Pajak</ion-label>\n\n						  	<ion-checkbox color="primary" checked value="1" [(ngModel)]="bill.is_tax" (ionChange)="toggleTax($event)"></ion-checkbox>\n\n						</ion-item>\n\n					</ion-col>\n\n				</ion-row>\n\n\n\n				<ion-row class="row form-group">\n\n					<ion-col col-3 class="">Pajak</ion-col>\n\n					<ion-col col-9 class=" input-box input-group">\n\n						<input type="number" min="1" max="99"  class="form-control--lg form-control" disabled="" name="" style="width: 18%;" [(ngModel)]="bill.tax_percent"  (input)="countTaxNominal()" value="10">\n\n						<span class="input-group-addon" id="basic-addon1"> % </span>\n\n						<input type="" class="form-control--lg form-control" name="" disabled="" [(ngModel)]="bill.tax_nominal" (input)="countTaxPercent()">\n\n					</ion-col>\n\n				</ion-row>\n\n\n\n				<ion-row class="form-group">\n\n					<ion-col col-3 class="">Total </ion-col>\n\n					<ion-col col-9 class=" input-box">\n\n						<input type="text" disabled class="form-control--lg" name="" value="Rp. {{ helper.intToIDR(billProvider.get_bill_component(\'payment_total\')) }}">\n\n					</ion-col>\n\n				</ion-row>\n\n\n\n				<!-- <ion-row class="row form-group center">\n\n						<button ion-button end (click)="updateItem()">Simpan</button>\n\n\n\n						<button ion-button color="danger" (click)="closeModal()">Batal</button>\n\n				</ion-row> -->\n\n			\n\n			</ion-col>\n\n		</ion-row>				\n\n	</ion-grid>\n\n\n\n						\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\total-payment-editor\total-payment-editor.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_bill_bill__["a" /* BillProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */]])
     ], TotalPaymentEditorPage);
@@ -1647,7 +1753,7 @@ var TotalPaymentEditorPage = (function () {
 
 /***/ }),
 
-/***/ 140:
+/***/ 141:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1724,7 +1830,7 @@ var MemberDetailPage = (function () {
     };
     MemberDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-member-detail',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\member-detail\member-detail.html"*/'<!--\n  Generated template for the MemberDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>member-detail</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n	<div class="row">\n		<div class="col-md-4">\n			<ion-list>\n				<ion-item>\n					Nama\n					<ion-note>\n						{{detail_member.member_name}}\n					</ion-note>\n				</ion-item>\n\n				<ion-item>\n					Email\n					<ion-note>\n						{{detail_member.member_mail}}\n					</ion-note>\n				</ion-item>\n\n				<ion-item>\n					Phone\n					<ion-note>\n						{{detail_member.member_phone}}\n					</ion-note>\n				</ion-item>\n			</ion-list>\n		</div>\n		<div class="col-md-8">\n			<ion-list>\n				<ion-item *ngFor="let item of transaction; let i = index">\n					<span>{{transform_date(item.payment_date)}}</span> &middot;\n					<span style="font-weight:700; ">\n						{{item.visitor_name}}\n					</span>\n					<p style="margin-top: 10px;">\n						<span> Nota {{item.pay_id}} &middot;</span>\n						<span *ngIf="!item.table_name"> Tidak memilih meja &middot;</span> \n						<span *ngIf="item.table_name"> {{item.table_name}} &middot;</span> \n						<span> Rp.{{helper.intToIDR(item.payment_total)}} &middot;</span>\n						<span *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" class="bs-label label-success"> Terbayar </span>\n						<span *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" class="bs-label label-warning"> Belum Dibayar </span>\n						<span *ngIf="item.payment_cancel_status == 1" class="bs-label label-danger"> Pembayaran Dibatalkan </span>\n			      	<!-- {{item.payment_nominal + item.paid_with_bank_nominal}} -->\n					</p>\n					<p>\n						\n					</p>\n					<ion-icon name="done-all" *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" color="primary" item-end></ion-icon>\n					<ion-icon name="alert" *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" color="warning" item-end></ion-icon>\n					<ion-icon name="trash" *ngIf="item.payment_cancel_status == 1" color="danger" item-end></ion-icon>\n				</ion-item>\n			</ion-list>\n		</div>\n	</div>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\member-detail\member-detail.html"*/,
+            selector: 'page-member-detail',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\member-detail\member-detail.html"*/'<!--\n\n  Generated template for the MemberDetailPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>member-detail</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<div class="row">\n\n		<div class="col-md-4">\n\n			<ion-list>\n\n				<ion-item>\n\n					Nama\n\n					<ion-note>\n\n						{{detail_member.member_name}}\n\n					</ion-note>\n\n				</ion-item>\n\n\n\n				<ion-item>\n\n					Email\n\n					<ion-note>\n\n						{{detail_member.member_mail}}\n\n					</ion-note>\n\n				</ion-item>\n\n\n\n				<ion-item>\n\n					Phone\n\n					<ion-note>\n\n						{{detail_member.member_phone}}\n\n					</ion-note>\n\n				</ion-item>\n\n			</ion-list>\n\n		</div>\n\n		<div class="col-md-8">\n\n			<ion-list>\n\n				<ion-item *ngFor="let item of transaction; let i = index">\n\n					<span>{{transform_date(item.payment_date)}}</span> &middot;\n\n					<span style="font-weight:700; ">\n\n						{{item.visitor_name}}\n\n					</span>\n\n					<p style="margin-top: 10px;">\n\n						<span> Nota {{item.pay_id}} &middot;</span>\n\n						<span *ngIf="!item.table_name"> Tidak memilih meja &middot;</span> \n\n						<span *ngIf="item.table_name"> {{item.table_name}} &middot;</span> \n\n						<span> Rp.{{helper.intToIDR(item.payment_total)}} &middot;</span>\n\n						<span *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" class="bs-label label-success"> Terbayar </span>\n\n						<span *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" class="bs-label label-warning"> Belum Dibayar </span>\n\n						<span *ngIf="item.payment_cancel_status == 1" class="bs-label label-danger"> Pembayaran Dibatalkan </span>\n\n			      	<!-- {{item.payment_nominal + item.paid_with_bank_nominal}} -->\n\n					</p>\n\n					<p>\n\n						\n\n					</p>\n\n					<ion-icon name="done-all" *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" color="primary" item-end></ion-icon>\n\n					<ion-icon name="alert" *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" color="warning" item-end></ion-icon>\n\n					<ion-icon name="trash" *ngIf="item.payment_cancel_status == 1" color="danger" item-end></ion-icon>\n\n				</ion-item>\n\n			</ion-list>\n\n		</div>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\member-detail\member-detail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */]])
     ], MemberDetailPage);
@@ -1735,7 +1841,7 @@ var MemberDetailPage = (function () {
 
 /***/ }),
 
-/***/ 141:
+/***/ 142:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1907,7 +2013,7 @@ var SendReceiptPage = (function () {
     };
     SendReceiptPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-send-receipt',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\send-receipt\send-receipt.html"*/'<!--\n  Generated template for the SendReceiptPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	<ion-toolbar color="main">\n	  <ion-navbar>\n	    <ion-title>Send Receipt</ion-title>\n	  </ion-navbar>\n	</ion-toolbar>\n</ion-header>\n\n\n<ion-content padding>\n	<div class="sendreceipt-box">\n		<div class="" style="margin-bottom: 35px;">Bagaimana anda menyerahkan struk ini kepada pelanggan?</div>\n		<div style="width: 60%">\n			<div style="display: flex;" class="btn-action">\n				<input type="email" name="" class="input-send-email-inline" placeholder="Email pelanggan" [(ngModel)]="email">\n				<button class="flat btn-send-email-inline" ion-button color="secondary" (click)="sendReceiptToEmail()"> Kirim </button>\n			</div>\n			<button class="btn-action" ion-button block color="secondary" (click)="printReceipt()">Cetak Struk ini</button>\n			<button class="btn-action" ion-button block color="secondary" (click)="sendAndPrint()">Cetak dan Email struk ini</button>\n			<button class="btn-action" ion-button block color="danger" (click)="backToCashier()">Kembali ke cashier.</button>\n		</div>\n	</div>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\send-receipt\send-receipt.html"*/,
+            selector: 'page-send-receipt',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\send-receipt\send-receipt.html"*/'<!--\n\n  Generated template for the SendReceiptPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n	  <ion-navbar>\n\n	    <ion-title>Send Receipt</ion-title>\n\n	  </ion-navbar>\n\n	</ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<div class="sendreceipt-box">\n\n		<div class="" style="margin-bottom: 35px;">Bagaimana anda menyerahkan struk ini kepada pelanggan?</div>\n\n		<div style="width: 60%">\n\n			<div style="display: flex;" class="btn-action">\n\n				<input type="email" name="" class="input-send-email-inline" placeholder="Email pelanggan" [(ngModel)]="email">\n\n				<button class="flat btn-send-email-inline" ion-button color="secondary" (click)="sendReceiptToEmail()"> Kirim </button>\n\n			</div>\n\n			<button class="btn-action" ion-button block color="secondary" (click)="printReceipt()">Cetak Struk ini</button>\n\n			<button class="btn-action" ion-button block color="secondary" (click)="sendAndPrint()">Cetak dan Email struk ini</button>\n\n			<button class="btn-action" ion-button block color="danger" (click)="backToCashier()">Kembali ke cashier.</button>\n\n		</div>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\send-receipt\send-receipt.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_bill_bill__["a" /* BillProvider */]])
     ], SendReceiptPage);
@@ -1918,7 +2024,7 @@ var SendReceiptPage = (function () {
 
 /***/ }),
 
-/***/ 142:
+/***/ 143:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2073,7 +2179,7 @@ var SplitBillPage = (function () {
     };
     SplitBillPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-split-bill',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\split-bill\split-bill.html"*/'<!--\n  Generated template for the SplitBillPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	\n	<ion-toolbar color="main">\n		<ion-navbar>\n			<ion-title>Pisahkan bill</ion-title>\n		</ion-navbar>\n		<ion-buttons end>\n			<button ion-button clear color="light" (click)="pay_transaction()">\n				Bayar\n			</button>\n		</ion-buttons>\n		\n	</ion-toolbar>\n	\n\n</ion-header>\n\n\n<ion-content padding id="page-split-bill">\n	<ion-grid class="">\n		<ion-row class="relative center">\n			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">\n				<div class="">\n					<page-receipt></page-receipt> \n				</div>\n			</div>\n			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-right">\n				<div class="receipt relative">\n					<div class="receipt-header" *ngIf="receipt_page_params.show_header">\n						<div class="receipt--costumer-header pseudo">\n							<h5 class="title">{{helper.local.get_params(helper.config.variable.credential).outlet.outlet_name? helper.local.get_params(helper.config.variable.credential).outlet.outlet_name : \'\'}}</h5>\n							<div class=" center " style="display: flex;"><div style="width: 80%;">{{helper.local.get_params(helper.config.variable.credential).outlet.outlet_address?helper.local.get_params(helper.config.variable.credential).outlet.outlet_address:\'\'}}</div> </div>\n							<div>{{helper.local.get_params(helper.config.variable.credential).outlet.outlet_phone?helper.local.get_params(helper.config.variable.credential).outlet.outlet_phone:\'\'}}</div>\n						</div>\n						<ion-row class="receipt-headinput">\n							<ion-col col-5>\n								<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--table"  placeholder="Nomor Meja" [disabled]="can_edit_table" [(ngModel)]="bill.table_name" (input)="update_receipt()" (click)="change_table()">\n							</ion-col>\n							<ion-col col-2></ion-col>\n							<ion-col col-5>\n								<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer"  placeholder="Atas nama" [disabled]="can_edit_visitor_name" [(ngModel)]="bill.visitor_name" (input)="update_receipt()">\n							</ion-col>\n						</ion-row>	\n					</div>\n					<div class="receipt-body" *ngIf="receipt_page_params.show_content">\n						\n						<div class="" style="display:flex; border-bottom: 1px solid #aaa; padding-bottom: 3px;margin-top: 10px; font-weight: 700;">\n							<div style="width: 10%"></div>\n							<div style="width: 10%">QTY</div>\n							<div style="width: 50%">ITEM</div>\n							<div style="width: 20%">HARGA</div>\n							<div style="width: 20%">JUMLAH</div>\n						</div>\n\n						<ion-list style="margin-top: 10px;">\n							<div *ngFor="let item of this.billProvider.get_nota(this.bill_index).orders; let i = index;">\n								<div class="session-order" *ngIf="item.first_session_order && item.order_session > 0">\n									Tambahan ke {{item.order_session}}\n								</div>\n								\n								<ion-item-sliding >\n									<ion-item class="item-receipt" id="receipt-product-{{item.id}}" style="display: flex; padding-left: 0px;" (click)="editItem(item, i)">\n										<div style="display: flex;font-size: .8em;">\n											<div class="receipt-detail--component text-align--center" style="width: 10%;"  >\n												<ion-icon md="ios-arrow-back" ios="ios-arrow-back"></ion-icon>\n											</div>\n											<div class="receipt-detail--component text-align--center" style="width: 10%;"  >\n												<span class="product-amount">{{item.qty}}</span>\n												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0 && item.complement_item < item.qty">{{item.complement_item}}</p>\n\n											</div>\n											\n											<div class="receipt-detail--component text-align--left" style="width: 50%;" >\n												<span>{{item.name}}</span><br>\n												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Complement</p>\n												<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">Diskon {{billProvider.helper.toInt(item.discount_percent)}}%</p>\n												<p class="receipt-detail--component--notes">{{item.note}}</p>\n											</div>\n\n											<div class="receipt-detail--component" style="width: 20%;">\n												<span> {{billProvider.helper.intToIDR(item.price)}} </span>\n												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0"> &nbsp; </p>\n												<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>\n											</div>\n											<div class="receipt-detail--component" style="width: 20%;">{{billProvider.helper.intToIDR(item.total)}}</div>\n										</div>\n									</ion-item>\n\n									<!-- menu slider -->\n								    <ion-item-options side="right" *ngIf="receipt_page_params.can_edit_slide_item">\n								      <button ion-button color="danger" class="center distributed" (click)="removeItem(i, item)">\n								        <ion-icon name="trash" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n								      </button>\n								    </ion-item-options>\n								    <ion-item-options side="left" *ngIf="receipt_page_params.can_edit_slide_item">\n								      <button ion-button color="secondary" class="center distributed" (click)="reduceItem(i, item)">\n								        <ion-icon name="remove" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n								      </button>\n								      <button ion-button color="primary" class="center distributed" (click)="addItem(i, item)">\n								        <ion-icon name="add" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n								      </button>\n								    </ion-item-options>\n								</ion-item-sliding>\n							</div>\n						</ion-list>\n						<div class="" *ngIf="!billProvider.get_bill_component(\'orders\') || billProvider.get_bill_component(\'orders\').length < 1" class="text-align--center"> Silahkan pilih menu disamping! </div>\n					</div>\n					<div class="receipt-footer" (click)="edit_total_payment()" *ngIf="receipt_page_params.show_footer"> \n						<!-- <table class="" style="margin-bottom: 0px;width: 100%;">\n							<tbody style="padding-top: 10px">\n								<tr class="" *ngIf="billProvider.get_bill_component(\'tax_nominal\')>0 || billProvider.get_bill_component(\'discount_nominal\')>0">\n									<td style="width: 10%;"></td>							\n									<td style="width: 10%;"></td>							\n									<td style="width: 48%;" class="text-align--right">Bill</td>\n									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(bill.payment_bills)}} </span> </td>\n								</tr>\n\n								<tr class="" *ngIf="billProvider.get_bill_component(\'tax_nominal\')>0">\n									<td style="width: 10%;"></td>\n									<td style="width: 10%;"></td>							\n									<td style="width: 48%;" class="text-align--right">Pajak</td>\n									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'tax_nominal\'))}} </span> </td>\n								</tr>\n\n								<tr class="" *ngIf="billProvider.get_bill_component(\'discount_nominal\')>0">\n									<td style="width: 10%;"></td>\n									<td style="width: 10%;"></td>							\n									<td style="width: 48%;" class="text-align--right">Diskon {{ billProvider.helper.toInt(billProvider.get_bill_component(\'discount_percent\')) > 0? billProvider.get_bill_component(\'discount_percent\')+\'%\':\'\'  }}</td>\n									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'discount_nominal\'))}} </span> </td>\n								</tr>\n\n								<tr >\n									<td style="width: 10%;" ></td>\n									<td style="width: 10%;"></td>							\n									<td style="width: 48%; padding-top: 10px; font-size: 1.3em;" class="text-align--right">Total</td>\n									<td style="width: 5%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span class="">Rp.</span> </td>\n									<td style="width: 10%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'payment_total\'))}} </span> </td>\n								</tr>\n\n							</tbody>\n						</table> -->\n					</div>\n				</div>\n			</div>\n		</ion-row>\n	</ion-grid>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\split-bill\split-bill.html"*/,
+            selector: 'page-split-bill',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\split-bill\split-bill.html"*/'<!--\n\n  Generated template for the SplitBillPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	\n\n	<ion-toolbar color="main">\n\n		<ion-navbar>\n\n			<ion-title>Pisahkan bill</ion-title>\n\n		</ion-navbar>\n\n		<ion-buttons end>\n\n			<button ion-button clear color="light" (click)="pay_transaction()">\n\n				Bayar\n\n			</button>\n\n		</ion-buttons>\n\n		\n\n	</ion-toolbar>\n\n	\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding id="page-split-bill">\n\n	<ion-grid class="">\n\n		<ion-row class="relative center">\n\n			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">\n\n				<div class="">\n\n					<page-receipt></page-receipt> \n\n				</div>\n\n			</div>\n\n			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-right">\n\n				<div class="receipt relative">\n\n					<div class="receipt-header" *ngIf="receipt_page_params.show_header">\n\n						<div class="receipt--costumer-header pseudo">\n\n							<h5 class="title">{{helper.local.get_params(helper.config.variable.credential).outlet.outlet_name? helper.local.get_params(helper.config.variable.credential).outlet.outlet_name : \'\'}}</h5>\n\n							<div class=" center " style="display: flex;"><div style="width: 80%;">{{helper.local.get_params(helper.config.variable.credential).outlet.outlet_address?helper.local.get_params(helper.config.variable.credential).outlet.outlet_address:\'\'}}</div> </div>\n\n							<div>{{helper.local.get_params(helper.config.variable.credential).outlet.outlet_phone?helper.local.get_params(helper.config.variable.credential).outlet.outlet_phone:\'\'}}</div>\n\n						</div>\n\n						<ion-row class="receipt-headinput">\n\n							<ion-col col-5>\n\n								<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--table"  placeholder="Nomor Meja" [disabled]="can_edit_table" [(ngModel)]="bill.table_name" (input)="update_receipt()" (click)="change_table()">\n\n							</ion-col>\n\n							<ion-col col-2></ion-col>\n\n							<ion-col col-5>\n\n								<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer"  placeholder="Atas nama" [disabled]="can_edit_visitor_name" [(ngModel)]="bill.visitor_name" (input)="update_receipt()">\n\n							</ion-col>\n\n						</ion-row>	\n\n					</div>\n\n					<div class="receipt-body" *ngIf="receipt_page_params.show_content">\n\n						\n\n						<div class="" style="display:flex; border-bottom: 1px solid #aaa; padding-bottom: 3px;margin-top: 10px; font-weight: 700;">\n\n							<div style="width: 10%"></div>\n\n							<div style="width: 10%">QTY</div>\n\n							<div style="width: 50%">ITEM</div>\n\n							<div style="width: 20%">HARGA</div>\n\n							<div style="width: 20%">JUMLAH</div>\n\n						</div>\n\n\n\n						<ion-list style="margin-top: 10px;">\n\n							<div *ngFor="let item of this.billProvider.get_nota(this.bill_index).orders; let i = index;">\n\n								<div class="session-order" *ngIf="item.first_session_order && item.order_session > 0">\n\n									Tambahan ke {{item.order_session}}\n\n								</div>\n\n								\n\n								<ion-item-sliding >\n\n									<ion-item class="item-receipt" id="receipt-product-{{item.id}}" style="display: flex; padding-left: 0px;" (click)="editItem(item, i)">\n\n										<div style="display: flex;font-size: .8em;">\n\n											<div class="receipt-detail--component text-align--center" style="width: 10%;"  >\n\n												<ion-icon md="ios-arrow-back" ios="ios-arrow-back"></ion-icon>\n\n											</div>\n\n											<div class="receipt-detail--component text-align--center" style="width: 10%;"  >\n\n												<span class="product-amount">{{item.qty}}</span>\n\n												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0 && item.complement_item < item.qty">{{item.complement_item}}</p>\n\n\n\n											</div>\n\n											\n\n											<div class="receipt-detail--component text-align--left" style="width: 50%;" >\n\n												<span>{{item.name}}</span><br>\n\n												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Complement</p>\n\n												<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">Diskon {{billProvider.helper.toInt(item.discount_percent)}}%</p>\n\n												<p class="receipt-detail--component--notes">{{item.note}}</p>\n\n											</div>\n\n\n\n											<div class="receipt-detail--component" style="width: 20%;">\n\n												<span> {{billProvider.helper.intToIDR(item.price)}} </span>\n\n												<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0"> &nbsp; </p>\n\n												<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>\n\n											</div>\n\n											<div class="receipt-detail--component" style="width: 20%;">{{billProvider.helper.intToIDR(item.total)}}</div>\n\n										</div>\n\n									</ion-item>\n\n\n\n									<!-- menu slider -->\n\n								    <ion-item-options side="right" *ngIf="receipt_page_params.can_edit_slide_item">\n\n								      <button ion-button color="danger" class="center distributed" (click)="removeItem(i, item)">\n\n								        <ion-icon name="trash" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n\n								      </button>\n\n								    </ion-item-options>\n\n								    <ion-item-options side="left" *ngIf="receipt_page_params.can_edit_slide_item">\n\n								      <button ion-button color="secondary" class="center distributed" (click)="reduceItem(i, item)">\n\n								        <ion-icon name="remove" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n\n								      </button>\n\n								      <button ion-button color="primary" class="center distributed" (click)="addItem(i, item)">\n\n								        <ion-icon name="add" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n\n								      </button>\n\n								    </ion-item-options>\n\n								</ion-item-sliding>\n\n							</div>\n\n						</ion-list>\n\n						<div class="" *ngIf="!billProvider.get_bill_component(\'orders\') || billProvider.get_bill_component(\'orders\').length < 1" class="text-align--center"> Silahkan pilih menu disamping! </div>\n\n					</div>\n\n					<div class="receipt-footer" (click)="edit_total_payment()" *ngIf="receipt_page_params.show_footer"> \n\n						<!-- <table class="" style="margin-bottom: 0px;width: 100%;">\n\n							<tbody style="padding-top: 10px">\n\n								<tr class="" *ngIf="billProvider.get_bill_component(\'tax_nominal\')>0 || billProvider.get_bill_component(\'discount_nominal\')>0">\n\n									<td style="width: 10%;"></td>							\n\n									<td style="width: 10%;"></td>							\n\n									<td style="width: 48%;" class="text-align--right">Bill</td>\n\n									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n\n									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(bill.payment_bills)}} </span> </td>\n\n								</tr>\n\n\n\n								<tr class="" *ngIf="billProvider.get_bill_component(\'tax_nominal\')>0">\n\n									<td style="width: 10%;"></td>\n\n									<td style="width: 10%;"></td>							\n\n									<td style="width: 48%;" class="text-align--right">Pajak</td>\n\n									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n\n									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'tax_nominal\'))}} </span> </td>\n\n								</tr>\n\n\n\n								<tr class="" *ngIf="billProvider.get_bill_component(\'discount_nominal\')>0">\n\n									<td style="width: 10%;"></td>\n\n									<td style="width: 10%;"></td>							\n\n									<td style="width: 48%;" class="text-align--right">Diskon {{ billProvider.helper.toInt(billProvider.get_bill_component(\'discount_percent\')) > 0? billProvider.get_bill_component(\'discount_percent\')+\'%\':\'\'  }}</td>\n\n									<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n\n									<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'discount_nominal\'))}} </span> </td>\n\n								</tr>\n\n\n\n								<tr >\n\n									<td style="width: 10%;" ></td>\n\n									<td style="width: 10%;"></td>							\n\n									<td style="width: 48%; padding-top: 10px; font-size: 1.3em;" class="text-align--right">Total</td>\n\n									<td style="width: 5%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span class="">Rp.</span> </td>\n\n									<td style="width: 10%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'payment_total\'))}} </span> </td>\n\n								</tr>\n\n\n\n							</tbody>\n\n						</table> -->\n\n					</div>\n\n				</div>\n\n			</div>\n\n		</ion-row>\n\n	</ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\split-bill\split-bill.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_bill_bill__["a" /* BillProvider */]])
     ], SplitBillPage);
@@ -2081,64 +2187,6 @@ var SplitBillPage = (function () {
 }());
 
 //# sourceMappingURL=split-bill.js.map
-
-/***/ }),
-
-/***/ 143:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BillItemEditorPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_bill_bill__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the BillItemEditorPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var BillItemEditorPage = (function () {
-    function BillItemEditorPage(navCtrl, navParams, billProvider, helper, events) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.billProvider = billProvider;
-        this.helper = helper;
-        this.events = events;
-        this.bill = {};
-        // this.navParams.data = {} // this code use to reset navParams. bcause, whenever a page pushed from this page and popped back, this data bill item always from the previous event. 
-    }
-    BillItemEditorPage.prototype.ionViewWillEnter = function () {
-        this.bill = this.navParams.data.bill;
-        console.log(this.bill);
-        this.billProvider.update_bill_component(this.navParams.data.bill, false);
-        this.billProvider.count_pricing();
-        this.events.publish('bill.update', {});
-    };
-    BillItemEditorPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-bill-item-editor',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\bill-item-editor\bill-item-editor.html"*/'<!--\n  Generated template for the BillItemEditorPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n	<ion-toolbar color="main">\n		<ion-navbar>\n			<ion-title>Nota {{bill.pay_id}}</ion-title>\n		</ion-navbar>\n	</ion-toolbar>\n\n</ion-header>\n\n\n<ion-content id="product-box-detail">\n	<ion-grid>\n		<ion-row class="relative" id="product-content-body">\n			\n			<div  col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-left">\n				<div class="receipt-product">\n					<page-receipt></page-receipt> \n				</div>\n			</div>\n			<ion-col col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-right" class="column">\n\n				<div class="box" id="box-product">\n					\n					<div class="bs-row">\n						<div class="col-md-12">\n							<ion-list>\n								<ion-item>\n									No. Nota\n									<ion-note item-end>\n										{{bill.pay_id}}\n									</ion-note>\n								</ion-item>\n\n								<ion-item>\n									Nama pelanggan\n									<ion-note item-end>\n										{{bill.visitor_name}}\n									</ion-note>\n								</ion-item>\n								<ion-item>\n									Nomor meja\n									<ion-note item-end>\n										<span *ngIf="bill.table_id && bill.table_name">{{bill.table_name}}</span>\n										<span *ngIf="!bill.table_id || !bill.table_name"> - </span>\n									</ion-note>\n								</ion-item>\n\n								\n								<ion-item>\n									Total Bill\n									<ion-note item-end>\n										Rp.{{ helper.intToIDR(bill.payment_bills) }}\n									</ion-note>\n								</ion-item>\n\n								<ion-item>\n									Pajak\n									<ion-note item-end>\n										<span *ngIf="bill.tax_nominal"> Rp.{{helper.intToIDR(bill.tax_nominal)}} </span>\n										<span *ngIf="!bill.tax_nominal"> - </span>\n									</ion-note>\n								</ion-item>\n\n								<ion-item>\n									Discount\n									<ion-note item-end>\n										<span *ngIf="bill.discount_id"> {{bill.discount_percent}} %,  Rp.{{helper.intToIDR(helper.percentToNominal(bill.discount_percent, bill.payment_bills)) }} </span>\n										<span *ngIf="!bill.discount_id"> - </span>\n									</ion-note>\n								</ion-item>\n\n								<ion-item>\n									Total Pembayaran\n									<ion-note item-end>\n										Rp.{{ helper.intToIDR(bill.payment_total) }}\n									</ion-note>\n								</ion-item>\n\n								<ion-item>\n									Bayar Tunai\n									<ion-note item-end>\n										<span *ngIf="bill.payment_nominal > 0">Rp. {{ helper.intToIDR(bill.payment_nominal) }}</span>\n										<span *ngIf="bill.payment_nominal <= 0">-</span>\n									</ion-note>\n								</ion-item>\n\n							</ion-list>\n						</div>\n					</div>\n				</div>	\n			</ion-col>\n			\n\n		</ion-row>\n	</ion-grid>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\bill-item-editor\bill-item-editor.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_bill_bill__["a" /* BillProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
-    ], BillItemEditorPage);
-    return BillItemEditorPage;
-}());
-
-//# sourceMappingURL=bill-item-editor.js.map
 
 /***/ }),
 
@@ -3035,7 +3083,7 @@ var WaitersPage = (function () {
     };
     WaitersPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-waiters',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\waiters\waiters.html"*/'<!--\n  Generated template for the ProductPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	<ion-toolbar color="main" class="center distributed">\n		<ion-navbar class="center distributed">\n			<button ion-button menuToggle>\n				<ion-icon name="menu"></ion-icon>\n			</button>\n			<ion-title>Waiters</ion-title>\n			\n\n			<ion-buttons end>\n				<button ion-button clear icon-right color="light" (tap)="tooltip_present($event)">\n				  <ion-icon name="more"></ion-icon>\n				</button>\n			</ion-buttons>\n			\n		</ion-navbar>\n	</ion-toolbar>\n	<ion-toolbar *ngIf=" waiter_state==\'product\' ">\n		<div style="display: flex; flex-direction: column;width: 100%;">\n				\n			<ion-row class="center-distributed" style="width: 100%;">\n				<ion-col col-12 col-xs-12 col-sm-12 col-md-12 class="tab" style="justify-content:unset; overflow-x: auto;">\n					<label class="tab-item relative" [ngClass]="{\'active\': filter_type_selected == 0}" col--33 color="main">\n						<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All \n					</label>\n					<label class="tab-item relative" [ngClass]="{\'active\': filter_type_selected == item.type}" col--33 color="main" *ngFor="let item of helper.local.get_params(helper.config.variable.credential).type_product; let i = index;" >\n						<input type="radio" class="sr-only" name="type_product" value="{{item.type}}" [(ngModel)]="filter_type_selected" (change)="refresh_data()"> {{item.alt_type_name}}\n					</label>\n					<!-- <label class="tab-item relative" col--33 [ngClass]="{\'active\': filter_type_selected == 2}" color="main">\n						<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman\n					</label> -->\n				</ion-col>\n				<!-- <ion-col col-2 col-xs-2 col-sm-2 col-md-2>\n					<button ion-button clear icon-right color="main" (tap)="product_sort()">\n					  Sort <ion-icon name="funnel"></ion-icon>\n					</button>\n				</ion-col> -->\n			</ion-row>\n			<ion-row>\n				<ion-col col-10 col-xs-10 col-sm-10 col-md-10>\n					<ion-searchbar (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" style="width: 100%;"></ion-searchbar>\n				</ion-col>\n				<ion-col col-auto>\n					<button small ion-button clear icon-only color="main" (tap)="product_sort()">\n					  <ion-icon name="funnel"></ion-icon>\n					</button>\n				</ion-col>\n			</ion-row>\n		</div>\n  	</ion-toolbar>\n</ion-header>\n\n<ion-content id="product-box" has-header="true" has-tabs="true" class="" [ngClass]="{\'noGapTop\': waiter_state==\'bill\'}">\n	<ion-refresher (ionRefresh)="refresh_data($event)">\n    	<ion-refresher-content></ion-refresher-content>\n  	</ion-refresher>\n	<ion-grid>\n		<ion-row class="relative" id="product-content-body">\n			<div  col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 id="" *ngIf=" waiter_state==\'bill\' ">\n				<div class="receipt-product">\n					<page-receipt></page-receipt> \n				</div>\n			</div>\n			<ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column" *ngIf=" waiter_state==\'product\' ">\n\n				<div class="box" id="box-product">\n					\n\n					<div *ngIf="!this.helper.local.get_params(\'pinned_product\') || this.helper.local.get_params(\'pinned_product\').length > 0" style="margin-bottom:10px;">\n						<strong style="font-size: .9em;margin-left: 5px;">Produk di Pin</strong>		\n						<ion-row class="box-body" id="">\n							<ion-col class="pinned_post col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of this.helper.local.get_params(\'pinned_product\'); let i = index" (tap)="add_to_bill(item)" (press)="pinnedProductOptions(item, index)">\n								<div class="product-body">\n									<div class="product-image" [style.backgroundImage]="\'url(\'+item.image.thumb+\')\'">\n										\n										<div class="product-name">{{item.name}}</div>\n									</div>\n									<div class="product-detail">\n										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>\n										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->\n									</div>\n								</div>\n							</ion-col>\n						</ion-row>\n					</div>\n					<div>\n						<strong style="font-size: .9em;margin-left: 5px;" *ngIf="!this.helper.local.get_params(\'pinned_product\') || this.helper.local.get_params(\'pinned_product\').length > 0">Produk</strong>\n						<ion-row class="box-body" id="">\n\n							<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (tap)="add_to_bill(item)" (press)="productOptions(item, index)">\n								<div class="product-body">\n									<div class="product-image" [style.backgroundImage]="\'url(\'+item.image.thumb+\')\'">\n										\n										<div class="product-name">{{item.name}}</div>\n									</div>\n									<div class="product-detail">\n										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>\n										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->\n									</div>\n								</div>\n							</ion-col>\n						</ion-row>\n					</div>\n\n								<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">\n									<div class="product-body" style="background-color: white;">\n										<div class="product-name">\n											<ion-icon name="add" style="color:white; font-size: -webkit-xxx-large;"></ion-icon>\n										</div>\n									</div>\n								</ion-col> -->\n								\n								<!-- <ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>\n								\n									<button ion-button block color="main" (tap)="infinite_product()">Load More</button>\n								</ion-col> -->\n					<ion-infinite-scroll (ionInfinite)="infinite_product($event)">\n					   <ion-infinite-scroll-content></ion-infinite-scroll-content>\n					 </ion-infinite-scroll>\n				</div> <!--  End of payment method -->\n			</ion-col>\n		</ion-row>\n	</ion-grid>\n\n	\n	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30" *ngIf=" waiter_state==\'product\' ">\n    <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>\n    <ion-fab-list side="top" #fab>\n      <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>\n      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow" >Bayar Pesanan</span> </button>\n      <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>\n      <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>\n    </ion-fab-list>\n  </ion-fab>\n\n</ion-content>\n<ion-footer>\n  <ion-toolbar color="main">\n	<button ion-button color="light" clear small icon-left (tap)="waiter_state=\'product\'">\n	  	<ion-icon name="home"></ion-icon>\n	  	Produk\n	</button>\n    <button ion-button color="light" clear small icon-left (tap)="waiter_state=\'bill\'">\n	  	<ion-icon ios="ios-document" md="md-document"></ion-icon>\n	  	Nota &nbsp; <ion-badge item-end color="light">{{billProvider.get_bill_component(\'orders\').length}}</ion-badge>\n	</button>\n	<ion-buttons end>\n	    <button end ion-button color="light" clear small>\n	    	Rp {{ helper.intToIDR(billProvider.get_bill_component(\'payment_total\')) }}\n	    </button>\n	</ion-buttons>\n\n  </ion-toolbar>\n</ion-footer>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\waiters\waiters.html"*/,
+            selector: 'page-waiters',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\waiters\waiters.html"*/'<!--\n\n  Generated template for the ProductPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main" class="center distributed">\n\n		<ion-navbar class="center distributed">\n\n			<button ion-button menuToggle>\n\n				<ion-icon name="menu"></ion-icon>\n\n			</button>\n\n			<ion-title>Waiters</ion-title>\n\n			\n\n\n\n			<ion-buttons end>\n\n				<button ion-button clear icon-right color="light" (tap)="tooltip_present($event)">\n\n				  <ion-icon name="more"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n	<ion-toolbar *ngIf=" waiter_state==\'product\' ">\n\n		<div style="display: flex; flex-direction: column;width: 100%;">\n\n				\n\n			<ion-row class="center-distributed" style="width: 100%;">\n\n				<ion-col col-12 col-xs-12 col-sm-12 col-md-12 class="tab" style="justify-content:unset; overflow-x: auto;">\n\n					<label class="tab-item relative" [ngClass]="{\'active\': filter_type_selected == 0}" col--33 color="main">\n\n						<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All \n\n					</label>\n\n					<label class="tab-item relative" [ngClass]="{\'active\': filter_type_selected == item.type}" col--33 color="main" *ngFor="let item of helper.local.get_params(helper.config.variable.credential).type_product; let i = index;" >\n\n						<input type="radio" class="sr-only" name="type_product" value="{{item.type}}" [(ngModel)]="filter_type_selected" (change)="refresh_data()"> {{item.alt_type_name}}\n\n					</label>\n\n					<!-- <label class="tab-item relative" col--33 [ngClass]="{\'active\': filter_type_selected == 2}" color="main">\n\n						<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman\n\n					</label> -->\n\n				</ion-col>\n\n				<!-- <ion-col col-2 col-xs-2 col-sm-2 col-md-2>\n\n					<button ion-button clear icon-right color="main" (tap)="product_sort()">\n\n					  Sort <ion-icon name="funnel"></ion-icon>\n\n					</button>\n\n				</ion-col> -->\n\n			</ion-row>\n\n			<ion-row>\n\n				<ion-col col-10 col-xs-10 col-sm-10 col-md-10>\n\n					<ion-searchbar (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" style="width: 100%;"></ion-searchbar>\n\n				</ion-col>\n\n				<ion-col col-auto>\n\n					<button small ion-button clear icon-only color="main" (tap)="product_sort()">\n\n					  <ion-icon name="funnel"></ion-icon>\n\n					</button>\n\n				</ion-col>\n\n			</ion-row>\n\n		</div>\n\n  	</ion-toolbar>\n\n</ion-header>\n\n\n\n<ion-content id="product-box" has-header="true" has-tabs="true" class="" [ngClass]="{\'noGapTop\': waiter_state==\'bill\'}">\n\n	<ion-refresher (ionRefresh)="refresh_data($event)">\n\n    	<ion-refresher-content></ion-refresher-content>\n\n  	</ion-refresher>\n\n	<ion-grid>\n\n		<ion-row class="relative" id="product-content-body">\n\n			<div  col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 id="" *ngIf=" waiter_state==\'bill\' ">\n\n				<div class="receipt-product">\n\n					<page-receipt></page-receipt> \n\n				</div>\n\n			</div>\n\n			<ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column" *ngIf=" waiter_state==\'product\' ">\n\n\n\n				<div class="box" id="box-product">\n\n					\n\n\n\n					<div *ngIf="!this.helper.local.get_params(\'pinned_product\') || this.helper.local.get_params(\'pinned_product\').length > 0" style="margin-bottom:10px;">\n\n						<strong style="font-size: .9em;margin-left: 5px;">Produk di Pin</strong>		\n\n						<ion-row class="box-body" id="">\n\n							<ion-col class="pinned_post col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of this.helper.local.get_params(\'pinned_product\'); let i = index" (tap)="add_to_bill(item)" (press)="pinnedProductOptions(item, index)">\n\n								<div class="product-body">\n\n									<div class="product-image" [style.backgroundImage]="\'url(\'+item.image.thumb+\')\'">\n\n										\n\n										<div class="product-name">{{item.name}}</div>\n\n									</div>\n\n									<div class="product-detail">\n\n										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>\n\n										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->\n\n									</div>\n\n								</div>\n\n							</ion-col>\n\n						</ion-row>\n\n					</div>\n\n					<div>\n\n						<strong style="font-size: .9em;margin-left: 5px;" *ngIf="!this.helper.local.get_params(\'pinned_product\') || this.helper.local.get_params(\'pinned_product\').length > 0">Produk</strong>\n\n						<ion-row class="box-body" id="">\n\n\n\n							<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (tap)="add_to_bill(item)" (press)="productOptions(item, index)">\n\n								<div class="product-body">\n\n									<div class="product-image" [style.backgroundImage]="\'url(\'+item.image.thumb+\')\'">\n\n										\n\n										<div class="product-name">{{item.name}}</div>\n\n									</div>\n\n									<div class="product-detail">\n\n										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>\n\n										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->\n\n									</div>\n\n								</div>\n\n							</ion-col>\n\n						</ion-row>\n\n					</div>\n\n\n\n								<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">\n\n									<div class="product-body" style="background-color: white;">\n\n										<div class="product-name">\n\n											<ion-icon name="add" style="color:white; font-size: -webkit-xxx-large;"></ion-icon>\n\n										</div>\n\n									</div>\n\n								</ion-col> -->\n\n								\n\n								<!-- <ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>\n\n								\n\n									<button ion-button block color="main" (tap)="infinite_product()">Load More</button>\n\n								</ion-col> -->\n\n					<ion-infinite-scroll (ionInfinite)="infinite_product($event)">\n\n					   <ion-infinite-scroll-content></ion-infinite-scroll-content>\n\n					 </ion-infinite-scroll>\n\n				</div> <!--  End of payment method -->\n\n			</ion-col>\n\n		</ion-row>\n\n	</ion-grid>\n\n\n\n	\n\n	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30" *ngIf=" waiter_state==\'product\' ">\n\n    <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>\n\n    <ion-fab-list side="top" #fab>\n\n      <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow" >Bayar Pesanan</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>\n\n    </ion-fab-list>\n\n  </ion-fab>\n\n\n\n</ion-content>\n\n<ion-footer>\n\n  <ion-toolbar color="main">\n\n	<button ion-button color="light" clear small icon-left (tap)="waiter_state=\'product\'">\n\n	  	<ion-icon name="home"></ion-icon>\n\n	  	Produk\n\n	</button>\n\n    <button ion-button color="light" clear small icon-left (tap)="waiter_state=\'bill\'">\n\n	  	<ion-icon ios="ios-document" md="md-document"></ion-icon>\n\n	  	Nota &nbsp; <ion-badge item-end color="light">{{billProvider.get_bill_component(\'orders\').length}}</ion-badge>\n\n	</button>\n\n	<ion-buttons end>\n\n	    <button end ion-button color="light" clear small>\n\n	    	Rp {{ helper.intToIDR(billProvider.get_bill_component(\'payment_total\')) }}\n\n	    </button>\n\n	</ion-buttons>\n\n\n\n  </ion-toolbar>\n\n</ion-footer>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\waiters\waiters.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
@@ -3062,54 +3110,6 @@ var WaitersPage = (function () {
 /***/ }),
 
 /***/ 145:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ErrorPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/**
- * Generated class for the ErrorPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ErrorPage = (function () {
-    function ErrorPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.page_params = { code: 500, message: "Page not found" };
-        this.page_params = Object.assign(this.page_params, this.navParams.data);
-        console.log(this.page_params);
-    }
-    ErrorPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ErrorPage');
-    };
-    ErrorPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-error',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\error\error.html"*/'<!--\n  Generated template for the ErrorPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	\n	<ion-toolbar color="main">\n		<ion-navbar>\n			<button ion-button menuToggle>\n				<ion-icon name="menu"></ion-icon>\n			</button>\n			<ion-title>Error {{page_params.code}}</ion-title>\n		</ion-navbar>\n	</ion-toolbar>\n\n</ion-header>\n\n\n<ion-content padding style="" >\n	<div class="center distributed" style="height: 90vh;flex-direction: column;">\n		<div class="col-md-7 col-xs-12 col-sm-8 col-lg-6" style="text-align: center;">\n				\n			<h1 style="font-size: 15rem;">{{page_params.code}}</h1>\n			<p style="font-size: 3rem;">{{page_params.message}}</p>\n		</div>\n	</div>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\error\error.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
-    ], ErrorPage);
-    return ErrorPage;
-}());
-
-//# sourceMappingURL=error.js.map
-
-/***/ }),
-
-/***/ 146:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3324,7 +3324,7 @@ var ModalPage = (function () {
     };
     ModalPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-modal',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\modal\modal.html"*/'<!--\n  Generated template for the ModalPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-toolbar color="main">\n  <ion-navbar>\n  	<button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Modal</ion-title>\n  </ion-navbar>\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content padding>\n	<div class="row">\n		<div class="col-md-4 col-xs-5" >\n			<ion-card>\n\n			  <ion-card-header>\n			    Menu Modal\n			  </ion-card-header>\n\n			  <ion-card-content>\n			    <!-- Add card content here! -->\n				<ion-list>\n\n					<ion-item>\n						<ion-label floating>Modal Nominal</ion-label>\n						<ion-input type="number" [(ngModel)]="modal.modal_nominal"></ion-input>\n					</ion-item>\n\n					<ion-item>\n						<ion-label floating>Catatan</ion-label>\n						<ion-textarea [(ngModel)]="modal.modal_note" style="height: 100%"></ion-textarea>\n					</ion-item>\n\n					<ion-item class="sr-only">\n					</ion-item>\n\n				</ion-list>\n				<div padding>\n					\n						<button ion-button block *ngIf="state==\'new\'" (click)="create_new_modal()"> Tambah modal </button>\n\n						<button ion-button block *ngIf="state==\'update\'" (click)="update_modal()"> Perbarui modal </button>\n				</div>\n			  </ion-card-content>\n\n			</ion-card>\n		</div>\n		<div class="col-md-8 col-xs-7" >\n\n			<div *ngIf="!data_modal || data_modal.length < 1" class="text-align--center">\n				Belum ada modal ditambahkan untuk hari ini.\n			</div>\n\n			<ion-row>\n		        <ion-col col-6 *ngFor="let item of data_modal; let i = index;" (press)="advanceOptions(i, item)">\n		          <ion-card padding>\n		          	<h2>Rp.{{helper.intToIDR(item.modal_nominal)}}</h2>\n		          	<div style="margin-top: 15px;" class="text-muted">\n		          		<div style="font-size: .7em;"> <ion-icon ios="ios-time" md="md-time"></ion-icon> {{helper.moment(item.modal_date).format(\'HH:mm - DD/MM/YYYY\')}} </div>\n		          		<div style="font-size: .7em;"> <ion-icon ios="ios-contact" md="md-contact"></ion-icon> {{item.users_fullname}} </div>\n		          	</div>\n		          </ion-card>\n		        </ion-col>\n		    </ion-row>\n		</div>\n	</div>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\modal\modal.html"*/,
+            selector: 'page-modal',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\modal\modal.html"*/'<!--\n\n  Generated template for the ModalPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-toolbar color="main">\n\n  <ion-navbar>\n\n  	<button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Modal</ion-title>\n\n  </ion-navbar>\n\n  </ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<div class="row">\n\n		<div class="col-md-4 col-xs-5" >\n\n			<ion-card>\n\n\n\n			  <ion-card-header>\n\n			    Menu Modal\n\n			  </ion-card-header>\n\n\n\n			  <ion-card-content>\n\n			    <!-- Add card content here! -->\n\n				<ion-list>\n\n\n\n					<ion-item>\n\n						<ion-label floating>Modal Nominal</ion-label>\n\n						<ion-input type="number" [(ngModel)]="modal.modal_nominal"></ion-input>\n\n					</ion-item>\n\n\n\n					<ion-item>\n\n						<ion-label floating>Catatan</ion-label>\n\n						<ion-textarea [(ngModel)]="modal.modal_note" style="height: 100%"></ion-textarea>\n\n					</ion-item>\n\n\n\n					<ion-item class="sr-only">\n\n					</ion-item>\n\n\n\n				</ion-list>\n\n				<div padding>\n\n					\n\n						<button ion-button block *ngIf="state==\'new\'" (click)="create_new_modal()"> Tambah modal </button>\n\n\n\n						<button ion-button block *ngIf="state==\'update\'" (click)="update_modal()"> Perbarui modal </button>\n\n				</div>\n\n			  </ion-card-content>\n\n\n\n			</ion-card>\n\n		</div>\n\n		<div class="col-md-8 col-xs-7" >\n\n\n\n			<div *ngIf="!data_modal || data_modal.length < 1" class="text-align--center">\n\n				Belum ada modal ditambahkan untuk hari ini.\n\n			</div>\n\n\n\n			<ion-row>\n\n		        <ion-col col-6 *ngFor="let item of data_modal; let i = index;" (press)="advanceOptions(i, item)">\n\n		          <ion-card padding>\n\n		          	<h2>Rp.{{helper.intToIDR(item.modal_nominal)}}</h2>\n\n		          	<div style="margin-top: 15px;" class="text-muted">\n\n		          		<div style="font-size: .7em;"> <ion-icon ios="ios-time" md="md-time"></ion-icon> {{helper.moment(item.modal_date).format(\'HH:mm - DD/MM/YYYY\')}} </div>\n\n		          		<div style="font-size: .7em;"> <ion-icon ios="ios-contact" md="md-contact"></ion-icon> {{item.users_fullname}} </div>\n\n		          	</div>\n\n		          </ion-card>\n\n		        </ion-col>\n\n		    </ion-row>\n\n		</div>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\modal\modal.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */]])
     ], ModalPage);
@@ -3335,7 +3335,7 @@ var ModalPage = (function () {
 
 /***/ }),
 
-/***/ 147:
+/***/ 146:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3344,9 +3344,9 @@ var ModalPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_db_local_db_local__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_error_error__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_error_error__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_print_bluetooth_panel_print_bluetooth_panel__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_print_bluetooth_panel_print_bluetooth_panel__ = __webpack_require__(113);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3466,7 +3466,7 @@ var SettingsPage = (function () {
     };
     SettingsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-settings',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\settings\settings.html"*/'<!--\n  Generated template for the SettingsPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	<ion-toolbar color="main">\n\n		<ion-navbar>\n			<button ion-button menuToggle>\n				<ion-icon name="menu"></ion-icon>\n			</button>\n			<ion-title>Pengaturan</ion-title>\n		</ion-navbar>\n\n	</ion-toolbar>\n</ion-header>\n\n\n<ion-content padding>\n	<ion-list *ngIf="segment == \'menu\'">\n		<button ion-item icon-only (click)="segment = \'global\'">\n			<ion-icon name="settings" item-start></ion-icon>\n			Settings\n			<ion-icon name="arrow-forward" item-end></ion-icon>\n		</button>  \n\n		<button ion-item icon-only  (click)="openPrinterBluetoothPrinterSettings()">\n			<ion-icon name="print" item-start></ion-icon>\n			Printer\n			<ion-icon name="arrow-forward" item-end></ion-icon>\n		</button>  \n\n		<button ion-item icon-only (click)="to_error_page(404, \'Page under constructed!\')">\n			<ion-icon name="sync" item-start></ion-icon>\n			Synchronize\n			<ion-icon name="arrow-forward" item-end></ion-icon>\n		</button>  \n\n		<button ion-item icon-only (click)="segment = \'pengguna\'">\n			<ion-icon name="person" item-start></ion-icon>\n			Pengguna\n			<ion-icon name="arrow-forward" item-end></ion-icon>\n		</button>  \n		<ion-item-divider>\n			Logout\n		</ion-item-divider>\n		<button ion-item icon-only (click)="logout()">\n			<ion-icon name="unlock" item-start></ion-icon>\n			Logout\n		</button> \n\n	</ion-list>\n\n	<!-- Page -->\n	<div *ngIf="segment == \'global\'">\n  		<button ion-button color="primary" icon-left (click)="segment = \'menu\'" style="margin-left: 15px;"> <ion-icon name="arrow-back"></ion-icon> &nbsp; Kembali</button>\n  		<hr>\n		<ion-list>\n  			<ion-item>\n  				<ion-label> Pilih meja ketika order? </ion-label>\n  				<ion-toggle checked="true" (ionChange)="update_settings()" [(ngModel)]="settings.choose_table_first"></ion-toggle>\n			</ion-item>\n\n			<ion-item>\n  				<ion-label> Aktifkan mode hutang? </ion-label>\n  				<ion-toggle checked="true" (ionChange)="update_settings()" [(ngModel)]="settings.debt_mode"></ion-toggle>\n			</ion-item>\n		</ion-list>\n	</div>\n\n	<div *ngIf="segment == \'pengguna\'">\n  		<button ion-button color="primary" icon-left (click)="segment = \'menu\'" style="margin-left: 15px;"> <ion-icon name="arrow-back"></ion-icon> &nbsp; Kembali</button>\n  		<hr>\n  		<ion-list>\n\n  			<ion-item>\n  				<ion-label floating>Password lama</ion-label>\n  				<ion-input type="password" [(ngModel)]="users.old_password"></ion-input>\n  			</ion-item>\n  			<ion-item>\n  				<ion-label floating>Password baru</ion-label>\n  				<ion-input type="password" [(ngModel)]="users.new_password"></ion-input>\n  			</ion-item>\n  			<ion-item>\n  				<ion-label floating>Ulangi Password</ion-label>\n  				<ion-input type="password" [(ngModel)]="users.rePassword"></ion-input>\n  			</ion-item>\n\n  			<ion-item>\n  				<button ion-button block (click)="updateUser()">Update</button>\n  			</ion-item>\n\n  		</ion-list>\n	</div>\n\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\settings\settings.html"*/,
+            selector: 'page-settings',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\settings\settings.html"*/'<!--\n\n  Generated template for the SettingsPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n\n\n		<ion-navbar>\n\n			<button ion-button menuToggle>\n\n				<ion-icon name="menu"></ion-icon>\n\n			</button>\n\n			<ion-title>Pengaturan</ion-title>\n\n		</ion-navbar>\n\n\n\n	</ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<ion-list *ngIf="segment == \'menu\'">\n\n		<button ion-item icon-only (click)="segment = \'global\'">\n\n			<ion-icon name="settings" item-start></ion-icon>\n\n			Settings\n\n			<ion-icon name="arrow-forward" item-end></ion-icon>\n\n		</button>  \n\n\n\n		<button ion-item icon-only  (click)="openPrinterBluetoothPrinterSettings()">\n\n			<ion-icon name="print" item-start></ion-icon>\n\n			Printer\n\n			<ion-icon name="arrow-forward" item-end></ion-icon>\n\n		</button>  \n\n\n\n		<button ion-item icon-only (click)="to_error_page(404, \'Page under constructed!\')">\n\n			<ion-icon name="sync" item-start></ion-icon>\n\n			Synchronize\n\n			<ion-icon name="arrow-forward" item-end></ion-icon>\n\n		</button>  \n\n\n\n		<button ion-item icon-only (click)="segment = \'pengguna\'">\n\n			<ion-icon name="person" item-start></ion-icon>\n\n			Pengguna\n\n			<ion-icon name="arrow-forward" item-end></ion-icon>\n\n		</button>  \n\n		<ion-item-divider>\n\n			Logout\n\n		</ion-item-divider>\n\n		<button ion-item icon-only (click)="logout()">\n\n			<ion-icon name="unlock" item-start></ion-icon>\n\n			Logout\n\n		</button> \n\n\n\n	</ion-list>\n\n\n\n	<!-- Page -->\n\n	<div *ngIf="segment == \'global\'">\n\n  		<button ion-button color="primary" icon-left (click)="segment = \'menu\'" style="margin-left: 15px;"> <ion-icon name="arrow-back"></ion-icon> &nbsp; Kembali</button>\n\n  		<hr>\n\n		<ion-list>\n\n  			<ion-item>\n\n  				<ion-label> Pilih meja ketika order? </ion-label>\n\n  				<ion-toggle checked="true" (ionChange)="update_settings()" [(ngModel)]="settings.choose_table_first"></ion-toggle>\n\n			</ion-item>\n\n\n\n			<ion-item>\n\n  				<ion-label> Aktifkan mode hutang? </ion-label>\n\n  				<ion-toggle checked="true" (ionChange)="update_settings()" [(ngModel)]="settings.debt_mode"></ion-toggle>\n\n			</ion-item>\n\n		</ion-list>\n\n	</div>\n\n\n\n	<div *ngIf="segment == \'pengguna\'">\n\n  		<button ion-button color="primary" icon-left (click)="segment = \'menu\'" style="margin-left: 15px;"> <ion-icon name="arrow-back"></ion-icon> &nbsp; Kembali</button>\n\n  		<hr>\n\n  		<ion-list>\n\n\n\n  			<ion-item>\n\n  				<ion-label floating>Password lama</ion-label>\n\n  				<ion-input type="password" [(ngModel)]="users.old_password"></ion-input>\n\n  			</ion-item>\n\n  			<ion-item>\n\n  				<ion-label floating>Password baru</ion-label>\n\n  				<ion-input type="password" [(ngModel)]="users.new_password"></ion-input>\n\n  			</ion-item>\n\n  			<ion-item>\n\n  				<ion-label floating>Ulangi Password</ion-label>\n\n  				<ion-input type="password" [(ngModel)]="users.rePassword"></ion-input>\n\n  			</ion-item>\n\n\n\n  			<ion-item>\n\n  				<button ion-button block (click)="updateUser()">Update</button>\n\n  			</ion-item>\n\n\n\n  		</ion-list>\n\n	</div>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\settings\settings.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_db_local_db_local__["a" /* DbLocalProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__["a" /* HelperProvider */]])
     ], SettingsPage);
@@ -3477,7 +3477,7 @@ var SettingsPage = (function () {
 
 /***/ }),
 
-/***/ 148:
+/***/ 147:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3486,7 +3486,7 @@ var SettingsPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_product_product__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_animations__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_animations__ = __webpack_require__(114);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3859,7 +3859,7 @@ var SpendPage = (function () {
     };
     SpendPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-spend',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\spend\spend.html"*/'<!--\n  Generated template for the SpendPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	<ion-toolbar color="main">\n\n	  <ion-navbar>\n		<ion-buttons left>\n		    \n		    <button ion-button icon-only clear color="light" *ngIf="state == \'new_spend\'" (click)="state = \'list\'">\n		      <ion-icon name="arrow-back"></ion-icon>\n		    </button>\n\n		    <button ion-button icon-only clear color="light" *ngIf="state == \'spend_item\'" (click)="state = \'new_spend\'">\n		      <ion-icon name="arrow-back"></ion-icon>\n		    </button>\n\n		    <button ion-button icon-only clear color="light" *ngIf="state == \'spend_preview\' && view_state != \'view\'" (click)="state = \'spend_item\'">\n		      <ion-icon name="arrow-back"></ion-icon>\n		    </button>\n		</ion-buttons>\n\n	  	<button ion-button menuToggle *ngIf="state == \'list\'">\n	      <ion-icon name="menu"></ion-icon>\n	    </button>\n\n	    <ion-title>\n	    	<span *ngIf="state == \'list\'"><span *ngIf="spend.sp_type == 1">Pengadaan barang</span><span *ngIf="spend.sp_type == 0">Pengeluaran tak terduga</span></span>\n	    	<span *ngIf="state == \'new_spend\'">Tambah data <span *ngIf="spend.sp_type == 1">pengadaan</span><span *ngIf="spend.sp_type == 0">pengeluaran</span></span>\n	    	<span *ngIf="state == \'spend_item\'">Tambah item</span>\n	    	<span *ngIf="state == \'spend_preview\'">Preview <span *ngIf="spend.sp_type == 1">pengadaan</span><span *ngIf="spend.sp_type == 0">pengeluaran</span></span>\n	    </ion-title>\n\n		<ion-buttons end *ngIf="state == \'list\'"  >\n			<button ion-button clear color="light" (click)="state = \'new_spend\'">\n		      <ion-icon name="add"></ion-icon> &nbsp;\n		      Tambah data\n		    </button>\n		</ion-buttons>\n		<ion-buttons end *ngIf="state == \'new_spend\'" >\n		    <button ion-button clear color="light" (click)="openSpendItem()">\n		      Selanjutnya &nbsp;\n		      <ion-icon name="arrow-forward"></ion-icon>\n		    </button>\n		</ion-buttons>\n\n		<ion-buttons end *ngIf="state == \'spend_item\'" >\n		    <button ion-button clear color="light" (click)="openSpendPreview()">\n		      Selanjutnya &nbsp;\n		      <ion-icon name="arrow-forward"></ion-icon>\n		    </button>\n		</ion-buttons>\n\n		<ion-buttons end *ngIf="state == \'spend_preview\'" >\n		    <button ion-button clear color="light" *ngIf="!view_state || view_state != \'view\'" (click)="create_new_spend_data();">\n		      Simpan &nbsp;\n		      <ion-icon name="send"></ion-icon>\n		    </button>\n\n		    <button ion-button clear color="light" *ngIf="view_state == \'view\'" (click)="close_preview();">\n		      close &nbsp;\n		    </button>\n		</ion-buttons>\n\n	  </ion-navbar>\n	</ion-toolbar>\n\n</ion-header>\n\n\n<ion-content >\n	<div *ngIf="state == \'list\'" [@pageTransition]="state" padding>\n		<div class="text-align--center" *ngIf="!data_spend || data_spend.length < 1">\n			Data Tidak Ditemukan \n		</div>\n		<ion-list *ngIf="data_spend">\n			<ion-item *ngFor="let item of data_spend; let i = index; " (click)="opsiLanjutanSpendItem(i, item)">\n				<h2>{{item.sp_supplier}}</h2>\n				<p>  \n					<span> Rp.{{helper.intToIDR(item.sp_total)}} </span>\n				</p>\n			</ion-item>\n		</ion-list>\n	</div>\n\n	<div *ngIf="state == \'new_spend\'" [@pageTransition]="state" style="padding-top: 15px;">\n		<div class="row center">\n			<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">\n				<ion-list>\n\n					<!-- <ion-item>\n						<ion-label *ngIf="!spend.sp_type"> Pengeluaran <br><span class="text-info" style="font-size: .7em; ">Ganti toggle disamping untuk mengganti data.</span></ion-label>\n						<ion-label *ngIf="spend.sp_type"> Pengadaan <br><span class="text-info" style="font-size: .7em; ">Ganti toggle disamping untuk mengganti data.</span></ion-label>\n						<ion-toggle checked="false" value="1" [(ngModel)]="spend.sp_type"></ion-toggle>\n					</ion-item> -->\n\n				  <ion-item style="height: 85px;">\n				    <ion-label stacked>Supplier</ion-label>\n				    <ion-input type="text" [(ngModel)]="spend.sp_supplier" style="margin-top: 9px;"></ion-input>\n				  </ion-item>\n\n				  \n				</ion-list>\n			</div>\n			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">\n				<div class="row">\n					<div class="col-md-6 col-sm-12 col-xs-12">\n						<ion-item style="height: 85px;">\n						    <ion-label stacked>Tanggal pengadaan</ion-label>\n						    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_date" style="padding-bottom: 22px;"> </ion-datetime>\n						</ion-item>\n						\n					</div>\n					<div class="col-md-6 col-sm-12 col-xs-12">\n						\n						<ion-item style="height: 85px;">\n						    <ion-label stacked>Tanggal dibayarkan</ion-label>\n						    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_paid" style="padding-bottom: 22px;"> </ion-datetime>\n						</ion-item>\n						\n					</div>\n				</div>	\n\n\n			</div>\n			<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">\n				<ion-item style="height: 85px;">\n				    <ion-label stacked>Catatan</ion-label>\n				    <ion-textarea [(ngModel)]="spend.sp_note"></ion-textarea>\n\n				</ion-item>\n			</div>\n		</div>\n		<hr>\n		<div class="row">\n	 		<div class="col-md-4">\n	 			\n				<ion-card>\n 					\n		 			<ion-list>\n		 				<ion-item *ngIf="spend.sp_type && helper.local.get_params(helper.config.variable.credential).data.serv_id != 1 && helper.local.get_params(helper.config.variable.credential).data.serv_id != 2 ">\n		 					<ion-label class="text-greensea" stacked>Product</ion-label>\n		 					<ion-select [(ngModel)]="spend_item_form.prod_id">\n		 						<ion-option selected>--Pilih Produk--</ion-option>\n		 						<ion-option *ngFor="let item of products; let i = index;" value="{{item.id}}">{{item.name}}</ion-option>\n		 					</ion-select >\n		 				</ion-item>\n\n		 				<ion-item *ngIf="spend.sp_type && (helper.local.get_params(helper.config.variable.credential).data.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id == 2 )">\n		 					<ion-label class="text-greensea" stacked>Ingredient</ion-label>\n		 					<ion-select [(ngModel)]="spend_item_form.ingd_id">\n		 						<ion-option selected>--Pilih Produk--</ion-option>\n		 						<ion-option *ngFor="let item of ingredients; let i = index;" value="{{item.ingd_id}}">{{item.ingd_name}}</ion-option>\n		 					</ion-select >\n		 				</ion-item>\n		 				\n		 				<ion-item *ngIf="spend.sp_type == 0">\n		 					<ion-label class="text-greensea" stacked>Deskripsi</ion-label>\n		 					<ion-textarea name="desc" type="text" [(ngModel)]="spend_item_form.sp_dt_desc" style="height: 100px;" placeholder="Deskripsi tentang pengeluaran barang"></ion-textarea>\n		 				</ion-item>\n\n		 				<ion-item>\n		 					<ion-label class="text-greensea" stacked>Jumlah</ion-label>\n		 					<ion-input name="qty" type="number" [(ngModel)]="spend_item_form.sp_dt_qty" (input)="countTotal($event)" placeholder="Jumlah yang dikeluarkan"> </ion-input>\n		 				</ion-item>\n\n		 				<ion-item>\n		 					<ion-label class="text-greensea" stacked>Harga per-item</ion-label>\n		 					<ion-input type="number" [(ngModel)]="spend_item_form.sp_dt_price" (input)="countTotal($event)" placeholder="Harga barang per-itemm"> </ion-input>\n		 				</ion-item>\n\n		 				<ion-item>\n		 					<ion-label class="text-greensea" stacked>Total</ion-label>\n		 					<ion-input name="total" type="text" [(ngModel)]="spend_item_form.sp_dt_total" disabled placeholder="Total harga barang yang dikeluarkan"></ion-input>\n		 				</ion-item>\n\n		 				\n\n		 				<ion-item *ngIf="spend.sp_type == 1">\n		 					<ion-label stacked>Catatan</ion-label>\n		 					<ion-textarea name="note" type="text" [(ngModel)]="spend_item_form.sp_dt_note" style="height: 100px;"></ion-textarea>\n		 				</ion-item>\n\n		 				<ion-item>\n		 					<div class="row">\n		 						<div class="col-md-6 col-xs-6"> \n					 				<button ion-button  block type="button" class="btn-round" color="greensea" (click)="SaveItem()" *ngIf="spend_item_form_state==\'new\'">\n					 					Tambahkan\n									</button>\n									<button ion-button  block type="button" class="btn-round" color="greensea" (click)="UpdateItem()" *ngIf="spend_item_form_state==\'edit\'">\n					 					Perbarui\n									</button>\n		 						</div>\n		 						<div class="col-md-6 col-xs-6"> \n									<button ion-button block  type="reset" class="btn-round" color="danger" (click)="ResetItem()">\n					 					Reset\n									</button>\n		 						</div>\n		 					</div>\n		 				</ion-item>\n\n		 				<ion-item>\n		 				</ion-item>\n\n	 				</ion-list>\n				</ion-card>\n\n	 			\n	 		</div>\n	 		<div class="col-md-8">\n	 			\n	 			<ion-list  *ngIf="spend.sp_type == 0">\n	 				<ion-item *ngFor="let item of spend_item; let i = index;" style="" (press)="advanceOptions(i, item)" (click)="advanceOptions(i, item)">\n	 					<h1 *ngIf="spend.sp_type == 1">{{item.product_item.name}}</h1>\n	 					<h4 *ngIf="spend.sp_type == 0">Item {{i+1}}</h4>\n	 					<p>\n	 						<span style="font-weight: 700;">QTY: </span> <span>{{item.sp_dt_qty}}</span> &middot;\n	 						<span style="font-weight: 700;">Harga: </span> <span>{{item.sp_dt_price}}</span> &middot;\n	 						<span style="font-weight: 700;">Total: </span> <span>{{item.sp_dt_total}}</span>\n	 					</p>\n	 				</ion-item>\n	 			</ion-list>\n	 			<ion-list  *ngIf="spend.sp_type == 1">\n	 				<ion-item *ngFor="let item of spend_item; let i = index;" style="" (press)="advanceOptions(i, item)" (click)="advanceOptions(i, item)">\n	 					<h1 *ngIf="spend.sp_type == 1">{{item.product_item.ingd_name}}</h1>\n	 					<p>\n	 						<span style="font-weight: 700;">QTY: </span> <span>{{item.sp_dt_qty}}</span> &middot;\n	 						<span style="font-weight: 700;">Harga: </span> <span>{{item.sp_dt_price}}</span> &middot;\n	 						<span style="font-weight: 700;">Total: </span> <span>{{item.sp_dt_total}}</span>\n	 					</p>\n	 				</ion-item>\n	 			</ion-list>\n	 		</div>\n\n		</div>\n		\n	</div>\n\n	<div *ngIf="state == \'spend_item\'" [@pageTransition]="state">\n	 	<div class="row center">\n			<div class="col-md-5 col-lg-5 col-xs-12 col-sm-12">\n				  \n				<ion-list>\n					\n\n					<div class=" form-group" padding>\n						<label>Pajak</label>\n						<div class="input-box input-group" style="margin-top: 8px;">\n							<input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" id="" (input)="countTotalSpend()" [(ngModel)]="spend.sp_tax_percent">\n							<span class="input-group-addon" id="basic-addon1"> % </span>\n							<input type="number" class="form-control--lg form-control" name="" id="" placeholder="Pajak nominal" (input)="countTotalSpend()" [(ngModel)]="spend.sp_tax_nominal">\n						</div>\n					</div>\n\n					<div class=" form-group" padding>\n						<label>Diskon</label>\n						<div class="input-box input-group" style="margin-top: 8px;">\n							<input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" id="" (input)="countTotalSpend()"[(ngModel)]="spend.sp_disc_percent">\n							<span class="input-group-addon" id="basic-addon1"> % </span>\n							<input type="number" class="form-control--lg form-control" name="" id="" placeholder="Diskon nominal" (input)="countTotalSpend()" [(ngModel)]="spend.sp_disc_nominal">\n						</div>\n					</div>\n\n					<ion-item>\n				    	<ion-label floating>Total biaya</ion-label>\n				    	<ion-input type="text" disabled value="{{helper.intToIDR(spend.sp_total)}}"></ion-input>\n				  	</ion-item>\n\n				  	<ion-item>\n				    	<ion-label floating>Uang dibayarkan</ion-label>\n				    	<ion-input type="text"  [(ngModel)]="spend.sp_bill"  (input)="changeToIDR($event)"></ion-input>\n				  	</ion-item>\n\n				  <ion-item>\n				  </ion-item>\n\n				</ion-list>\n			</div>\n		</div>\n	</div>\n\n	<div *ngIf="state == \'spend_preview\'" [@pageTransition]="state">\n		<ion-list>\n			<ion-item>\n				Supplier\n				<ion-note item-end>\n					{{spend.sp_supplier}}\n				</ion-note>\n			</ion-item>\n			<ion-item>\n				Tanggal pembelian\n				<ion-note item-end>\n					{{helper.moment(spend.sp_date).format(\'YYYY-MM-DD HH:mm\')}}\n				</ion-note>\n			</ion-item>\n			<ion-item>\n				Tanggal dibayarkan\n				<ion-note item-end>\n					{{helper.moment(spend.sp_paid).format(\'YYYY-MM-DD HH:mm\')}}\n				</ion-note>\n			</ion-item>\n			<ion-item>\n				Type\n				<ion-note item-end>\n					<span *ngIf="spend.sp_type">Pengadaan</span>\n					<span *ngIf="!spend.sp_type">Pengeluaran</span>\n				</ion-note>\n			</ion-item>\n			<ion-item-divider color="main">Item pembelian</ion-item-divider>\n			<ion-item *ngFor="let item of spend_item; let i = index;" style="" (press)="advanceOptions(i, item)" (click)="advanceOptions(i, item)">\n				<h1 *ngIf="item.product_item">{{item.product_item.name}}</h1>\n				<h1 *ngIf="!item.product_item">Item {{i+1}}</h1>\n				<p>\n					<span style="font-weight: 700;">QTY: </span> <span>{{item.sp_dt_qty}}</span> &middot;\n					<span style="font-weight: 700;">Harga: </span> <span>{{item.sp_dt_price}}</span> &middot;\n					<span style="font-weight: 700;">Total: </span> <span>{{item.sp_dt_total}}</span>\n				</p>\n			</ion-item>\n\n			<ion-item-divider color="main">Detail pembayaran</ion-item-divider>\n			<ion-item>\n				Diskon\n				<ion-note item-end>\n					<span *ngIf="!spend.sp_disc_percent || spend.sp_disc_percent < 1">0 %,</span>\n					<span *ngIf="spend.sp_disc_percent > 0">{{spend.sp_disc_percent}} %,</span>\n					<span *ngIf="spend.sp_tax_nominal > 0" >Rp. {{helper.intToIDR(spend.sp_disc_nominal)}}</span>\n					<span *ngIf="!spend.sp_tax_nominal || spend.sp_tax_nominal < 1" >Rp. {{helper.intToIDR(spend.sp_disc_nominal)}}</span>\n				</ion-note>\n			</ion-item>\n\n			<ion-item>\n				Pajak\n				<ion-note item-end>\n					<span *ngIf="!spend.sp_tax_percent || spend.sp_tax_percent < 1">0 %,</span>\n					<span *ngIf="spend.sp_tax_percent > 0" >{{spend.sp_tax_percent}} %,</span>\n					<span *ngIf="spend.sp_tax_nominal > 0" >Rp. {{helper.intToIDR(spend.sp_tax_nominal)}}</span>\n					<span *ngIf="!spend.sp_tax_nominal || spend.sp_tax_percent < 1" >Rp. 0</span>\n				</ion-note>\n			</ion-item>\n\n			<ion-item>\n				Total harga\n				<ion-note item-end>\n					<span >Rp. {{helper.intToIDR(spend.sp_total)}}</span>\n				</ion-note>\n			</ion-item>\n\n			<ion-item>\n				Uang Dibayarkan\n				<ion-note item-end>\n					<span >Rp. {{spend.sp_bill}}</span>\n				</ion-note>\n			</ion-item>\n\n			\n		</ion-list>\n	</div>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\spend\spend.html"*/,
+            selector: 'page-spend',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\spend\spend.html"*/'<!--\n\n  Generated template for the SpendPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n\n\n	  <ion-navbar>\n\n		<ion-buttons left>\n\n		    \n\n		    <button ion-button icon-only clear color="light" *ngIf="state == \'new_spend\'" (click)="state = \'list\'">\n\n		      <ion-icon name="arrow-back"></ion-icon>\n\n		    </button>\n\n\n\n		    <button ion-button icon-only clear color="light" *ngIf="state == \'spend_item\'" (click)="state = \'new_spend\'">\n\n		      <ion-icon name="arrow-back"></ion-icon>\n\n		    </button>\n\n\n\n		    <button ion-button icon-only clear color="light" *ngIf="state == \'spend_preview\' && view_state != \'view\'" (click)="state = \'spend_item\'">\n\n		      <ion-icon name="arrow-back"></ion-icon>\n\n		    </button>\n\n		</ion-buttons>\n\n\n\n	  	<button ion-button menuToggle *ngIf="state == \'list\'">\n\n	      <ion-icon name="menu"></ion-icon>\n\n	    </button>\n\n\n\n	    <ion-title>\n\n	    	<span *ngIf="state == \'list\'"><span *ngIf="spend.sp_type == 1">Pengadaan barang</span><span *ngIf="spend.sp_type == 0">Pengeluaran tak terduga</span></span>\n\n	    	<span *ngIf="state == \'new_spend\'">Tambah data <span *ngIf="spend.sp_type == 1">pengadaan</span><span *ngIf="spend.sp_type == 0">pengeluaran</span></span>\n\n	    	<span *ngIf="state == \'spend_item\'">Tambah item</span>\n\n	    	<span *ngIf="state == \'spend_preview\'">Preview <span *ngIf="spend.sp_type == 1">pengadaan</span><span *ngIf="spend.sp_type == 0">pengeluaran</span></span>\n\n	    </ion-title>\n\n\n\n		<ion-buttons end *ngIf="state == \'list\'"  >\n\n			<button ion-button clear color="light" (click)="state = \'new_spend\'">\n\n		      <ion-icon name="add"></ion-icon> &nbsp;\n\n		      Tambah data\n\n		    </button>\n\n		</ion-buttons>\n\n		<ion-buttons end *ngIf="state == \'new_spend\'" >\n\n		    <button ion-button clear color="light" (click)="openSpendItem()">\n\n		      Selanjutnya &nbsp;\n\n		      <ion-icon name="arrow-forward"></ion-icon>\n\n		    </button>\n\n		</ion-buttons>\n\n\n\n		<ion-buttons end *ngIf="state == \'spend_item\'" >\n\n		    <button ion-button clear color="light" (click)="openSpendPreview()">\n\n		      Selanjutnya &nbsp;\n\n		      <ion-icon name="arrow-forward"></ion-icon>\n\n		    </button>\n\n		</ion-buttons>\n\n\n\n		<ion-buttons end *ngIf="state == \'spend_preview\'" >\n\n		    <button ion-button clear color="light" *ngIf="!view_state || view_state != \'view\'" (click)="create_new_spend_data();">\n\n		      Simpan &nbsp;\n\n		      <ion-icon name="send"></ion-icon>\n\n		    </button>\n\n\n\n		    <button ion-button clear color="light" *ngIf="view_state == \'view\'" (click)="close_preview();">\n\n		      close &nbsp;\n\n		    </button>\n\n		</ion-buttons>\n\n\n\n	  </ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content >\n\n	<div *ngIf="state == \'list\'" [@pageTransition]="state" padding>\n\n		<div class="text-align--center" *ngIf="!data_spend || data_spend.length < 1">\n\n			Data Tidak Ditemukan \n\n		</div>\n\n		<ion-list *ngIf="data_spend">\n\n			<ion-item *ngFor="let item of data_spend; let i = index; " (click)="opsiLanjutanSpendItem(i, item)">\n\n				<h2>{{item.sp_supplier}}</h2>\n\n				<p>  \n\n					<span> Rp.{{helper.intToIDR(item.sp_total)}} </span>\n\n				</p>\n\n			</ion-item>\n\n		</ion-list>\n\n	</div>\n\n\n\n	<div *ngIf="state == \'new_spend\'" [@pageTransition]="state" style="padding-top: 15px;">\n\n		<div class="row center">\n\n			<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">\n\n				<ion-list>\n\n\n\n					<!-- <ion-item>\n\n						<ion-label *ngIf="!spend.sp_type"> Pengeluaran <br><span class="text-info" style="font-size: .7em; ">Ganti toggle disamping untuk mengganti data.</span></ion-label>\n\n						<ion-label *ngIf="spend.sp_type"> Pengadaan <br><span class="text-info" style="font-size: .7em; ">Ganti toggle disamping untuk mengganti data.</span></ion-label>\n\n						<ion-toggle checked="false" value="1" [(ngModel)]="spend.sp_type"></ion-toggle>\n\n					</ion-item> -->\n\n\n\n				  <ion-item style="height: 85px;">\n\n				    <ion-label stacked>Supplier</ion-label>\n\n				    <ion-input type="text" [(ngModel)]="spend.sp_supplier" style="margin-top: 9px;"></ion-input>\n\n				  </ion-item>\n\n\n\n				  \n\n				</ion-list>\n\n			</div>\n\n			<div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">\n\n				<div class="row">\n\n					<div class="col-md-6 col-sm-12 col-xs-12">\n\n						<ion-item style="height: 85px;">\n\n						    <ion-label stacked>Tanggal pengadaan</ion-label>\n\n						    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_date" style="padding-bottom: 22px;"> </ion-datetime>\n\n						</ion-item>\n\n						\n\n					</div>\n\n					<div class="col-md-6 col-sm-12 col-xs-12">\n\n						\n\n						<ion-item style="height: 85px;">\n\n						    <ion-label stacked>Tanggal dibayarkan</ion-label>\n\n						    <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY-MM-DD HH:mm" [(ngModel)]="spend.sp_paid" style="padding-bottom: 22px;"> </ion-datetime>\n\n						</ion-item>\n\n						\n\n					</div>\n\n				</div>	\n\n\n\n\n\n			</div>\n\n			<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">\n\n				<ion-item style="height: 85px;">\n\n				    <ion-label stacked>Catatan</ion-label>\n\n				    <ion-textarea [(ngModel)]="spend.sp_note"></ion-textarea>\n\n\n\n				</ion-item>\n\n			</div>\n\n		</div>\n\n		<hr>\n\n		<div class="row">\n\n	 		<div class="col-md-4">\n\n	 			\n\n				<ion-card>\n\n 					\n\n		 			<ion-list>\n\n		 				<ion-item *ngIf="spend.sp_type && helper.local.get_params(helper.config.variable.credential).data.serv_id != 1 && helper.local.get_params(helper.config.variable.credential).data.serv_id != 2 ">\n\n		 					<ion-label class="text-greensea" stacked>Product</ion-label>\n\n		 					<ion-select [(ngModel)]="spend_item_form.prod_id">\n\n		 						<ion-option selected>--Pilih Produk--</ion-option>\n\n		 						<ion-option *ngFor="let item of products; let i = index;" value="{{item.id}}">{{item.name}}</ion-option>\n\n		 					</ion-select >\n\n		 				</ion-item>\n\n\n\n		 				<ion-item *ngIf="spend.sp_type && (helper.local.get_params(helper.config.variable.credential).data.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id == 2 )">\n\n		 					<ion-label class="text-greensea" stacked>Ingredient</ion-label>\n\n		 					<ion-select [(ngModel)]="spend_item_form.ingd_id">\n\n		 						<ion-option selected>--Pilih Produk--</ion-option>\n\n		 						<ion-option *ngFor="let item of ingredients; let i = index;" value="{{item.ingd_id}}">{{item.ingd_name}}</ion-option>\n\n		 					</ion-select >\n\n		 				</ion-item>\n\n		 				\n\n		 				<ion-item *ngIf="spend.sp_type == 0">\n\n		 					<ion-label class="text-greensea" stacked>Deskripsi</ion-label>\n\n		 					<ion-textarea name="desc" type="text" [(ngModel)]="spend_item_form.sp_dt_desc" style="height: 100px;" placeholder="Deskripsi tentang pengeluaran barang"></ion-textarea>\n\n		 				</ion-item>\n\n\n\n		 				<ion-item>\n\n		 					<ion-label class="text-greensea" stacked>Jumlah</ion-label>\n\n		 					<ion-input name="qty" type="number" [(ngModel)]="spend_item_form.sp_dt_qty" (input)="countTotal($event)" placeholder="Jumlah yang dikeluarkan"> </ion-input>\n\n		 				</ion-item>\n\n\n\n		 				<ion-item>\n\n		 					<ion-label class="text-greensea" stacked>Harga per-item</ion-label>\n\n		 					<ion-input type="number" [(ngModel)]="spend_item_form.sp_dt_price" (input)="countTotal($event)" placeholder="Harga barang per-itemm"> </ion-input>\n\n		 				</ion-item>\n\n\n\n		 				<ion-item>\n\n		 					<ion-label class="text-greensea" stacked>Total</ion-label>\n\n		 					<ion-input name="total" type="text" [(ngModel)]="spend_item_form.sp_dt_total" disabled placeholder="Total harga barang yang dikeluarkan"></ion-input>\n\n		 				</ion-item>\n\n\n\n		 				\n\n\n\n		 				<ion-item *ngIf="spend.sp_type == 1">\n\n		 					<ion-label stacked>Catatan</ion-label>\n\n		 					<ion-textarea name="note" type="text" [(ngModel)]="spend_item_form.sp_dt_note" style="height: 100px;"></ion-textarea>\n\n		 				</ion-item>\n\n\n\n		 				<ion-item>\n\n		 					<div class="row">\n\n		 						<div class="col-md-6 col-xs-6"> \n\n					 				<button ion-button  block type="button" class="btn-round" color="greensea" (click)="SaveItem()" *ngIf="spend_item_form_state==\'new\'">\n\n					 					Tambahkan\n\n									</button>\n\n									<button ion-button  block type="button" class="btn-round" color="greensea" (click)="UpdateItem()" *ngIf="spend_item_form_state==\'edit\'">\n\n					 					Perbarui\n\n									</button>\n\n		 						</div>\n\n		 						<div class="col-md-6 col-xs-6"> \n\n									<button ion-button block  type="reset" class="btn-round" color="danger" (click)="ResetItem()">\n\n					 					Reset\n\n									</button>\n\n		 						</div>\n\n		 					</div>\n\n		 				</ion-item>\n\n\n\n		 				<ion-item>\n\n		 				</ion-item>\n\n\n\n	 				</ion-list>\n\n				</ion-card>\n\n\n\n	 			\n\n	 		</div>\n\n	 		<div class="col-md-8">\n\n	 			\n\n	 			<ion-list  *ngIf="spend.sp_type == 0">\n\n	 				<ion-item *ngFor="let item of spend_item; let i = index;" style="" (press)="advanceOptions(i, item)" (click)="advanceOptions(i, item)">\n\n	 					<h1 *ngIf="spend.sp_type == 1">{{item.product_item.name}}</h1>\n\n	 					<h4 *ngIf="spend.sp_type == 0">Item {{i+1}}</h4>\n\n	 					<p>\n\n	 						<span style="font-weight: 700;">QTY: </span> <span>{{item.sp_dt_qty}}</span> &middot;\n\n	 						<span style="font-weight: 700;">Harga: </span> <span>{{item.sp_dt_price}}</span> &middot;\n\n	 						<span style="font-weight: 700;">Total: </span> <span>{{item.sp_dt_total}}</span>\n\n	 					</p>\n\n	 				</ion-item>\n\n	 			</ion-list>\n\n	 			<ion-list  *ngIf="spend.sp_type == 1">\n\n	 				<ion-item *ngFor="let item of spend_item; let i = index;" style="" (press)="advanceOptions(i, item)" (click)="advanceOptions(i, item)">\n\n	 					<h1 *ngIf="spend.sp_type == 1">{{item.product_item.ingd_name}}</h1>\n\n	 					<p>\n\n	 						<span style="font-weight: 700;">QTY: </span> <span>{{item.sp_dt_qty}}</span> &middot;\n\n	 						<span style="font-weight: 700;">Harga: </span> <span>{{item.sp_dt_price}}</span> &middot;\n\n	 						<span style="font-weight: 700;">Total: </span> <span>{{item.sp_dt_total}}</span>\n\n	 					</p>\n\n	 				</ion-item>\n\n	 			</ion-list>\n\n	 		</div>\n\n\n\n		</div>\n\n		\n\n	</div>\n\n\n\n	<div *ngIf="state == \'spend_item\'" [@pageTransition]="state">\n\n	 	<div class="row center">\n\n			<div class="col-md-5 col-lg-5 col-xs-12 col-sm-12">\n\n				  \n\n				<ion-list>\n\n					\n\n\n\n					<div class=" form-group" padding>\n\n						<label>Pajak</label>\n\n						<div class="input-box input-group" style="margin-top: 8px;">\n\n							<input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" id="" (input)="countTotalSpend()" [(ngModel)]="spend.sp_tax_percent">\n\n							<span class="input-group-addon" id="basic-addon1"> % </span>\n\n							<input type="number" class="form-control--lg form-control" name="" id="" placeholder="Pajak nominal" (input)="countTotalSpend()" [(ngModel)]="spend.sp_tax_nominal">\n\n						</div>\n\n					</div>\n\n\n\n					<div class=" form-group" padding>\n\n						<label>Diskon</label>\n\n						<div class="input-box input-group" style="margin-top: 8px;">\n\n							<input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" id="" (input)="countTotalSpend()"[(ngModel)]="spend.sp_disc_percent">\n\n							<span class="input-group-addon" id="basic-addon1"> % </span>\n\n							<input type="number" class="form-control--lg form-control" name="" id="" placeholder="Diskon nominal" (input)="countTotalSpend()" [(ngModel)]="spend.sp_disc_nominal">\n\n						</div>\n\n					</div>\n\n\n\n					<ion-item>\n\n				    	<ion-label floating>Total biaya</ion-label>\n\n				    	<ion-input type="text" disabled value="{{helper.intToIDR(spend.sp_total)}}"></ion-input>\n\n				  	</ion-item>\n\n\n\n				  	<ion-item>\n\n				    	<ion-label floating>Uang dibayarkan</ion-label>\n\n				    	<ion-input type="text"  [(ngModel)]="spend.sp_bill"  (input)="changeToIDR($event)"></ion-input>\n\n				  	</ion-item>\n\n\n\n				  <ion-item>\n\n				  </ion-item>\n\n\n\n				</ion-list>\n\n			</div>\n\n		</div>\n\n	</div>\n\n\n\n	<div *ngIf="state == \'spend_preview\'" [@pageTransition]="state">\n\n		<ion-list>\n\n			<ion-item>\n\n				Supplier\n\n				<ion-note item-end>\n\n					{{spend.sp_supplier}}\n\n				</ion-note>\n\n			</ion-item>\n\n			<ion-item>\n\n				Tanggal pembelian\n\n				<ion-note item-end>\n\n					{{helper.moment(spend.sp_date).format(\'YYYY-MM-DD HH:mm\')}}\n\n				</ion-note>\n\n			</ion-item>\n\n			<ion-item>\n\n				Tanggal dibayarkan\n\n				<ion-note item-end>\n\n					{{helper.moment(spend.sp_paid).format(\'YYYY-MM-DD HH:mm\')}}\n\n				</ion-note>\n\n			</ion-item>\n\n			<ion-item>\n\n				Type\n\n				<ion-note item-end>\n\n					<span *ngIf="spend.sp_type">Pengadaan</span>\n\n					<span *ngIf="!spend.sp_type">Pengeluaran</span>\n\n				</ion-note>\n\n			</ion-item>\n\n			<ion-item-divider color="main">Item pembelian</ion-item-divider>\n\n			<ion-item *ngFor="let item of spend_item; let i = index;" style="" (press)="advanceOptions(i, item)" (click)="advanceOptions(i, item)">\n\n				<h1 *ngIf="item.product_item">{{item.product_item.name}}</h1>\n\n				<h1 *ngIf="!item.product_item">Item {{i+1}}</h1>\n\n				<p>\n\n					<span style="font-weight: 700;">QTY: </span> <span>{{item.sp_dt_qty}}</span> &middot;\n\n					<span style="font-weight: 700;">Harga: </span> <span>{{item.sp_dt_price}}</span> &middot;\n\n					<span style="font-weight: 700;">Total: </span> <span>{{item.sp_dt_total}}</span>\n\n				</p>\n\n			</ion-item>\n\n\n\n			<ion-item-divider color="main">Detail pembayaran</ion-item-divider>\n\n			<ion-item>\n\n				Diskon\n\n				<ion-note item-end>\n\n					<span *ngIf="!spend.sp_disc_percent || spend.sp_disc_percent < 1">0 %,</span>\n\n					<span *ngIf="spend.sp_disc_percent > 0">{{spend.sp_disc_percent}} %,</span>\n\n					<span *ngIf="spend.sp_tax_nominal > 0" >Rp. {{helper.intToIDR(spend.sp_disc_nominal)}}</span>\n\n					<span *ngIf="!spend.sp_tax_nominal || spend.sp_tax_nominal < 1" >Rp. {{helper.intToIDR(spend.sp_disc_nominal)}}</span>\n\n				</ion-note>\n\n			</ion-item>\n\n\n\n			<ion-item>\n\n				Pajak\n\n				<ion-note item-end>\n\n					<span *ngIf="!spend.sp_tax_percent || spend.sp_tax_percent < 1">0 %,</span>\n\n					<span *ngIf="spend.sp_tax_percent > 0" >{{spend.sp_tax_percent}} %,</span>\n\n					<span *ngIf="spend.sp_tax_nominal > 0" >Rp. {{helper.intToIDR(spend.sp_tax_nominal)}}</span>\n\n					<span *ngIf="!spend.sp_tax_nominal || spend.sp_tax_percent < 1" >Rp. 0</span>\n\n				</ion-note>\n\n			</ion-item>\n\n\n\n			<ion-item>\n\n				Total harga\n\n				<ion-note item-end>\n\n					<span >Rp. {{helper.intToIDR(spend.sp_total)}}</span>\n\n				</ion-note>\n\n			</ion-item>\n\n\n\n			<ion-item>\n\n				Uang Dibayarkan\n\n				<ion-note item-end>\n\n					<span >Rp. {{spend.sp_bill}}</span>\n\n				</ion-note>\n\n			</ion-item>\n\n\n\n			\n\n		</ion-list>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\spend\spend.html"*/,
             animations: [
                 Object(__WEBPACK_IMPORTED_MODULE_4__angular_animations__["i" /* trigger */])('pageTransition', [
                     Object(__WEBPACK_IMPORTED_MODULE_4__angular_animations__["h" /* transition */])('*=>list', [Object(__WEBPACK_IMPORTED_MODULE_4__angular_animations__["g" /* style */])({
@@ -3886,7 +3886,7 @@ var SpendPage = (function () {
 
 /***/ }),
 
-/***/ 149:
+/***/ 148:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4036,7 +4036,7 @@ var StocksPage = (function () {
     };
     StocksPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-stocks',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\stocks\stocks.html"*/'<!--\n  Generated template for the StocksPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n    <ion-toolbar color="main">\n\n        <ion-navbar>\n            <button ion-button menuToggle>\n                <ion-icon name="menu"></ion-icon>\n            </button>\n            <ion-title>Stok</ion-title>\n            <ion-searchbar class="searchbar-toolbar" *ngIf="page_params.toggleSearchInput" (ionInput)="filter_stock($event)" style="width: 35%;"></ion-searchbar>\n            <ion-buttons class="center distributed">\n                <button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">\n                    <ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>\n                    <ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>\n                </button>\n            </ion-buttons>\n        </ion-navbar>\n        \n\n    </ion-toolbar>\n</ion-header>\n\n\n<ion-content padding>\n    <ion-refresher (ionRefresh)="first_time_get_product($event)">\n        <ion-refresher-content></ion-refresher-content>\n    </ion-refresher>\n    \n    <ion-list style="margin-top: 10px;">\n        <ion-item style="padding: 6px 0px;">\n            <span class="pull-right">\n                <strong>{{items.length||ingredients.length}}</strong> produk ditemukan. \n            </span>\n        </ion-item>\n        <div *ngIf="!restaurant_mode">\n            \n            <ion-item *ngIf="items.length < 1" class="text-align--center"  style="padding: 6px 0px;">\n                Tidak ditemukan produk\n            </ion-item>\n            <button ion-item *ngFor="let item of items" style="padding: 6px 0px;" (click)="openDetailStock(item)">\n                {{item.name}}\n                <span class="bs-label pull-right"  [ngClass]="{\'label-primary\': item.stock > 0, \'label-warning\': item.stock == 0, \'label-danger\': item.stock < 0 }"> {{item.stock}}</span>\n                <!-- <span class="bs-label label-warning" *ngIf="item.stock == 0"> {{item.stock}}</span> -->\n                <!-- <span class="bs-label label-danger" *ngIf="item.stock < 0"> {{item.stock}}</span> -->\n                <ion-icon name="arrow-forward" item-end></ion-icon>\n            </button>\n        </div>\n\n        <div *ngIf="restaurant_mode">\n            \n            <ion-item *ngIf="ingredients.length < 1" class="text-align--center"  style="padding: 6px 0px;">\n                Tidak ditemukan produk\n            </ion-item>\n            <button ion-item *ngFor="let item of ingredients" style="padding: 6px 0px;" (click)="openDetailStock(item)">\n                {{item.ingd_name}}\n                <span class="bs-label pull-right"  [ngClass]="{\'label-primary\': item.ingd_stock > 0, \'label-warning\': item.ingd_stock == 0, \'label-danger\': item.ingd_stock < 0 }"> {{item.ingd_stock}}</span>\n                <span class="bs-label label-warning" *ngIf="item.ingd_stock == 0"> {{item.ingd_stock}}</span>\n                <span class="bs-label label-danger" *ngIf="item.ingd_stock < 0"> {{item.ingd_stock}}</span>\n                <ion-icon name="arrow-forward" item-end></ion-icon>\n            </button>\n        </div>\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\stocks\stocks.html"*/,
+            selector: 'page-stocks',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\stocks\stocks.html"*/'<!--\n\n  Generated template for the StocksPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n    <ion-toolbar color="main">\n\n\n\n        <ion-navbar>\n\n            <button ion-button menuToggle>\n\n                <ion-icon name="menu"></ion-icon>\n\n            </button>\n\n            <ion-title>Stok</ion-title>\n\n            <ion-searchbar class="searchbar-toolbar" *ngIf="page_params.toggleSearchInput" (ionInput)="filter_stock($event)" style="width: 35%;"></ion-searchbar>\n\n            <ion-buttons class="center distributed">\n\n                <button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">\n\n                    <ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>\n\n                    <ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>\n\n                </button>\n\n            </ion-buttons>\n\n        </ion-navbar>\n\n        \n\n\n\n    </ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <ion-refresher (ionRefresh)="first_time_get_product($event)">\n\n        <ion-refresher-content></ion-refresher-content>\n\n    </ion-refresher>\n\n    \n\n    <ion-list style="margin-top: 10px;">\n\n        <ion-item style="padding: 6px 0px;">\n\n            <span class="pull-right">\n\n                <strong>{{items.length||ingredients.length}}</strong> produk ditemukan. \n\n            </span>\n\n        </ion-item>\n\n        <div *ngIf="!restaurant_mode">\n\n            \n\n            <ion-item *ngIf="items.length < 1" class="text-align--center"  style="padding: 6px 0px;">\n\n                Tidak ditemukan produk\n\n            </ion-item>\n\n            <button ion-item *ngFor="let item of items" style="padding: 6px 0px;" (click)="openDetailStock(item)">\n\n                {{item.name}}\n\n                <span class="bs-label pull-right"  [ngClass]="{\'label-primary\': item.stock > 0, \'label-warning\': item.stock == 0, \'label-danger\': item.stock < 0 }"> {{item.stock}}</span>\n\n                <!-- <span class="bs-label label-warning" *ngIf="item.stock == 0"> {{item.stock}}</span> -->\n\n                <!-- <span class="bs-label label-danger" *ngIf="item.stock < 0"> {{item.stock}}</span> -->\n\n                <ion-icon name="arrow-forward" item-end></ion-icon>\n\n            </button>\n\n        </div>\n\n\n\n        <div *ngIf="restaurant_mode">\n\n            \n\n            <ion-item *ngIf="ingredients.length < 1" class="text-align--center"  style="padding: 6px 0px;">\n\n                Tidak ditemukan produk\n\n            </ion-item>\n\n            <button ion-item *ngFor="let item of ingredients" style="padding: 6px 0px;" (click)="openDetailStock(item)">\n\n                {{item.ingd_name}}\n\n                <span class="bs-label pull-right"  [ngClass]="{\'label-primary\': item.ingd_stock > 0, \'label-warning\': item.ingd_stock == 0, \'label-danger\': item.ingd_stock < 0 }"> {{item.ingd_stock}}</span>\n\n                <span class="bs-label label-warning" *ngIf="item.ingd_stock == 0"> {{item.ingd_stock}}</span>\n\n                <span class="bs-label label-danger" *ngIf="item.ingd_stock < 0"> {{item.ingd_stock}}</span>\n\n                <ion-icon name="arrow-forward" item-end></ion-icon>\n\n            </button>\n\n        </div>\n\n    </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\stocks\stocks.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_product_product__["a" /* ProductProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_helper_helper__["a" /* HelperProvider */]])
     ], StocksPage);
@@ -4814,7 +4814,7 @@ var BillProvider = (function () {
 
 /***/ }),
 
-/***/ 161:
+/***/ 160:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -4827,93 +4827,93 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 161;
+webpackEmptyAsyncContext.id = 160;
 
 /***/ }),
 
-/***/ 203:
+/***/ 202:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/about/about.module": [
-		345
+		203
 	],
 	"../pages/bill-item-editor/bill-item-editor.module": [
-		512,
+		499,
 		24
 	],
 	"../pages/bill-saved/bill-saved.module": [
-		502,
+		500,
 		23
 	],
 	"../pages/debt/debt.module": [
-		503,
+		501,
 		22
 	],
 	"../pages/detail-stock/detail-stock.module": [
-		505,
+		502,
 		21
 	],
 	"../pages/edit-receipt-item/edit-receipt-item.module": [
-		504,
+		503,
 		20
 	],
 	"../pages/error/error.module": [
-		507,
+		504,
 		19
 	],
 	"../pages/login/login.module": [
-		506,
+		505,
 		18
 	],
 	"../pages/member-detail/member-detail.module": [
-		509,
+		506,
 		17
 	],
 	"../pages/member-new-form/member-new-form.module": [
-		508,
+		507,
 		16
 	],
 	"../pages/member/member.module": [
-		510,
+		508,
 		15
 	],
 	"../pages/modal/modal.module": [
-		511,
+		509,
 		14
 	],
 	"../pages/outlet-list/outlet-list.module": [
-		349
+		346
 	],
 	"../pages/payment/payment.module": [
-		515,
+		510,
 		13
 	],
 	"../pages/print-bluetooth-panel/print-bluetooth-panel.module": [
-		347
+		344
 	],
 	"../pages/product/product.module": [
-		513,
+		511,
 		12
 	],
 	"../pages/receipt/receipt.module": [
-		514,
+		512,
 		11
 	],
 	"../pages/send-receipt/send-receipt.module": [
-		518,
+		513,
 		10
 	],
 	"../pages/settings/settings.module": [
-		516,
+		514,
 		9
 	],
 	"../pages/spend-detail/spend-detail.module": [
-		520,
+		515,
 		8
 	],
 	"../pages/spend/spend.module": [
-		519,
+		516,
 		7
 	],
 	"../pages/split-bill/split-bill.module": [
@@ -4921,27 +4921,27 @@ var map = {
 		6
 	],
 	"../pages/stocks/stocks.module": [
-		524,
+		518,
 		5
 	],
 	"../pages/table/table.module": [
-		526,
+		519,
 		4
 	],
 	"../pages/tooltip-product/tooltip-product.module": [
-		521,
+		520,
 		3
 	],
 	"../pages/total-payment-editor/total-payment-editor.module": [
-		525,
+		521,
 		2
 	],
 	"../pages/transaction/transaction.module": [
-		523,
+		522,
 		1
 	],
 	"../pages/waiters/waiters.module": [
-		522,
+		523,
 		0
 	]
 };
@@ -4956,12 +4956,121 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 203;
+webpackAsyncContext.id = 202;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 208:
+/***/ 203:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AboutPageModule", function() { return AboutPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__about__ = __webpack_require__(204);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var AboutPageModule = (function () {
+    function AboutPageModule() {
+    }
+    AboutPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__about__["a" /* AboutPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__about__["a" /* AboutPage */]),
+            ],
+        })
+    ], AboutPageModule);
+    return AboutPageModule;
+}());
+
+//# sourceMappingURL=about.module.js.map
+
+/***/ }),
+
+/***/ 204:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__ = __webpack_require__(8);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the AboutPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AboutPage = (function () {
+    function AboutPage(helper, navCtrl, navParams) {
+        this.helper = helper;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.listAbout = [];
+        this.listAbout = [{
+                name: "nama",
+                value: 'Folarpos Instant'
+            }, {
+                name: 'uuid',
+                value: this.helper.local.get_params('uuid')
+            }, {
+                name: 'version',
+                value: 'build 20180321-1-20'
+            }, {
+                name: 'Author',
+                value: 'dhoni.p.saputra@gmail.com'
+            }, {
+                name: 'Company',
+                value: 'Folarium Technomedia'
+            }, {
+                name: "Year",
+                value: 2018
+            }, {
+                name: 'Website',
+                value: "http://folarpos.co.id"
+            }];
+    }
+    AboutPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad AboutPage');
+    };
+    AboutPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-about',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\about\about.html"*/'<!--\n\n  Generated template for the AboutPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	\n\n	<ion-toolbar color="main">\n\n	  <ion-navbar>\n\n	  	<button ion-button menuToggle>\n\n			<ion-icon name="menu"></ion-icon>\n\n		</button>\n\n	    <ion-title>about</ion-title>\n\n	  </ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<ion-list>\n\n	  <ion-item *ngFor="let item of listAbout">\n\n	  	<strong>{{item.name}}</strong><br>\n\n	  	<span>{{item.value}}</span>\n\n\n\n	  </ion-item>\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\about\about.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
+    ], AboutPage);
+    return AboutPage;
+}());
+
+//# sourceMappingURL=about.js.map
+
+/***/ }),
+
+/***/ 209:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4971,7 +5080,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_db_local_db_local__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_config_config__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_socket_io_client__ = __webpack_require__(455);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_socket_io_client__ = __webpack_require__(452);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_socket_io_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_socket_io_client__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_local_notifications__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5140,8 +5249,8 @@ var AiRemoteProvider = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jquery__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_local_notifications__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_file_transfer__ = __webpack_require__(205);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_file_transfer__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__ = __webpack_require__(207);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6184,7 +6293,7 @@ var ProductPage = (function () {
     };
     ProductPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-product',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\product\product.html"*/'<!--\n\n  Generated template for the ProductPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main" class="center distributed">\n\n		<ion-navbar class="center distributed">\n\n			<button ion-button menuToggle>\n\n				<ion-icon name="menu"></ion-icon>\n\n			</button>\n\n			<ion-title>Kasir</ion-title>\n\n			<ion-searchbar *ngIf="searchinput" end (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" class="searchbar-toolbar" style="padding: 0px;width: 40%;"></ion-searchbar>\n\n			\n\n			<ion-buttons class="center distributed">\n\n				<button ion-button icon-only color="light" (tap)="toggleSearchInput()">\n\n					<ion-icon name="search" *ngIf="!searchinput"></ion-icon>\n\n					<ion-icon name="close" *ngIf="searchinput"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			<ion-buttons end>\n\n				<button ion-button (tap)="openSavedBill()">\n\n					Nota tersimpan &nbsp; <ion-badge item-end color="light">{{unpaid_bill_length}}</ion-badge>\n\n				</button>\n\n			</ion-buttons>\n\n\n\n			<ion-buttons end>\n\n				<button ion-button clear icon-right color="light" (tap)="tooltip_present($event)">\n\n				  <ion-icon name="more"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content id="product-box">\n\n\n\n	<ion-grid>\n\n		<ion-row class="relative" id="product-content-body">\n\n			<div  col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">\n\n				<div class="receipt-product">\n\n					<page-receipt></page-receipt> \n\n				</div>\n\n			</div>\n\n\n\n			<ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">\n\n\n\n				<div class="box" id="box-product">\n\n					<div class="box-header">\n\n						<ion-row class="center-distributed">\n\n							<ion-col col-10 col-xs-10 col-sm-10 col-md-10 class="tab" style="justify-content:unset; overflow-x: auto;">\n\n								<label class="tab-item relative" [ngClass]="{\'active\': filter_type_selected == 0}" col--33 color="main">\n\n									<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All \n\n								</label>\n\n								<label class="tab-item relative" [ngClass]="{\'active\': filter_type_selected == item.type}" col--33 color="main" *ngFor="let item of helper.local.get_params(helper.config.variable.credential).type_product; let i = index;" >\n\n									<input type="radio" class="sr-only" name="type_product" value="{{item.type}}" [(ngModel)]="filter_type_selected" (change)="refresh_data()"> {{item.alt_type_name}}\n\n								</label>\n\n								<!-- <label class="tab-item relative" col--33 [ngClass]="{\'active\': filter_type_selected == 2}" color="main">\n\n									<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman\n\n								</label> -->\n\n							</ion-col>\n\n							<ion-col col-2 col-xs-2 col-sm-2 col-md-2>\n\n								<button ion-button clear icon-right color="main" (tap)="product_sort()">\n\n								  Sort <ion-icon name="funnel"></ion-icon>\n\n								</button>\n\n							</ion-col>\n\n						</ion-row>\n\n					</div>\n\n					<div *ngIf="!this.helper.local.get_params(\'pinned_product\') || this.helper.local.get_params(\'pinned_product\').length > 0" style="margin-bottom:10px;">\n\n						<strong style="font-size: .9em;margin-left: 5px;">Produk di Pin</strong>		\n\n						<ion-row class="box-body" id="">\n\n							<ion-col class="pinned_post col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of this.helper.local.get_params(\'pinned_product\'); let i = index" (tap)="add_to_bill(item)" (press)="pinnedProductOptions(item, index)">\n\n								<div class="product-body">\n\n									<div class="product-image" [style.backgroundImage]="\'url(\'+item.image.thumb+\')\'">\n\n										\n\n										<div class="product-name">{{item.name}}</div>\n\n									</div>\n\n									<div class="product-detail">\n\n										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>\n\n										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->\n\n									</div>\n\n								</div>\n\n							</ion-col>\n\n						</ion-row>\n\n					</div>\n\n					<div>\n\n						<strong style="font-size: .9em;margin-left: 5px;" *ngIf="!this.helper.local.get_params(\'pinned_product\') || this.helper.local.get_params(\'pinned_product\').length > 0">Produk</strong>\n\n						<ion-row class="box-body" id="">\n\n\n\n							<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (tap)="add_to_bill(item)" (press)="productOptions(item, index)">\n\n								<div class="product-body">\n\n									<div class="product-image" [style.backgroundImage]="\'url(\'+item.image.thumb+\')\'">\n\n										\n\n										<div class="product-name">{{item.name}}</div>\n\n									</div>\n\n									<div class="product-detail">\n\n										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>\n\n										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->\n\n									</div>\n\n								</div>\n\n							</ion-col>\n\n						</ion-row>\n\n					</div>\n\n\n\n								<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">\n\n									<div class="product-body" style="background-color: white;">\n\n										<div class="product-name">\n\n											<ion-icon name="add" style="color:white; font-size: -webkit-xxx-large;"></ion-icon>\n\n										</div>\n\n									</div>\n\n								</ion-col> -->\n\n								\n\n								<!-- <ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>\n\n								\n\n									<button ion-button block color="main" (tap)="infinite_product()">Load More</button>\n\n								</ion-col> -->\n\n					<ion-infinite-scroll (ionInfinite)="infinite_product($event)">\n\n					   <ion-infinite-scroll-content></ion-infinite-scroll-content>\n\n					 </ion-infinite-scroll>\n\n				</div> <!--  End of payment method -->\n\n			</ion-col>\n\n		</ion-row>\n\n	</ion-grid>\n\n\n\n	\n\n	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30">\n\n    <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>\n\n    <ion-fab-list side="top" #fab>\n\n      <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow" >Bayar Pesanan</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>\n\n    </ion-fab-list>\n\n  </ion-fab>\n\n\n\n</ion-content>\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <ion-title>Footer</ion-title>\n\n  </ion-toolbar>\n\n</ion-footer>\n\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\product\product.html"*/,
+            selector: 'page-product',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\product\product.html"*/'<!--\n\n  Generated template for the ProductPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main" class="center distributed">\n\n		<ion-navbar class="center distributed">\n\n			<button ion-button menuToggle>\n\n				<ion-icon name="menu"></ion-icon>\n\n			</button>\n\n			<ion-title>Kasir</ion-title>\n\n			<ion-searchbar *ngIf="searchinput" end (ionInput)="refresh_data()" [(ngModel)]="filter_product_name" class="searchbar-toolbar" style="padding: 0px;width: 40%;"></ion-searchbar>\n\n			\n\n			<ion-buttons class="center distributed">\n\n				<button ion-button icon-only color="light" (tap)="toggleSearchInput()">\n\n					<ion-icon name="search" *ngIf="!searchinput"></ion-icon>\n\n					<ion-icon name="close" *ngIf="searchinput"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			<ion-buttons end>\n\n				<button ion-button (tap)="openSavedBill()">\n\n					Nota tersimpan &nbsp; <ion-badge item-end color="light">{{unpaid_bill_length}}</ion-badge>\n\n				</button>\n\n			</ion-buttons>\n\n\n\n			<ion-buttons end>\n\n				<button ion-button clear icon-right color="light" (tap)="tooltip_present($event)">\n\n				  <ion-icon name="more"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content id="product-box">\n\n\n\n	<ion-grid>\n\n		<ion-row class="relative" id="product-content-body">\n\n			<div  col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">\n\n				<div class="receipt-product">\n\n					<page-receipt></page-receipt> \n\n				</div>\n\n			</div>\n\n\n\n			<ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">\n\n\n\n				<div class="box" id="box-product">\n\n					<div class="box-header">\n\n						<ion-row class="center-distributed">\n\n							<ion-col col-10 col-xs-10 col-sm-10 col-md-10 class="tab" style="justify-content:unset; overflow-x: auto;">\n\n								<label class="tab-item relative" [ngClass]="{\'active\': filter_type_selected == 0}" col--33 color="main">\n\n									<input type="radio" class="sr-only" name="type_product" value=0 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> All \n\n								</label>\n\n								<label class="tab-item relative" [ngClass]="{\'active\': filter_type_selected == item.type}" col--33 color="main" *ngFor="let item of helper.local.get_params(helper.config.variable.credential).type_product; let i = index;" >\n\n									<input type="radio" class="sr-only" name="type_product" value="{{item.type}}" [(ngModel)]="filter_type_selected" (change)="refresh_data()"> {{item.alt_type_name}}\n\n								</label>\n\n								<!-- <label class="tab-item relative" col--33 [ngClass]="{\'active\': filter_type_selected == 2}" color="main">\n\n									<input type="radio" class="sr-only" name="type_product" value=2 [(ngModel)]="filter_type_selected" (change)="refresh_data()"> Minuman\n\n								</label> -->\n\n							</ion-col>\n\n							<ion-col col-2 col-xs-2 col-sm-2 col-md-2>\n\n								<button ion-button clear icon-right color="main" (tap)="product_sort()">\n\n								  Sort <ion-icon name="funnel"></ion-icon>\n\n								</button>\n\n							</ion-col>\n\n						</ion-row>\n\n					</div>\n\n					<div *ngIf="!this.helper.local.get_params(\'pinned_product\') || this.helper.local.get_params(\'pinned_product\').length > 0" style="margin-bottom:10px;">\n\n						<strong style="font-size: .9em;margin-left: 5px;">Produk di Pin</strong>		\n\n						<ion-row class="box-body" id="">\n\n							<ion-col class="pinned_post col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of this.helper.local.get_params(\'pinned_product\'); let i = index" (tap)="add_to_bill(item)" (press)="pinnedProductOptions(item, index)">\n\n								<div class="product-body">\n\n									<div class="product-image" [style.backgroundImage]="\'url(\'+item.image.thumb+\')\'">\n\n										\n\n										<div class="product-name">{{item.name}}</div>\n\n									</div>\n\n									<div class="product-detail">\n\n										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>\n\n										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->\n\n									</div>\n\n								</div>\n\n							</ion-col>\n\n						</ion-row>\n\n					</div>\n\n					<div>\n\n						<strong style="font-size: .9em;margin-left: 5px;" *ngIf="!this.helper.local.get_params(\'pinned_product\') || this.helper.local.get_params(\'pinned_product\').length > 0">Produk</strong>\n\n						<ion-row class="box-body" id="">\n\n\n\n							<ion-col class="col-xs-{{page_params.product_width.xs}} col-sm-{{page_params.product_width.sm}} col-md-{{page_params.product_width.md}} col-lg-{{page_params.product_width.md}} col-xl-{{page_params.product_width.md}} product" *ngFor="let item of items; let i = index" (tap)="add_to_bill(item)" (press)="productOptions(item, index)">\n\n								<div class="product-body">\n\n									<div class="product-image" [style.backgroundImage]="\'url(\'+item.image.thumb+\')\'">\n\n										\n\n										<div class="product-name">{{item.name}}</div>\n\n									</div>\n\n									<div class="product-detail">\n\n										<div class="product-detail--price" color="primary"> <ion-icon name="cash"></ion-icon> Rp.{{priceToRupiah(item.price)}}</div>\n\n										<!-- <div class="product-detail--stock" color="secondary" ><ion-icon name="cube"></ion-icon> {{item.stock}}</div> -->\n\n									</div>\n\n								</div>\n\n							</ion-col>\n\n						</ion-row>\n\n					</div>\n\n\n\n								<!-- <ion-col col-6 col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-3 class="product">\n\n									<div class="product-body" style="background-color: white;">\n\n										<div class="product-name">\n\n											<ion-icon name="add" style="color:white; font-size: -webkit-xxx-large;"></ion-icon>\n\n										</div>\n\n									</div>\n\n								</ion-col> -->\n\n								\n\n								<!-- <ion-col col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>\n\n								\n\n									<button ion-button block color="main" (tap)="infinite_product()">Load More</button>\n\n								</ion-col> -->\n\n					<ion-infinite-scroll (ionInfinite)="infinite_product($event)">\n\n					   <ion-infinite-scroll-content></ion-infinite-scroll-content>\n\n					 </ion-infinite-scroll>\n\n				</div> <!--  End of payment method -->\n\n			</ion-col>\n\n		</ion-row>\n\n	</ion-grid>\n\n\n\n	\n\n	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30">\n\n    <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>\n\n    <ion-fab-list side="top" #fab>\n\n      <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow" >Bayar Pesanan</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>\n\n      <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>\n\n    </ion-fab-list>\n\n  </ion-fab>\n\n\n\n</ion-content>\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <ion-title>Footer</ion-title>\n\n  </ion-toolbar>\n\n</ion-footer>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\product\product.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
@@ -6210,7 +6319,7 @@ var ProductPage = (function () {
 
 /***/ }),
 
-/***/ 343:
+/***/ 342:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6288,116 +6397,7 @@ var DbTableProvider = (function () {
 
 /***/ }),
 
-/***/ 345:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AboutPageModule", function() { return AboutPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__about__ = __webpack_require__(346);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var AboutPageModule = (function () {
-    function AboutPageModule() {
-    }
-    AboutPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__about__["a" /* AboutPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__about__["a" /* AboutPage */]),
-            ],
-        })
-    ], AboutPageModule);
-    return AboutPageModule;
-}());
-
-//# sourceMappingURL=about.module.js.map
-
-/***/ }),
-
-/***/ 346:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AboutPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__ = __webpack_require__(8);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Generated class for the AboutPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AboutPage = (function () {
-    function AboutPage(helper, navCtrl, navParams) {
-        this.helper = helper;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.listAbout = [];
-        this.listAbout = [{
-                name: "nama",
-                value: 'Folarpos Instant'
-            }, {
-                name: 'uuid',
-                value: this.helper.local.get_params('uuid')
-            }, {
-                name: 'version',
-                value: 'build 20180321-1-20'
-            }, {
-                name: 'Author',
-                value: 'dhoni.p.saputra@gmail.com'
-            }, {
-                name: 'Company',
-                value: 'Folarium Technomedia'
-            }, {
-                name: "Year",
-                value: 2018
-            }, {
-                name: 'Website',
-                value: "http://folarpos.co.id"
-            }];
-    }
-    AboutPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad AboutPage');
-    };
-    AboutPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-about',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\about\about.html"*/'<!--\n  Generated template for the AboutPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	\n	<ion-toolbar color="main">\n	  <ion-navbar>\n	  	<button ion-button menuToggle>\n			<ion-icon name="menu"></ion-icon>\n		</button>\n	    <ion-title>about</ion-title>\n	  </ion-navbar>\n	</ion-toolbar>\n\n</ion-header>\n\n\n<ion-content padding>\n	<ion-list>\n	  <ion-item *ngFor="let item of listAbout">\n	  	<strong>{{item.name}}</strong><br>\n	  	<span>{{item.value}}</span>\n\n	  </ion-item>\n	</ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\about\about.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
-    ], AboutPage);
-    return AboutPage;
-}());
-
-//# sourceMappingURL=about.js.map
-
-/***/ }),
-
-/***/ 347:
+/***/ 344:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6405,7 +6405,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PrintBluetoothPanelPageModule", function() { return PrintBluetoothPanelPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__print_bluetooth_panel__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__print_bluetooth_panel__ = __webpack_require__(113);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6435,7 +6435,7 @@ var PrintBluetoothPanelPageModule = (function () {
 
 /***/ }),
 
-/***/ 349:
+/***/ 346:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6443,7 +6443,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OutletListPageModule", function() { return OutletListPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__outlet_list__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__outlet_list__ = __webpack_require__(111);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6522,7 +6522,7 @@ var ConfigProvider = (function () {
 
 /***/ }),
 
-/***/ 390:
+/***/ 387:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6560,7 +6560,7 @@ var BillSavedPage = (function () {
     };
     BillSavedPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-bill-saved',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\bill-saved\bill-saved.html"*/'<!--\n  Generated template for the BillSavedPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Bill tersimpan</ion-title>\n\n    <ion-buttons end>\n      <button ion-button (click)="closeModal()">\n      	Close\n      </button>\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\bill-saved\bill-saved.html"*/,
+            selector: 'page-bill-saved',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\bill-saved\bill-saved.html"*/'<!--\n\n  Generated template for the BillSavedPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Bill tersimpan</ion-title>\n\n\n\n    <ion-buttons end>\n\n      <button ion-button (click)="closeModal()">\n\n      	Close\n\n      </button>\n\n    </ion-buttons>\n\n\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\bill-saved\bill-saved.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]])
     ], BillSavedPage);
@@ -6571,7 +6571,7 @@ var BillSavedPage = (function () {
 
 /***/ }),
 
-/***/ 391:
+/***/ 388:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6605,7 +6605,7 @@ var SpendDetailPage = (function () {
     };
     SpendDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-spend-detail',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\spend-detail\spend-detail.html"*/'<!--\n  Generated template for the SpendDetailPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>spend-detail</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\spend-detail\spend-detail.html"*/,
+            selector: 'page-spend-detail',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\spend-detail\spend-detail.html"*/'<!--\n\n  Generated template for the SpendDetailPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>spend-detail</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\spend-detail\spend-detail.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
     ], SpendDetailPage);
@@ -6616,14 +6616,14 @@ var SpendDetailPage = (function () {
 
 /***/ }),
 
-/***/ 392:
+/***/ 389:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(390);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(414);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(411);
 
 
 
@@ -6633,7 +6633,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 414:
+/***/ 411:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6644,57 +6644,57 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_local_notifications__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_sqlite__ = __webpack_require__(495);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_file_transfer__ = __webpack_require__(205);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_sqlite__ = __webpack_require__(492);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_file_transfer__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_file__ = __webpack_require__(207);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_screen_orientation__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_native_audio__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__(496);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_home__ = __webpack_require__(497);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_list_list__ = __webpack_require__(498);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_native_audio__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__(493);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_home_home__ = __webpack_require__(494);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_list_list__ = __webpack_require__(495);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_table_table__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_login_login__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_send_receipt_send_receipt__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_send_receipt_send_receipt__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_payment_payment__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_receipt_receipt__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_product_product__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_bill_saved_bill_saved__ = __webpack_require__(390);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_settings_settings__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_stocks_stocks__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_bill_item_editor_bill_item_editor__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_bill_saved_bill_saved__ = __webpack_require__(387);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_settings_settings__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_stocks_stocks__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_bill_item_editor_bill_item_editor__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_transaction_transaction__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_detail_stock_detail_stock__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_edit_receipt_item_edit_receipt_item__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_total_payment_editor_total_payment_editor__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_total_payment_editor_total_payment_editor__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_tooltip_product_tooltip_product__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_error_error__ = __webpack_require__(145);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_split_bill_split_bill__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_error_error__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_split_bill_split_bill__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_member_member__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_member_new_form_member_new_form__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_member_detail_member_detail__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_modal_modal__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_spend_spend__ = __webpack_require__(148);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_spend_detail_spend_detail__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_member_detail_member_detail__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_modal_modal__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_spend_spend__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_spend_detail_spend_detail__ = __webpack_require__(388);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__pages_debt_debt__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__pages_waiters_waiters__ = __webpack_require__(144);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_outlet_list_outlet_list_module__ = __webpack_require__(349);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_print_bluetooth_panel_print_bluetooth_panel_module__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_about_about_module__ = __webpack_require__(345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__ionic_native_status_bar__ = __webpack_require__(389);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__ionic_native_splash_screen__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__providers_receipt_data_receipt_data__ = __webpack_require__(499);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_outlet_list_outlet_list_module__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_print_bluetooth_panel_print_bluetooth_panel_module__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_about_about_module__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__ionic_native_status_bar__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__ionic_native_splash_screen__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__providers_receipt_data_receipt_data__ = __webpack_require__(496);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__providers_config_config__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__providers_product_product__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__providers_bill_bill__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__providers_db_local_db_local__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__providers_db_table_db_table__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__providers_db_table_db_table__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__providers_helper_helper__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__angular_platform_browser_animations__ = __webpack_require__(500);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__angular_platform_browser_animations__ = __webpack_require__(497);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__providers_printer_service_printer_service__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__ionic_native_bluetooth_serial__ = __webpack_require__(348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__ionic_native_unique_device_id__ = __webpack_require__(344);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__ionic_native_http__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__providers_ai_remote_ai_remote__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__ionic_native_bluetooth_serial__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__ionic_native_unique_device_id__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__ionic_native_http__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__providers_ai_remote_ai_remote__ = __webpack_require__(209);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6804,34 +6804,34 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_41__pages_about_about_module__["AboutPageModule"],
                 __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */], {}, {
                     links: [
+                        { loadChildren: '../pages/about/about.module#AboutPageModule', name: 'AboutPage', segment: 'about', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/bill-item-editor/bill-item-editor.module#BillItemEditorPageModule', name: 'BillItemEditorPage', segment: 'bill-item-editor', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/bill-saved/bill-saved.module#BillSavedPageModule', name: 'BillSavedPage', segment: 'bill-saved', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/debt/debt.module#DebtPageModule', name: 'DebtPage', segment: 'debt', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/edit-receipt-item/edit-receipt-item.module#EditReceiptItemPageModule', name: 'EditReceiptItemPage', segment: 'edit-receipt-item', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/detail-stock/detail-stock.module#DetailStockPageModule', name: 'DetailStockPage', segment: 'detail-stock', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/edit-receipt-item/edit-receipt-item.module#EditReceiptItemPageModule', name: 'EditReceiptItemPage', segment: 'edit-receipt-item', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/error/error.module#ErrorPageModule', name: 'ErrorPage', segment: 'error', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/member-new-form/member-new-form.module#MemberNewFormPageModule', name: 'MemberNewFormPage', segment: 'member-new-form', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/member-detail/member-detail.module#MemberDetailPageModule', name: 'MemberDetailPage', segment: 'member-detail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/member-new-form/member-new-form.module#MemberNewFormPageModule', name: 'MemberNewFormPage', segment: 'member-new-form', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/member/member.module#MemberPageModule', name: 'MemberPage', segment: 'member', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modal/modal.module#ModalPageModule', name: 'ModalPage', segment: 'modal', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/bill-item-editor/bill-item-editor.module#BillItemEditorPageModule', name: 'BillItemEditorPage', segment: 'bill-item-editor', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/about/about.module#AboutPageModule', name: 'AboutPage', segment: 'about', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/payment/payment.module#PaymentPageModule', name: 'PaymentPage', segment: 'payment', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/print-bluetooth-panel/print-bluetooth-panel.module#PrintBluetoothPanelPageModule', name: 'PrintBluetoothPanelPage', segment: 'print-bluetooth-panel', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/product/product.module#ProductPageModule', name: 'ProductPage', segment: 'product', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/receipt/receipt.module#ReceiptPageModule', name: 'ReceiptPage', segment: 'receipt', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/print-bluetooth-panel/print-bluetooth-panel.module#PrintBluetoothPanelPageModule', name: 'PrintBluetoothPanelPage', segment: 'print-bluetooth-panel', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/payment/payment.module#PaymentPageModule', name: 'PaymentPage', segment: 'payment', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/settings/settings.module#SettingsPageModule', name: 'SettingsPage', segment: 'settings', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/split-bill/split-bill.module#SplitBillPageModule', name: 'SplitBillPage', segment: 'split-bill', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/send-receipt/send-receipt.module#SendReceiptPageModule', name: 'SendReceiptPage', segment: 'send-receipt', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/outlet-list/outlet-list.module#OutletListPageModule', name: 'OutletListPage', segment: 'outlet-list', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/spend/spend.module#SpendPageModule', name: 'SpendPage', segment: 'spend', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/settings/settings.module#SettingsPageModule', name: 'SettingsPage', segment: 'settings', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/spend-detail/spend-detail.module#SpendDetailPageModule', name: 'SpendDetailPage', segment: 'spend-detail', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/tooltip-product/tooltip-product.module#TooltipProductPageModule', name: 'TooltipProductPage', segment: 'tooltip-product', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/waiters/waiters.module#WaitersPageModule', name: 'WaitersPage', segment: 'waiters', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/transaction/transaction.module#TransactionPageModule', name: 'TransactionPage', segment: 'transaction', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/spend/spend.module#SpendPageModule', name: 'SpendPage', segment: 'spend', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/split-bill/split-bill.module#SplitBillPageModule', name: 'SplitBillPage', segment: 'split-bill', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/stocks/stocks.module#StocksPageModule', name: 'StocksPage', segment: 'stocks', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/table/table.module#TablePageModule', name: 'TablePage', segment: 'table', priority: 'high', defaultHistory: [] },
+                        { loadChildren: '../pages/tooltip-product/tooltip-product.module#TooltipProductPageModule', name: 'TooltipProductPage', segment: 'tooltip-product', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/total-payment-editor/total-payment-editor.module#TotalPaymentEditorPageModule', name: 'TotalPaymentEditorPage', segment: 'total-payment-editor', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/table/table.module#TablePageModule', name: 'TablePage', segment: 'table', priority: 'high', defaultHistory: [] }
+                        { loadChildren: '../pages/transaction/transaction.module#TransactionPageModule', name: 'TransactionPage', segment: 'transaction', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/waiters/waiters.module#WaitersPageModule', name: 'WaitersPage', segment: 'waiters', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/outlet-list/outlet-list.module#OutletListPageModule', name: 'OutletListPage', segment: 'outlet-list', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_5__ionic_storage__["a" /* IonicStorageModule */].forRoot()
@@ -6907,7 +6907,7 @@ var AppModule = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_db_local_db_local__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_product_product__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_db_table_db_table__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_db_table_db_table__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_helper_helper__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_bill_bill__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_screen_orientation__ = __webpack_require__(46);
@@ -7062,7 +7062,7 @@ var TablePage = (function () {
     };
     TablePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-table',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\table\table.html"*/'<!--\n  Generated template for the TablePage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header class="bg-green">\n  <ion-toolbar color="main">\n    <ion-navbar>\n      <button ion-button menuToggle>\n        <ion-icon name="menu"></ion-icon>\n      </button>\n      <ion-title>Meja</ion-title>\n      \n    </ion-navbar>\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  \n  <ion-row class="center-distributed">\n    <ion-col col-6 col-md-4 col-lg-4 col-xl-4>\n      \n      <div class="tab">\n        <label class="tab-item relative"  [ngClass]="{\'active\': choose_type_order == 1}" (change)="change_order(1)">\n          <!-- <ion-badge item-start class="badge badge-flying flying-left bg-danger" color="assertive">2</ion-badge> -->\n          <input type="radio" class="sr-only" value="1" name="type_order"> Meja\n        </label>\n        <label class="tab-item relative"  [ngClass]="{\'active\': choose_type_order == 2}" (change)="change_order(2)">\n          <!-- <ion-badge item-start class="badge badge-flying flying-right bg-danger" color="assertive">2</ion-badge> -->\n          <input type="radio" class="sr-only" value="2" name="type_order"> Bungkus\n        </label>\n      </div>\n      \n    </ion-col>\n  </ion-row>\n\n  <div style="margin: 10px 0px;" class="text-align--center" padding>\n    Silahkan Pilih Meja\n  </div>\n	\n	<div class="table-box">\n		<div class="table-item" absolute-drag *ngFor="let item of tableNum; let i = index" (click)="selectTable(i, item.tab_id)" [ngClass]="{\'table-square\':helper.local.get_params(\'configure_table\') && item.tab_type == 2,\'table-rectangle\':helper.local.get_params(\'configure_table\') && item.tab_type == 3, \'selected\': is_selected(i)}"> {{item.tab_name}} </div>\n	</div>\n  <div class="center">\n      <!-- <button ion-button >Selanjutnya >> </button> -->\n  </div>\n\n  <ion-fab bottom right>\n      <button ion-fab color="main" *ngIf="!is_selection_null()" (click)="order()"><ion-icon name="arrow-forward"></ion-icon></button>\n    </ion-fab>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\table\table.html"*/,
+            selector: 'page-table',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\table\table.html"*/'<!--\n\n  Generated template for the TablePage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header class="bg-green">\n\n  <ion-toolbar color="main">\n\n    <ion-navbar>\n\n      <button ion-button menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n      </button>\n\n      <ion-title>Meja</ion-title>\n\n      \n\n    </ion-navbar>\n\n  </ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  \n\n  <ion-row class="center-distributed">\n\n    <ion-col col-6 col-md-4 col-lg-4 col-xl-4>\n\n      \n\n      <div class="tab">\n\n        <label class="tab-item relative"  [ngClass]="{\'active\': choose_type_order == 1}" (change)="change_order(1)">\n\n          <!-- <ion-badge item-start class="badge badge-flying flying-left bg-danger" color="assertive">2</ion-badge> -->\n\n          <input type="radio" class="sr-only" value="1" name="type_order"> Meja\n\n        </label>\n\n        <label class="tab-item relative"  [ngClass]="{\'active\': choose_type_order == 2}" (change)="change_order(2)">\n\n          <!-- <ion-badge item-start class="badge badge-flying flying-right bg-danger" color="assertive">2</ion-badge> -->\n\n          <input type="radio" class="sr-only" value="2" name="type_order"> Bungkus\n\n        </label>\n\n      </div>\n\n      \n\n    </ion-col>\n\n  </ion-row>\n\n\n\n  <div style="margin: 10px 0px;" class="text-align--center" padding>\n\n    Silahkan Pilih Meja\n\n  </div>\n\n	\n\n	<div class="table-box">\n\n		<div class="table-item" absolute-drag *ngFor="let item of tableNum; let i = index" (click)="selectTable(i, item.tab_id)" [ngClass]="{\'table-square\':helper.local.get_params(\'configure_table\') && item.tab_type == 2,\'table-rectangle\':helper.local.get_params(\'configure_table\') && item.tab_type == 3, \'selected\': is_selected(i)}"> {{item.tab_name}} </div>\n\n	</div>\n\n  <div class="center">\n\n      <!-- <button ion-button >Selanjutnya >> </button> -->\n\n  </div>\n\n\n\n  <ion-fab bottom right>\n\n      <button ion-fab color="main" *ngIf="!is_selection_null()" (click)="order()"><ion-icon name="arrow-forward"></ion-icon></button>\n\n    </ion-fab>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\table\table.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_7__ionic_native_screen_orientation__["a" /* ScreenOrientation */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_db_local_db_local__["a" /* DbLocalProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_db_table_db_table__["a" /* DbTableProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */], __WEBPACK_IMPORTED_MODULE_6__providers_bill_bill__["a" /* BillProvider */]])
     ], TablePage);
@@ -7073,225 +7073,221 @@ var TablePage = (function () {
 
 /***/ }),
 
-/***/ 473:
+/***/ 470:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 476:
+/***/ 473:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 221,
-	"./af.js": 221,
-	"./ar": 222,
-	"./ar-dz": 223,
-	"./ar-dz.js": 223,
-	"./ar-kw": 224,
-	"./ar-kw.js": 224,
-	"./ar-ly": 225,
-	"./ar-ly.js": 225,
-	"./ar-ma": 226,
-	"./ar-ma.js": 226,
-	"./ar-sa": 227,
-	"./ar-sa.js": 227,
-	"./ar-tn": 228,
-	"./ar-tn.js": 228,
-	"./ar.js": 222,
-	"./az": 229,
-	"./az.js": 229,
-	"./be": 230,
-	"./be.js": 230,
-	"./bg": 231,
-	"./bg.js": 231,
-	"./bm": 232,
-	"./bm.js": 232,
-	"./bn": 233,
-	"./bn.js": 233,
-	"./bo": 234,
-	"./bo.js": 234,
-	"./br": 235,
-	"./br.js": 235,
-	"./bs": 236,
-	"./bs.js": 236,
-	"./ca": 237,
-	"./ca.js": 237,
-	"./cs": 238,
-	"./cs.js": 238,
-	"./cv": 239,
-	"./cv.js": 239,
-	"./cy": 240,
-	"./cy.js": 240,
-	"./da": 241,
-	"./da.js": 241,
-	"./de": 242,
-	"./de-at": 243,
-	"./de-at.js": 243,
-	"./de-ch": 244,
-	"./de-ch.js": 244,
-	"./de.js": 242,
-	"./dv": 245,
-	"./dv.js": 245,
-	"./el": 246,
-	"./el.js": 246,
-	"./en-au": 247,
-	"./en-au.js": 247,
-	"./en-ca": 248,
-	"./en-ca.js": 248,
-	"./en-gb": 249,
-	"./en-gb.js": 249,
-	"./en-ie": 250,
-	"./en-ie.js": 250,
-	"./en-il": 251,
-	"./en-il.js": 251,
-	"./en-nz": 252,
-	"./en-nz.js": 252,
-	"./eo": 253,
-	"./eo.js": 253,
-	"./es": 254,
-	"./es-do": 255,
-	"./es-do.js": 255,
-	"./es-us": 256,
-	"./es-us.js": 256,
-	"./es.js": 254,
-	"./et": 257,
-	"./et.js": 257,
-	"./eu": 258,
-	"./eu.js": 258,
-	"./fa": 259,
-	"./fa.js": 259,
-	"./fi": 260,
-	"./fi.js": 260,
-	"./fo": 261,
-	"./fo.js": 261,
-	"./fr": 262,
-	"./fr-ca": 263,
-	"./fr-ca.js": 263,
-	"./fr-ch": 264,
-	"./fr-ch.js": 264,
-	"./fr.js": 262,
-	"./fy": 265,
-	"./fy.js": 265,
-	"./gd": 266,
-	"./gd.js": 266,
-	"./gl": 267,
-	"./gl.js": 267,
-	"./gom-latn": 268,
-	"./gom-latn.js": 268,
-	"./gu": 269,
-	"./gu.js": 269,
-	"./he": 270,
-	"./he.js": 270,
-	"./hi": 271,
-	"./hi.js": 271,
-	"./hr": 272,
-	"./hr.js": 272,
-	"./hu": 273,
-	"./hu.js": 273,
-	"./hy-am": 274,
-	"./hy-am.js": 274,
-	"./id": 275,
-	"./id.js": 275,
-	"./is": 276,
-	"./is.js": 276,
-	"./it": 277,
-	"./it.js": 277,
-	"./ja": 278,
-	"./ja.js": 278,
-	"./jv": 279,
-	"./jv.js": 279,
-	"./ka": 280,
-	"./ka.js": 280,
-	"./kk": 281,
-	"./kk.js": 281,
-	"./km": 282,
-	"./km.js": 282,
-	"./kn": 283,
-	"./kn.js": 283,
-	"./ko": 284,
-	"./ko.js": 284,
-	"./ky": 285,
-	"./ky.js": 285,
-	"./lb": 286,
-	"./lb.js": 286,
-	"./lo": 287,
-	"./lo.js": 287,
-	"./lt": 288,
-	"./lt.js": 288,
-	"./lv": 289,
-	"./lv.js": 289,
-	"./me": 290,
-	"./me.js": 290,
-	"./mi": 291,
-	"./mi.js": 291,
-	"./mk": 292,
-	"./mk.js": 292,
-	"./ml": 293,
-	"./ml.js": 293,
-	"./mr": 294,
-	"./mr.js": 294,
-	"./ms": 295,
-	"./ms-my": 296,
-	"./ms-my.js": 296,
-	"./ms.js": 295,
-	"./mt": 297,
-	"./mt.js": 297,
-	"./my": 298,
-	"./my.js": 298,
-	"./nb": 299,
-	"./nb.js": 299,
-	"./ne": 300,
-	"./ne.js": 300,
-	"./nl": 301,
-	"./nl-be": 302,
-	"./nl-be.js": 302,
-	"./nl.js": 301,
-	"./nn": 303,
-	"./nn.js": 303,
-	"./pa-in": 304,
-	"./pa-in.js": 304,
-	"./pl": 305,
-	"./pl.js": 305,
-	"./pt": 306,
-	"./pt-br": 307,
-	"./pt-br.js": 307,
-	"./pt.js": 306,
-	"./ro": 308,
-	"./ro.js": 308,
-	"./ru": 309,
-	"./ru.js": 309,
-	"./sd": 310,
-	"./sd.js": 310,
-	"./se": 311,
-	"./se.js": 311,
-	"./si": 312,
-	"./si.js": 312,
-	"./sk": 313,
-	"./sk.js": 313,
-	"./sl": 314,
-	"./sl.js": 314,
-	"./sq": 315,
-	"./sq.js": 315,
-	"./sr": 316,
-	"./sr-cyrl": 317,
-	"./sr-cyrl.js": 317,
-	"./sr.js": 316,
-	"./ss": 318,
-	"./ss.js": 318,
-	"./sv": 319,
-	"./sv.js": 319,
-	"./sw": 320,
-	"./sw.js": 320,
-	"./ta": 321,
-	"./ta.js": 321,
-	"./te": 322,
-	"./te.js": 322,
-	"./tet": 323,
-	"./tet.js": 323,
-	"./tg": 324,
-	"./tg.js": 324,
+	"./af": 223,
+	"./af.js": 223,
+	"./ar": 224,
+	"./ar-dz": 225,
+	"./ar-dz.js": 225,
+	"./ar-kw": 226,
+	"./ar-kw.js": 226,
+	"./ar-ly": 227,
+	"./ar-ly.js": 227,
+	"./ar-ma": 228,
+	"./ar-ma.js": 228,
+	"./ar-sa": 229,
+	"./ar-sa.js": 229,
+	"./ar-tn": 230,
+	"./ar-tn.js": 230,
+	"./ar.js": 224,
+	"./az": 231,
+	"./az.js": 231,
+	"./be": 232,
+	"./be.js": 232,
+	"./bg": 233,
+	"./bg.js": 233,
+	"./bm": 234,
+	"./bm.js": 234,
+	"./bn": 235,
+	"./bn.js": 235,
+	"./bo": 236,
+	"./bo.js": 236,
+	"./br": 237,
+	"./br.js": 237,
+	"./bs": 238,
+	"./bs.js": 238,
+	"./ca": 239,
+	"./ca.js": 239,
+	"./cs": 240,
+	"./cs.js": 240,
+	"./cv": 241,
+	"./cv.js": 241,
+	"./cy": 242,
+	"./cy.js": 242,
+	"./da": 243,
+	"./da.js": 243,
+	"./de": 244,
+	"./de-at": 245,
+	"./de-at.js": 245,
+	"./de-ch": 246,
+	"./de-ch.js": 246,
+	"./de.js": 244,
+	"./dv": 247,
+	"./dv.js": 247,
+	"./el": 248,
+	"./el.js": 248,
+	"./en-au": 249,
+	"./en-au.js": 249,
+	"./en-ca": 250,
+	"./en-ca.js": 250,
+	"./en-gb": 251,
+	"./en-gb.js": 251,
+	"./en-ie": 252,
+	"./en-ie.js": 252,
+	"./en-nz": 253,
+	"./en-nz.js": 253,
+	"./eo": 254,
+	"./eo.js": 254,
+	"./es": 255,
+	"./es-do": 256,
+	"./es-do.js": 256,
+	"./es-us": 257,
+	"./es-us.js": 257,
+	"./es.js": 255,
+	"./et": 258,
+	"./et.js": 258,
+	"./eu": 259,
+	"./eu.js": 259,
+	"./fa": 260,
+	"./fa.js": 260,
+	"./fi": 261,
+	"./fi.js": 261,
+	"./fo": 262,
+	"./fo.js": 262,
+	"./fr": 263,
+	"./fr-ca": 264,
+	"./fr-ca.js": 264,
+	"./fr-ch": 265,
+	"./fr-ch.js": 265,
+	"./fr.js": 263,
+	"./fy": 266,
+	"./fy.js": 266,
+	"./gd": 267,
+	"./gd.js": 267,
+	"./gl": 268,
+	"./gl.js": 268,
+	"./gom-latn": 269,
+	"./gom-latn.js": 269,
+	"./gu": 270,
+	"./gu.js": 270,
+	"./he": 271,
+	"./he.js": 271,
+	"./hi": 272,
+	"./hi.js": 272,
+	"./hr": 273,
+	"./hr.js": 273,
+	"./hu": 274,
+	"./hu.js": 274,
+	"./hy-am": 275,
+	"./hy-am.js": 275,
+	"./id": 276,
+	"./id.js": 276,
+	"./is": 277,
+	"./is.js": 277,
+	"./it": 278,
+	"./it.js": 278,
+	"./ja": 279,
+	"./ja.js": 279,
+	"./jv": 280,
+	"./jv.js": 280,
+	"./ka": 281,
+	"./ka.js": 281,
+	"./kk": 282,
+	"./kk.js": 282,
+	"./km": 283,
+	"./km.js": 283,
+	"./kn": 284,
+	"./kn.js": 284,
+	"./ko": 285,
+	"./ko.js": 285,
+	"./ky": 286,
+	"./ky.js": 286,
+	"./lb": 287,
+	"./lb.js": 287,
+	"./lo": 288,
+	"./lo.js": 288,
+	"./lt": 289,
+	"./lt.js": 289,
+	"./lv": 290,
+	"./lv.js": 290,
+	"./me": 291,
+	"./me.js": 291,
+	"./mi": 292,
+	"./mi.js": 292,
+	"./mk": 293,
+	"./mk.js": 293,
+	"./ml": 294,
+	"./ml.js": 294,
+	"./mr": 295,
+	"./mr.js": 295,
+	"./ms": 296,
+	"./ms-my": 297,
+	"./ms-my.js": 297,
+	"./ms.js": 296,
+	"./mt": 298,
+	"./mt.js": 298,
+	"./my": 299,
+	"./my.js": 299,
+	"./nb": 300,
+	"./nb.js": 300,
+	"./ne": 301,
+	"./ne.js": 301,
+	"./nl": 302,
+	"./nl-be": 303,
+	"./nl-be.js": 303,
+	"./nl.js": 302,
+	"./nn": 304,
+	"./nn.js": 304,
+	"./pa-in": 305,
+	"./pa-in.js": 305,
+	"./pl": 306,
+	"./pl.js": 306,
+	"./pt": 307,
+	"./pt-br": 308,
+	"./pt-br.js": 308,
+	"./pt.js": 307,
+	"./ro": 309,
+	"./ro.js": 309,
+	"./ru": 310,
+	"./ru.js": 310,
+	"./sd": 311,
+	"./sd.js": 311,
+	"./se": 312,
+	"./se.js": 312,
+	"./si": 313,
+	"./si.js": 313,
+	"./sk": 314,
+	"./sk.js": 314,
+	"./sl": 315,
+	"./sl.js": 315,
+	"./sq": 316,
+	"./sq.js": 316,
+	"./sr": 317,
+	"./sr-cyrl": 318,
+	"./sr-cyrl.js": 318,
+	"./sr.js": 317,
+	"./ss": 319,
+	"./ss.js": 319,
+	"./sv": 320,
+	"./sv.js": 320,
+	"./sw": 321,
+	"./sw.js": 321,
+	"./ta": 322,
+	"./ta.js": 322,
+	"./te": 323,
+	"./te.js": 323,
+	"./tet": 324,
+	"./tet.js": 324,
 	"./th": 325,
 	"./th.js": 325,
 	"./tl-ph": 326,
@@ -7306,28 +7302,26 @@ var map = {
 	"./tzm-latn": 331,
 	"./tzm-latn.js": 331,
 	"./tzm.js": 330,
-	"./ug-cn": 332,
-	"./ug-cn.js": 332,
-	"./uk": 333,
-	"./uk.js": 333,
-	"./ur": 334,
-	"./ur.js": 334,
-	"./uz": 335,
-	"./uz-latn": 336,
-	"./uz-latn.js": 336,
-	"./uz.js": 335,
-	"./vi": 337,
-	"./vi.js": 337,
-	"./x-pseudo": 338,
-	"./x-pseudo.js": 338,
-	"./yo": 339,
-	"./yo.js": 339,
-	"./zh-cn": 340,
-	"./zh-cn.js": 340,
-	"./zh-hk": 341,
-	"./zh-hk.js": 341,
-	"./zh-tw": 342,
-	"./zh-tw.js": 342
+	"./uk": 332,
+	"./uk.js": 332,
+	"./ur": 333,
+	"./ur.js": 333,
+	"./uz": 334,
+	"./uz-latn": 335,
+	"./uz-latn.js": 335,
+	"./uz.js": 334,
+	"./vi": 336,
+	"./vi.js": 336,
+	"./x-pseudo": 337,
+	"./x-pseudo.js": 337,
+	"./yo": 338,
+	"./yo.js": 338,
+	"./zh-cn": 339,
+	"./zh-cn.js": 339,
+	"./zh-hk": 340,
+	"./zh-hk.js": 340,
+	"./zh-tw": 341,
+	"./zh-tw.js": 341
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -7343,32 +7337,32 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 476;
+webpackContext.id = 473;
 
 /***/ }),
 
-/***/ 496:
+/***/ 493:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(389);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(112);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_table_table__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_outlet_list_outlet_list__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_outlet_list_outlet_list__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_product_product__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_settings_settings__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_stocks_stocks__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_settings_settings__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_stocks_stocks__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_transaction_transaction__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_member_member__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_spend_spend__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_spend_spend__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_debt_debt__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_modal_modal__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_about_about__ = __webpack_require__(346);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_print_bluetooth_panel_print_bluetooth_panel__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_modal_modal__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_about_about__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_print_bluetooth_panel_print_bluetooth_panel__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_screen_orientation__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_helper_helper__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7507,7 +7501,7 @@ var MyApp = (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\app\app.html"*/'<ion-menu [content]="content" side="left" id="menu1">\n\n    <ion-header color="main">\n\n      <ion-toolbar color="main">\n\n          <ion-title>Menu</ion-title>\n\n      </ion-toolbar>\n\n    </ion-header>\n\n\n\n  <ion-content>\n\n    <!-- {{helper.local.get_params(helper.config.variable.credential).users}} -->\n\n    <ion-list>\n\n      <ion-item *ngIf="helper.local.get_params(\'is_login\') && helper.local.get_params(helper.config.variable.credential).users">\n\n        <ion-avatar item-start>\n\n          <img src="{{helper.config.base_url( )+helper.local.get_params(helper.config.variable.credential).users.users_photo}}">\n\n        </ion-avatar>\n\n        <h2>{{helper.local.get_params(helper.config.variable.credential).users.users_fullname}}</h2>\n\n        <p>Cashier</p>\n\n        <p>\n\n          <button ion-button small color="main" menuClose (click)="logout()"> <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon> &nbsp; Log Out</button>\n\n        </p>\n\n      </ion-item>\n\n    </ion-list>\n\n    <ion-list id="menu-list">\n\n      <!-- <ion-item-divider>Menu</ion-item-divider> -->\n\n      <button menuClose ion-item *ngIf="!helper.local.get_params(\'login_outlet_device\')" (click)="setRoot(outletListPage)">\n\n        <img src="assets/imgs/icons/outlet.png" style="width:25px; height: 25px;"> Pilih outlet \n\n      </button>\n\n      <div *ngIf="helper.local.get_params(\'login_outlet_device\')">\n\n        <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> \n\n          <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir \n\n        </button>\n\n        <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> \n\n          <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir \n\n        </button>\n\n        <div *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3">\n\n          <button menuClose ion-item (click)="setRoot(stocksPage)">\n\n            <img src="assets/imgs/icons/product.png" style="width:25px; height: 25px;"> Stok\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(transactionPage)">\n\n            <img src="assets/imgs/icons/transaction.png" style="width:25px; height: 25px;"> Transaksi\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(memberPage)">\n\n            <img src="assets/imgs/icons/member.png" style="width:25px; height: 25px;"> Member\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(modalPage)">\n\n            <img src="assets/imgs/icons/modal.png" style="width:25px; height: 25px;"> Modal\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:0})">\n\n            <img src="assets/imgs/icons/stock_out.png" style="width:25px; height: 25px;"> Pengeluaran\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:1})">\n\n            <img src="assets/imgs/icons/stock_in.png" style="width:25px; height: 25px;"> Pengadaan\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && helper.local.get_params(helper.config.variable.settings).debt_mode">\n\n            <img src="assets/imgs/icons/debt.png" style="width:25px; height: 25px;"> Hutang\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(settingsPage)">\n\n            <img src="assets/imgs/icons/settings.png" style="width:25px; height: 25px;"> Settings\n\n          </button>\n\n        </div>\n\n        \n\n        <button menuClose ion-item (click)="setRoot(printerPage)">\n\n          <img src="assets/imgs/icons/printer.png" style="width:25px; height: 25px;"> Printer\n\n        </button>\n\n      </div>\n\n      <button menuClose ion-item (click)="setRoot(aboutPage)">\n\n          <img src="assets/imgs/icons/about.png" style="width:25px; height: 25px;"> Tentang System\n\n      </button>\n\n      <button menuClose ion-item *ngIf="helper.local.get_params(\'login_outlet_device\')" (click)="signOutOutlet()">\n\n        <img src="assets/imgs/icons/out.png" style="width:25px; height: 25px;"> keluar outlet\n\n      </button>\n\n      <button menuClose ion-item (click)="closeApp()">\n\n        <img src="assets/imgs/icons/close.png" style="width:25px; height: 25px;"> Tutup Aplikasi\n\n      </button>\n\n      <!-- <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="{\'sr-only\': !helper.local.get_params(helper.config.variable.settings)[p.options.setting_name]}" >\n\n        {{p.title}}\n\n      </button> -->\n\n      <!-- <button menuClose ion-item (click)="logout()">\n\n        Logout\n\n      </button> -->\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n\n\n\n\n<ion-menu [content]="content" side="right" id="menu2" enabled="false">\n\n  <button class="">Dame</button>\n\n  <ion-content>\n\n    <ion-list>\n\n      <ion-item >\n\n        <div style="\n\n        display: flex;\n\n        justify-content: space-evenly;\n\n        align-items: center;\n\n        ">\n\n          <button ion-button color="main" round (click)="helper.zoom(\'out\')">\n\n            <ion-icon name="remove"></ion-icon>\n\n          </button>\n\n             Zoom product\n\n          <button ion-button color="main" round (click)="helper.zoom()">\n\n            <ion-icon name="add"></ion-icon>\n\n          </button>\n\n        </div>\n\n      </ion-item>\n\n    </ion-list>\n\n    <hr>\n\n    <div class=" fluid content center distributed" *ngIf="!helper.local.get_params(\'activeCategoriesProduct\') || helper.local.get_params(\'activeCategoriesProduct\').categories_children.length < 1">\n\n      <span class="text-center"><ion-icon class="text-warning" ios="ios-warning" md="md-warning" style="font-size: 3em;"></ion-icon><br>Tidak ada data kategori<br>untuk ditampilkan</span>\n\n    </div>\n\n    <ion-list *ngIf="helper.local.get_params(\'activeCategoriesProduct\')">\n\n      <ion-item *ngFor="let item of helper.local.get_params(\'activeCategoriesProduct\').categories_children">\n\n        \n\n        <!-- <ion-label> {{item.type_name}} </ion-label>\n\n        <ion-checkbox color="dark" checked="true"></ion-checkbox> -->\n\n        \n\n        <label class="control control--checkbox"> \n\n          {{item.type_name}} \n\n          <input type="checkbox" checked="checked" name="typeCategories" class="typeCategories" value="{{item.type_id}}" (change)="filteringTypeCategories(item)">\n\n          <div class="control__indicator"></div>\n\n        </label>\n\n\n\n      </ion-item>\n\n    </ion-list>\n\n  </ion-content>\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\app\app.html"*/'<ion-menu [content]="content" side="left" id="menu1">\n\n    <ion-header color="main">\n\n      <ion-toolbar color="main">\n\n          <ion-title>Menu</ion-title>\n\n      </ion-toolbar>\n\n    </ion-header>\n\n\n\n  <ion-content>\n\n    <!-- {{helper.local.get_params(helper.config.variable.credential).users}} -->\n\n    <ion-list>\n\n      <ion-item *ngIf="helper.local.get_params(\'is_login\') && helper.local.get_params(helper.config.variable.credential).users">\n\n        <ion-avatar item-start>\n\n          <img src="{{helper.config.base_url( )+helper.local.get_params(helper.config.variable.credential).users.users_photo}}">\n\n        </ion-avatar>\n\n        <h2>{{helper.local.get_params(helper.config.variable.credential).users.users_fullname}}</h2>\n\n        <p>Cashier</p>\n\n        <p>\n\n          <button ion-button small color="main" menuClose (click)="logout()"> <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon> &nbsp; Log Out</button>\n\n        </p>\n\n      </ion-item>\n\n    </ion-list>\n\n    <ion-list id="menu-list">\n\n      <!-- <ion-item-divider>Menu</ion-item-divider> -->\n\n      <button menuClose ion-item *ngIf="!helper.local.get_params(\'login_outlet_device\')" (click)="setRoot(outletListPage)">\n\n        <img src="assets/imgs/icons/outlet.png" style="width:25px; height: 25px;"> Pilih outlet \n\n      </button>\n\n      <div *ngIf="helper.local.get_params(\'login_outlet_device\')">\n\n        <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> \n\n          <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir \n\n        </button>\n\n        <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> \n\n          <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir \n\n        </button>\n\n        <div *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3">\n\n          <button menuClose ion-item (click)="setRoot(stocksPage)">\n\n            <img src="assets/imgs/icons/product.png" style="width:25px; height: 25px;"> Stok\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(transactionPage)">\n\n            <img src="assets/imgs/icons/transaction.png" style="width:25px; height: 25px;"> Transaksi\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(memberPage)">\n\n            <img src="assets/imgs/icons/member.png" style="width:25px; height: 25px;"> Member\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(modalPage)">\n\n            <img src="assets/imgs/icons/modal.png" style="width:25px; height: 25px;"> Modal\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:0})">\n\n            <img src="assets/imgs/icons/stock_out.png" style="width:25px; height: 25px;"> Pengeluaran\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(spendPage,{sp_type:1})">\n\n            <img src="assets/imgs/icons/stock_in.png" style="width:25px; height: 25px;"> Pengadaan\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && helper.local.get_params(helper.config.variable.settings).debt_mode">\n\n            <img src="assets/imgs/icons/debt.png" style="width:25px; height: 25px;"> Hutang\n\n          </button>\n\n          <button menuClose ion-item (click)="setRoot(settingsPage)">\n\n            <img src="assets/imgs/icons/settings.png" style="width:25px; height: 25px;"> Settings\n\n          </button>\n\n        </div>\n\n        \n\n        <button menuClose ion-item (click)="setRoot(printerPage)">\n\n          <img src="assets/imgs/icons/printer.png" style="width:25px; height: 25px;"> Printer\n\n        </button>\n\n      </div>\n\n      <button menuClose ion-item (click)="setRoot(aboutPage)">\n\n          <img src="assets/imgs/icons/about.png" style="width:25px; height: 25px;"> Tentang System\n\n      </button>\n\n      <button menuClose ion-item *ngIf="helper.local.get_params(\'login_outlet_device\')" (click)="signOutOutlet()">\n\n        <img src="assets/imgs/icons/out.png" style="width:25px; height: 25px;"> keluar outlet\n\n      </button>\n\n      <button menuClose ion-item (click)="closeApp()">\n\n        <img src="assets/imgs/icons/close.png" style="width:25px; height: 25px;"> Tutup Aplikasi\n\n      </button>\n\n      <!-- <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [ngClass]="{\'sr-only\': !helper.local.get_params(helper.config.variable.settings)[p.options.setting_name]}" >\n\n        {{p.title}}\n\n      </button> -->\n\n      <!-- <button menuClose ion-item (click)="logout()">\n\n        Logout\n\n      </button> -->\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n\n\n\n\n<ion-menu [content]="content" side="right" id="menu2" enabled="false">\n\n  <button class="">Dame</button>\n\n  <ion-content>\n\n    <ion-list>\n\n      <ion-item >\n\n        <div style="\n\n        display: flex;\n\n        justify-content: space-evenly;\n\n        align-items: center;\n\n        ">\n\n          <button ion-button color="main" round (click)="helper.zoom(\'out\')">\n\n            <ion-icon name="remove"></ion-icon>\n\n          </button>\n\n             Zoom product\n\n          <button ion-button color="main" round (click)="helper.zoom()">\n\n            <ion-icon name="add"></ion-icon>\n\n          </button>\n\n        </div>\n\n      </ion-item>\n\n    </ion-list>\n\n    <hr>\n\n    <div class=" fluid content center distributed" *ngIf="!helper.local.get_params(\'activeCategoriesProduct\') || helper.local.get_params(\'activeCategoriesProduct\').categories_children.length < 1">\n\n      <span class="text-center"><ion-icon class="text-warning" ios="ios-warning" md="md-warning" style="font-size: 3em;"></ion-icon><br>Tidak ada data kategori<br>untuk ditampilkan</span>\n\n    </div>\n\n    <ion-list *ngIf="helper.local.get_params(\'activeCategoriesProduct\')">\n\n      <ion-item *ngFor="let item of helper.local.get_params(\'activeCategoriesProduct\').categories_children">\n\n        \n\n        <!-- <ion-label> {{item.type_name}} </ion-label>\n\n        <ion-checkbox color="dark" checked="true"></ion-checkbox> -->\n\n        \n\n        <label class="control control--checkbox"> \n\n          {{item.type_name}} \n\n          <input type="checkbox" checked="checked" name="typeCategories" class="typeCategories" value="{{item.type_id}}" (change)="filteringTypeCategories(item)">\n\n          <div class="control__indicator"></div>\n\n        </label>\n\n\n\n      </ion-item>\n\n    </ion-list>\n\n  </ion-content>\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_18__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_17__ionic_native_screen_orientation__["a" /* ScreenOrientation */]])
     ], MyApp);
@@ -7518,7 +7512,7 @@ var MyApp = (function () {
 
 /***/ }),
 
-/***/ 497:
+/***/ 494:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7546,7 +7540,7 @@ var HomePage = (function () {
     }
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <h3>Ionic Menu Starter</h3>\n\n  <p>\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.\n  </p>\n\n  <button ion-button secondary menuToggle>Toggle Menu</button>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Home</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <h3>Ionic Menu Starter</h3>\n\n\n\n  <p>\n\n    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.\n\n  </p>\n\n\n\n  <button ion-button secondary menuToggle>Toggle Menu</button>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
     ], HomePage);
@@ -7557,7 +7551,7 @@ var HomePage = (function () {
 
 /***/ }),
 
-/***/ 498:
+/***/ 495:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7602,7 +7596,7 @@ var ListPage = (function () {
     };
     ListPage = ListPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-list',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\list\list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-end>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n  <div *ngIf="selectedItem" padding>\n    You navigated here from <b>{{selectedItem.title}}</b>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\list\list.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\list\list.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>List</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-list>\n\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n\n      {{item.title}}\n\n      <div class="item-note" item-end>\n\n        {{item.note}}\n\n      </div>\n\n    </button>\n\n  </ion-list>\n\n  <div *ngIf="selectedItem" padding>\n\n    You navigated here from <b>{{selectedItem.title}}</b>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\list\list.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
     ], ListPage);
@@ -7614,7 +7608,7 @@ var ListPage = (function () {
 
 /***/ }),
 
-/***/ 499:
+/***/ 496:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7832,7 +7826,7 @@ var DetailStockPage = (function () {
     };
     DetailStockPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-detail-stock',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\detail-stock\detail-stock.html"*/'<!--\n  Generated template for the DetailStockPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	<ion-toolbar  color="main">\n		<ion-navbar>\n			<ion-title>{{product.name}}</ion-title>\n			\n		    <ion-buttons end *ngIf="page_params.show_history_stock == true">\n		      <a ion-button target="_blank" href="{{helper.config.base_url(\'admin/outlet/stock/export/download\')}}{{product.outlet||product.outlet_id}}/{{product.id||product.ingd_id}}">\n		      	Download kartu stok\n		      </a>\n		    </ion-buttons>\n		    \n			<ion-buttons end>\n		      <button ion-button icon-only (click)="closeModal()" *ngIf="page_params.view_type == \'modal\' ">\n		      	<ion-icon name="close-circle"></ion-icon>\n		      </button>\n		    </ion-buttons>\n\n\n		</ion-navbar>\n	</ion-toolbar>\n\n</ion-header>\n\n\n<ion-content padding>\n	<div padding>\n		<ion-segment [(ngModel)]="tab">\n			<ion-segment-button value="detail_product">\n				Detail\n			</ion-segment-button>\n			<ion-segment-button value="ingredients_product">\n				Bahan\n			</ion-segment-button>\n			<ion-segment-button value="history_stock" *ngIf="page_params.show_history_stock == true">\n				Stock History\n			</ion-segment-button>\n		</ion-segment>\n	</div>\n\n	<div [ngSwitch]="tab">\n		<div *ngSwitchCase="\'detail_product\'">\n			<div *ngIf="product.id">\n				\n				<div class="col-md-4">\n	    			<div style="">\n	    				<img src="{{helper.config.base_url(product.image.raw)}}">\n	    			</div>\n	    			<div style="" [innerHTML]="product.prod_description">\n	    			</div>\n				</div>\n				<div class="col-md-8">\n					<ion-list inset>\n						<ion-item>\n							<h2>Nama</h2>\n			    			<p>{{product.name}}</p>\n						</ion-item>\n						<ion-item>\n							<h2>Harga</h2>\n			    			<p>Rp. {{product.price_idr}}</p>\n						</ion-item>\n						<ion-item>\n							<h2>Stok</h2>\n			    			<p>{{product.stock}} {{product.unit}}</p>\n						</ion-item>\n\n						<ion-item>\n							<h2>Stok Opname</h2>\n			    			<p>{{product.stock_opname}} {{product.unit}}</p>\n						</ion-item>\n					</ion-list>\n					\n				</div>\n			</div>\n			<div *ngIf="product.ingd_id">\n				<div class="col-md-6">\n	    			<div style="">\n	    			</div>\n	    			\n				</div>\n				<div class="col-md-6">\n					<ion-list inset>\n						<ion-item>\n							<h2>Nama</h2>\n			    			<p>{{product.ingd_name}}</p>\n						</ion-item>\n						<ion-item>\n							<h2>Harga</h2>\n			    			<p>Rp. {{product.ingd_price}}</p>\n						</ion-item>\n						<ion-item>\n							<h2>Unit</h2>\n			    			<p>{{product.stock}} {{product.ingd_unit}}</p>\n						</ion-item>\n\n						<ion-item>\n							<h2>Stok</h2>\n			    			<p>{{product.ingd_stock}} {{product.ingd_unit}}</p>\n						</ion-item>\n					</ion-list>\n					\n				</div>\n			</div>\n		</div>\n\n		<div *ngSwitchCase="\'ingredients_product\'">\n\n				<ion-list inset>\n					\n					<ion-item *ngIf="!product.ingredients || product.ingredients.length < 1" class="text-align--center">\n						Tidak ada bahan\n					</ion-item>\n					<ion-item *ngFor="let ingd of product.ingredients">\n						<h2>{{ingd.ingd_name}}</h2>\n		    			<p>{{ingd.prod_ingd_qty}} {{ingd.ingd_unit}}</p>\n					</ion-item>\n				</ion-list>\n				\n		</div>\n\n		<ion-list *ngSwitchCase="\'history_stock\'">\n			<div class="table-responsive">\n				<table class="table table-bordered table-hover table-striped">\n					<thead>\n						<tr>\n							<th>No</th>\n							<th>Tanggal</th>\n							<th>Stok masuk</th>\n							<th>Stok keluar</th>\n							<th>Stok Sisa</th>\n							<th>Catatan</th>\n						</tr>\n					</thead>\n					<tbody>\n						<tr *ngFor="let item of log_stock; let i = index;">\n							<td>{{i+1}}</td>\n							<td>{{item.stock_date}}</td>\n							<td>{{item.stock_in}}</td>\n							<td>{{item.stock_out}}</td>\n							<td>{{item.stock_rest}}</td>\n							<td>{{item.stock_note}}</td>\n						</tr>\n					</tbody>\n				</table>\n			</div>\n		</ion-list>\n	</div>	\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\detail-stock\detail-stock.html"*/,
+            selector: 'page-detail-stock',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\detail-stock\detail-stock.html"*/'<!--\n\n  Generated template for the DetailStockPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar  color="main">\n\n		<ion-navbar>\n\n			<ion-title>{{product.name}}</ion-title>\n\n			\n\n		    <ion-buttons end *ngIf="page_params.show_history_stock == true">\n\n		      <a ion-button target="_blank" href="{{helper.config.base_url(\'admin/outlet/stock/export/download\')}}{{product.outlet||product.outlet_id}}/{{product.id||product.ingd_id}}">\n\n		      	Download kartu stok\n\n		      </a>\n\n		    </ion-buttons>\n\n		    \n\n			<ion-buttons end>\n\n		      <button ion-button icon-only (click)="closeModal()" *ngIf="page_params.view_type == \'modal\' ">\n\n		      	<ion-icon name="close-circle"></ion-icon>\n\n		      </button>\n\n		    </ion-buttons>\n\n\n\n\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n	<div padding>\n\n		<ion-segment [(ngModel)]="tab">\n\n			<ion-segment-button value="detail_product">\n\n				Detail\n\n			</ion-segment-button>\n\n			<ion-segment-button value="ingredients_product">\n\n				Bahan\n\n			</ion-segment-button>\n\n			<ion-segment-button value="history_stock" *ngIf="page_params.show_history_stock == true">\n\n				Stock History\n\n			</ion-segment-button>\n\n		</ion-segment>\n\n	</div>\n\n\n\n	<div [ngSwitch]="tab">\n\n		<div *ngSwitchCase="\'detail_product\'">\n\n			<div *ngIf="product.id">\n\n				\n\n				<div class="col-md-4">\n\n	    			<div style="">\n\n	    				<img src="{{helper.config.base_url(product.image.raw)}}">\n\n	    			</div>\n\n	    			<div style="" [innerHTML]="product.prod_description">\n\n	    			</div>\n\n				</div>\n\n				<div class="col-md-8">\n\n					<ion-list inset>\n\n						<ion-item>\n\n							<h2>Nama</h2>\n\n			    			<p>{{product.name}}</p>\n\n						</ion-item>\n\n						<ion-item>\n\n							<h2>Harga</h2>\n\n			    			<p>Rp. {{product.price_idr}}</p>\n\n						</ion-item>\n\n						<ion-item>\n\n							<h2>Stok</h2>\n\n			    			<p>{{product.stock}} {{product.unit}}</p>\n\n						</ion-item>\n\n\n\n						<ion-item>\n\n							<h2>Stok Opname</h2>\n\n			    			<p>{{product.stock_opname}} {{product.unit}}</p>\n\n						</ion-item>\n\n					</ion-list>\n\n					\n\n				</div>\n\n			</div>\n\n			<div *ngIf="product.ingd_id">\n\n				<div class="col-md-6">\n\n	    			<div style="">\n\n	    			</div>\n\n	    			\n\n				</div>\n\n				<div class="col-md-6">\n\n					<ion-list inset>\n\n						<ion-item>\n\n							<h2>Nama</h2>\n\n			    			<p>{{product.ingd_name}}</p>\n\n						</ion-item>\n\n						<ion-item>\n\n							<h2>Harga</h2>\n\n			    			<p>Rp. {{product.ingd_price}}</p>\n\n						</ion-item>\n\n						<ion-item>\n\n							<h2>Unit</h2>\n\n			    			<p>{{product.stock}} {{product.ingd_unit}}</p>\n\n						</ion-item>\n\n\n\n						<ion-item>\n\n							<h2>Stok</h2>\n\n			    			<p>{{product.ingd_stock}} {{product.ingd_unit}}</p>\n\n						</ion-item>\n\n					</ion-list>\n\n					\n\n				</div>\n\n			</div>\n\n		</div>\n\n\n\n		<div *ngSwitchCase="\'ingredients_product\'">\n\n\n\n				<ion-list inset>\n\n					\n\n					<ion-item *ngIf="!product.ingredients || product.ingredients.length < 1" class="text-align--center">\n\n						Tidak ada bahan\n\n					</ion-item>\n\n					<ion-item *ngFor="let ingd of product.ingredients">\n\n						<h2>{{ingd.ingd_name}}</h2>\n\n		    			<p>{{ingd.prod_ingd_qty}} {{ingd.ingd_unit}}</p>\n\n					</ion-item>\n\n				</ion-list>\n\n				\n\n		</div>\n\n\n\n		<ion-list *ngSwitchCase="\'history_stock\'">\n\n			<div class="table-responsive">\n\n				<table class="table table-bordered table-hover table-striped">\n\n					<thead>\n\n						<tr>\n\n							<th>No</th>\n\n							<th>Tanggal</th>\n\n							<th>Stok masuk</th>\n\n							<th>Stok keluar</th>\n\n							<th>Stok Sisa</th>\n\n							<th>Catatan</th>\n\n						</tr>\n\n					</thead>\n\n					<tbody>\n\n						<tr *ngFor="let item of log_stock; let i = index;">\n\n							<td>{{i+1}}</td>\n\n							<td>{{item.stock_date}}</td>\n\n							<td>{{item.stock_in}}</td>\n\n							<td>{{item.stock_out}}</td>\n\n							<td>{{item.stock_rest}}</td>\n\n							<td>{{item.stock_note}}</td>\n\n						</tr>\n\n					</tbody>\n\n				</table>\n\n			</div>\n\n		</ion-list>\n\n	</div>	\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\detail-stock\detail-stock.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */]])
     ], DetailStockPage);
@@ -7853,7 +7847,7 @@ var DetailStockPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__table_table__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__product_product__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__outlet_list_outlet_list__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__outlet_list_outlet_list__ = __webpack_require__(111);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8002,7 +7996,7 @@ var LoginPage = (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\login\login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n	<ion-toolbar color="main">\n		<ion-navbar>\n			<ion-title>Login</ion-title>\n		</ion-navbar> \n	</ion-toolbar>\n\n</ion-header>\n\n\n<ion-content padding >\n	<div class="center distributed" style="flex-direction: column;">\n		\n		<div class="col-md-6 col-lg-6 col-sm-8 col-xs-12">\n			<div style="text-align: center;">\n				<img src="assets/imgs/folarpos_logo.png" style="width: auto; height: 150px;">\n				<h3>Log into Folarpos Instan</h3>\n			</div>\n\n			<div *ngIf="!helper.local.get_params(\'is_login\')">\n				<form (ngSubmit)="signIn($event)">\n					<ion-list >\n						<ion-item>\n							<ion-label floating>Email</ion-label>\n							<ion-input name="email" type="text" required [(ngModel)]="user.user_email_or_phone"></ion-input>\n						</ion-item>\n\n						<ion-item>\n							<ion-label floating>Password</ion-label>\n							<ion-input name="password" type="password" required [(ngModel)]="user.user_password"></ion-input>\n						</ion-item>\n						<ion-item style="display: none;">\n						</ion-item>\n\n					</ion-list>\n\n					<div padding style="padding-right: 0px;">\n						<button ion-button block color="main" large type="submit">Sign In</button>\n					</div>\n				</form>\n			</div>\n\n		</div>\n	</div>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\login\login.html"*/,
+            selector: 'page-login',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\login\login.html"*/'<!--\n\n  Generated template for the LoginPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n	<ion-toolbar color="main">\n\n		<ion-navbar>\n\n			<ion-title>Login</ion-title>\n\n		</ion-navbar> \n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding >\n\n	<div class="center distributed" style="flex-direction: column;">\n\n		\n\n		<div class="col-md-6 col-lg-6 col-sm-8 col-xs-12">\n\n			<div style="text-align: center;">\n\n				<img src="assets/imgs/folarpos_logo.png" style="width: auto; height: 150px;">\n\n				<h3>Log into Folarpos Instan</h3>\n\n			</div>\n\n\n\n			<div *ngIf="!helper.local.get_params(\'is_login\')">\n\n				<form (ngSubmit)="signIn($event)">\n\n					<ion-list >\n\n						<ion-item>\n\n							<ion-label floating>Email</ion-label>\n\n							<ion-input name="email" type="text" required [(ngModel)]="user.user_email_or_phone"></ion-input>\n\n						</ion-item>\n\n\n\n						<ion-item>\n\n							<ion-label floating>Password</ion-label>\n\n							<ion-input name="password" type="password" required [(ngModel)]="user.user_password"></ion-input>\n\n						</ion-item>\n\n						<ion-item style="display: none;">\n\n						</ion-item>\n\n\n\n					</ion-list>\n\n\n\n					<div padding style="padding-right: 0px;">\n\n						<button ion-button block color="main" large type="submit">Sign In</button>\n\n					</div>\n\n				</form>\n\n			</div>\n\n\n\n		</div>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\login\login.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* Platform */]])
     ], LoginPage);
@@ -8022,7 +8016,7 @@ var LoginPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__member_new_form_member_new_form__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__member_detail_member_detail__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__member_detail_member_detail__ = __webpack_require__(141);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8281,7 +8275,7 @@ var MemberPage = (function () {
     };
     MemberPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-member',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\member\member.html"*/'<!--\n  Generated template for the MemberPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	<ion-toolbar color="main">\n		<ion-navbar>\n			<button ion-button menuToggle>\n	        <ion-icon name="menu"></ion-icon>\n	     </button>\n			<ion-title>Member</ion-title>\n      <ion-searchbar class="searchbar-toolbar" *ngIf="page_params.toggleSearchInput" (ionInput)="filter_member($event)" style="width: 35%;"></ion-searchbar>\n      <ion-buttons class="center distributed">\n          <button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">\n              <ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>\n              <ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>\n          </button>\n      </ion-buttons>\n		</ion-navbar>\n	</ion-toolbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-refresher (ionRefresh)="fetching_member($event)">\n    <ion-refresher-content></ion-refresher-content>\n  </ion-refresher>\n	<ion-row>\n        <ion-col col-4 *ngFor="let item of member; let i = index;" (press)="advanceOptions(i, item)" (click)="pickMember(i, item)">\n          <ion-card padding>\n          	<h2 class="text-main">{{item.member_name}}</h2>\n          	<div style="margin-top: 15px;" class="text-muted">\n          		<div style="font-size: .7em;"> <ion-icon ios="ios-time" md="md-time"></ion-icon> <span *ngIf="item.member_registered">{{helper.moment(item.member_registered).format(\'YYYY MMM DD\')}}</span> <span *ngIf="!item.member_registered">Tanggal pendaftaran tidak ditemukan</span>   </div>\n          		<div style="font-size: .7em;"> <ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon> {{helper.get_initial_outlet_name(helper.local.get_params(helper.config.variable.credential).outlet.outlet_name,\'.\')}}/000-{{item.member_id}} </div>\n          		<div style="font-size: .7em;"> <ion-icon ios="ios-call" md="md-call"></ion-icon> {{item.member_phone}}</div>\n          		<div style="font-size: .7em;"> <ion-icon ios="logo-usd" md="logo-usd"></ion-icon> <span *ngIf="item.last_transaction"> {{helper.moment(item.last_transaction).format(\'YYYY MMM DD HH:mm\')}} </span> <span *ngIf="!item.last_transaction">Tidak ada transaksi</span> </div>\n          	</div>\n          </ion-card>\n        </ion-col>\n    </ion-row>\n    <div *ngIf="!member || member.length < 1" class="text-align--center">\n		Anda belum memiliki member\n	</div>\n	\n\n	<ion-fab bottom right>\n		<button ion-fab color="main" (tap)="openFormPopover()"><ion-icon name="add"></ion-icon></button>\n	</ion-fab>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\member\member.html"*/,
+            selector: 'page-member',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\member\member.html"*/'<!--\n\n  Generated template for the MemberPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n		<ion-navbar>\n\n			<button ion-button menuToggle>\n\n	        <ion-icon name="menu"></ion-icon>\n\n	     </button>\n\n			<ion-title>Member</ion-title>\n\n      <ion-searchbar class="searchbar-toolbar" *ngIf="page_params.toggleSearchInput" (ionInput)="filter_member($event)" style="width: 35%;"></ion-searchbar>\n\n      <ion-buttons class="center distributed">\n\n          <button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">\n\n              <ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>\n\n              <ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>\n\n          </button>\n\n      </ion-buttons>\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <ion-refresher (ionRefresh)="fetching_member($event)">\n\n    <ion-refresher-content></ion-refresher-content>\n\n  </ion-refresher>\n\n	<ion-row>\n\n        <ion-col col-4 *ngFor="let item of member; let i = index;" (press)="advanceOptions(i, item)" (click)="pickMember(i, item)">\n\n          <ion-card padding>\n\n          	<h2 class="text-main">{{item.member_name}}</h2>\n\n          	<div style="margin-top: 15px;" class="text-muted">\n\n          		<div style="font-size: .7em;"> <ion-icon ios="ios-time" md="md-time"></ion-icon> <span *ngIf="item.member_registered">{{helper.moment(item.member_registered).format(\'YYYY MMM DD\')}}</span> <span *ngIf="!item.member_registered">Tanggal pendaftaran tidak ditemukan</span>   </div>\n\n          		<div style="font-size: .7em;"> <ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon> {{helper.get_initial_outlet_name(helper.local.get_params(helper.config.variable.credential).outlet.outlet_name,\'.\')}}/000-{{item.member_id}} </div>\n\n          		<div style="font-size: .7em;"> <ion-icon ios="ios-call" md="md-call"></ion-icon> {{item.member_phone}}</div>\n\n          		<div style="font-size: .7em;"> <ion-icon ios="logo-usd" md="logo-usd"></ion-icon> <span *ngIf="item.last_transaction"> {{helper.moment(item.last_transaction).format(\'YYYY MMM DD HH:mm\')}} </span> <span *ngIf="!item.last_transaction">Tidak ada transaksi</span> </div>\n\n          	</div>\n\n          </ion-card>\n\n        </ion-col>\n\n    </ion-row>\n\n    <div *ngIf="!member || member.length < 1" class="text-align--center">\n\n		Anda belum memiliki member\n\n	</div>\n\n	\n\n\n\n	<ion-fab bottom right>\n\n		<button ion-fab color="main" (tap)="openFormPopover()"><ion-icon name="add"></ion-icon></button>\n\n	</ion-fab>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\member\member.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]])
     ], MemberPage);
@@ -8303,7 +8297,7 @@ var MemberPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_bill_bill__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__product_product__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__send_receipt_send_receipt__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__send_receipt_send_receipt__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8723,7 +8717,7 @@ var PaymentPage = (function () {
     };
     PaymentPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-payment',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\payment\payment.html"*/'<!--\n  Generated template for the PaymentPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n	<ion-toolbar color="main">\n	  <ion-navbar>\n	    <button ion-button menuToggle *ngIf="state == \'payment\'">\n	      <ion-icon name="menu"></ion-icon>\n	    </button>\n	    <ion-title>Pembayaran</ion-title>\n	    <ion-buttons class="center distributed">\n			<button ion-button clear icon-right color="light" *ngIf="state == \'payment\'" (click)="payBill()">\n			  Bayar pesanan\n			</button>\n		</ion-buttons>\n	  </ion-navbar>\n	</ion-toolbar>\n</ion-header>\n\n\n<ion-content id="payment-box" >\n\n	<ion-grid *ngIf="state == \'payment\'">\n		<ion-row class="relative">\n			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">\n				<div class="receipt-product">\n					<page-receipt></page-receipt> \n				</div>\n			</div>\n\n			<ion-col col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">\n				<div class="payment-method ">\n						\n					<ion-row padding class="center-distributed">\n						<ion-col col-7 col-xs-12 col-sm-12 col-md-8 class="tab">\n							<label class="tab-item relative" [ngClass]="{\'active\': payment_method == 1}" col--33>\n								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="1" (change)="resetBillCounted()"> Tunai\n							</label>\n							<label class="tab-item relative" [ngClass]="{\'active\': payment_method == 2}" col--33>\n								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="2" (change)="resetBillCounted()"> kartu\n							</label>\n							<label class="tab-item relative" [ngClass]="{\'active\': payment_method == 3}" col--33>\n								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="3" (change)="resetBillCounted()"> Campuran\n							</label>\n						</ion-col>\n					</ion-row>\n					\n						\n					<ion-row class="center" *ngIf="payment_method == 1">\n						<ion-col col-12 col-xs-12 col-sm-12 col-md-4>\n							<input type="text" class="form-control--lg" id="paid" name="" [(ngModel)]="bill.payment_nominal" (input)="sumReturn(true)" placeholder="Uang dibayarkan">				\n						</ion-col>\n						<ion-col col-12 col-xs-12 col-sm-12 col-md-4>\n							<input type="text" class="form-control--lg" disabled name="" [(ngModel)]="bill.payment_rest" value="0" placeholder="Kembalian">				\n						</ion-col>\n					</ion-row>\n\n					<ion-row class="center">\n						<ion-col col-12 col-xs-12 col-sm-12 col-md-12 *ngIf="payment_method == 1">\n							<div class="row center" style="margin-bottom: 10px;">\n								<div class="col-xs-7">\n									  <ion-segment color="main">\n									    <ion-segment-button color="main" value="numpad" [ngClass]="{\'segment-activated\':numpad_type == \'numpad\'}" (click)="numpad_type = \'numpad\' ">\n									      Manual\n									    </ion-segment-button>\n									    <ion-segment-button color="main" value="suggest" [ngClass]="{\'segment-activated\':numpad_type == \'suggest\'}" (click)="numpad_type = \'suggest\' ">\n									      Suggest bayar\n									    </ion-segment-button>\n									  </ion-segment>\n								</div>\n							</div>\n\n							<div>\n								<div class="row center" *ngIf="numpad_type == \'numpad\'">\n									<div id="container" class="center">\n									    <div class="numpad">\n									    	<div class="numpad-col numpad-number">\n												<div class="numpad-key bg-main" color="main" value="1" (click)="calculate($event, \'numeric\', \'1\')" rel="1">1</div>\n												<div class="numpad-key bg-main" color="main" value="2" (click)="calculate($event, \'numeric\', \'2\')" rel="2">2</div>\n												<div class="numpad-key bg-main" color="main" value="3" (click)="calculate($event, \'numeric\', \'3\')" rel="3">3</div>\n									    		<div class="numpad-key bg-main" color="main" value="4" (click)="calculate($event, \'numeric\', \'4\')" rel="4">4</div>\n											    <div class="numpad-key bg-main" color="main" value="5" (click)="calculate($event, \'numeric\', \'5\')" rel="5">5</div>\n											    <div class="numpad-key bg-main" color="main" value="6" (click)="calculate($event, \'numeric\', \'6\')" rel="6">6</div>\n											    <div class="numpad-key bg-main" color="main" value="7" (click)="calculate($event, \'numeric\', \'7\')" rel="7">7</div>\n												<div class="numpad-key bg-main" color="main" value="8" (click)="calculate($event, \'numeric\', \'8\')" rel="8">8</div>\n												<div class="numpad-key bg-main" color="main" value="9" (click)="calculate($event, \'numeric\', \'9\')" rel="9">9</div>\n												<div class="numpad-key bg-main" color="main" value="," (click)="calculate($event, \'numeric\', \',\')" rel=",">,</div>\n												<div class="numpad-key bg-main" color="main" value="0" (click)="calculate($event, \'numeric\', \'0\')" rel="0">0</div>\n									      		<div class="numpad-key bg-main" color="main" value="C" (click)="calculate($event, \'action\', \'clear\')" rel="0">C</div>\n									    	</div>\n									    	<div class="numpad-col numpad-action">\n										      <div class="numpad-key bg-main" color="main" value="rm" (click)="calculate($event, \'action\', \'rm\')" rel="rm" style="font-size: 1.7em;"> <ion-icon name="backspace"></ion-icon> </div>\n										      <div class="numpad-key bg-main" color="main" value="pas" (click)="calculate($event, \'action\', \'pas\')" rel="pas" style="font-size: 1.3em;"> uang Pas </div>\n										      <div class="numpad-key bg-main" color="main" value="simpan" (click)="calculate($event, \'action\', \'simpan\')" rel="pas" style="font-size: 1.3em; flex-grow: 1;"> Bayar </div>\n										      \n									    		\n									    	</div>\n									      \n									    </div>\n									</div>\n								</div>\n									\n								<div class="row center" *ngIf="numpad_type == \'suggest\'">\n									<div class="col-md-8">\n										\n										<div class="center" style="flex-wrap: wrap;">\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'10000\')"> 10.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'20000\')"> 20.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'30000\')"> 30.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'50000\')"> 50.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'70000\')"> 70.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'100000\')"> 100.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'150000\')"> 150.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'200000\')"> 200.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'500000\')"> 500.000</button>\n										</div>\n										<div class="center" style="flex-wrap: wrap;">\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'substract\', \'10000\')"> -10.000</button>\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'sum\', \'10000\')"> +10.000</button>\n										</div>\n										\n									</div>\n								</div>\n							</div>\n						</ion-col>\n						<ion-col col-8 col-xs-12 col-sm-12 col-md-8 *ngIf="payment_method == 3">\n							\n						\n							<ion-row class="row form-group">\n								<ion-col col-3 class="">Total Belanja</ion-col>\n								<ion-col col-9 class=" input-box">\n									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.payment_total">\n								</ion-col>\n							</ion-row>\n							<ion-row class="form-group">\n								<ion-col col-3 class="">Tunai</ion-col>\n								<ion-col col-9 class=" input-box">\n									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.payment_nominal" (input)="sumReturn()">\n								</ion-col>\n							</ion-row>\n\n							<ion-row class="form-group">\n								<ion-col col-3 class="">Kartu (Masuk ke)</ion-col>\n								<ion-col col-9 class=" input-box input-group">\n									<input type="text" class="form-control--lg" name="" >\n									<span class="input-group-addon" id="basic-addon1"> Edit </span>\n								</ion-col>\n							</ion-row>\n							\n							<ion-row class="row form-group">\n								<ion-col col-3 class="">Charge</ion-col>\n								<ion-col col-9 class=" input-box input-group">\n									<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.payment_bank_charge_percent" (input)="countChargePercent($event)">\n									<span class="input-group-addon" id="basic-addon1"> % </span>\n									<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.payment_bank_charge_nominal" (input)="countChargeNominal()">\n								</ion-col>\n							</ion-row>\n							\n							<ion-row class="form-group">\n								<ion-col col-3 class="">Kartu</ion-col>\n								<ion-col col-9 class=" input-box">\n									<input type="text" class="form-control--lg" name="" readonly [(ngModel)]="bill.paid_with_bank_nominal">\n								</ion-col>\n							</ion-row>\n							\n\n							<ion-row class="row form-group center">\n									<button ion-button block end color="main" (click)="payBill()">Bayar</button>\n\n							</ion-row>\n						\n						</ion-col>\n\n						<ion-col col-8 col-xs-12 col-sm-12 col-md-8 *ngIf="payment_method == 2">\n							<ion-row class="row form-group">\n								<ion-col col-3 class="">Total Belanja</ion-col>\n								<ion-col col-9 class=" input-box input-group">\n									<span class="input-group-addon" id="basic-addon1">@</span>\n									<input type="text" class="form-control form-control--lg" name="" [(ngModel)]="bill.payment_total">\n								</ion-col>\n							</ion-row>\n							<ion-row class="form-group">\n								<ion-col col-3 class="">Masuk ke</ion-col>\n								<ion-col col-9 class=" input-box input-group">\n									<input type="text" class="form-control--lg" name="" >\n									<span class="input-group-addon" id="basic-addon1"> Edit </span>\n								</ion-col>\n							</ion-row>\n							\n							<ion-row class="row form-group">\n								<ion-col col-3 class="">Charge</ion-col>\n								<ion-col col-9 class=" input-box input-group">\n									<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.payment_bank_charge_percent" (input)="countChargePercent($event)">\n									<span class="input-group-addon" id="basic-addon1"> % </span>\n									<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.payment_bank_charge_nominal" (input)="countChargeNominal()">\n								</ion-col>\n							</ion-row>\n\n							<ion-row class="form-group">\n								<ion-col col-3 class="">Total</ion-col>\n								<ion-col col-9 class=" input-box">\n									<input type="text" readonly class="form-control--lg" name="" [(ngModel)]="bill.paid_with_bank_nominal">\n								</ion-col>\n							</ion-row>\n\n							<ion-row class="row form-group center">\n									<button ion-button block end color="main" (click)="payBill()">Bayar</button>\n\n							</ion-row>\n						</ion-col>\n\n					</ion-row>\n\n				\n				</div> <!--  End of payment method -->\n			</ion-col>\n		</ion-row>\n	</ion-grid>\n	<div class="r" *ngIf="state == \'afterPayment\'">\n		<div class="text-align--center">\n			<ion-icon ios="ios-print" md="ios-print" color="main" style="font-size: 10.5em;"></ion-icon>\n		</div>\n		<div class="text-align--center row" style="margin-top: 25px; ">\n				\n			<div class="text-align--center col-xs-7" style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; margin:auto;">\n				<button ion-button block color="main" (click)="print_nota()">Cetak nota</button>\n				<button ion-button block color="secondary" (click)="email_panel()">Kirimkan nota ke email</button>\n				<button ion-button block (click)="back_to_cashier()">Kembali ke kasir</button>\n			</div>\n\n		</div>\n	</div>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\payment\payment.html"*/,
+            selector: 'page-payment',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\payment\payment.html"*/'<!--\n\n  Generated template for the PaymentPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n	  <ion-navbar>\n\n	    <button ion-button menuToggle *ngIf="state == \'payment\'">\n\n	      <ion-icon name="menu"></ion-icon>\n\n	    </button>\n\n	    <ion-title>Pembayaran</ion-title>\n\n	    <ion-buttons class="center distributed">\n\n			<button ion-button clear icon-right color="light" *ngIf="state == \'payment\'" (click)="payBill()">\n\n			  Bayar pesanan\n\n			</button>\n\n		</ion-buttons>\n\n	  </ion-navbar>\n\n	</ion-toolbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content id="payment-box" >\n\n\n\n	<ion-grid *ngIf="state == \'payment\'">\n\n		<ion-row class="relative">\n\n			<div  col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 id="section-left">\n\n				<div class="receipt-product">\n\n					<page-receipt></page-receipt> \n\n				</div>\n\n			</div>\n\n\n\n			<ion-col col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column">\n\n				<div class="payment-method ">\n\n						\n\n					<ion-row padding class="center-distributed">\n\n						<ion-col col-7 col-xs-12 col-sm-12 col-md-8 class="tab">\n\n							<label class="tab-item relative" [ngClass]="{\'active\': payment_method == 1}" col--33>\n\n								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="1" (change)="resetBillCounted()"> Tunai\n\n							</label>\n\n							<label class="tab-item relative" [ngClass]="{\'active\': payment_method == 2}" col--33>\n\n								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="2" (change)="resetBillCounted()"> kartu\n\n							</label>\n\n							<label class="tab-item relative" [ngClass]="{\'active\': payment_method == 3}" col--33>\n\n								<input type="radio" class="sr-only" name="" [(ngModel)]="payment_method" value="3" (change)="resetBillCounted()"> Campuran\n\n							</label>\n\n						</ion-col>\n\n					</ion-row>\n\n					\n\n						\n\n					<ion-row class="center" *ngIf="payment_method == 1">\n\n						<ion-col col-12 col-xs-12 col-sm-12 col-md-4>\n\n							<input type="text" class="form-control--lg" id="paid" name="" [(ngModel)]="bill.payment_nominal" (input)="sumReturn(true)" placeholder="Uang dibayarkan">				\n\n						</ion-col>\n\n						<ion-col col-12 col-xs-12 col-sm-12 col-md-4>\n\n							<input type="text" class="form-control--lg" disabled name="" [(ngModel)]="bill.payment_rest" value="0" placeholder="Kembalian">				\n\n						</ion-col>\n\n					</ion-row>\n\n\n\n					<ion-row class="center">\n\n						<ion-col col-12 col-xs-12 col-sm-12 col-md-12 *ngIf="payment_method == 1">\n\n							<div class="row center" style="margin-bottom: 10px;">\n\n								<div class="col-xs-7">\n\n									  <ion-segment color="main">\n\n									    <ion-segment-button color="main" value="numpad" [ngClass]="{\'segment-activated\':numpad_type == \'numpad\'}" (click)="numpad_type = \'numpad\' ">\n\n									      Manual\n\n									    </ion-segment-button>\n\n									    <ion-segment-button color="main" value="suggest" [ngClass]="{\'segment-activated\':numpad_type == \'suggest\'}" (click)="numpad_type = \'suggest\' ">\n\n									      Suggest bayar\n\n									    </ion-segment-button>\n\n									  </ion-segment>\n\n								</div>\n\n							</div>\n\n\n\n							<div>\n\n								<div class="row center" *ngIf="numpad_type == \'numpad\'">\n\n									<div id="container" class="center">\n\n									    <div class="numpad">\n\n									    	<div class="numpad-col numpad-number">\n\n												<div class="numpad-key bg-main" color="main" value="1" (click)="calculate($event, \'numeric\', \'1\')" rel="1">1</div>\n\n												<div class="numpad-key bg-main" color="main" value="2" (click)="calculate($event, \'numeric\', \'2\')" rel="2">2</div>\n\n												<div class="numpad-key bg-main" color="main" value="3" (click)="calculate($event, \'numeric\', \'3\')" rel="3">3</div>\n\n									    		<div class="numpad-key bg-main" color="main" value="4" (click)="calculate($event, \'numeric\', \'4\')" rel="4">4</div>\n\n											    <div class="numpad-key bg-main" color="main" value="5" (click)="calculate($event, \'numeric\', \'5\')" rel="5">5</div>\n\n											    <div class="numpad-key bg-main" color="main" value="6" (click)="calculate($event, \'numeric\', \'6\')" rel="6">6</div>\n\n											    <div class="numpad-key bg-main" color="main" value="7" (click)="calculate($event, \'numeric\', \'7\')" rel="7">7</div>\n\n												<div class="numpad-key bg-main" color="main" value="8" (click)="calculate($event, \'numeric\', \'8\')" rel="8">8</div>\n\n												<div class="numpad-key bg-main" color="main" value="9" (click)="calculate($event, \'numeric\', \'9\')" rel="9">9</div>\n\n												<div class="numpad-key bg-main" color="main" value="," (click)="calculate($event, \'numeric\', \',\')" rel=",">,</div>\n\n												<div class="numpad-key bg-main" color="main" value="0" (click)="calculate($event, \'numeric\', \'0\')" rel="0">0</div>\n\n									      		<div class="numpad-key bg-main" color="main" value="C" (click)="calculate($event, \'action\', \'clear\')" rel="0">C</div>\n\n									    	</div>\n\n									    	<div class="numpad-col numpad-action">\n\n										      <div class="numpad-key bg-main" color="main" value="rm" (click)="calculate($event, \'action\', \'rm\')" rel="rm" style="font-size: 1.7em;"> <ion-icon name="backspace"></ion-icon> </div>\n\n										      <div class="numpad-key bg-main" color="main" value="pas" (click)="calculate($event, \'action\', \'pas\')" rel="pas" style="font-size: 1.3em;"> uang Pas </div>\n\n										      <div class="numpad-key bg-main" color="main" value="simpan" (click)="calculate($event, \'action\', \'simpan\')" rel="pas" style="font-size: 1.3em; flex-grow: 1;"> Bayar </div>\n\n										      \n\n									    		\n\n									    	</div>\n\n									      \n\n									    </div>\n\n									</div>\n\n								</div>\n\n									\n\n								<div class="row center" *ngIf="numpad_type == \'suggest\'">\n\n									<div class="col-md-8">\n\n										\n\n										<div class="center" style="flex-wrap: wrap;">\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'10000\')"> 10.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'20000\')"> 20.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'30000\')"> 30.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'50000\')"> 50.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'70000\')"> 70.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'100000\')"> 100.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'150000\')"> 150.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'200000\')"> 200.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'value\', \'500000\')"> 500.000</button>\n\n										</div>\n\n										<div class="center" style="flex-wrap: wrap;">\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'substract\', \'10000\')"> -10.000</button>\n\n											<button color="main" class="btn-numpad-suggest" ion-button (click)="calculate($event, \'sum\', \'10000\')"> +10.000</button>\n\n										</div>\n\n										\n\n									</div>\n\n								</div>\n\n							</div>\n\n						</ion-col>\n\n						<ion-col col-8 col-xs-12 col-sm-12 col-md-8 *ngIf="payment_method == 3">\n\n							\n\n						\n\n							<ion-row class="row form-group">\n\n								<ion-col col-3 class="">Total Belanja</ion-col>\n\n								<ion-col col-9 class=" input-box">\n\n									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.payment_total">\n\n								</ion-col>\n\n							</ion-row>\n\n							<ion-row class="form-group">\n\n								<ion-col col-3 class="">Tunai</ion-col>\n\n								<ion-col col-9 class=" input-box">\n\n									<input type="text" class="form-control--lg" name="" [(ngModel)]="bill.payment_nominal" (input)="sumReturn()">\n\n								</ion-col>\n\n							</ion-row>\n\n\n\n							<ion-row class="form-group">\n\n								<ion-col col-3 class="">Kartu (Masuk ke)</ion-col>\n\n								<ion-col col-9 class=" input-box input-group">\n\n									<input type="text" class="form-control--lg" name="" >\n\n									<span class="input-group-addon" id="basic-addon1"> Edit </span>\n\n								</ion-col>\n\n							</ion-row>\n\n							\n\n							<ion-row class="row form-group">\n\n								<ion-col col-3 class="">Charge</ion-col>\n\n								<ion-col col-9 class=" input-box input-group">\n\n									<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.payment_bank_charge_percent" (input)="countChargePercent($event)">\n\n									<span class="input-group-addon" id="basic-addon1"> % </span>\n\n									<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.payment_bank_charge_nominal" (input)="countChargeNominal()">\n\n								</ion-col>\n\n							</ion-row>\n\n							\n\n							<ion-row class="form-group">\n\n								<ion-col col-3 class="">Kartu</ion-col>\n\n								<ion-col col-9 class=" input-box">\n\n									<input type="text" class="form-control--lg" name="" readonly [(ngModel)]="bill.paid_with_bank_nominal">\n\n								</ion-col>\n\n							</ion-row>\n\n							\n\n\n\n							<ion-row class="row form-group center">\n\n									<button ion-button block end color="main" (click)="payBill()">Bayar</button>\n\n\n\n							</ion-row>\n\n						\n\n						</ion-col>\n\n\n\n						<ion-col col-8 col-xs-12 col-sm-12 col-md-8 *ngIf="payment_method == 2">\n\n							<ion-row class="row form-group">\n\n								<ion-col col-3 class="">Total Belanja</ion-col>\n\n								<ion-col col-9 class=" input-box input-group">\n\n									<span class="input-group-addon" id="basic-addon1">@</span>\n\n									<input type="text" class="form-control form-control--lg" name="" [(ngModel)]="bill.payment_total">\n\n								</ion-col>\n\n							</ion-row>\n\n							<ion-row class="form-group">\n\n								<ion-col col-3 class="">Masuk ke</ion-col>\n\n								<ion-col col-9 class=" input-box input-group">\n\n									<input type="text" class="form-control--lg" name="" >\n\n									<span class="input-group-addon" id="basic-addon1"> Edit </span>\n\n								</ion-col>\n\n							</ion-row>\n\n							\n\n							<ion-row class="row form-group">\n\n								<ion-col col-3 class="">Charge</ion-col>\n\n								<ion-col col-9 class=" input-box input-group">\n\n									<input type="" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="bill.payment_bank_charge_percent" (input)="countChargePercent($event)">\n\n									<span class="input-group-addon" id="basic-addon1"> % </span>\n\n									<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.payment_bank_charge_nominal" (input)="countChargeNominal()">\n\n								</ion-col>\n\n							</ion-row>\n\n\n\n							<ion-row class="form-group">\n\n								<ion-col col-3 class="">Total</ion-col>\n\n								<ion-col col-9 class=" input-box">\n\n									<input type="text" readonly class="form-control--lg" name="" [(ngModel)]="bill.paid_with_bank_nominal">\n\n								</ion-col>\n\n							</ion-row>\n\n\n\n							<ion-row class="row form-group center">\n\n									<button ion-button block end color="main" (click)="payBill()">Bayar</button>\n\n\n\n							</ion-row>\n\n						</ion-col>\n\n\n\n					</ion-row>\n\n\n\n				\n\n				</div> <!--  End of payment method -->\n\n			</ion-col>\n\n		</ion-row>\n\n	</ion-grid>\n\n	<div class="r" *ngIf="state == \'afterPayment\'">\n\n		<div class="text-align--center">\n\n			<ion-icon ios="ios-print" md="ios-print" color="main" style="font-size: 10.5em;"></ion-icon>\n\n		</div>\n\n		<div class="text-align--center row" style="margin-top: 25px; ">\n\n				\n\n			<div class="text-align--center col-xs-7" style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; margin:auto;">\n\n				<button ion-button block color="main" (click)="print_nota()">Cetak nota</button>\n\n				<button ion-button block color="secondary" (click)="email_panel()">Kirimkan nota ke email</button>\n\n				<button ion-button block (click)="back_to_cashier()">Kembali ke kasir</button>\n\n			</div>\n\n\n\n		</div>\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\payment\payment.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_db_local_db_local__["a" /* DbLocalProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */], __WEBPACK_IMPORTED_MODULE_3__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_bill_bill__["a" /* BillProvider */]])
     ], PaymentPage);
@@ -8745,9 +8739,9 @@ var PaymentPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_config_config__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__payment_payment__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__product_product__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__split_bill_split_bill__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__split_bill_split_bill__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_bill_bill__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__bill_item_editor_bill_item_editor__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__bill_item_editor_bill_item_editor__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_helper_helper__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_jquery__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_jquery__);
@@ -9112,7 +9106,7 @@ var TransactionPage = (function () {
     };
     TransactionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-transaction',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\transaction\transaction.html"*/'<!--\n\n  Generated template for the StocksPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  	<ion-toolbar color="main">\n\n	  	<ion-navbar>\n\n	  		<ion-title>Transaksi</ion-title>\n\n	  		<button ion-button menuToggle>\n\n	  			<ion-icon name="menu"></ion-icon>\n\n	  		</button>\n\n			<ion-searchbar *ngIf="page_params.toggleSearchInput" class="searchbar-toolbar" (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 0px 5px; width:40%;"></ion-searchbar>\n\n			<ion-buttons class="center distributed">\n\n				<button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">\n\n					<ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>\n\n					<ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			<ion-buttons>\n\n				<button ion-button clear icon-right color="light" (click)="page_params.toggleFilter = !page_params.toggleFilter">\n\n				  Sort <ion-icon name="funnel"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n\n\n<ion-content padding>\n\n	<div *ngIf="!edit_transaction_status">\n\n		<div>				\n\n			<ion-row>\n\n				<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>\n\n				</ion-col>\n\n				<!-- <ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == \'payment_date\' ">\n\n					<ion-item>\n\n				    <ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="filter_date_start"></ion-datetime>\n\n				  </ion-item>\n\n				</ion-col>\n\n				\n\n				<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == \'payment_date\' ">\n\n					<ion-item>\n\n				    	<ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="filter_date_end"></ion-datetime>\n\n				  	</ion-item>\n\n				</ion-col> -->\n\n\n\n			</ion-row>\n\n\n\n			<ion-row *ngIf="page_params.toggleFilter">\n\n				\n\n				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>\n\n					<ion-item>\n\n						<ion-label>Cari berdasarkan</ion-label>\n\n						<ion-select [(ngModel)]="filter_by" (ionChange)="filter_transaction()" interface="action-sheet">\n\n							<ion-option value="visitor_name">Nama</ion-option>\n\n							<ion-option value="pay_id">No Nota</ion-option>\n\n							<ion-option value="table_name">Nama Meja</ion-option>\n\n							<ion-option value="payment_date">Hari ini</ion-option>\n\n						</ion-select>\n\n					</ion-item>\n\n				</ion-col>\n\n				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>\n\n					<ion-item>\n\n						<ion-label>Urutkan</ion-label>\n\n						<ion-select [(ngModel)]="order_by" (ionChange)="filter_transaction()" interface="action-sheet">\n\n							<ion-option value="pay_id DESC">No Nota</ion-option>\n\n							<ion-option value="visitor_name DESC">Nama (Z-A) </ion-option>\n\n							<ion-option value="visitor_name ASC">Nama (A-Z) </ion-option>\n\n							<ion-option value="payment_date DESC">Tanggal</ion-option>\n\n						</ion-select>\n\n					</ion-item>\n\n				</ion-col>\n\n				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>\n\n					<ion-item>\n\n						<ion-label>Status</ion-label>\n\n						<ion-select [(ngModel)]="payment_status" (ionChange)="filter_transaction()" interface="action-sheet">\n\n							<ion-option value="-1">Semua</ion-option>\n\n							<ion-option value="0">Belum Dibayar</ion-option>\n\n							<ion-option value="1">Dibayar</ion-option>\n\n						</ion-select>\n\n					</ion-item>\n\n				</ion-col>\n\n\n\n\n\n				\n\n\n\n			</ion-row>\n\n\n\n		</div>\n\n		<ion-list>\n\n			<ion-item-sliding *ngFor="let item of items; let i = index">\n\n\n\n				<ion-item (click)="default_click_transaction(i, item)" (press)="advanceOptions(i, item)">\n\n						<span>{{transform_date(item.payment_date)}}</span> &middot;\n\n					<span style="font-weight:700; ">\n\n						{{item.visitor_name}}\n\n					</span>\n\n					<p style="margin-top: 10px;">\n\n						<span> Nota {{item.pay_id}} &middot;</span>\n\n						<span *ngIf="!item.table_name"> Tidak memilih meja &middot;</span> \n\n						<span *ngIf="item.table_name"> {{item.table_name}} &middot;</span> \n\n						<span> Rp.{{helper.intToIDR(item.payment_total)}} &middot;</span>\n\n						<span *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" class="bs-label label-success"> Terbayar </span>\n\n						<span *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" class="bs-label label-warning"> Belum Dibayar </span>\n\n						<span *ngIf="item.payment_cancel_status == 1" class="bs-label label-danger"> Pembayaran Dibatalkan </span>\n\n			      	<!-- {{item.payment_nominal + item.paid_with_bank_nominal}} -->\n\n					</p>\n\n					<p>\n\n						\n\n					</p>\n\n					<ion-icon name="done-all" *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" color="primary" item-end></ion-icon>\n\n					<ion-icon name="alert" *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" color="warning" item-end></ion-icon>\n\n					<ion-icon name="trash" *ngIf="item.payment_cancel_status == 1" color="danger" item-end></ion-icon>\n\n				</ion-item>\n\n				\n\n				<ion-item-options side="right">\n\n			      	\n\n					<button ion-button color="primary" class="center distributed" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3 && ( helper.IDRtoInt(item.payment_nominal) + helper.IDRtoInt(item.paid_with_bank_nominal) < helper.IDRtoInt(item.payment_total) && item.payment_cancel_status == 0 )" (click)="pay_transaction(i, item)"> \n\n						<ion-icon name="logo-usd" style="padding:0px 10px; font-size:1.2em;"></ion-icon>\n\n					</button>\n\n					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action==\'edit\' || item.payment_nominal + item.paid_with_bank_nominal >= item.payment_total" (click)="edit_transaction(i, item)">\n\n						<ion-icon name="create" style="padding:0px 10px; font-size:1.2em;"></ion-icon>\n\n					</button>\n\n					<button ion-button color="danger" class="center distributed" (click)="cancel_transaction(i, item)" *ngIf="item.payment_cancel_status == 0">\n\n						<ion-icon name="trash" style="padding:0px 10px; font-size:1.2em;"></ion-icon>\n\n					</button>\n\n			    </ion-item-options>\n\n			</ion-item-sliding>\n\n			<ion-item *ngIf="items.length < 1" class="text-align--center">\n\n				Tidak ditemukan transaksi\n\n			</ion-item>\n\n\n\n		</ion-list>\n\n		<ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">\n\n		   <ion-infinite-scroll-content></ion-infinite-scroll-content>\n\n		</ion-infinite-scroll>\n\n	</div>\n\n	<div *ngIf="edit_transaction_status">\n\n\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\transaction\transaction.html"*/,
+            selector: 'page-transaction',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\transaction\transaction.html"*/'<!--\n\n  Generated template for the StocksPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  	<ion-toolbar color="main">\n\n	  	<ion-navbar>\n\n	  		<ion-title>Transaksi</ion-title>\n\n	  		<button ion-button menuToggle>\n\n	  			<ion-icon name="menu"></ion-icon>\n\n	  		</button>\n\n			<ion-searchbar *ngIf="page_params.toggleSearchInput" class="searchbar-toolbar" (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 0px 5px; width:40%;"></ion-searchbar>\n\n			<ion-buttons class="center distributed">\n\n				<button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">\n\n					<ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>\n\n					<ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n			<ion-buttons>\n\n				<button ion-button clear icon-right color="light" (click)="page_params.toggleFilter = !page_params.toggleFilter">\n\n				  Sort <ion-icon name="funnel"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n\n\n\n\n<ion-content padding>\n\n	<div *ngIf="!edit_transaction_status">\n\n		<div>				\n\n			<ion-row>\n\n				<ion-col col-xs-8 col-sm-8 col-md-8 col-lg-8>\n\n				</ion-col>\n\n				<!-- <ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == \'payment_date\' ">\n\n					<ion-item>\n\n				    <ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="filter_date_start"></ion-datetime>\n\n				  </ion-item>\n\n				</ion-col>\n\n				\n\n				<ion-col col-xs-4 col-sm-4 col-md-4 col-lg-4 *ngIf="filter_by == \'payment_date\' ">\n\n					<ion-item>\n\n				    	<ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="filter_date_end"></ion-datetime>\n\n				  	</ion-item>\n\n				</ion-col> -->\n\n\n\n			</ion-row>\n\n\n\n			<ion-row *ngIf="page_params.toggleFilter">\n\n				\n\n				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>\n\n					<ion-item>\n\n						<ion-label>Cari berdasarkan</ion-label>\n\n						<ion-select [(ngModel)]="filter_by" (ionChange)="filter_transaction()" interface="action-sheet">\n\n							<ion-option value="visitor_name">Nama</ion-option>\n\n							<ion-option value="pay_id">No Nota</ion-option>\n\n							<ion-option value="table_name">Nama Meja</ion-option>\n\n							<ion-option value="payment_date">Hari ini</ion-option>\n\n						</ion-select>\n\n					</ion-item>\n\n				</ion-col>\n\n				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>\n\n					<ion-item>\n\n						<ion-label>Urutkan</ion-label>\n\n						<ion-select [(ngModel)]="order_by" (ionChange)="filter_transaction()" interface="action-sheet">\n\n							<ion-option value="pay_id DESC">No Nota</ion-option>\n\n							<ion-option value="visitor_name DESC">Nama (Z-A) </ion-option>\n\n							<ion-option value="visitor_name ASC">Nama (A-Z) </ion-option>\n\n							<ion-option value="payment_date DESC">Tanggal</ion-option>\n\n						</ion-select>\n\n					</ion-item>\n\n				</ion-col>\n\n				<ion-col col-xs-3 col-sm-3 col-md-3 col-lg-3>\n\n					<ion-item>\n\n						<ion-label>Status</ion-label>\n\n						<ion-select [(ngModel)]="payment_status" (ionChange)="filter_transaction()" interface="action-sheet">\n\n							<ion-option value="-1">Semua</ion-option>\n\n							<ion-option value="0">Belum Dibayar</ion-option>\n\n							<ion-option value="1">Dibayar</ion-option>\n\n						</ion-select>\n\n					</ion-item>\n\n				</ion-col>\n\n\n\n\n\n				\n\n\n\n			</ion-row>\n\n\n\n		</div>\n\n		<ion-list>\n\n			<ion-item-sliding *ngFor="let item of items; let i = index">\n\n\n\n				<ion-item (click)="default_click_transaction(i, item)" (press)="advanceOptions(i, item)">\n\n						<span>{{transform_date(item.payment_date)}}</span> &middot;\n\n					<span style="font-weight:700; ">\n\n						{{item.visitor_name}}\n\n					</span>\n\n					<p style="margin-top: 10px;">\n\n						<span> Nota {{item.pay_id}} &middot;</span>\n\n						<span *ngIf="!item.table_name"> Tidak memilih meja &middot;</span> \n\n						<span *ngIf="item.table_name"> {{item.table_name}} &middot;</span> \n\n						<span> Rp.{{helper.intToIDR(item.payment_total)}} &middot;</span>\n\n						<span *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" class="bs-label label-success"> Terbayar </span>\n\n						<span *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" class="bs-label label-warning"> Belum Dibayar </span>\n\n						<span *ngIf="item.payment_cancel_status == 1" class="bs-label label-danger"> Pembayaran Dibatalkan </span>\n\n			      	<!-- {{item.payment_nominal + item.paid_with_bank_nominal}} -->\n\n					</p>\n\n					<p>\n\n						\n\n					</p>\n\n					<ion-icon name="done-all" *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" color="primary" item-end></ion-icon>\n\n					<ion-icon name="alert" *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" color="warning" item-end></ion-icon>\n\n					<ion-icon name="trash" *ngIf="item.payment_cancel_status == 1" color="danger" item-end></ion-icon>\n\n				</ion-item>\n\n				\n\n				<ion-item-options side="right">\n\n			      	\n\n					<button ion-button color="primary" class="center distributed" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3 && ( helper.IDRtoInt(item.payment_nominal) + helper.IDRtoInt(item.paid_with_bank_nominal) < helper.IDRtoInt(item.payment_total) && item.payment_cancel_status == 0 )" (click)="pay_transaction(i, item)"> \n\n						<ion-icon name="logo-usd" style="padding:0px 10px; font-size:1.2em;"></ion-icon>\n\n					</button>\n\n					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action==\'edit\' || item.payment_nominal + item.paid_with_bank_nominal >= item.payment_total" (click)="edit_transaction(i, item)">\n\n						<ion-icon name="create" style="padding:0px 10px; font-size:1.2em;"></ion-icon>\n\n					</button>\n\n					<button ion-button color="danger" class="center distributed" (click)="cancel_transaction(i, item)" *ngIf="item.payment_cancel_status == 0">\n\n						<ion-icon name="trash" style="padding:0px 10px; font-size:1.2em;"></ion-icon>\n\n					</button>\n\n			    </ion-item-options>\n\n			</ion-item-sliding>\n\n			<ion-item *ngIf="items.length < 1" class="text-align--center">\n\n				Tidak ditemukan transaksi\n\n			</ion-item>\n\n\n\n		</ion-list>\n\n		<ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">\n\n		   <ion-infinite-scroll-content></ion-infinite-scroll-content>\n\n		</ion-infinite-scroll>\n\n	</div>\n\n	<div *ngIf="edit_transaction_status">\n\n\n\n	</div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\transaction\transaction.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_7__providers_bill_bill__["a" /* BillProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_db_local_db_local__["a" /* DbLocalProvider */], __WEBPACK_IMPORTED_MODULE_9__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_config_config__["a" /* ConfigProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */]])
     ], TransactionPage);
@@ -9133,7 +9127,7 @@ var TransactionPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_bill_bill__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_db_local_db_local__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__table_table__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__total_payment_editor_total_payment_editor__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__total_payment_editor_total_payment_editor__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__edit_receipt_item_edit_receipt_item__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_helper_helper__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__member_new_form_member_new_form__ = __webpack_require__(76);
@@ -9444,7 +9438,7 @@ var ReceiptPage = (function () {
     };
     ReceiptPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-receipt',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\receipt\receipt.html"*/'<!--\n  Generated template for the ReceiptPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n	<div class="receipt receipt-container relative">\n		<div class="receipt-header" *ngIf="receipt_page_params.show_header">\n			<div class="receipt--costumer-header pseudo">\n				<h5 class="title">{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : \'\'}}</h5>\n				<div class=" center " style="display: flex;"><div style="width: 80%;">{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:\'\'}}</div> </div>\n				<div>{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:\'\'}}</div>\n			</div>\n			<ion-row class="receipt-headinput">\n				<ion-col col-5>\n					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--table"  placeholder="Nomor Meja" [disabled]="can_edit_table" [(ngModel)]="bill.table_name" (input)="update_receipt()" (click)="change_table()">\n				</ion-col>\n				<ion-col col-2></ion-col>\n				<ion-col col-5>\n					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer"  placeholder="Atas nama" [disabled]="can_edit_visitor_name" [(ngModel)]="bill.visitor_name" (input)="update_receipt()" (press)="optionVisitor()">\n				</ion-col>\n			</ion-row>	\n		</div>\n		<div class="receipt-body" *ngIf="receipt_page_params.show_content">\n			\n			<div class="" style="display:flex; border-bottom: 1px solid #aaa; padding-bottom: 3px;margin-top: 10px; font-weight: 700;">\n				<div style="width: 10%">QTY</div>\n				<div style="width: 50%">ITEM</div>\n				<div style="width: 20%">HARGA</div>\n				<div style="width: 20%">JUMLAH</div>\n				<div style="width: 10%" *ngIf="receipt_page_params.show_split_arrow"></div>\n			</div>\n\n			<ion-list style="margin-top: 10px;">\n				<div *ngFor="let item of get_orders(); let i = index;">\n					<div class="session-order" *ngIf="item.first_session_order && item.order_session > 0">\n						Tambahan ke {{item.order_session}}\n					</div>\n					\n					<ion-item-sliding >\n						<ion-item class="item-receipt" id="receipt-product-{{item.id}}" style="display: flex; padding-left: 0px;" (click)="editItem(item, i)">\n							<div style="display: flex;font-size: .8em;">\n								<div class="receipt-detail--component text-align--center" style="width: 10%;"  >\n									<span class="product-amount">{{item.qty}}</span>\n									<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0 && item.complement_item < item.qty">{{item.complement_item}}</p>\n\n								</div>\n								\n								<div class="receipt-detail--component text-align--left" style="width: 50%;" >\n									<span>{{item.name}}</span><br>\n									<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Complement</p>\n									<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">Diskon {{billProvider.helper.toInt(item.discount_percent)}}%</p>\n									<p class="receipt-detail--component--notes">{{item.note}}</p>\n								</div>\n\n								<div class="receipt-detail--component" style="width: 20%;">\n									<span> {{billProvider.helper.intToIDR(item.price)}} </span>\n									<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0"> &nbsp; </p>\n									<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>\n								</div>\n\n								<div class="receipt-detail--component" style="width: 20%;">{{billProvider.helper.intToIDR(item.total)}}</div>\n								<div style="width: 10%;" *ngIf="receipt_page_params.show_split_arrow"> <ion-icon md="ios-arrow-forward" ios="ios-arrow-forward"></ion-icon></div>\n							</div>\n						</ion-item>\n\n						<!-- menu slider -->\n					    <ion-item-options side="right" *ngIf="receipt_page_params.can_edit_slide_item">\n					      <button ion-button color="danger" class="center distributed" (click)="removeItem(i, item)">\n					        <ion-icon name="trash" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n					      </button>\n					    </ion-item-options>\n					    <ion-item-options side="left" *ngIf="receipt_page_params.can_edit_slide_item">\n					      <button ion-button color="secondary" class="center distributed" (click)="reduceItem(i, item)">\n					        <ion-icon name="remove" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n					      </button>\n					      <button ion-button color="primary" class="center distributed" (click)="addItem(i, item)">\n					        <ion-icon name="add" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n					      </button>\n					    </ion-item-options>\n					</ion-item-sliding>\n				</div>\n			</ion-list>\n			<div class="" *ngIf="!billProvider.get_bill_component(\'orders\') || billProvider.get_bill_component(\'orders\').length < 1" class="text-align--center"> Silahkan pilih menu disamping! </div>\n		</div>\n		<div class="receipt-footer" (click)="edit_total_payment()" *ngIf="receipt_page_params.show_footer"> \n			<table class="" style="margin-bottom: 0px;width: 100%;">\n				<tbody style="padding-top: 10px">\n					<tr class="" *ngIf="billProvider.get_bill_component(\'tax_nominal\')>0 || billProvider.get_bill_component(\'discount_nominal\')>0">\n						<td style="width: 10%;"></td>							\n						<td style="width: 10%;"></td>							\n						<td style="width: 48%;" class="text-align--right">Bill</td>\n						<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n						<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(bill.payment_bills)}} </span> </td>\n					</tr>\n\n					<tr class="" *ngIf="billProvider.get_bill_component(\'tax_nominal\')>0">\n						<td style="width: 10%;"></td>\n						<td style="width: 10%;"></td>							\n						<td style="width: 48%;" class="text-align--right">Pajak</td>\n						<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n						<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'tax_nominal\'))}} </span> </td>\n					</tr>\n\n					<tr class="" *ngIf="billProvider.get_bill_component(\'discount_nominal\')>0">\n						<td style="width: 10%;"></td>\n						<td style="width: 10%;"></td>							\n						<td style="width: 48%;" class="text-align--right">Diskon {{ billProvider.helper.toInt(billProvider.get_bill_component(\'discount_percent\')) > 0? billProvider.get_bill_component(\'discount_percent\')+\'%\':\'\'  }}</td>\n						<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n						<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'discount_nominal\'))}} </span> </td>\n					</tr>\n\n					<tr >\n						<td style="width: 10%;" ></td>\n						<td style="width: 10%;"></td>							\n						<td style="width: 48%; padding-top: 10px; font-size: 1.3em;" class="text-align--right">Total</td>\n						<td style="width: 5%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span class="">Rp.</span> </td>\n						<td style="width: 10%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'payment_total\'))}} </span> </td>\n					</tr>\n\n				</tbody>\n			</table>\n		</div>\n	</div>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\receipt\receipt.html"*/,
+            selector: 'page-receipt',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\receipt\receipt.html"*/'<!--\n\n  Generated template for the ReceiptPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n	<div class="receipt receipt-container relative">\n\n		<div class="receipt-header" *ngIf="receipt_page_params.show_header">\n\n			<div class="receipt--costumer-header pseudo">\n\n				<h5 class="title">{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name? helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : \'\'}}</h5>\n\n				<div class=" center " style="display: flex;"><div style="width: 80%;">{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address?helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address:\'\'}}</div> </div>\n\n				<div>{{helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone?helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone:\'\'}}</div>\n\n			</div>\n\n			<ion-row class="receipt-headinput">\n\n				<ion-col col-5>\n\n					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--table"  placeholder="Nomor Meja" [disabled]="can_edit_table" [(ngModel)]="bill.table_name" (input)="update_receipt()" (click)="change_table()">\n\n				</ion-col>\n\n				<ion-col col-2></ion-col>\n\n				<ion-col col-5>\n\n					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer"  placeholder="Atas nama" [disabled]="can_edit_visitor_name" [(ngModel)]="bill.visitor_name" (input)="update_receipt()" (press)="optionVisitor()">\n\n				</ion-col>\n\n			</ion-row>	\n\n		</div>\n\n		<div class="receipt-body" *ngIf="receipt_page_params.show_content">\n\n			\n\n			<div class="" style="display:flex; border-bottom: 1px solid #aaa; padding-bottom: 3px;margin-top: 10px; font-weight: 700;">\n\n				<div style="width: 10%">QTY</div>\n\n				<div style="width: 50%">ITEM</div>\n\n				<div style="width: 20%">HARGA</div>\n\n				<div style="width: 20%">JUMLAH</div>\n\n				<div style="width: 10%" *ngIf="receipt_page_params.show_split_arrow"></div>\n\n			</div>\n\n\n\n			<ion-list style="margin-top: 10px;">\n\n				<div *ngFor="let item of get_orders(); let i = index;">\n\n					<div class="session-order" *ngIf="item.first_session_order && item.order_session > 0">\n\n						Tambahan ke {{item.order_session}}\n\n					</div>\n\n					\n\n					<ion-item-sliding >\n\n						<ion-item class="item-receipt" id="receipt-product-{{item.id}}" style="display: flex; padding-left: 0px;" (click)="editItem(item, i)">\n\n							<div style="display: flex;font-size: .8em;">\n\n								<div class="receipt-detail--component text-align--center" style="width: 10%;"  >\n\n									<span class="product-amount">{{item.qty}}</span>\n\n									<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0 && item.complement_item < item.qty">{{item.complement_item}}</p>\n\n\n\n								</div>\n\n								\n\n								<div class="receipt-detail--component text-align--left" style="width: 50%;" >\n\n									<span>{{item.name}}</span><br>\n\n									<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0">Complement</p>\n\n									<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">Diskon {{billProvider.helper.toInt(item.discount_percent)}}%</p>\n\n									<p class="receipt-detail--component--notes">{{item.note}}</p>\n\n								</div>\n\n\n\n								<div class="receipt-detail--component" style="width: 20%;">\n\n									<span> {{billProvider.helper.intToIDR(item.price)}} </span>\n\n									<p class="italic receipt-detail--component--properties" *ngIf="item.complement_status > 0"> &nbsp; </p>\n\n									<p class="italic receipt-detail--component--properties" *ngIf="billProvider.helper.IDRtoInt(item.discount_nominal) > 0 && (billProvider.helper.toInt(item.complement_status) != 1 || billProvider.helper.toInt(item.complement_item) < billProvider.helper.toInt(item.qty) )">-{{ billProvider.helper.intToIDR(item.discount_nominal) }}</p>\n\n								</div>\n\n\n\n								<div class="receipt-detail--component" style="width: 20%;">{{billProvider.helper.intToIDR(item.total)}}</div>\n\n								<div style="width: 10%;" *ngIf="receipt_page_params.show_split_arrow"> <ion-icon md="ios-arrow-forward" ios="ios-arrow-forward"></ion-icon></div>\n\n							</div>\n\n						</ion-item>\n\n\n\n						<!-- menu slider -->\n\n					    <ion-item-options side="right" *ngIf="receipt_page_params.can_edit_slide_item">\n\n					      <button ion-button color="danger" class="center distributed" (click)="removeItem(i, item)">\n\n					        <ion-icon name="trash" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n\n					      </button>\n\n					    </ion-item-options>\n\n					    <ion-item-options side="left" *ngIf="receipt_page_params.can_edit_slide_item">\n\n					      <button ion-button color="secondary" class="center distributed" (click)="reduceItem(i, item)">\n\n					        <ion-icon name="remove" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n\n					      </button>\n\n					      <button ion-button color="primary" class="center distributed" (click)="addItem(i, item)">\n\n					        <ion-icon name="add" style="padding-left: 10px; padding-bottom: 0px; padding-right: 10px;"></ion-icon>\n\n					      </button>\n\n					    </ion-item-options>\n\n					</ion-item-sliding>\n\n				</div>\n\n			</ion-list>\n\n			<div class="" *ngIf="!billProvider.get_bill_component(\'orders\') || billProvider.get_bill_component(\'orders\').length < 1" class="text-align--center"> Silahkan pilih menu disamping! </div>\n\n		</div>\n\n		<div class="receipt-footer" (click)="edit_total_payment()" *ngIf="receipt_page_params.show_footer"> \n\n			<table class="" style="margin-bottom: 0px;width: 100%;">\n\n				<tbody style="padding-top: 10px">\n\n					<tr class="" *ngIf="billProvider.get_bill_component(\'tax_nominal\')>0 || billProvider.get_bill_component(\'discount_nominal\')>0">\n\n						<td style="width: 10%;"></td>							\n\n						<td style="width: 10%;"></td>							\n\n						<td style="width: 48%;" class="text-align--right">Bill</td>\n\n						<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n\n						<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(bill.payment_bills)}} </span> </td>\n\n					</tr>\n\n\n\n					<tr class="" *ngIf="billProvider.get_bill_component(\'tax_nominal\')>0">\n\n						<td style="width: 10%;"></td>\n\n						<td style="width: 10%;"></td>							\n\n						<td style="width: 48%;" class="text-align--right">Pajak</td>\n\n						<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n\n						<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'tax_nominal\'))}} </span> </td>\n\n					</tr>\n\n\n\n					<tr class="" *ngIf="billProvider.get_bill_component(\'discount_nominal\')>0">\n\n						<td style="width: 10%;"></td>\n\n						<td style="width: 10%;"></td>							\n\n						<td style="width: 48%;" class="text-align--right">Diskon {{ billProvider.helper.toInt(billProvider.get_bill_component(\'discount_percent\')) > 0? billProvider.get_bill_component(\'discount_percent\')+\'%\':\'\'  }}</td>\n\n						<td style="width: 5%;" class="text-align--right"><span class="">Rp.</span> </td>\n\n						<td style="width: 10%;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'discount_nominal\'))}} </span> </td>\n\n					</tr>\n\n\n\n					<tr >\n\n						<td style="width: 10%;" ></td>\n\n						<td style="width: 10%;"></td>							\n\n						<td style="width: 48%; padding-top: 10px; font-size: 1.3em;" class="text-align--right">Total</td>\n\n						<td style="width: 5%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span class="">Rp.</span> </td>\n\n						<td style="width: 10%; padding-top: 10px; font-size: 1.3em;" class="text-align--right"><span>{{billProvider.helper.intToIDR(billProvider.get_bill_component(\'payment_total\'))}} </span> </td>\n\n					</tr>\n\n\n\n				</tbody>\n\n			</table>\n\n		</div>\n\n	</div>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\receipt\receipt.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_7__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */], __WEBPACK_IMPORTED_MODULE_3__providers_db_local_db_local__["a" /* DbLocalProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_bill_bill__["a" /* BillProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]])
     ], ReceiptPage);
@@ -9570,7 +9564,7 @@ var MemberNewFormPage = (function () {
     };
     MemberNewFormPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-member-new-form',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\member-new-form\member-new-form.html"*/'<!--\n  Generated template for the MemberPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n	<ion-toolbar color="main">\n		<ion-navbar>\n			<ion-title>Member</ion-title>\n			<ion-buttons end>\n				<button ion-button icon-only (click)="closeModal()">\n					<ion-icon name="close-circle"></ion-icon>\n				</button>\n			</ion-buttons>\n\n		</ion-navbar>\n	</ion-toolbar>\n\n</ion-header>\n\n<ion-content>\n	<ion-list>\n						\n		<ion-item>\n			<ion-label floating>Username</ion-label>\n			<ion-input type="text" [(ngModel)]="member.member_name"></ion-input>\n		</ion-item>\n\n		<ion-item>\n			<ion-label floating>Email</ion-label>\n			<ion-input type="email" [(ngModel)]="member.member_mail"></ion-input>\n		</ion-item>\n\n		<ion-item>\n			<ion-label floating>Telephone</ion-label>\n			<ion-input type="tel" [(ngModel)]="member.member_phone"></ion-input>\n		</ion-item>\n			\n		<ion-item *ngIf="!member.state || member.state==\'new\'">\n			<button ion-button block large (click)="create_new_member()"> Tambahkan member baru </button>\n		</ion-item>\n\n		<ion-item *ngIf="member.state==\'update\'">\n			<button ion-button block large (click)="update_new_member()"> Perbarui data member </button>\n		</ion-item>\n\n		<ion-item class="sr-only">\n		</ion-item>\n\n	</ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\member-new-form\member-new-form.html"*/,
+            selector: 'page-member-new-form',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\member-new-form\member-new-form.html"*/'<!--\n\n  Generated template for the MemberPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n\n\n<ion-header>\n\n	<ion-toolbar color="main">\n\n		<ion-navbar>\n\n			<ion-title>Member</ion-title>\n\n			<ion-buttons end>\n\n				<button ion-button icon-only (click)="closeModal()">\n\n					<ion-icon name="close-circle"></ion-icon>\n\n				</button>\n\n			</ion-buttons>\n\n\n\n		</ion-navbar>\n\n	</ion-toolbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content>\n\n	<ion-list>\n\n						\n\n		<ion-item>\n\n			<ion-label floating>Username</ion-label>\n\n			<ion-input type="text" [(ngModel)]="member.member_name"></ion-input>\n\n		</ion-item>\n\n\n\n		<ion-item>\n\n			<ion-label floating>Email</ion-label>\n\n			<ion-input type="email" [(ngModel)]="member.member_mail"></ion-input>\n\n		</ion-item>\n\n\n\n		<ion-item>\n\n			<ion-label floating>Telephone</ion-label>\n\n			<ion-input type="tel" [(ngModel)]="member.member_phone"></ion-input>\n\n		</ion-item>\n\n			\n\n		<ion-item *ngIf="!member.state || member.state==\'new\'">\n\n			<button ion-button block large (click)="create_new_member()"> Tambahkan member baru </button>\n\n		</ion-item>\n\n\n\n		<ion-item *ngIf="member.state==\'update\'">\n\n			<button ion-button block large (click)="update_new_member()"> Perbarui data member </button>\n\n		</ion-item>\n\n\n\n		<ion-item class="sr-only">\n\n		</ion-item>\n\n\n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\member-new-form\member-new-form.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_helper_helper__["a" /* HelperProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]])
     ], MemberNewFormPage);
@@ -9621,7 +9615,7 @@ var TooltipProductPage = (function () {
     };
     TooltipProductPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-tooltip-product',template:/*ion-inline-start:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\tooltip-product\tooltip-product.html"*/'<!--\n  Generated template for the TooltipProductPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content>\n	<ion-list>\n		\n\n		<ion-item class="component--zoom" style="">\n             <button ion-button color="main" round (click)="zoom(\'out\')">\n             	<ion-icon name="remove"></ion-icon>\n             </button>\n             Zoom product\n			<button ion-button color="main" round (click)="zoom()">\n				<ion-icon name="add"></ion-icon>\n			</button>\n		</ion-item>  \n	</ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\wamp64\www\mobile\folarpos_outlet\src\pages\tooltip-product\tooltip-product.html"*/,
+            selector: 'page-tooltip-product',template:/*ion-inline-start:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\tooltip-product\tooltip-product.html"*/'<!--\n\n  Generated template for the TooltipProductPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-content>\n\n	<ion-list>\n\n		\n\n\n\n		<ion-item class="component--zoom" style="">\n\n             <button ion-button color="main" round (click)="zoom(\'out\')">\n\n             	<ion-icon name="remove"></ion-icon>\n\n             </button>\n\n             Zoom product\n\n			<button ion-button color="main" round (click)="zoom()">\n\n				<ion-icon name="add"></ion-icon>\n\n			</button>\n\n		</ion-item>  \n\n	</ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\wamp64\www\sandbox\folarpos_outlet\src\pages\tooltip-product\tooltip-product.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* Events */]])
     ], TooltipProductPage);
@@ -9645,14 +9639,14 @@ var TooltipProductPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_db_local_db_local__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_printer_service_printer_service__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_http__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_ai_remote_ai_remote__ = __webpack_require__(208);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_native_audio__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_http__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_ai_remote_ai_remote__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_native_audio__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_jquery__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_moment__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_html2canvas__ = __webpack_require__(477);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_html2canvas__ = __webpack_require__(474);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_html2canvas___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_html2canvas__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -9849,5 +9843,5 @@ var HelperProvider = (function () {
 
 /***/ })
 
-},[392]);
+},[389]);
 //# sourceMappingURL=main.js.map
