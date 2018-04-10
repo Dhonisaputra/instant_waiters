@@ -15,6 +15,7 @@ import { SpendPage } from '../pages/spend/spend';
 import { DebtPage } from '../pages/debt/debt';
 import { ModalPage } from '../pages/modal/modal';
 import { AboutPage } from '../pages/about/about';
+import { WaitersPage } from '../pages/waiters/waiters';
 import { PrintBluetoothPanelPage } from '../pages/print-bluetooth-panel/print-bluetooth-panel';
 
 
@@ -31,6 +32,7 @@ export class MyApp {
   tablePage        : any = TablePage;
   productPage      : any = ProductPage;
   
+  waitersPage       :any=WaitersPage;
   stocksPage       :any=StocksPage;
   transactionPage  :any=TransactionPage;
   memberPage       :any=MemberPage;
@@ -68,12 +70,6 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      if( this.platform.is('android') )
-      {
-        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
-        .catch(()=>{
-        })
-      }
 
       this.platform.registerBackButtonAction(()=>this.preventClose(),10);
       this.statusBar.styleDefault();

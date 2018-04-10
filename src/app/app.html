@@ -10,10 +10,10 @@
     <ion-list>
       <ion-item *ngIf="helper.local.get_params('is_login') && helper.local.get_params(helper.config.variable.credential).users">
         <ion-avatar item-start>
-          <img src="{{helper.config.base_url( )+helper.local.get_params(helper.config.variable.credential).users.users_photo}}">
+          <img src="{{helper.config.base_url( )+helper.local.get_params(helper.config.variable.credential).users.users_photo != helper.config.base_url()+'null'? helper.config.base_url( )+helper.local.get_params(helper.config.variable.credential).users.users_photo : 'assets/imgs/nonuser.png'}}">
         </ion-avatar>
         <h2>{{helper.local.get_params(helper.config.variable.credential).users.users_fullname}}</h2>
-        <p>Cashier</p>
+        <p>{{helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_name}}</p>
         <p>
           <button ion-button small color="main" menuClose (click)="logout()"> <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon> &nbsp; Log Out</button>
         </p>
@@ -25,12 +25,23 @@
         <img src="assets/imgs/icons/outlet.png" style="width:25px; height: 25px;"> Pilih outlet 
       </button>
       <div *ngIf="helper.local.get_params('login_outlet_device')">
-        <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> 
-          <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir 
-        </button>
-        <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> 
-          <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir 
-        </button>
+        <div *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3">
+          <button menuClose ion-item (click)="setRoot(tablePage)" *ngIf="!helper.local.get_params(helper.config.variable.settings) || helper.local.get_params(helper.config.variable.settings).choose_table_first"> 
+            <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir 
+          </button>
+          <button menuClose ion-item (click)="setRoot(productPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && !helper.local.get_params(helper.config.variable.settings).choose_table_first"> 
+            <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir 
+          </button>
+        </div>
+        <div *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id == 3">
+          <button menuClose ion-item (click)="setRoot(waitersPage)" > 
+            <img src="assets/imgs/icons/cashier.png" style="width:25px; height: 25px;"> Kasir 
+          </button>
+          <button menuClose ion-item (click)="setRoot(transactionPage)">
+            <img src="assets/imgs/icons/transaction.png" style="width:25px; height: 25px;"> Transaksi
+          </button>
+        </div>
+        
         <div *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3">
           <button menuClose ion-item (click)="setRoot(stocksPage)">
             <img src="assets/imgs/icons/product.png" style="width:25px; height: 25px;"> Stok

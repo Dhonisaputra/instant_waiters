@@ -14,4 +14,10 @@ page-waiters {
 	{
 
 	}
+
+	.receipt:not(.printed)
+	{
+		height: calc(100vh - 140px) !important;
+		min-height: calc(100vh - 140px) !important;
+	}
 }	

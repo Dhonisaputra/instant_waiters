@@ -25,11 +25,11 @@
   <ion-grid>
     <ion-row class="relative center " id="product-content-body">
      
-      <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 id="section-right" class="column">
+      <ion-col col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 id="section-right" class="column">
             
             <ion-row class="row form-group">
-              <ion-col col-3 class="">Jumlah Pembelian</ion-col>
-              <ion-col col-9 class=" input-box input-group">
+              <ion-col col-4 class="">Jumlah Pembelian</ion-col>
+              <ion-col col-8 class=" input-box input-group">
                 <button class="" ion-button color="light" icon-only id="" round (click)="reduceItem()" style="margin-right: 10px;">
                   <ion-icon name="remove"></ion-icon>
                 </button>
@@ -41,39 +41,39 @@
             </ion-row>
 
             <ion-row class="form-group">
-              <ion-col col-3 class="">Harga</ion-col>
-              <ion-col col-9 class=" input-box input-group">
+              <ion-col col-4 class="">Harga</ion-col>
+              <ion-col col-8 class=" input-box input-group">
                 <b class="" style="font-size: 1.1em;">Rp {{helper.intToIDR(item.price)}}</b>
               </ion-col>
             </ion-row>
             
             <ion-row class="row form-group">
-              <ion-col col-3 class="">Diskon</ion-col>
-              <ion-col col-9 class=" input-box input-group">
-                <input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" [(ngModel)]="item.discount_percent" (input)="countChargeNominal($event)">
+              <ion-col col-4  class="">Diskon</ion-col>
+              <ion-col col-8  class=" input-box input-group">
+                <input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 35%;" [(ngModel)]="item.discount_percent" (input)="countChargeNominal($event)">
                 <span class="input-group-addon" id="basic-addon1"> % </span>
                 <input type="number" class="form-control--lg form-control" name="" [(ngModel)]="item.discount_nominal" (input)="countChargePercent($event)">
               </ion-col>
             </ion-row>
 
             <ion-row class="form-group">
-              <ion-col col-3 class="">Keterangan</ion-col>
-              <ion-col col-9 class=" input-box">
-                <textarea class="form-control" [(ngModel)]="item.note" (input)="changeNotes()" style="height: 100px;"></textarea>
+              <ion-col col-4 class="">Keterangan</ion-col>
+              <ion-col col-8 class=" input-box">
+                <textarea placeholder="Keterangan pesanan" class="form-control" [(ngModel)]="item.note" (input)="changeNotes()" style="height: 100px;"></textarea>
               </ion-col>
             </ion-row>
 
             <ion-row class="form-group">
              
-              <ion-col col-3 class="">Complement?</ion-col>
-              <ion-col col-9 class=" input-box">
+              <ion-col col-4 class="">Komplimen?</ion-col>
+              <ion-col col-8 class=" input-box">
                   <ion-toggle checked="false" value="1" [(ngModel)]="item.complement_status" (ionChange)="changeComplementStatus()"></ion-toggle>
               </ion-col>
             </ion-row>
   
             <ion-row class="form-group" *ngIf="item.complement_status > 0">
-              <ion-col col-3 class="">Complement Item</ion-col>
-              <ion-col col-9 class=" input-box input-group">
+              <ion-col col-4 class="">Jumlah Komplimen</ion-col>
+              <ion-col col-8 class=" input-box input-group">
                  <button class="" ion-button color="light" icon-only id="" round (click)="changeComplementItems('reduce')" style="margin-right: 10px;">
                   <ion-icon name="remove"></ion-icon>
                 </button>
@@ -86,9 +86,9 @@
             </ion-row>
 
             <ion-row class="form-group" *ngIf="item.complement_status > 0">
-              <ion-col col-3 class="">Complement Note</ion-col>
-              <ion-col col-9 class=" input-box">
-                <textarea class="form-control" [(ngModel)]="item.complement_note" (input)="changeComplementNotes()" style="height: 100px;" placeholder="Isikan alasan komplimen"></textarea>
+              <ion-col col-4 class="">Komplimen Note*</ion-col>
+              <ion-col col-8 class=" input-box">
+                <textarea class="form-control" [(ngModel)]="item.complement_note" (input)="changeComplementNotes()" style="height: 100px;" placeholder="Isikan alasan komplimen (Wajib diisi)"></textarea>
               </ion-col>
             </ion-row>
 

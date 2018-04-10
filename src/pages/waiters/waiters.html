@@ -13,7 +13,7 @@
 			<ion-title>Waiters</ion-title>
 			
 
-			<ion-buttons end>
+			<ion-buttons end *ngIf="waiter_state=='product'">
 				<button ion-button clear icon-right color="light" (tap)="tooltip_present($event)">
 				  <ion-icon name="more"></ion-icon>
 				</button>
@@ -62,12 +62,12 @@
   	</ion-refresher>
 	<ion-grid>
 		<ion-row class="relative" id="product-content-body">
-			<div  col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 id="" *ngIf=" waiter_state=='bill' ">
+			<div  col-12  id="" *ngIf=" waiter_state=='bill' ">
 				<div class="receipt-product">
 					<page-receipt></page-receipt> 
 				</div>
 			</div>
-			<ion-col col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 id="section-right" class="column" *ngIf=" waiter_state=='product' ">
+			<ion-col col-12 id="section-right" class="column" *ngIf=" waiter_state=='product' ">
 
 				<div class="box" id="box-product">
 					
@@ -129,31 +129,35 @@
 	</ion-grid>
 
 	
-	<ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30" *ngIf=" waiter_state=='product' ">
-    <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>
-    <ion-fab-list side="top" #fab>
-      <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>
-      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow" >Bayar Pesanan</span> </button>
-      <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>
-      <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>
-    </ion-fab-list>
-  </ion-fab>
+	<!-- <ion-fab right bottom absolute-drag absolute-drag-horizontal reduceRight="30" *ngIf=" waiter_state=='product' ">
+	    <button ion-fab color="main" style="box-shadow: 0px 0px 0px 3px white;"><ion-icon name="apps"></ion-icon></button>
+	    <ion-fab-list side="top" #fab>
+	      <button ion-fab ion-fab-item color="main" (tap)="print_bill()"> <ion-icon name="print"></ion-icon> <span class="label glow">Cetak Bill</span> </button>
+	      <button ion-fab ion-fab-item color="main" (tap)="pay_bill()" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3"> <ion-icon name="logo-usd"></ion-icon> <span class="label glow" >Bayar Pesanan</span> </button>
+	      <button ion-fab ion-fab-item color="main" (tap)="saveBill()"> <ion-icon name="paper"></ion-icon> <span class="label glow">Simpan Pesanan</span> </button>
+	      <button ion-fab ion-fab-item color="main" (tap)="reset_receipts()"> <ion-icon name="trash"></ion-icon> <span class="label glow">Reset Pesanan</span> </button>
+	    </ion-fab-list>
+	  </ion-fab> -->
 
 </ion-content>
 <ion-footer>
   <ion-toolbar color="main">
-	<button ion-button color="light" clear small icon-left (tap)="waiter_state='product'">
-	  	<ion-icon name="home"></ion-icon>
-	  	Produk
+	<button ion-button color="light" clear small icon-left (tap)="waiter_state='product'" *ngIf="waiter_state!='product'">
+	  	<ion-icon ios="ios-arrow-back" md="ios-arrow-back"></ion-icon>
+	  	Kembali
 	</button>
-    <button ion-button color="light" clear small icon-left (tap)="waiter_state='bill'">
-	  	<ion-icon ios="ios-document" md="md-document"></ion-icon>
-	  	Nota &nbsp; <ion-badge item-end color="light">{{billProvider.get_bill_component('orders').length}}</ion-badge>
-	</button>
-	<ion-buttons end>
-	    <button end ion-button color="light" clear small>
-	    	Rp {{ helper.intToIDR(billProvider.get_bill_component('payment_total')) }}
-	    </button>
+    <button ion-button color="light" clear small *ngIf="waiter_state == 'product'">
+    	Rp {{ helper.intToIDR(billProvider.get_bill_component('payment_total')) }}
+    </button>
+	<ion-buttons end >
+	    <button end ion-button color="light" clear small icon-right (tap)="options_next_bill()" *ngIf="waiter_state != 'product'">
+		  	Selanjutnya
+		  	<ion-icon ios="ios-arrow-forward" md="ios-arrow-forward"></ion-icon>
+		</button>
+	    <button ion-button color="light" clear small icon-left (tap)="waiter_state='bill'" *ngIf="waiter_state=='product'">
+		  	<ion-icon ios="ios-document" md="md-document"></ion-icon>
+		  	Lihat Nota Pesanan &nbsp; <ion-badge item-end color="light">{{billProvider.get_bill_component('orders').length}}</ion-badge>
+		</button>
 	</ion-buttons>
 
   </ion-toolbar>
