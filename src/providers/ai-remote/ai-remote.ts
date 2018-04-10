@@ -78,6 +78,19 @@ export class AiRemoteProvider {
       let data = this.local.get_params(this.config.variable.credential).data;
       let uuid = this.local.get_params(this.config.variable.credential).outlet_device.uuid;
       
+      if(this.local.get_params(this.config.variable.credential).outlet.outlet_roles_id != 3)
+      {
+        this.subscribe(outlet_id+'.app.cashier:new-order', (res)=>{
+          this.events.publish('transaction:refresh')
+          this.localNotifications.schedule({
+            id: 1,
+            text: res.title,
+            sound: 'file://assets/audio/notification.mp3',
+            data: { secret: uuid }
+          });
+        })
+      }
+
       this.subscribe('app.'+uuid+'.'+outlet_id+'.authority.revoke', ()=>{
         if(!isLogin)
         {
@@ -116,22 +129,9 @@ export class AiRemoteProvider {
   	if(!this.isListenGeneral)
   	{
 
-	    let data = this.local.get_params(this.config.variable.credential).data;
+      let vari = this.local.get_params(this.config.variable.credential);
+      let data = vari;
 	    let uuid = this.local.get_params("uuid");
-
-      if(this.local.get_params(this.config.variable.credential).outlet.outlet_roles_id != 3)
-      {
-        this.subscribe(data.outlet_id+'.app.cashier', (res)=>{
-
-          this.events.publish('transaction:refresh')
-          this.localNotifications.schedule({
-            id: 1,
-            text: res.title,
-            sound: 'file://assets/audio/notification.mp3',
-            data: { secret: uuid }
-          });
-        })
-      }
 
       this.subscribe('app.'+uuid+'.authority.accepted', ()=>{
         if(isLogin)

@@ -87,7 +87,7 @@ export class BillProvider {
             if(res.code == 200)
             {
 
-                this.helper.airemote.send(item.outlet_id+'.app.cashier','',{title:"Terdapat pesanan baru"}, function(){})
+                this.helper.airemote.send(item.outlet_id+'.app.cashier:new-order','',{title:"Terdapat pesanan baru"}, function(){})
                 successData.present();
 
             }else

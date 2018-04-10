@@ -7,6 +7,7 @@ import { TablePage } from '../table/table';
 import { ProductPage } from '../product/product'; 
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WaitersPage } from '../waiters/waiters'; 
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 
 
@@ -25,7 +26,7 @@ import { WaitersPage } from '../waiters/waiters';
 export class OutletListPage {
 	uid:any='';
 	outlets:any=[];
-  constructor(private splashScreen : SplashScreen, public navCtrl: NavController, public navParams: NavParams, public device_id: UniqueDeviceID, private helper:HelperProvider, public platform: Platform) {
+  constructor(public screenOrientation: ScreenOrientation, private splashScreen : SplashScreen, public navCtrl: NavController, public navParams: NavParams, public device_id: UniqueDeviceID, private helper:HelperProvider, public platform: Platform) {
   	
   this.helper.local.set_params('login_outlet_device', false)
 
@@ -203,13 +204,18 @@ export class OutletListPage {
         this.helper.airemote.socket_listener()
 
   			this.helper.airemote.send(item.outlet_id+'.notif.ring','',{toast: true, title:"Pemberitahuan perangkat terhubung", text: data.users.users_fullname+" tersambung kedalam sistem."}, () => {
-          console.log(item)
+          
           if(item.outlet_roles_id == 3)
           {
             this.navCtrl.setRoot(WaitersPage);
             
           }else{
-
+            if( this.platform.is('android') )
+            {
+              this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
+              .catch(()=>{
+              })
+            }
             this.navCtrl.setRoot(default_page);
           }
 			  })

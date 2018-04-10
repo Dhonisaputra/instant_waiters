@@ -609,11 +609,9 @@ export class WaitersPage {
 		{
 			this.helper.alertCtrl.create({
 				title: "Kesalahan",
-				message: "Layanan printer tidak tersedia untuk perangkat ini",
+				message: "Layanan printer bluetooth tidak tersedia untuk perangkat ini, sistem akan mencetak melalui printer biasa",
 				buttons:["OK"]
 			}).present()
-			console.log(this.helper.html2canvas)
-			return false;
 		}
 
 		if(this.error_product())
@@ -732,11 +730,9 @@ export class WaitersPage {
 			{
 				this.helper.alertCtrl.create({
 					title: "Kesalahan",
-					message: "Layanan printer tidak tersedia untuk perangkat ini",
+					message: "Layanan printer bluetooth tidak tersedia untuk perangkat ini. Sistem hanya akan mencetak melalui print biasa",
 					buttons:["OK"]
 				}).present()
-				reject();
-				return false;
 			}
 			
 	  		/*if(!device || !device.address)
@@ -773,24 +769,26 @@ export class WaitersPage {
 
 		  					break;
 		  				case "bluetooth":
+		  					if( this.helper.printer.isAvailable() )
+							{
+								var t = this.billProvider.print_bill('', printer_filter[0]);
+			  					this.helper.printer.connect(printer_filter[0].outlet_printer_address)
+						  		.then(()=>{
+									let el = this.helper.$('.receipt');
+									setTimeout( ()=>{
 
-							var t = this.billProvider.print_bill('', printer_filter[0]);
-		  					this.helper.printer.connect(printer_filter[0].outlet_printer_address)
-					  		.then(()=>{
-								let el = this.helper.$('.receipt');
-								setTimeout( ()=>{
-
-									// let t = this.billProvider.print_bill(printer_filter[0]);
-									this.helper.printer.printText(t)
-									.then(()=>{
-										resolve();
-									}, ()=>{
-										reject();
-									})
-								}, 2000 ) // set timeout
-					  		}, (err)=>{
-									reject()
-					  		})
+										// let t = this.billProvider.print_bill(printer_filter[0]);
+										this.helper.printer.printText(t)
+										.then(()=>{
+											resolve();
+										}, ()=>{
+											reject();
+										})
+									}, 2000 ) // set timeout
+						  		}, (err)=>{
+										reject()
+						  		})
+							}
 							resolve()
 		  					break;
 
@@ -1050,6 +1048,35 @@ export class WaitersPage {
   		ev: ev,
   		
   	});
+  }
+
+  options_next_bill()
+  {
+  	let actionSheet = this.actionSheetCtrl.create({
+      buttons: [
+        {
+        	icon: 'ios-send',
+          text: 'Simpan Pesanan',
+          handler: () => {
+            this.saveBill()
+          }
+        },{
+        	icon: "print",
+          text: 'Simpan dan cetak pesanan',
+          handler: () => {
+          	this.print_bill();
+          }
+        },{
+        	icon: "ios-close",
+          text: 'Batal',
+          role: 'cancel',
+          handler: () => {
+          	// actionSheet.dismiss();
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
 }
