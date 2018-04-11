@@ -29,14 +29,23 @@ export class PaymentPage {
 	latest_bill_id:number;
 	state:string = 'payment';
 	numpad_type:string='numpad';
+	method_payment:any=[];
+	card_method_payment:any=[];
   constructor(public navCtrl: NavController, public navParams: NavParams, private dbLocalProvider: DbLocalProvider, private events: Events, private helper: HelperProvider, private billProvider: BillProvider) {
   	
   	this.numpad_type = 'numpad';
+
+  	this.method_payment = this.helper.local.get_params(this.helper.config.variable.credential).outlet.payment_method;
+  	this.card_method_payment = this.method_payment.filter((res)=>{
+  		return res.method_type == 2;
+  	})
+
 
   }
 
   ionViewDidEnter()
     {
+
 		console.log(this.navParams.data)
     	if(this.navParams.data.event)
     	{
@@ -133,7 +142,7 @@ export class PaymentPage {
 			paid_with_bank_nominal		: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.paid_with_bank_nominal) > 0  ? this.helper.IDRtoInt( this.bill.paid_with_bank_nominal) : 0,
 			payment_bank_charge_nominal	: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.payment_bank_charge_nominal) > 0  ? this.helper.IDRtoInt( this.bill.payment_bank_charge_nominal) : 0,
 			payment_bank_charge_percent	: (this.payment_method == 3 || this.payment_method == 2) && this.helper.IDRtoInt( this.bill.payment_bank_charge_percent) > 0  ? this.helper.IDRtoInt( this.bill.payment_bank_charge_percent) : 0,
-			payment_method 				: this.payment_method,
+			payment_method 				: this.bill.outlet_payment_method_id,
 		})
 		.done((res)=>{
 			res = !this.helper.isJSON(res)? res : JSON.parse(res);

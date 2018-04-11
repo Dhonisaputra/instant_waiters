@@ -29,7 +29,7 @@ export class KitchenbarPage {
     original_items:any=[]
     outlet        :number;
     filter_by     :string="visitor_name";
-    order_by      :string='payment_date DESC';
+    order_by      :string='date ASC';
     filter_input  :string='';
     payment_status:number=-1;
     filter_date_start   :string=moment().format('MM/DD/YYYY');
@@ -49,11 +49,7 @@ export class KitchenbarPage {
             online:true,
             infinite: false,
             data: { 
-                limit:20,
-                outlet: this.outlet,
-                page: 1,
-                join:['table','discount'],
-                fields: `pay_id,users_outlet,table_id,bank_id,discount_id,payment_method,outlet,payment_nominal,payment_date,visitor_name,payment_date_only,payment_bills,tax_percent,tax_nominal,paid_date,payment_total,paid_nominal,paid_with_bank_nominal,payment_complement_status,payment_complement_note,orders,table_name,payment_rest,discount_name,discount_percent,discount_nominal,payment_cancel_status,payment_cancel_note,reference_counter`
+                
             }
         }
 
@@ -63,6 +59,7 @@ export class KitchenbarPage {
             {
                 this.navParams.data.body.where['payment_date_only'] = moment().format('YYYY-MM-DD')
                 this.navParams.data.body.where['outlet_id'] = this.outlet
+                this.navParams.data.body.in = [['pay_dt_order_status', [0,1]]]
                 this.navParams.data.body.group_by = 'pay_id, pay_dt_order_session';
                 this.navParams.data.body.order_by = 'pay_date ASC';
                 this.payment_status = 0;
@@ -74,7 +71,15 @@ export class KitchenbarPage {
         }
 
         this.transaction_params = dataFetch;
+        let loadingData = this.loadingCtrl.create({
+          content: "Mengambil data.Silahkan tunggu"
+        });
+
+        loadingData.present();
         this.filter_transaction()
+        .then((res)=>{
+            loadingData.dismiss();
+        })
 
         
 
@@ -87,8 +92,75 @@ export class KitchenbarPage {
     }
 
     ionViewDidLoad() {
-
+        this.helper.events.subscribe("monitoring_request:refresh", (res)=>{
+            this.filter_transaction();
+            this.helper.toast.create({
+                message: "Terdapat pesanan baru",
+                showCloseButton: true,
+                duration: 3000,
+            }).present();
+        })
     }
+
+    ionViewWillLeave()
+    {
+        this.helper.events.unsubscribe('monitoring_request:refresh')
+    }
+
+    changeProses(item)
+    {
+        let url = this.config.base_url('admin/outlet/transaction/order/update');
+        let data = {
+            update:{
+                pay_dt_order_status: item.pay_dt_order_status == 0? 1 : (item.pay_dt_order_status == 1? 2 : 3),
+            },
+            where: {
+                pay_id: item.pay_id,
+                order_session: item.order_session,
+            }
+        }
+        this.helper.$.post(url, data)
+        .done((res)=>{
+            res = JSON.parse(res)
+            if(res.code == 200)
+            {
+                this.filter_transaction();
+                console.log(item.pay_dt_order_status)
+                switch (parseInt(item.pay_dt_order_status)) {
+                    case 0:
+                        this.helper.toast.create({
+                            message: "Status pesanan berhasil diubah menjadi proses",
+                            duration: 2000
+                        }).present()
+                        var nota = this.helper.outlet_initial_name()+'/NOTA/'+this.helper.lead_zero(item.pay_id, 5);
+                        this.helper.airemote.send(this.outlet+'.waiters:proses-done','',{title: "Pesanan nota "+nota+' telah diproses' }, () => {
+                        })
+                        break;
+
+                    case 1:
+                        this.helper.toast.create({
+                            message: "Status pesanan berhasil diselesaikan",
+                            duration: 4000
+                        }).present()
+                        var nota = this.helper.outlet_initial_name()+'/NOTA/'+this.helper.lead_zero(item.pay_id, 5);
+                        this.helper.airemote.send(this.outlet+'.waiters:proses-done','',{title: "Pesanan nota "+nota+' telah selesai' }, () => {
+
+                        })
+                        break;
+                    
+                    default:
+                        // code...
+                        break;
+                }
+            }
+        })
+    }
+
+    splitting_prod_name(item)
+    {
+        return item.split(', ');
+    }
+
 
     update_page_parameters(data:any={})
     {
@@ -97,14 +169,22 @@ export class KitchenbarPage {
 
     get_transaction(data:any={data:{}})
     {
-        let loadingData = this.loadingCtrl.create({
-          content: "Silahkan tunggu"
-        });
-
-        loadingData.present();
+        
         this.transaction_params = data;
 
-        let url = this.config.base_url('admin/outlet/transaction/get')
+        let url = this.config.base_url('admin/outlet/transaction/realtime/kitchenbar')
+        let included_data = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id != 3? [0,1] : [0,1,2]
+        let ndata = {
+            "where":{
+                "outlet_id": this.outlet,
+                "pay_dt_date_now": this.helper.moment('YYYY-MM-DD')
+            },
+            in : [['pay_dt_order_status', included_data]],
+            "join":["md_prod_type","tr_payment","mg_member"],
+            "group_by":"pay_id,pay_dt_order_session",
+            "order_by":"date ASC",
+        }
+        data.data = Object.assign(ndata, data.data)
         return $.post(url, data.data)
         .done((res) => {
 
@@ -127,7 +207,6 @@ export class KitchenbarPage {
             }
         })
         .always( ()=>{
-            loadingData.dismiss();
         } )
     }
 
@@ -192,51 +271,58 @@ export class KitchenbarPage {
     }
     filter_transaction(ev:any={})
     {
-        let exclude_to_filter_input = ['table_name','visitor_name', 'pay_id']
+        return new Promise((resolve, reject) => {
 
-        let val = this.filter_input;
-        if(val && exclude_to_filter_input.indexOf('this.filter_by') > -1)
-        {
-            return false;
-        }
+            let exclude_to_filter_input = ['table_name','visitor_name', 'pay_id']
 
-        this.transaction_params.data.where = {}
-        this.transaction_params.data.like =  []
-        this.transaction_params.infinite = false;
-        this.transaction_params.data.page = 1;
-
-        if (val && val.trim() != '') {
-
-
-            if(this.filter_by == 'visitor_name')
+            let val = this.filter_input;
+            if(val && exclude_to_filter_input.indexOf('this.filter_by') > -1)
             {
-                this.transaction_params.data.like = [[this.filter_by, val]]; 
-                delete this.transaction_params.data.where[this.filter_by] 
-            }else
-            {
-                this.transaction_params.data.where[this.filter_by] = val;
-                delete this.transaction_params.data.like; 
+                reject();
+                return false;
             }
-        }
 
-        if(this.filter_by == 'payment_date')
-        {
-          this.transaction_params.data.like = [[this.filter_by, moment().format("YYYY-MM-DD")]]; 
-        }
+            this.transaction_params.data.where = {}
+            this.transaction_params.data.like =  []
+            this.transaction_params.infinite = false;
+            this.transaction_params.data.page = 1;
 
-        this.transaction_params.data.where['payment_complement_status'] = this.payment_status;
-        if(this.payment_status < 0)
-        {
-            delete this.transaction_params.data.where['payment_complement_status'];
-        }
+            if (val && val.trim() != '') {
 
-        this.transaction_params.data.order_by = this.order_by;
 
-        this.get_transaction(this.transaction_params)
-        .then(()=>{
+                if(this.filter_by == 'visitor_name')
+                {
+                    this.transaction_params.data.like = [[this.filter_by, val]]; 
+                    delete this.transaction_params.data.where[this.filter_by] 
+                }else
+                {
+                    this.transaction_params.data.where[this.filter_by] = val;
+                    delete this.transaction_params.data.like; 
+                }
+            }
+
+            if(this.filter_by == 'payment_date')
+            {
+              this.transaction_params.data.like = [[this.filter_by, moment().format("YYYY-MM-DD")]]; 
+            }
+
+            this.transaction_params.data.where['payment_complement_status'] = this.payment_status;
+            if(this.payment_status < 0)
+            {
+                delete this.transaction_params.data.where['payment_complement_status'];
+            }
+
+            this.transaction_params.data.order_by = this.order_by;
+
+            this.get_transaction(this.transaction_params)
+            .done((res)=>{
+                resolve(res)
+            })
+            .fail(()=>{
+                reject();
+            })
+
         })
-
-
     }
 
     edit_transaction(i, item)
@@ -293,7 +379,7 @@ export class KitchenbarPage {
 
     transform_date(date)
     {
-        return moment(date).format('HH:mm - YYYY MMM DD')
+        return moment(date).format('HH:mm - DD MMM YYYY')
     }
 
     cancel_transaction(index, item)

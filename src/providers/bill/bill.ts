@@ -455,7 +455,12 @@ export class BillProvider {
 
     set_data_bill(data:any={}, update_db:boolean=true)
     {
+        console.log(this.bill, data)
+        this.bill = data;
         
+        this.count_pricing()
+        this.update_bill();
+        this.events.publish('bill.update')
     }
 
     pull_data_bill()

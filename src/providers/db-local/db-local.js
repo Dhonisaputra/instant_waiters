@@ -42,7 +42,8 @@ var DbLocalProvider = /** @class */ (function () {
                 member: true,
                 modal: true,
                 pengeluaran: true,
-                settings: true
+                settings: true,
+                configure_table: false
             }
         }; // variable to store temporary params || karena saya belum bisa ngirim / ganti page menggunakan parameters.
         this.credential = {

@@ -14,6 +14,7 @@ import { SQLite } from '@ionic-native/sqlite';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { NativeAudio } from '@ionic-native/native-audio';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -41,7 +42,11 @@ import { ModalPage } from '../pages/modal/modal';
 import { SpendPage } from '../pages/spend/spend';
 import { SpendDetailPage } from '../pages/spend-detail/spend-detail';
 import { DebtPage } from '../pages/debt/debt';
+import { WaitersPage } from '../pages/waiters/waiters';
+import { KitchenbarPage } from '../pages/kitchenbar/kitchenbar';
+import { OutletListPageModule } from '../pages/outlet-list/outlet-list.module';
 import { PrintBluetoothPanelPageModule } from '../pages/print-bluetooth-panel/print-bluetooth-panel.module';
+import { AboutPageModule } from '../pages/about/about.module';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ReceiptDataProvider } from '../providers/receipt-data/receipt-data';
@@ -54,6 +59,9 @@ import { HelperProvider } from '../providers/helper/helper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrinterServiceProvider } from '../providers/printer-service/printer-service';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { HTTP } from '@ionic-native/http';
+import { AiRemoteProvider } from '../providers/ai-remote/ai-remote';
 // import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -87,14 +95,18 @@ var AppModule = /** @class */ (function () {
                 ModalPage,
                 SpendPage,
                 SpendDetailPage,
-                DebtPage
+                DebtPage,
+                WaitersPage,
+                KitchenbarPage
                 // AbsoluteDragDirective
             ],
             imports: [
                 BrowserModule,
                 PrintBluetoothPanelPageModule,
                 BrowserAnimationsModule,
+                OutletListPageModule,
                 HttpClientModule,
+                AboutPageModule,
                 IonicModule.forRoot(MyApp),
                 IonicStorageModule.forRoot()
             ],
@@ -125,7 +137,9 @@ var AppModule = /** @class */ (function () {
                 ModalPage,
                 SpendPage,
                 SpendDetailPage,
-                DebtPage
+                DebtPage,
+                WaitersPage,
+                KitchenbarPage
             ],
             providers: [
                 StatusBar,
@@ -135,7 +149,7 @@ var AppModule = /** @class */ (function () {
                 File,
                 FileTransfer,
                 ScreenOrientation,
-                { provide: ErrorHandler, useClass: IonicErrorHandler },
+                NativeAudio,
                 ReceiptDataProvider,
                 ConfigProvider,
                 ProductProvider,
@@ -144,7 +158,11 @@ var AppModule = /** @class */ (function () {
                 DbTableProvider,
                 HelperProvider,
                 PrinterServiceProvider,
-                BluetoothSerial
+                BluetoothSerial,
+                UniqueDeviceID,
+                HTTP,
+                AiRemoteProvider,
+                { provide: ErrorHandler, useClass: IonicErrorHandler },
             ]
         })
     ], AppModule);

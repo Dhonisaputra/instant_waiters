@@ -43,6 +43,8 @@ export class TotalPaymentEditorPage {
 
    ionViewDidLoad() {
         console.log('ionViewDidLoad DetailStockPage');
+        let data = Object.assign({}, this.billProvider.get_bill())
+        this.helper.local.set_params('payment_editor_temp', data)
     }
     update_page_parameters(data:any={})
     {
@@ -51,6 +53,13 @@ export class TotalPaymentEditorPage {
     closeModal()
     {
         this.viewCtrl.dismiss();
+    }
+
+    cancelEdit()
+    {
+        let data = this.helper.local.get_params('payment_editor_temp')
+        this.billProvider.set_data_bill(data)
+        this.closeModal();
     }
 
   countTaxNominal()

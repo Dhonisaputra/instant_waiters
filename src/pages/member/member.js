@@ -27,14 +27,21 @@ var MemberPage = /** @class */ (function () {
         this.viewCtrl = viewCtrl;
         this.segment_member = 'member_list';
         this.member = [];
+        this.page_params = {
+            toggleSearchInput: false
+        };
         this.segment_member = 'member_list';
         this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
     }
     MemberPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad MemberPage');
     };
-    MemberPage.prototype.fetching_member = function () {
+    MemberPage.prototype.filter_member = function ($event) {
         var _this = this;
+        var val = $event.target.value;
+        if (val && val.length < 3) {
+            return false;
+        }
         var load = this.helper.loadingCtrl.create({
             content: "Memeriksa data"
         });
@@ -43,12 +50,40 @@ var MemberPage = /** @class */ (function () {
             type: "POST",
             url: this.helper.config.base_url('admin/outlet/member/get'),
             data: {
+                fields: "last_transaction,member_id,outlet_id,member_name,member_code,member_phone,member_mail,member_registered",
+                outlet_id: this.outlet,
+                like: [['member_name', val]]
+            },
+            dataType: 'json'
+        })
+            .done(function (res) {
+            _this.member = res.data;
+        })
+            .always(function () {
+            load.dismiss();
+        });
+    };
+    MemberPage.prototype.fetching_member = function ($event) {
+        var _this = this;
+        if ($event === void 0) { $event = {}; }
+        var load = this.helper.loadingCtrl.create({
+            content: "Memeriksa data"
+        });
+        load.present();
+        this.helper.$.ajax({
+            type: "POST",
+            url: this.helper.config.base_url('admin/outlet/member/get'),
+            data: {
+                fields: "last_transaction,member_id,outlet_id,member_name,member_code,member_phone,member_mail,member_registered",
                 outlet_id: this.outlet
             },
             dataType: 'json'
         })
             .done(function (res) {
             _this.member = res.data;
+            if (typeof $event.complete == 'function') {
+                $event.complete();
+            }
         })
             .always(function () {
             load.dismiss();

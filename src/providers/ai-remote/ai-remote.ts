@@ -78,10 +78,32 @@ export class AiRemoteProvider {
       let data = this.local.get_params(this.config.variable.credential).data;
       let uuid = this.local.get_params(this.config.variable.credential).outlet_device.uuid;
       
+      if(this.local.get_params(this.config.variable.credential).outlet.outlet_roles_id == 3)
+      {
+        console.log('waiters subscribe')
+        this.subscribe(outlet_id+'.waiters:proses-done', (res)=>{
+          console.log(res)
+          this.events.publish('transaction:refresh')
+          this.events.publish('monitoring_request:refresh')
+          this.localNotifications.schedule({
+            id: 1,
+            text: res.title,
+            sound: 'file://assets/audio/notification.mp3',
+            data: { secret: uuid }
+          });
+          this.toast.create({
+            message: res.title,
+            duration: 3000
+          }).present();
+        })
+      }
       if(this.local.get_params(this.config.variable.credential).outlet.outlet_roles_id != 3)
       {
+        
+
         this.subscribe(outlet_id+'.app.cashier:new-order', (res)=>{
           this.events.publish('transaction:refresh')
+          this.events.publish('monitoring_request:refresh')
           this.localNotifications.schedule({
             id: 1,
             text: res.title,

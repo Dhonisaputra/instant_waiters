@@ -8,10 +8,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { HelperProvider } from '../../providers/helper/helper';
 import { TablePage } from '../table/table';
 import { ProductPage } from '../product/product';
+import { OutletListPage } from '../outlet-list/outlet-list';
 /**
  * Generated class for the LoginPage page.
  *
@@ -19,21 +20,55 @@ import { ProductPage } from '../product/product';
  * Ionic pages and navigation.
  */
 var LoginPage = /** @class */ (function () {
-    function LoginPage(navCtrl, navParams, helper) {
+    function LoginPage(navCtrl, navParams, helper, platform) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.helper = helper;
+        this.platform = platform;
         this.user = {};
-        this.check_credential();
+        this.win = window;
+        console.log(this.win.plugins);
+        if (this.win.plugins && typeof this.win.plugins.screensize == 'function') {
+            document.addEventListener("deviceready", function () {
+                _this.win.plugins.screensize.get(function (res) {
+                    var wi = Math.pow(res.width / res.xdpi, 2);
+                    var hi = Math.pow(res.height / res.ydpi, 2);
+                    var dim = Math.sqrt(hi + wi);
+                    if (dim < 6) {
+                        _this.helper.alertCtrl.create({
+                            title: 'Gagal masuk sistem',
+                            subTitle: 'Ukuran layar anda tidak memenuhi syarat instalasi aplikasi.',
+                            message: "Aplikasi hanya berjalan pada layar smartphone minimal 6 Inches",
+                            enableBackdropDismiss: false,
+                            buttons: [{
+                                    text: 'OK',
+                                    handler: function () {
+                                        _this.platform.exitApp();
+                                    }
+                                }]
+                        }).present();
+                    }
+                    else {
+                        _this.check_credential();
+                    }
+                }, false);
+            });
+        }
+        else {
+            this.check_credential();
+        }
     }
     LoginPage.prototype.check_credential = function () {
         var _this = this;
+        console.log('login');
         var loader = this.helper.loadingCtrl.create({
             content: 'Melakukan pengecheckan pengguna. Silahkan tunggu..'
         });
         loader.present();
         this.helper.storage.get(this.helper.config.variable.credential)
             .then(function (val) {
+            console.log(val);
             if (!val || !val.outlet) {
                 _this.helper.local.set_params('is_login', false);
                 loader.dismiss();
@@ -41,11 +76,12 @@ var LoginPage = /** @class */ (function () {
             else {
                 _this.helper.storage.get(_this.helper.config.variable.settings)
                     .then(function (resSettings) {
+                    val.outlet_device = {};
                     _this.helper.local.set_params(_this.helper.config.variable.credential, val);
                     _this.helper.local.set_params('is_login', true);
                     _this.helper.local.set_params(_this.helper.config.variable.settings, resSettings);
                     var default_page = resSettings && !resSettings.choose_table_first ? ProductPage : TablePage;
-                    _this.navCtrl.setRoot(default_page);
+                    _this.navCtrl.setRoot(OutletListPage);
                     loader.dismiss();
                 });
             }
@@ -85,7 +121,7 @@ var LoginPage = /** @class */ (function () {
                 _this.helper.local.set_params(_this.helper.config.variable.credential, res);
                 _this.helper.storage.set(_this.helper.config.variable.credential, res);
                 // alertSuccess.present();
-                _this.navCtrl.setRoot(TablePage);
+                _this.navCtrl.setRoot(OutletListPage);
             }
             else {
                 _this.helper.local.set_params('is_login', false);
@@ -114,7 +150,7 @@ var LoginPage = /** @class */ (function () {
             selector: 'page-login',
             templateUrl: 'login.html',
         }),
-        __metadata("design:paramtypes", [NavController, NavParams, HelperProvider])
+        __metadata("design:paramtypes", [NavController, NavParams, HelperProvider, Platform])
     ], LoginPage);
     return LoginPage;
 }());

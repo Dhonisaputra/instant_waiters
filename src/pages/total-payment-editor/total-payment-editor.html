@@ -10,8 +10,8 @@
 		<ion-navbar>
 			<ion-title>Edit total pembayaran</ion-title>
 			<ion-buttons end>
-				<button ion-button icon-only (click)="updateItem()" *ngIf="page_params.view_type == 'modal' ">
-					Selesai
+				<button ion-button icon-only (click)="cancelEdit()" *ngIf="page_params.view_type == 'modal' ">
+					Tutup
 				</button>
 			</ion-buttons>
 		</ion-navbar>
@@ -32,62 +32,44 @@
 				</ion-row>
 
 				<ion-row class="row form-group ion-checkbox-no-bordered">
-					<ion-col col-3 class=""></ion-col>
-					<ion-col col-9 class=" input-box input-group">
-						<ion-item style="padding-left: 0px;">
-							<ion-label style="border-bottom: none;">Tambahkan diskon</ion-label>
-						  	<ion-checkbox color="primary" checked="true" value="1" [(ngModel)]="bill.is_discount" (ionChange)="toggleDiscount()"></ion-checkbox>
-						</ion-item>
+					<ion-col col-3 class="" style="display: flex; justify-content: space-between; align-items: center;">
+						Diskon 
+                  		<ion-toggle checked="false" value="1" [(ngModel)]="bill.is_discount" (ionChange)="toggleDiscount()"></ion-toggle>
+
+					</ion-col>
+					<ion-col col-9 class=" input-box input-group" style="display: flex; justify-content: left; align-items: center;" *ngIf="bill.is_discount">
+						<ion-toggle checked="false" [(ngModel)]="bill.discount_type_fill"></ion-toggle> Gunakan data diskon	
 					</ion-col>
 				</ion-row>
 
 				
 				<ion-row class="row form-group" *ngIf="bill.is_discount">
 					<ion-col col-3 class=""></ion-col>
-					<ion-col col-3 class="">
-						<div>
-							<ion-toggle checked="false" [(ngModel)]="bill.discount_type_fill"></ion-toggle>
-						</div>
-						<!-- <ion-select [(ngModel)]="bill.discount_type_fill" style="max-width:100%; width: 100%;">
-						    <ion-option value="0" selected>Pilih Type</ion-option>
-						    <ion-option value="1">Manual</ion-option>
-						    <ion-option value="2">Master Data</ion-option>
-						</ion-select> -->
-					</ion-col>
+						
 
-					<ion-col col-6 class="" *ngIf="bill.discount_type_fill">
-						<ion-select [(ngModel)]="bill.discount_id" (ionChange)="change_discount()" style="max-width:100%; width: 100%;">
+
+					<ion-col col-9 class="" *ngIf="bill.discount_type_fill">
+						<ion-select [(ngModel)]="bill.discount_id" (ionChange)="change_discount()" style="max-width:100%; width: 100%; display: flex;">
 							<ion-option value="0"  selected> Pilih Diskon </ion-option>
 							<ion-option value="{{item.discount_id}}" *ngFor="let item of bill.discounts" > {{item.discount_name}} - {{item.discount_percent}} % </ion-option>
 					    </ion-select>
 					</ion-col>
-					<ion-col col-6 class=" input-box input-group" *ngIf="!bill.discount_type_fill">
+					<ion-col col-9 class=" input-box input-group" *ngIf="!bill.discount_type_fill">
 						<input type="number" class="form-control--lg form-control" max="99" min="1" name="" style="width: 20%;" [(ngModel)]="bill.discount_percent" (input)="countDiscountNominal($event)" >
 						<span class="input-group-addon" id="basic-addon1"> % </span>
 						<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.discount_nominal" (input)="countDiscountPercent($event)">
+
 					</ion-col>
 				</ion-row>
 
 				
-				<!-- <ion-row class="row form-group" *ngIf="bill.is_discount">
-					<ion-col col-3 class="">Discount</ion-col>
-					<ion-col col-9 class=" input-box input-group">
-						
-					</ion-col>
-				</ion-row> -->
-				
-				<ion-row class="row form-group ion-checkbox-no-bordered">
-					<ion-col col-3 class=""></ion-col>
-					<ion-col col-9 class=" input-box input-group">
-						<ion-item style="padding-left: 0px;">
-							<ion-label style="border-bottom: none;">Tambahkan Pajak</ion-label>
-						  	<ion-checkbox color="primary" checked value="1" [(ngModel)]="bill.is_tax" (ionChange)="toggleTax($event)"></ion-checkbox>
-						</ion-item>
-					</ion-col>
-				</ion-row>
 
 				<ion-row class="row form-group">
-					<ion-col col-3 class="">Pajak</ion-col>
+					<ion-col col-3 class="" style="display: flex; justify-content: space-between; align-items: center;">
+						Pajak 
+                  		<ion-toggle checked="false" value="1" [(ngModel)]="bill.is_tax" (ionChange)="toggleTax($event)"></ion-toggle>
+
+					</ion-col>
 					<ion-col col-9 class=" input-box input-group">
 						<input type="number" min="1" max="99"  class="form-control--lg form-control" disabled="" name="" style="width: 18%;" [(ngModel)]="bill.tax_percent"  (input)="countTaxNominal()" value="10">
 						<span class="input-group-addon" id="basic-addon1"> % </span>
@@ -102,11 +84,11 @@
 					</ion-col>
 				</ion-row>
 
-				<!-- <ion-row class="row form-group center">
-						<button ion-button end (click)="updateItem()">Simpan</button>
+				<ion-row class="row form-group center">
+						<button  class="btn-round" ion-button end (click)="updateItem()">Simpan</button>
 
-						<button ion-button color="danger" (click)="closeModal()">Batal</button>
-				</ion-row> -->
+						<button  class="btn-round" ion-button color="danger" (click)="cancelEdit()">Batal</button>
+				</ion-row>
 			
 			</ion-col>
 		</ion-row>				

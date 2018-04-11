@@ -151,6 +151,12 @@ export class HelperProvider {
     return initialName;
   }
 
+  outlet_initial_name()
+  {
+    let outletName = this.local.get_params(this.config.variable.credential).outlet.outlet_name? this.local.get_params(this.config.variable.credential).outlet.outlet_name : 'OUTLET';
+    return this.get_initial_outlet_name(outletName, '.');
+  }
+
   // audio
   preload(key, asset) {
  
@@ -209,6 +215,24 @@ export class HelperProvider {
     {
       // this.navParams.data.zoom('out')
       this.events.publish('zoom.controller', {event: type})
+    }
+
+    lead_zero(value, length)
+    {
+        length = length || 5;
+        value = value.toString();
+        let val_len = value.length;
+        if(val_len < length)
+        {
+            let chunk = length - val_len;
+            let text = '';
+            for (var i = 0; i < chunk; i++) {
+                text += '0';
+            }
+            return text+value; 
+        }
+        return value;
+
     }
 
 }

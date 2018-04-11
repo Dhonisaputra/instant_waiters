@@ -143,11 +143,16 @@
 							</ion-row>
 
 							<ion-row class="form-group">
-								<ion-col col-3 class="">Kartu (Masuk ke)</ion-col>
-								<ion-col col-9 class=" input-box input-group">
-									<input type="text" class="form-control--lg" name="" >
-									<span class="input-group-addon" id="basic-addon1"> Edit </span>
+								<ion-col col-3 class="">Pilihan Kartu</ion-col>
+								<ion-col col-9 class=" input-box">
+									
+								    <ion-select [(ngModel)]="bill.outlet_payment_method_id" style="max-width:100%; width: 100%; display: flex;margin-bottom: 0px;">
+								      <ion-option  value="0" selected> --- Pilih Cara bayar --- </ion-option>
+								      <ion-option *ngFor="let item of card_method_payment" value="{{item.outlet_payment_method_id}}"> {{item.method_name}} </ion-option>
+
+								    </ion-select>
 								</ion-col>
+
 							</ion-row>
 							
 							<ion-row class="row form-group">
@@ -183,10 +188,13 @@
 								</ion-col>
 							</ion-row>
 							<ion-row class="form-group">
-								<ion-col col-3 class="">Masuk ke</ion-col>
-								<ion-col col-9 class=" input-box input-group">
-									<input type="text" class="form-control--lg" name="" >
-									<span class="input-group-addon" id="basic-addon1"> Edit </span>
+								<ion-col col-3 class="">Cara bayar</ion-col>
+								<ion-col col-9 class=" input-box">
+									    <ion-select [(ngModel)]="bill.outlet_payment_method_id" style="max-width:100%; width: 100%; display: flex;margin-bottom: 0px;">
+									      <ion-option selected value="0"> --- Pilih Cara bayar --- </ion-option>
+									      <ion-option *ngFor="let item of card_method_payment" value="{{item.outlet_payment_method_id}}"> {{item.method_name}} </ion-option>
+
+									    </ion-select>
 								</ion-col>
 							</ion-row>
 							

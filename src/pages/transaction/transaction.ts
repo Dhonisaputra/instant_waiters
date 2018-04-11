@@ -380,6 +380,11 @@ export class TransactionPage {
                   handler: () => {
                       this.info_transaction(index, item)
                   }
+                },{
+                  text: 'Cetak ulang nota',
+                  handler: () => {
+                      this.re_print(item)
+                  }
                 }
               ]
             }).present();  
@@ -397,6 +402,187 @@ export class TransactionPage {
               ]
             }).present();
         }
+    }
+
+    re_print(temp_bill_params:any)
+    {
+        let printer = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer;
+        let printer_rule = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer_rule;
+        let nota_printer = printer_rule.filter((res)=>{
+            return res.printer_page_id == 5; //--> 5 is constanta from database;
+        })
+        let last_session = 0;
+        if(temp_bill_params)
+        {
+            this.billProvider.set_bill(temp_bill_params);
+            last_session = temp_bill_params.orders[temp_bill_params.orders.length - 1 ].order_session;
+        }
+
+        return new Promise((resolve, reject) => {
+
+            let temp_bill = Object.assign({}, temp_bill_params);
+
+            this.billProvider.temp_bill = temp_bill;
+            let deff = this.helper.$.Deferred();
+            if(last_session > 0)
+            {
+                let btn = [];
+                btn.push({
+                    text: 'Cetak semua transaksi',
+                    handler: (res)=>{
+                        deff.resolve(-1)
+                    },
+                })
+                for (var i = 0; i <= last_session; ++i) {
+                    let index:number = i;
+                    let text = i == 0? 'Pesanan pertama' : "Extra pesanan ke-"+(i+1);
+                    btn.push(
+                        {
+                            handler: (res)=>{
+                                deff.resolve(index)
+                            },
+                            text: text,
+                        }
+                    )
+                }
+
+                btn.push({
+                    text: 'Batal',
+                    role: 'cancel'
+                })
+
+                this.helper.actionSheet.create({
+                    title: "Terdapat extra pesanan, silahkan pilih yang akan di cetak",
+
+                    buttons: btn 
+                }).present();
+                
+            }else
+            {
+                deff.resolve(last_session)
+            }
+
+            this.helper.$.when(deff.promise())
+            .done((val)=>{
+
+                let nbill = temp_bill;
+                if(val >= 0)
+                {
+                    nbill = this.billProvider.nota_bill_session(val);
+                }else
+                {
+                }
+                this.billProvider.set_bill(nbill)
+
+                if(nota_printer.length < 1)
+                {
+                    reject();
+                    return false;
+                }
+
+                if( !this.helper.printer.isAvailable() )
+                {
+                    this.helper.alertCtrl.create({
+                        title: "Kesalahan",
+                        message: "Layanan printer tidak tersedia untuk perangkat ini",
+                        buttons:["OK"]
+                    }).present()
+                    reject();
+                    return false;
+                }
+                
+                  /*if(!device || !device.address)
+                  {
+                      this.helper.alertCtrl.create({
+                          title: "Printer tidak ditemukan",
+                          message: "Silahkan menuju settings dan pilih menu printer.",
+                          buttons: ["OK"]
+                      }).present();
+
+                    reject();
+                      return false;
+                  }*/
+
+                  let group_printer = nota_printer[0].group_outlet_printer_id.split(',');
+
+
+
+
+                  this.helper.$.each(group_printer, (i, val)=>{
+                      let printer_filter = printer.filter((res)=>{
+                          return res.outlet_printer_id == val;
+                      })
+
+                    // var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+
+                      if(printer_filter.length > 0)
+                      {
+                          switch (printer_filter[0].outlet_printer_connect_with) {
+                              case "wifi":
+                                var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+                                  this.helper.printer.connectWifi(printer_filter[0].outlet_printer_address)
+                                  this.helper.printer.printWifi(t);
+                                  this.helper.printer.cutpaper();
+                                resolve()
+
+                                  break;
+                              case "bluetooth":
+
+                                var t = this.billProvider.print_bill('', printer_filter[0]);
+                                  this.helper.printer.connect(printer_filter[0].outlet_printer_address)
+                                  .then(()=>{
+                                    let el = this.helper.$('.receipt');
+                                    setTimeout( ()=>{
+
+                                        // let t = this.billProvider.print_bill(printer_filter[0]);
+                                        this.helper.printer.printText(t)
+                                        .then(()=>{
+                                            resolve();
+                                        }, ()=>{
+                                            reject();
+                                        })
+                                    }, 2000 ) // set timeout
+                                  }, (err)=>{
+                                        reject()
+                                  })
+                                resolve()
+                                  break;
+
+                              default:
+                                  // code...
+                                reject();
+                                  break;
+                          }
+                      }else
+                      {        
+                        reject();
+                      }
+
+                      /*this.helper.printer.connect(device.address)
+                      .then(()=>{
+
+                        let el = this.helper.$('.receipt');
+                        console.log(this.billProvider)
+                        setTimeout( ()=>{
+                            let t = this.billProvider.print_bill();
+                            this.helper.printer.printText(t)
+                            .then(()=>{
+                                resolve()
+                            }, ()=>{
+                                reject();
+                            })
+                        }, 2000 ) // set timeout
+                      }, (err)=>{
+                            reject()
+                      })*/
+
+                  })
+
+                this.helper.local.opendb('printer_connected')
+                  .then((device)=>{
+                  })
+            })
+        }) // end of promise
     }
 
     splitBill(index, item)

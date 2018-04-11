@@ -9,11 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Platform, LoadingController, AlertController, ToastController, ActionSheetController, Events, PopoverController } from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
 import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { PrinterServiceProvider } from '../../providers/printer-service/printer-service';
 import { Storage } from '@ionic/storage';
+import { HTTP } from '@ionic-native/http';
+import { AiRemoteProvider } from '../../providers/ai-remote/ai-remote';
+import { NativeAudio } from '@ionic-native/native-audio';
 import * as $ from "jquery";
 import * as moment from 'moment';
 import * as html2canvas from "html2canvas";
@@ -24,7 +28,7 @@ import * as html2canvas from "html2canvas";
   and Angular DI.
 */
 var HelperProvider = /** @class */ (function () {
-    function HelperProvider(http, config, toast, alertCtrl, loadingCtrl, local, storage, actionSheet, events, popoverCtrl, platform, printer) {
+    function HelperProvider(http, config, toast, alertCtrl, loadingCtrl, local, storage, actionSheet, events, popoverCtrl, platform, printer, ajax, localNotifications, airemote, nativeAudio) {
         var _this = this;
         this.http = http;
         this.config = config;
@@ -38,10 +42,16 @@ var HelperProvider = /** @class */ (function () {
         this.popoverCtrl = popoverCtrl;
         this.platform = platform;
         this.printer = printer;
+        this.ajax = ajax;
+        this.localNotifications = localNotifications;
+        this.airemote = airemote;
+        this.nativeAudio = nativeAudio;
         this.$ = $;
         this.moment = moment;
         this.html2canvas = html2canvas;
         this.defaultTimeout = 100;
+        this.audioType = 'html5';
+        this.sounds = [];
         this.win = window;
         console.log('Hello HelperProvider Provider');
         this.platform.ready().then(function () {
@@ -49,6 +59,9 @@ var HelperProvider = /** @class */ (function () {
                 console.warn("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
             }
         });
+        if (platform.is('cordova')) {
+            this.audioType = 'native';
+        }
     }
     /*
       Source
@@ -99,13 +112,60 @@ var HelperProvider = /** @class */ (function () {
     HelperProvider.prototype.html_decode = function (value) {
         return $('<div/>').html(value).text();
     };
-    HelperProvider.prototype.get_initial_outlet_name = function (name) {
+    HelperProvider.prototype.get_initial_outlet_name = function (name, join) {
+        if (join === void 0) { join = null; }
         var nameArr = name.replace(/[^A-Za-z0-9]/g, ' ').split(' ');
         var initialName = [];
         $.each(nameArr, function (i, val) {
             initialName.push(val[0]);
         });
+        if (join) {
+            return initialName.join(join);
+        }
         return initialName;
+    };
+    // audio
+    HelperProvider.prototype.preload = function (key, asset) {
+        if (this.audioType === 'html5') {
+            var audio = {
+                key: key,
+                asset: asset,
+                type: 'html5'
+            };
+            this.sounds.push(audio);
+        }
+        else {
+            this.nativeAudio.preloadSimple(key, asset);
+            var audio = {
+                key: key,
+                asset: key,
+                type: 'native'
+            };
+            this.sounds.push(audio);
+        }
+    };
+    HelperProvider.prototype.play = function (key) {
+        var audio = this.sounds.find(function (sound) {
+            return sound.key === key;
+        });
+        if (audio.type === 'html5') {
+            var audioAsset = new Audio(audio.asset);
+            audioAsset.play();
+        }
+        else {
+            this.nativeAudio.play(audio.asset).then(function (res) {
+                console.log(res);
+            }, function (err) {
+                console.log(err);
+            })
+                .catch(function () {
+            });
+        }
+    };
+    HelperProvider.prototype.zoom = function (type) {
+        if (type === void 0) { type = "in"; }
+        // this.navParams.data.zoom('out')
+        this.events.publish('zoom.controller', { event: type });
     };
     HelperProvider = __decorate([
         Injectable(),
@@ -120,7 +180,11 @@ var HelperProvider = /** @class */ (function () {
             Events,
             PopoverController,
             Platform,
-            PrinterServiceProvider])
+            PrinterServiceProvider,
+            HTTP,
+            LocalNotifications,
+            AiRemoteProvider,
+            NativeAudio])
     ], HelperProvider);
     return HelperProvider;
 }());

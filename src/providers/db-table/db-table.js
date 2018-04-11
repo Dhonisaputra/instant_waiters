@@ -11,7 +11,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ConfigProvider } from '../../providers/config/config';
+import { MenuController } from 'ionic-angular';
 import * as $ from "jquery";
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { HelperProvider } from '../../providers/helper/helper';
 /*
   Generated class for the DbTableProvider provider.
 
@@ -19,10 +22,13 @@ import * as $ from "jquery";
   and Angular DI.
 */
 var DbTableProvider = /** @class */ (function () {
-    function DbTableProvider(http, storage, config) {
+    function DbTableProvider(helper, http, storage, config, menuController, screenOrientation) {
+        this.helper = helper;
         this.http = http;
         this.storage = storage;
         this.config = config;
+        this.menuController = menuController;
+        this.screenOrientation = screenOrientation;
         console.log('Hello DbTableProvider Provider');
     }
     DbTableProvider.prototype.get_table = function (data) {
@@ -47,7 +53,7 @@ var DbTableProvider = /** @class */ (function () {
     };
     DbTableProvider = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [HttpClient, Storage, ConfigProvider])
+        __metadata("design:paramtypes", [HelperProvider, HttpClient, Storage, ConfigProvider, MenuController, ScreenOrientation])
     ], DbTableProvider);
     return DbTableProvider;
 }());

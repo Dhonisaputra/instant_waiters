@@ -57,13 +57,14 @@ var BillProvider = /** @class */ (function () {
     BillProvider.prototype.save = function (data) {
         var _this = this;
         if (data === void 0) { data = {}; }
+        var item = this.helper.local.get_params(this.helper.config.variable.credential).outlet;
         var loader = this.loadingCtrl.create({
             content: "Memproses permintaan...",
         });
         loader.present();
         var alertData = this.alertCont.create({
             title: "Process gagal",
-            message: "Terdapat galat ketika menyimpan nota. Silahkan laporkan pengembang sistem.",
+            message: "Terdapat kesalahan ketika menyimpan nota. Silahkan laporkan pengembang sistem.",
             buttons: ["Ok"]
         });
         var successData = this.alertCont.create({
@@ -75,11 +76,12 @@ var BillProvider = /** @class */ (function () {
         var billdata = this.data_bill(data);
         billdata = Object.assign(billdata, data);
         billdata.complement_status = data.complement_status == 'true' ? 1 : 0;
-        console.log(billdata);
+        this.bill = billdata;
         return $.post(url, billdata)
             .done(function (res) {
             res = !_this.helper.isJSON(res) ? res : JSON.parse(res);
             if (res.code == 200) {
+                _this.helper.airemote.send(item.outlet_id + '.app.cashier:new-order', '', { title: "Terdapat pesanan baru" }, function () { });
                 successData.present();
             }
             else {
@@ -273,10 +275,10 @@ var BillProvider = /** @class */ (function () {
         var discount_nominal = this.get_bill_component('discount_nominal');
         var discount_percent = this.get_bill_component('discount_percent');
         var discount_id = this.get_bill_component('discount_id');
-        console.log(discount_id, discount_percent, discount_nominal, payment_total);
         tax_nominal = tax_nominal ? parseInt(tax_nominal) : 0;
         discount_nominal = discount_nominal ? parseInt(discount_nominal) : 0;
         var order = this.get_bill_component('orders');
+        console.log(this.bill);
         $.each(order, function (i, val) {
             if (!val.complement_status || parseInt(val.complement_status) < 1) {
                 var total = order[i].qty * order[i].price;
@@ -333,7 +335,9 @@ var BillProvider = /** @class */ (function () {
         this.set_bill_component('discount_nominal', discount_nominal, true);
     };
     BillProvider.prototype.set_bill = function (data) {
-        this.set_bill_component('orders', data.data);
+        // this.set_bill_component('orders', data.data);
+        var orders = data.data || data.orders;
+        this.set_bill_component('orders', orders);
         this.count_pricing();
         this.set_bill_component('visitor_name', data.visitor_name);
         this.set_bill_component('table_id', data.visitor_table);
@@ -406,6 +410,13 @@ var BillProvider = /** @class */ (function () {
             // create new session
             this.add_order_session();
         }
+    };
+    BillProvider.prototype.get_order_session_item = function (session) {
+        if (session === void 0) { session = 0; }
+        var a = this.get_bill_component('orders');
+        return a.filter(function (res) {
+            return res.order_session == session;
+        });
     };
     BillProvider.prototype.add_order_session = function (data) {
         if (data === void 0) { data = {}; }
@@ -509,16 +520,21 @@ var BillProvider = /** @class */ (function () {
             nota['orders'][order_index] = value;
         }
     };
-    BillProvider.prototype.nota_count_pricing = function (nota) {
+    BillProvider.prototype.nota_count_pricing = function (nota, reset) {
         var _this = this;
+        if (reset === void 0) { reset = false; }
         nota = Object.assign({}, nota);
-        var payment_total = nota['payment_total'];
-        var payment_bills = nota['payment_bills'];
-        var tax_nominal = nota['tax_nominal'];
         var discount_nominal = nota['discount_nominal'];
         var discount_percent = nota['discount_percent'];
         var discount_id = nota['discount_id'];
-        console.log(discount_id, discount_percent, discount_nominal, payment_total);
+        var payment_total = 0;
+        var payment_bills = 0;
+        var tax_nominal = 0;
+        if (!reset) {
+            var payment_total_1 = nota['payment_total'];
+            var payment_bills_1 = nota['payment_bills'];
+            var tax_nominal_1 = nota['tax_nominal'];
+        }
         tax_nominal = tax_nominal ? parseInt(tax_nominal) : 0;
         discount_nominal = discount_nominal ? parseInt(discount_nominal) : 0;
         var order = nota['orders'];
@@ -576,10 +592,126 @@ var BillProvider = /** @class */ (function () {
         nota.payment_bills = payment_bills;
         nota.payment_total = payment_total;
         nota.discount_nominal = discount_nominal;
-        console.log(nota);
         return nota;
     };
-    BillProvider.prototype.print = function (nota) {
+    BillProvider.prototype.nota_bill_session = function (session) {
+        if (session === void 0) { session = 0; }
+        var bill = this.get_order_session_item(session);
+        bill = this.nota_count_pricing({ orders: bill });
+        bill = Object.assign(this.get_bill(), bill);
+        return bill;
+    };
+    BillProvider.prototype.nota_order_session = function (data) {
+        return data.map(function (res) {
+            // return
+        });
+    };
+    BillProvider.prototype.print_bill_wifi = function (data_print, nota) {
+        var _this = this;
+        if (data_print === void 0) { data_print = {}; }
+        if (nota === void 0) { nota = ''; }
+        data_print.print_type = parseInt(data_print.print_type);
+        var outletName = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name ? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
+        var outletAddress = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address ? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address : 'ADDRESS';
+        var outletPhone = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone ? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone : 'PHONE';
+        var orders = this.get_bill_component('orders');
+        var b = this.get_bill();
+        var initialName = this.helper.get_initial_outlet_name(outletName).join('.');
+        var divider = "\n________________\n";
+        nota = nota ? initialName + '/0000' + nota : '-';
+        var visitorTable = b.table_name ? b.table_name + '/' : '';
+        var visitorName = b.visitor_name ? b.visitor_name : '-';
+        var visitor = "Nomor Nota : " + nota + "\nMeja/Pelanggan: " + visitorTable + visitorName + "\n" + "Kasir: " + this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname + "\nTanggal : " + this.helper.moment().format('DD MMM YYYY HH:mm') + "\n";
+        var textPrintHeader = outletName + "\n" + outletAddress + "\n" + outletPhone + '' + divider + "" + visitor;
+        var textPrint = textPrintHeader;
+        if (b.member_id) {
+            textPrint += "Member : " + initialName + '/000' + b.member_id + "\n";
+        }
+        textPrint += "" + divider;
+        var conf_print = this.helper.printer.countConfiguration(this.helper.printer.print_type(data_print.print_type), 0);
+        var data_item = [];
+        $.each(orders, function (i, item) {
+            var ditem = {
+                qty: item.qty,
+                name: item.name,
+                price: _this.helper.intToIDR(item.price),
+                totalPrice: _this.helper.intToIDR(item.price * item.qty)
+            };
+            textPrint += _this.helper.printer.convert(ditem, conf_print);
+            /* if(item.complement_status > 0)
+            {
+                let kompl_item = item.complement_status > 0 && item.complement_item < item.qty? item.complement_item : '';
+                textPrint += kompl_item+" komplimen\n";
+            }
+            if(this.helper.IDRtoInt(item.discount_nominal) > 0 && (this.helper.toInt(item.complement_status) != 1 || this.helper.toInt(item.complement_item) < this.helper.toInt(item.qty) ) )
+            {
+                textPrint += "Diskon "+ this.helper.toInt(item.discount_percent)+"% (-"+this.helper.intToIDR(item.discount_nominal)+") \n";
+            }*/
+        });
+        textPrint += "________________\n";
+        textPrint += "Total :      " + this.helper.intToIDR(this.get_bill_component('payment_total')) + "\n";
+        textPrint += "\n\n Bila ada pelayanan/produk yang kurang \nberkenan, Hub. 0857 1272 2217 \nTerima Kasih\nPowered by folarpos.co.id\n";
+        return textPrint;
+    };
+    BillProvider.prototype.print_bill = function (nota, data_print) {
+        var _this = this;
+        if (nota === void 0) { nota = ''; }
+        if (data_print === void 0) { data_print = {}; }
+        data_print.print_type = parseInt(data_print.print_type);
+        var outletName = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name ? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
+        var outletAddress = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address ? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_address : 'ADDRESS';
+        var outletPhone = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone ? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone : 'PHONE';
+        var orders = this.get_bill_component('orders');
+        var b = this.get_bill();
+        var initialName = this.helper.get_initial_outlet_name(outletName).join('.');
+        var divider = "\n________________\n";
+        nota = nota ? initialName + '/0000' + nota : '-';
+        var visitorTable = b.table_name ? b.table_name + '/' : '';
+        var visitorName = b.visitor_name ? b.visitor_name : '-';
+        var visitor = "Nomor Nota : " + nota + "\nMeja/Pelanggan: " + visitorTable + visitorName + "\n" + "Kasir: " + this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname + "\nTanggal : " + this.helper.moment().format('DD MMM YYYY HH:mm') + "\n";
+        var textPrintHeader = "{center}" + outletName + "\n{s}" + outletAddress + "\n" + outletPhone + "{s}" + divider + "{left}" + visitor;
+        var textPrint = textPrintHeader;
+        if (b.member_id) {
+            textPrint += "Member : " + initialName + '/000' + b.member_id + "\n";
+        }
+        textPrint += "{left}" + divider;
+        var conf_print = this.helper.printer.countConfiguration(this.helper.printer.print_type(data_print.print_type), 0);
+        $.each(orders, function (i, item) {
+            // textPrint += "{s}{left}"+item.qty+" "+item.name+" x "+this.helper.intToIDR(item.price)+"{/s}  {s}{b}"+this.helper.intToIDR(item.price * item.qty)+"{/b} {/s}{reset}\n";
+            var ditem = {
+                qty: item.qty,
+                name: item.name,
+                price: _this.helper.intToIDR(item.price),
+                totalPrice: _this.helper.intToIDR(item.price * item.qty)
+            };
+            textPrint += "{s}" + _this.helper.printer.convert(ditem, conf_print);
+            if (item.complement_status > 0) {
+                var kompl_item = item.complement_status > 0 && item.complement_item < item.qty ? item.complement_item : '';
+                textPrint += "{left} {s}{i}" + kompl_item + "{i} komplimen{s}\n";
+            }
+            if (_this.helper.IDRtoInt(item.discount_nominal) > 0 && (_this.helper.toInt(item.complement_status) != 1 || _this.helper.toInt(item.complement_item) < _this.helper.toInt(item.qty))) {
+                textPrint += "{left} {s}Diskon " + _this.helper.toInt(item.discount_percent) + "% {b}(-" + _this.helper.intToIDR(item.discount_nominal) + "){/b} \n\n";
+            }
+        });
+        textPrint += "________________\n{right}";
+        /*if(this.get_bill_component('tax_nominal')>0 || this.get_bill_component('discount_nominal')>0 )
+        {
+            textPrint += "Bill :      "+this.helper.intToIDR(this.bill.payment_bills)+"\n";
+        }*/
+        // if(this.get_bill_component('tax_nominal')>0 )
+        // {
+        //     textPrint += "Pajak "+this.get_bill_component('tax_percent')+"% :      "+this.helper.intToIDR(this.get_bill_component('tax_nominal'))+"\n";
+        // }
+        // if(this.get_bill_component('discount_nominal')>0 )
+        // {
+        //     let discountPercent = this.helper.toInt(this.get_bill_component('discount_percent')) > 0? this.get_bill_component('discount_percent')+'%':''
+        //     textPrint += "Diskon "+discountPercent+":      "+this.helper.intToIDR(this.get_bill_component('discount_nominal'))+"\n";
+        // }
+        textPrint += "{s}Total :      " + this.helper.intToIDR(this.get_bill_component('payment_total')) + "{/s}\n";
+        textPrint += "\n{center}{s}Bila ada pelayanan/produk yang kurang \nberkenan, Hub. 0857 1272 2217 \nTerima Kasih\nPowered by folarpos.co.id{/s}\n\n\n";
+        return textPrint;
+    };
+    BillProvider.prototype.print_nota = function (nota) {
         var _this = this;
         if (nota === void 0) { nota = ''; }
         var outletName = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name ? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_name : 'OUTLET';
@@ -587,23 +719,26 @@ var BillProvider = /** @class */ (function () {
         var outletPhone = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone ? this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_phone : 'PHONE';
         var orders = this.get_bill_component('orders');
         var b = this.get_bill();
+        var initialName = this.helper.get_initial_outlet_name(outletName).join('.');
         var divider = "\n________________\n";
-        nota = nota ? nota : '-';
+        nota = nota ? initialName + '/0000' + nota : '-';
         var visitorTable = b.table_name ? b.table_name + '/' : '';
         var visitorName = b.visitor_name ? b.visitor_name : '-';
         var visitor = "Nomor Nota : " + nota + "\nMeja/Pelanggan: " + visitorTable + visitorName + "\n" + "Kasir: " + this.helper.local.get_params(this.helper.config.variable.credential).users.users_fullname + "\nTanggal : " + this.helper.moment().format('DD MMM YYYY HH:mm') + "\n";
-        var textPrintHeader = "{center}" + outletName + "\n{s}" + outletAddress + "\n" + outletPhone + "{s}{left}\n" + visitor;
-        if (b.)
-            var textPrint = textPrintHeader;
-        textPrint += "{left}" + divider;
+        var textPrintHeader = "{center}" + outletName + "\n{s}" + outletAddress + "\n" + outletPhone + "{s}" + divider + "{left}\n" + visitor;
+        var textPrint = textPrintHeader;
+        if (b.member_id) {
+            textPrint += "Member : " + initialName + '/000' + b.member_id + "";
+        }
+        textPrint += "{right}" + divider;
         $.each(orders, function (i, item) {
-            textPrint += "{s}{left}" + item.qty + " " + item.name + " x " + _this.helper.intToIDR(item.price) + "{/s}  {s}{b}" + _this.helper.intToIDR(item.price * item.qty) + "{/b} {/s}{reset}\n";
+            textPrint += "{s}{right}" + item.qty + " " + item.name + " x " + _this.helper.intToIDR(item.price) + "{/s}  {s}{b}" + _this.helper.intToIDR(item.price * item.qty) + "{/b} {/s}{reset}\n";
             if (item.complement_status > 0) {
                 var kompl_item = item.complement_status > 0 && item.complement_item < item.qty ? item.complement_item : '';
-                textPrint += "{left} {s}{i}" + kompl_item + "{i} komplimen{s}\n";
+                textPrint += "{right} {s}{i}" + kompl_item + "{i} komplimen{s}\n";
             }
             if (_this.helper.IDRtoInt(item.discount_nominal) > 0 && (_this.helper.toInt(item.complement_status) != 1 || _this.helper.toInt(item.complement_item) < _this.helper.toInt(item.qty))) {
-                textPrint += "{left} {s}Diskon " + _this.helper.toInt(item.discount_percent) + "% {b}(-" + _this.helper.intToIDR(item.discount_nominal) + "){/b} \n";
+                textPrint += "{right} {s}Diskon " + _this.helper.toInt(item.discount_percent) + "% {i}(-" + _this.helper.intToIDR(item.discount_nominal) + "){/i} \n";
             }
         });
         textPrint += "________________\n\n{right}";
@@ -611,14 +746,23 @@ var BillProvider = /** @class */ (function () {
             textPrint += "Bill :      " + this.helper.intToIDR(this.bill.payment_bills) + "\n";
         }
         if (this.get_bill_component('tax_nominal') > 0) {
-            textPrint += "Pajak :      " + this.helper.intToIDR(this.get_bill_component('tax_nominal')) + "\n";
+            textPrint += "Pajak " + this.get_bill_component('tax_percent') + "% :      (-" + this.helper.intToIDR(this.get_bill_component('tax_nominal')) + ")\n";
         }
         if (this.get_bill_component('discount_nominal') > 0) {
             var discountPercent = this.helper.toInt(this.get_bill_component('discount_percent')) > 0 ? this.get_bill_component('discount_percent') + '%' : '';
-            textPrint += "Diskon " + discountPercent + ":      " + this.helper.intToIDR(this.get_bill_component('discount_nominal')) + "\n";
+            textPrint += "Diskon " + discountPercent + ":      (+" + this.helper.intToIDR(this.get_bill_component('discount_nominal')) + ")\n";
         }
-        textPrint += "Total :      " + this.helper.intToIDR(this.get_bill_component('payment_total')) + "{/s}\n";
-        textPrint += "\n\n{center}{s}Bila ada pelayanan/produk yang kurang \nberkenan, Hub. 0857 1272 2217 \nTerima Kasih\nPowered by folarpos.co.id{/s}\n\n\n\n\n";
+        textPrint += "{s}Total :      " + this.helper.intToIDR(this.get_bill_component('payment_total')) + "{/s}\n";
+        textPrint += "{s}Tunai :      " + this.helper.intToIDR(this.get_bill_component('payment_nominal')) + "{/s}\n";
+        if (this.get_bill_component('paid_with_bank_nominal') > 0) {
+            if (this.get_bill_component('payment_bank_charge_percent') > 0) {
+                var charge = this.get_bill_component('payment_bank_charge_percent');
+                textPrint += "{s}Charge Non-tunai " + charge + ":      (+" + this.helper.intToIDR(this.get_bill_component('payment_bank_charge_nominal')) + "){s}\n";
+            }
+            textPrint += "{s}Non-tunai :      " + this.helper.intToIDR(this.get_bill_component('paid_with_bank_nominal')) + "{/s}\n";
+        }
+        textPrint += "{s}Kembali :      " + this.helper.intToIDR(this.get_bill_component('payment_rest')) + "{/s}\n";
+        textPrint += "{center}{s}\n\nTerima kasih. Selamat belanja kembali\nBila ada pelayanan/produk yang kurang \nberkenan, Hub." + outletPhone + " \nTerima Kasih\nPowered by folarpos.co.id{/s}\n\n\n\n\n";
         return textPrint;
     };
     BillProvider = __decorate([

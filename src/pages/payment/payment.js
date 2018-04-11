@@ -13,6 +13,7 @@ import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { HelperProvider } from '../../providers/helper/helper';
 import { BillProvider } from '../../providers/bill/bill';
 import { ProductPage } from '../product/product';
+import { SendReceiptPage } from '../send-receipt/send-receipt';
 import * as $ from "jquery";
 /**
  * Generated class for the PaymentPage page.
@@ -32,6 +33,7 @@ var PaymentPage = /** @class */ (function () {
         this.payment_method = 1;
         this.users_outlet = 1;
         this.bank_id = 1;
+        this.state = 'payment';
         this.numpad_type = 'numpad';
         this.numpad_type = 'numpad';
     }
@@ -114,19 +116,150 @@ var PaymentPage = /** @class */ (function () {
                 .done(function (res) {
                 res = !_this.helper.isJSON(res) ? res : JSON.parse(res);
                 if (res.code == 200) {
-                    _this.bill = {};
-                    _this.navCtrl.setRoot(ProductPage, {
-                        previous: 'payment-page',
-                        event: 'payment.cashier',
-                        trigger_event: "order.new",
-                        message: "Nota telah dibayarkan"
-                    });
+                    _this.latest_bill_id = res.data.pay_id;
+                    _this.navCtrl.setRoot(SendReceiptPage, { data: _this.latest_bill_id });
+                    // this.state = 'afterPayment';
                 }
                 else {
                     console.error('Error when saving the bill');
                 }
             });
         }
+    };
+    PaymentPage.prototype.print_nota = function () {
+        var loadingPrint = this.helper.loadingCtrl.create({
+            content: "Mencetak nota",
+        });
+        loadingPrint.present();
+        this.process_print_nota(this.latest_bill_id)
+            .then(function () {
+            loadingPrint.dismiss();
+        }, function () {
+            loadingPrint.dismiss();
+        });
+    };
+    PaymentPage.prototype.back_to_cashier = function () {
+        this.bill = {};
+        this.navCtrl.setRoot(ProductPage, {
+            previous: 'payment-page',
+            event: 'payment.cashier',
+            trigger_event: "order.new",
+            message: "Nota telah dibayarkan"
+        });
+    };
+    PaymentPage.prototype.email_panel = function () {
+        var bill = Object.assign({}, this.bill);
+        this.navCtrl.push('SendReceiptPage', { bill: bill });
+        this.bill = {};
+    };
+    PaymentPage.prototype.process_print_nota = function (nota) {
+        var _this = this;
+        if (nota === void 0) { nota = null; }
+        var printer = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer;
+        var printer_rule = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer_rule;
+        var nota_printer = printer_rule.filter(function (res) {
+            return res.printer_page_id == 5; //--> 5 is constanta from database;
+        });
+        return new Promise(function (resolve, reject) {
+            /*if( !this.helper.printer.isAvailable() )
+            {
+                this.helper.alertCtrl.create({
+                    title: "Kesalahan",
+                    message: "Layanan printer tidak tersedia untuk perangkat ini",
+                    buttons:["OK"]
+                }).present();
+                reject();
+                return false;
+            }*/
+            var group_printer = nota_printer[0].group_outlet_printer_id.split(',');
+            _this.helper.$.each(group_printer, function (i, val) {
+                var printer_filter = printer.filter(function (res) {
+                    return res.outlet_printer_id == val;
+                });
+                // var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+                if (printer_filter.length > 0) {
+                    switch (printer_filter[0].outlet_printer_connect_with) {
+                        case "wifi":
+                            var t = _this.billProvider.print_bill_wifi(printer_filter[0], '');
+                            _this.helper.printer.connectWifi(printer_filter[0].outlet_printer_address);
+                            _this.helper.printer.printWifi(t);
+                            _this.helper.printer.cutpaper();
+                            resolve();
+                            break;
+                        case "bluetooth":
+                            var t = _this.billProvider.print_bill('', printer_filter[0]);
+                            _this.helper.printer.connect(printer_filter[0].outlet_printer_address)
+                                .then(function () {
+                                var el = _this.helper.$('.receipt');
+                                setTimeout(function () {
+                                    // let t = this.billProvider.print_bill(printer_filter[0]);
+                                    _this.helper.printer.printText(t)
+                                        .then(function () {
+                                        resolve();
+                                    }, function () {
+                                        reject();
+                                    });
+                                }, 2000); // set timeout
+                            }, function (err) {
+                                reject();
+                            });
+                            resolve();
+                            break;
+                        default:
+                            // code...
+                            reject();
+                            break;
+                    }
+                }
+                else {
+                    reject();
+                }
+                /*this.helper.printer.connect(device.address)
+                .then(()=>{
+
+                    let el = this.helper.$('.receipt');
+                    console.log(this.billProvider)
+                    setTimeout( ()=>{
+                        let t = this.billProvider.print_bill();
+                        this.helper.printer.printText(t)
+                        .then(()=>{
+                            resolve()
+                        }, ()=>{
+                            reject();
+                        })
+                    }, 2000 ) // set timeout
+                }, (err)=>{
+                        reject()
+                })*/
+            });
+            /*this.helper.local.opendb('printer_connected')
+            .then((device)=>{
+                console.log(device)
+                if(!device || !device.address)
+                {
+                    this.helper.alertCtrl.create({
+                        title: "Printer tidak ditemukan",
+                        message: "Silahkan menuju settings dan pilih menu printer.",
+                        buttons: ["OK"]
+                    }).present();
+
+                    return false;
+                }
+                this.helper.printer.connect(device.address)
+                .then(()=>{
+
+                    setTimeout( ()=>{
+                        let t = this.billProvider.print_nota(nota);
+                        this.helper.printer.printText(t)
+                        .then(()=>{
+                            resolve()
+                        }, ()=>{
+                            reject();
+                        })
+                    }, 2000 ) // set timeout
+                })
+            })*/
+        }); // end of promise
     };
     PaymentPage.prototype.addPaymentToDebt = function () {
         var _this = this;

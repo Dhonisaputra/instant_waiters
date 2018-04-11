@@ -48,7 +48,7 @@ export class EditReceiptItemPage {
 
   closeModal()
   {
-      this.helper.play('audio');
+    this.helper.play('audio');
     if(this.isChange)
     {
       this.helper.alertCtrl.create({
@@ -63,6 +63,10 @@ export class EditReceiptItemPage {
           },
         }, "Batal"]
       }).present();
+    }else
+    {
+      this.viewCtrl.dismiss();
+      
     }
   }
   cancelUpdate()

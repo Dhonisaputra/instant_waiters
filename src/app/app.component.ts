@@ -17,6 +17,7 @@ import { ModalPage } from '../pages/modal/modal';
 import { AboutPage } from '../pages/about/about';
 import { WaitersPage } from '../pages/waiters/waiters';
 import { PrintBluetoothPanelPage } from '../pages/print-bluetooth-panel/print-bluetooth-panel';
+import { KitchenbarPage } from '../pages/kitchenbar/kitchenbar';
 
 
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -31,6 +32,7 @@ export class MyApp {
   rootPage         : any = LoginPage;
   tablePage        : any = TablePage;
   productPage      : any = ProductPage;
+  kitchenbarPage      : any = KitchenbarPage;
   
   waitersPage       :any=WaitersPage;
   stocksPage       :any=StocksPage;

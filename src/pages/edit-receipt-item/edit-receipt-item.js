@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
 import { BillProvider } from '../../providers/bill/bill';
+import { HelperProvider } from '../../providers/helper/helper';
 import * as $ from "jquery";
 /**
  * Generated class for the EditReceiptItemPage page.
@@ -18,12 +19,15 @@ import * as $ from "jquery";
  * Ionic pages and navigation.
  */
 var EditReceiptItemPage = /** @class */ (function () {
-    function EditReceiptItemPage(viewCtrl, navCtrl, navParams, billProvider, alertCtrl) {
+    function EditReceiptItemPage(helper, viewCtrl, navCtrl, navParams, billProvider, alertCtrl) {
+        this.helper = helper;
         this.viewCtrl = viewCtrl;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.billProvider = billProvider;
         this.alertCtrl = alertCtrl;
+        this.isChange = false;
+        this.isUpdated = false;
         this.item = {};
     }
     EditReceiptItemPage.prototype.ionViewDidLoad = function () {
@@ -35,12 +39,37 @@ var EditReceiptItemPage = /** @class */ (function () {
         console.log(this.navParams.data.index);
         var item = this.billProvider.get_order(this.navParams.data.index);
         this.item = item ? item : {};
+        this.itemTemp = Object.assign({}, this.item);
     };
     EditReceiptItemPage.prototype.closeModal = function () {
+        var _this = this;
+        this.helper.play('audio');
+        if (this.isChange) {
+            this.helper.alertCtrl.create({
+                title: "Anda telah mengubah data, apakah anda ingin keluar?",
+                subTitle: "Data anda tidak akan tersimpan.",
+                buttons: [{
+                        text: "Keluar",
+                        handler: function () {
+                            _this.isChange = false;
+                            _this.cancelUpdate();
+                            _this.viewCtrl.dismiss();
+                        },
+                    }, "Batal"]
+            }).present();
+        }
+    };
+    EditReceiptItemPage.prototype.cancelUpdate = function () {
+        this.helper.play('audio');
+        console.log(this.itemTemp);
+        this.billProvider.set_order(this.navParams.data.index, this.itemTemp);
+        this.billProvider.update_bill();
+        this.billProvider.count_pricing();
         this.viewCtrl.dismiss();
     };
     EditReceiptItemPage.prototype.countChargeNominal = function (el) {
         if (el === void 0) { el = {}; }
+        this.isChange = true;
         var product_price = this.billProvider.helper.IDRtoInt(this.billProvider.get_order_item(this.item.index, 'price'));
         var qty = this.billProvider.helper.IDRtoInt(this.billProvider.get_order_item(this.item.index, 'qty'));
         var val = this.billProvider.helper.IDRtoInt(this.item.discount_percent);
@@ -53,11 +82,12 @@ var EditReceiptItemPage = /** @class */ (function () {
         var chargeNominal = price * (val / 100);
         this.item.totalWithCharge = this.billProvider.helper.intToIDR(price + chargeNominal);
         this.item.discount_nominal = this.billProvider.helper.intToIDR(chargeNominal);
-        this.billProvider.update_order_item(this.item.index, 'discount_nominal', chargeNominal);
-        this.billProvider.update_order_item(this.item.index, 'total', (product_price * qty) - chargeNominal);
+        // this.billProvider.update_order_item(this.item.index, 'discount_nominal', chargeNominal)
+        // this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-chargeNominal)
     };
     EditReceiptItemPage.prototype.countChargePercent = function (el) {
         if (el === void 0) { el = {}; }
+        this.isChange = true;
         var product_price = this.billProvider.helper.IDRtoInt(this.billProvider.get_order_item(this.item.index, 'price'));
         var qty = this.billProvider.helper.IDRtoInt(this.billProvider.get_order_item(this.item.index, 'qty'));
         var val = this.billProvider.helper.IDRtoInt(this.item.discount_nominal);
@@ -70,22 +100,26 @@ var EditReceiptItemPage = /** @class */ (function () {
         val = val ? val : 0;
         this.item.discount_percent = ((val / price) * 100).toFixed(1); // to make 1 digit after comma
         this.item.totalWithCharge = this.billProvider.helper.intToIDR(price + val);
-        this.billProvider.update_order_item(this.item.index, 'discount_percent', this.item.discount_percent);
-        this.billProvider.update_order_item(this.item.index, 'total', (product_price * qty) - val);
+        // this.billProvider.update_order_item(this.item.index, 'discount_percent', this.item.discount_percent)
+        // this.billProvider.update_order_item(this.item.index, 'total', (product_price*qty)-val)
     };
     EditReceiptItemPage.prototype.changeNotes = function () {
+        this.isChange = true;
         this.item.note = this.item.note ? this.item.note : '';
-        this.billProvider.update_order_item(this.item.index, 'notes', this.item.note);
+        // this.billProvider.update_order_item(this.item.index, 'notes', this.item.note)
         // this.ionViewWillEnter()
     };
     EditReceiptItemPage.prototype.changeComplementNotes = function () {
+        this.isChange = true;
         this.item.complement_note = this.item.complement_note ? this.item.complement_note : '';
-        this.billProvider.update_order_item(this.item.index, 'complement_note', this.item.complement_note);
+        // this.billProvider.update_order_item(this.item.index, 'complement_note', this.item.complement_note)
         // this.ionViewWillEnter()
     };
     EditReceiptItemPage.prototype.changeComplementItems = function (type, el) {
         if (type === void 0) { type = 'input'; }
         if (el === void 0) { el = {}; }
+        this.helper.play('audio');
+        this.isChange = true;
         var qty;
         switch (type) {
             case "input":
@@ -118,6 +152,7 @@ var EditReceiptItemPage = /** @class */ (function () {
         // this.ionViewWillEnter()
     };
     EditReceiptItemPage.prototype.changeComplementStatus = function () {
+        this.isChange = true;
         var product_price = this.billProvider.helper.IDRtoInt(this.billProvider.get_order_item(this.item.index, 'price'));
         var qty = this.billProvider.helper.IDRtoInt(this.billProvider.get_order_item(this.item.index, 'qty'));
         var complement_status = this.item.complement_status ? 1 : 0;
@@ -150,22 +185,28 @@ var EditReceiptItemPage = /** @class */ (function () {
         // this.ionViewWillEnter()
     };
     EditReceiptItemPage.prototype.reduceItem = function () {
+        this.helper.play('audio');
+        this.isChange = true;
         var dataitem = this.billProvider.get_order(this.item.index);
         if (dataitem.qty <= 1) {
             return false;
         }
         else {
-            this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) - 1);
-            this.billProvider.count_pricing();
-            this.ionViewWillEnter();
+            this.item.qty = parseInt(this.item.qty) - 1;
+            // this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) - 1)
+            // this.billProvider.count_pricing()
+            // this.ionViewWillEnter()
             // this.trigger_update_receipt();
         }
     };
     EditReceiptItemPage.prototype.addItem = function () {
+        this.helper.play('audio');
+        this.isChange = true;
         var dataitem = this.billProvider.get_order(this.item.index);
-        this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) + 1);
-        this.billProvider.count_pricing();
-        this.ionViewWillEnter();
+        this.item.qty = parseInt(this.item.qty) + 1;
+        // this.billProvider.update_order_item(this.item.index, 'qty', parseInt(this.item.qty) + 1)
+        // this.billProvider.count_pricing()
+        // this.ionViewWillEnter()
         // this.trigger_update_receipt();
     };
     EditReceiptItemPage.prototype.updateItem = function () {
@@ -178,11 +219,15 @@ var EditReceiptItemPage = /** @class */ (function () {
             alertErrorProduct.present();
             return false;
         }
+        this.billProvider.set_order(this.navParams.data.index, this.item);
         this.changeComplementStatus();
         this.billProvider.update_bill();
         this.billProvider.count_pricing();
+        this.isChange = false;
+        this.isUpdated = true;
+        this.viewCtrl.dismiss();
         // this.closeModal();
-        this.navCtrl.pop({});
+        // this.navCtrl.pop({})
         /*this.navCtrl.setRoot(ProductPage,{
           event: 'order.return',
           trigger_event: 'order.return',
@@ -198,7 +243,7 @@ var EditReceiptItemPage = /** @class */ (function () {
             selector: 'page-edit-receipt-item',
             templateUrl: 'edit-receipt-item.html',
         }),
-        __metadata("design:paramtypes", [ViewController, NavController, NavParams, BillProvider, AlertController])
+        __metadata("design:paramtypes", [HelperProvider, ViewController, NavController, NavParams, BillProvider, AlertController])
     ], EditReceiptItemPage);
     return EditReceiptItemPage;
 }());

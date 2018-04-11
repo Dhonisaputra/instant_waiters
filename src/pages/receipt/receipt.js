@@ -134,17 +134,18 @@ var ReceiptPage = /** @class */ (function () {
     };
     ReceiptPage.prototype.change_table = function () {
         this.events.publish('bill.table.change', {});
-        if (this.receipt_page_params.can_edit_table) {
-            var index = -1;
-            var isFound = false;
-            var navCtrlLen = this.navCtrl.length();
-            this.navCtrl.setRoot(TablePage, {
-                previous: 'product-page',
-                event: 'bill.changeTable',
-                trigger_event: 'table.change',
-                data: this.event_handler['table.pick']
-            });
-        }
+        // if(this.receipt_page_params.can_edit_table)
+        // {
+        var index = -1;
+        var isFound = false;
+        var navCtrlLen = this.navCtrl.length();
+        this.navCtrl.setRoot(TablePage, {
+            previous: 'product-page',
+            event: 'bill.changeTable',
+            trigger_event: 'table.change',
+            data: this.event_handler['table.pick']
+        });
+        // }
     };
     ReceiptPage.prototype.removeReceipt = function (ev, item) {
         // alert('removed')
@@ -213,9 +214,9 @@ var ReceiptPage = /** @class */ (function () {
             return false;
         }
         item.index = index;
-        this.navCtrl.push(EditReceiptItemPage, item);
+        var modal = this.modalCtrl.create(EditReceiptItemPage, item);
         // let modal = this.modalCtrl.create(EditReceiptItemPage, item)
-        // modal.present();
+        modal.present();
         // modal.onDidDismiss(data => {
         // this.trigger_update_receipt();
         // });
@@ -235,7 +236,6 @@ var ReceiptPage = /** @class */ (function () {
     ReceiptPage.prototype.openFormNewMember = function (data) {
         var _this = this;
         if (data === void 0) { data = {}; }
-        console.log(data.data);
         var modal = this.modalCtrl.create(MemberNewFormPage, data.data);
         modal.onDidDismiss(function (data) {
             _this.callbackNewMember(data);

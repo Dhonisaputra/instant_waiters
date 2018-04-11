@@ -30,6 +30,7 @@ var SettingsPage = /** @class */ (function () {
         this.settings = {
             choose_table_first: true
         };
+        this.users = {};
         this.settings = Object.assign(this.settings, this.helper.local.get_params(this.helper.config.variable.settings));
     }
     SettingsPage.prototype.ionViewDidLoad = function () {
@@ -59,6 +60,60 @@ var SettingsPage = /** @class */ (function () {
     };
     SettingsPage.prototype.openPrinterBluetoothPrinterSettings = function () {
         this.navCtrl.push(PrintBluetoothPanelPage);
+    };
+    SettingsPage.prototype.updateUser = function () {
+        var _this = this;
+        if (this.users.new_password != this.users.rePassword) {
+            this.helper.alertCtrl.create({
+                title: "Kesalahan",
+                message: "password tidak sama",
+                buttons: ["OK"]
+            }).present();
+            return false;
+        }
+        var url = this.helper.config.base_url('sign/mobile_change_password');
+        var users_id = this.helper.local.get_params(this.helper.config.variable.credential).users.users_id;
+        this.helper.$.post(url, { users_id: users_id, new_password: this.users.new_password, old_password: this.users.old_password })
+            .done(function (res) {
+            res = JSON.parse(res);
+            switch (res.code) {
+                case 200:
+                    _this.helper.toast.create({
+                        message: "password sudah diganti",
+                        duration: 2000
+                    }).present();
+                    break;
+                case 404:
+                    _this.helper.alertCtrl.create({
+                        title: "Kesalahan",
+                        message: "Pengguna tidak ditemukan",
+                        buttons: ["OK"]
+                    }).present();
+                    break;
+                default:
+                case 500:
+                    _this.helper.alertCtrl.create({
+                        title: "Kesalahan Fatal",
+                        message: "System tidak dapat mengolah permintaan anda. Silahkan laporkan kepada pengembang sistem",
+                        buttons: ["OK"]
+                    }).present();
+                    break;
+                case 304:
+                    _this.helper.alertCtrl.create({
+                        title: "Tidak ada perubahan",
+                        message: "Password yang anda isikan sama dengan sebelumnya, tidak dapat melakukan perubahan",
+                        buttons: ["OK"]
+                    }).present();
+                    break;
+            }
+        })
+            .fail(function () {
+            _this.helper.alertCtrl.create({
+                title: "Kesalahan Fatal",
+                message: "System tidak dapat mengolah permintaan anda. Silahkan laporkan kepada pengembang sistem",
+                buttons: ["OK"]
+            }).present();
+        });
     };
     SettingsPage = __decorate([
         IonicPage(),

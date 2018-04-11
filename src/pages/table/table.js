@@ -14,6 +14,7 @@ import { ProductPage } from "../../pages/product/product";
 import { DbTableProvider } from "../../providers/db-table/db-table";
 import { HelperProvider } from '../../providers/helper/helper';
 import { BillProvider } from '../../providers/bill/bill';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 /**
  * Generated class for the TablePage page.
  *
@@ -21,7 +22,8 @@ import { BillProvider } from '../../providers/bill/bill';
  * Ionic pages and navigation.
  */
 var TablePage = /** @class */ (function () {
-    function TablePage(navCtrl, appCtrl, navParams, local, dbTableProvider, helper, events, billProvider) {
+    function TablePage(screenOrientation, navCtrl, appCtrl, navParams, local, dbTableProvider, helper, events, billProvider) {
+        this.screenOrientation = screenOrientation;
         this.navCtrl = navCtrl;
         this.appCtrl = appCtrl;
         this.navParams = navParams;
@@ -52,6 +54,11 @@ var TablePage = /** @class */ (function () {
     }
     TablePage.prototype.ionViewWillEnter = function () {
         this.detect_parameters();
+        if (this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3) {
+            this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+                .catch(function () {
+            });
+        }
         if (!this.navParams.data.trigger_event || this.navParams.data.trigger_event != 'table.change') {
             /*if(this.helper.local.get_params(this.helper.config.variable.settings) && !this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first)
             {
@@ -148,7 +155,7 @@ var TablePage = /** @class */ (function () {
             selector: 'page-table',
             templateUrl: 'table.html',
         }),
-        __metadata("design:paramtypes", [NavController, App, NavParams, DbLocalProvider, DbTableProvider, HelperProvider, Events, BillProvider])
+        __metadata("design:paramtypes", [ScreenOrientation, NavController, App, NavParams, DbLocalProvider, DbTableProvider, HelperProvider, Events, BillProvider])
     ], TablePage);
     return TablePage;
 }());

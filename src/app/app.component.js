@@ -11,13 +11,9 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-// import { HomePage } from '../pages/home/home';
-// import { ListPage } from '../pages/list/list';
 import { TablePage } from '../pages/table/table';
 import { LoginPage } from '../pages/login/login';
-// import { SendReceiptPage } from '../pages/send-receipt/send-receipt';
-// import { PaymentPage } from '../pages/payment/payment';
-// import { ReceiptPage } from '../pages/receipt/receipt';
+import { OutletListPage } from '../pages/outlet-list/outlet-list';
 import { ProductPage } from '../pages/product/product';
 import { SettingsPage } from '../pages/settings/settings';
 import { StocksPage } from '../pages/stocks/stocks';
@@ -26,18 +22,25 @@ import { MemberPage } from '../pages/member/member';
 import { SpendPage } from '../pages/spend/spend';
 import { DebtPage } from '../pages/debt/debt';
 import { ModalPage } from '../pages/modal/modal';
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { AboutPage } from '../pages/about/about';
+import { WaitersPage } from '../pages/waiters/waiters';
+import { PrintBluetoothPanelPage } from '../pages/print-bluetooth-panel/print-bluetooth-panel';
+import { KitchenbarPage } from '../pages/kitchenbar/kitchenbar';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { HelperProvider } from '../providers/helper/helper';
 var MyApp = /** @class */ (function () {
-    function MyApp(toastCtrl, platform, statusBar, splashScreen, helper) {
+    function MyApp(toastCtrl, platform, statusBar, splashScreen, helper, screenOrientation) {
         this.toastCtrl = toastCtrl;
         this.platform = platform;
         this.statusBar = statusBar;
         this.splashScreen = splashScreen;
         this.helper = helper;
+        this.screenOrientation = screenOrientation;
         this.rootPage = LoginPage;
         this.tablePage = TablePage;
         this.productPage = ProductPage;
+        this.kitchenbarPage = KitchenbarPage;
+        this.waitersPage = WaitersPage;
         this.stocksPage = StocksPage;
         this.transactionPage = TransactionPage;
         this.memberPage = MemberPage;
@@ -45,6 +48,9 @@ var MyApp = /** @class */ (function () {
         this.spendPage = SpendPage;
         this.debtPage = DebtPage;
         this.settingsPage = SettingsPage;
+        this.outletListPage = OutletListPage;
+        this.aboutPage = AboutPage;
+        this.printerPage = PrintBluetoothPanelPage;
         this.lastTimeBackPress = 0;
         this.timePeriodToExit = 2000;
         this.users = {};
@@ -53,20 +59,7 @@ var MyApp = /** @class */ (function () {
         // console.log(helper.local.get_params(this.helper.config.variable.settings))
         // let default_page = !this.helper.local.get_params(this.helper.config.variable.settings) || this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first?  TablePage : ProductPage ;
         // used for an example of ngFor and navigation
-        this.pages = [
-            // { title: 'Home', component: HomePage },
-            // { title: 'Kasir', component: TablePage }, 
-            // { title: 'Kasir', component: ProductPage },
-            // { title: 'Send Receipt', component: SendReceiptPage },
-            // { title: 'Payment', component: PaymentPage },
-            { title: 'Stok', component: StocksPage, options: { type: 'setting', setting_name: 'stok', status: true } },
-            { title: 'Transaksi', component: TransactionPage, options: { type: 'setting', setting_name: 'transaksi', status: true } },
-            { title: 'Member', component: MemberPage, options: { type: 'setting', setting_name: 'member', status: true } },
-            { title: 'Modal', component: ModalPage, options: { type: 'setting', setting_name: 'modal', status: true } },
-            { title: 'Pengeluaran', component: SpendPage, options: { type: 'setting', setting_name: 'pengeluaran', status: true } },
-            { title: 'Hutang', component: DebtPage, options: { type: 'setting', setting_name: 'debt_mode', status: true } },
-            { title: 'Settings', component: SettingsPage, options: { type: 'setting', setting_name: 'settings', status: true } },
-        ];
+        this.pages = [];
         // this.storage.set('outlet', 1)
         this.routeHistory = [];
     }
@@ -75,10 +68,14 @@ var MyApp = /** @class */ (function () {
         this.platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            // this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
             _this.platform.registerBackButtonAction(function () { return _this.preventClose(); }, 10);
             _this.statusBar.styleDefault();
             _this.splashScreen.hide();
+            _this.helper.preload('audio', 'assets/audio/intuition.mp3');
+            _this.helper.events.subscribe('outlet.signout', function () {
+                // user and time are the same arguments passed in `events.publish(user, time)`
+                _this.signOutOutlet();
+            });
             // this.users = this.helper.local.get_params(this.helper.config.variable.credential).users;
         });
     };
@@ -89,13 +86,14 @@ var MyApp = /** @class */ (function () {
     };
     MyApp.prototype.setRoot = function (page, params) {
         if (params === void 0) { params = {}; }
+        this.helper.play('audio');
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
         this.nav.setRoot(page, params);
     };
     MyApp.prototype.preventClose = function () {
         var toast = this.toastCtrl.create({
-            message: "Press Again to Confirm Exit",
+            message: "Silahkan tutup aplikasi melalui sidebar menu!",
             duration: 3000
         });
         toast.present();
@@ -108,6 +106,28 @@ var MyApp = /** @class */ (function () {
         this.helper.local.set_params('pinned_params', []);
         this.nav.setRoot(LoginPage);
     };
+    MyApp.prototype.closeApp = function () {
+        var _this = this;
+        this.helper.alertCtrl.create({
+            title: "Tutup aplikasi",
+            message: "Apakah anda yakin ingin menutup aplikasi?",
+            buttons: ["Tidak", {
+                    text: "Tutup",
+                    handler: function () {
+                        _this.platform.exitApp();
+                    }
+                }]
+        }).present();
+    };
+    MyApp.prototype.signOutOutlet = function () {
+        this.helper.local.reset_params('login_outlet_device');
+        this.helper.local.set_params('login_outlet_device', false);
+        this.nav.setRoot(OutletListPage);
+    };
+    MyApp.prototype.filteringTypeCategories = function (item) {
+        var selectedType = this.helper.$('.typeCategories:checked').serializeArray().map(function (res) { return res.value; });
+        this.helper.events.publish('product:filter-type', { item: selectedType });
+    };
     __decorate([
         ViewChild(Nav),
         __metadata("design:type", Nav)
@@ -116,7 +136,7 @@ var MyApp = /** @class */ (function () {
         Component({
             templateUrl: 'app.html'
         }),
-        __metadata("design:paramtypes", [ToastController, Platform, StatusBar, SplashScreen, HelperProvider])
+        __metadata("design:paramtypes", [ToastController, Platform, StatusBar, SplashScreen, HelperProvider, ScreenOrientation])
     ], MyApp);
     return MyApp;
 }());

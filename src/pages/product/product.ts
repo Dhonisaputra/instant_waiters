@@ -764,7 +764,6 @@ export class ProductPage
   		})
 		
 		let last_session = 0; 
-		console.log(last_session, temp_bill_params)
 		if(temp_bill_params)
 		{
 			this.billProvider.set_bill(temp_bill_params);
@@ -779,38 +778,8 @@ export class ProductPage
 
 			this.billProvider.temp_bill = temp_bill;
 			let deff = this.helper.$.Deferred();
-			if(last_session > 0)
-			{
-				let btn = [];
-				for (var i = 0; i <= last_session; ++i) {
-					let index:number = i;
-					let text = i == 0? 'Pesanan pertama' : "Extra pesanan ke-"+(i+1);
-					btn.push(
-						{
-							handler: (res)=>{
-								deff.resolve(index)
-							},
-							text: text,
-						}
-					)
-				}
-
-				btn.push({
-					text: 'Batal',
-					role: 'cancel'
-				})
-
-				this.helper.actionSheet.create({
-					title: "Terdapat extra pesanan, silahkan pilih yang akan di cetak",
-
-					buttons: btn 
-				}).present();
-				
-			}else
-			{
-				console.log(this.billProvider.bill)
-				deff.resolve(last_session)
-			}
+			
+			deff.resolve(last_session)
 
 			this.helper.$.when(deff.promise())
 			.done((val)=>{
@@ -849,7 +818,6 @@ export class ProductPage
 		  		}*/
 
 		  		let group_printer = nota_printer[0].group_outlet_printer_id.split(',');
-
 
 
 

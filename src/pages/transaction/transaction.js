@@ -325,6 +325,11 @@ var TransactionPage = /** @class */ (function () {
                         handler: function () {
                             _this.info_transaction(index, item);
                         }
+                    }, {
+                        text: 'Cetak ulang nota',
+                        handler: function () {
+                            _this.re_print(item);
+                        }
                     }
                 ]
             }).present();
@@ -342,6 +347,155 @@ var TransactionPage = /** @class */ (function () {
                 ]
             }).present();
         }
+    };
+    TransactionPage.prototype.re_print = function (temp_bill_params) {
+        var _this = this;
+        var printer = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer;
+        var printer_rule = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer_rule;
+        var nota_printer = printer_rule.filter(function (res) {
+            return res.printer_page_id == 5; //--> 5 is constanta from database;
+        });
+        var last_session = 0;
+        if (temp_bill_params) {
+            this.billProvider.set_bill(temp_bill_params);
+            last_session = temp_bill_params.orders[temp_bill_params.orders.length - 1].order_session;
+        }
+        return new Promise(function (resolve, reject) {
+            var temp_bill = Object.assign({}, temp_bill_params);
+            _this.billProvider.temp_bill = temp_bill;
+            var deff = _this.helper.$.Deferred();
+            if (last_session > 0) {
+                var btn = [];
+                btn.push({
+                    text: 'Cetak semua transaksi',
+                    handler: function (res) {
+                        deff.resolve(-1);
+                    },
+                });
+                var _loop_1 = function () {
+                    var index = i;
+                    var text = i == 0 ? 'Pesanan pertama' : "Extra pesanan ke-" + (i + 1);
+                    btn.push({
+                        handler: function (res) {
+                            deff.resolve(index);
+                        },
+                        text: text,
+                    });
+                };
+                for (var i = 0; i <= last_session; ++i) {
+                    _loop_1();
+                }
+                btn.push({
+                    text: 'Batal',
+                    role: 'cancel'
+                });
+                _this.helper.actionSheet.create({
+                    title: "Terdapat extra pesanan, silahkan pilih yang akan di cetak",
+                    buttons: btn
+                }).present();
+            }
+            else {
+                deff.resolve(last_session);
+            }
+            _this.helper.$.when(deff.promise())
+                .done(function (val) {
+                var nbill = temp_bill;
+                if (val >= 0) {
+                    nbill = _this.billProvider.nota_bill_session(val);
+                }
+                else {
+                }
+                _this.billProvider.set_bill(nbill);
+                if (nota_printer.length < 1) {
+                    reject();
+                    return false;
+                }
+                if (!_this.helper.printer.isAvailable()) {
+                    _this.helper.alertCtrl.create({
+                        title: "Kesalahan",
+                        message: "Layanan printer tidak tersedia untuk perangkat ini",
+                        buttons: ["OK"]
+                    }).present();
+                    reject();
+                    return false;
+                }
+                /*if(!device || !device.address)
+                {
+                    this.helper.alertCtrl.create({
+                        title: "Printer tidak ditemukan",
+                        message: "Silahkan menuju settings dan pilih menu printer.",
+                        buttons: ["OK"]
+                    }).present();
+
+                  reject();
+                    return false;
+                }*/
+                var group_printer = nota_printer[0].group_outlet_printer_id.split(',');
+                _this.helper.$.each(group_printer, function (i, val) {
+                    var printer_filter = printer.filter(function (res) {
+                        return res.outlet_printer_id == val;
+                    });
+                    // var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+                    if (printer_filter.length > 0) {
+                        switch (printer_filter[0].outlet_printer_connect_with) {
+                            case "wifi":
+                                var t = _this.billProvider.print_bill_wifi(printer_filter[0], '');
+                                _this.helper.printer.connectWifi(printer_filter[0].outlet_printer_address);
+                                _this.helper.printer.printWifi(t);
+                                _this.helper.printer.cutpaper();
+                                resolve();
+                                break;
+                            case "bluetooth":
+                                var t = _this.billProvider.print_bill('', printer_filter[0]);
+                                _this.helper.printer.connect(printer_filter[0].outlet_printer_address)
+                                    .then(function () {
+                                    var el = _this.helper.$('.receipt');
+                                    setTimeout(function () {
+                                        // let t = this.billProvider.print_bill(printer_filter[0]);
+                                        _this.helper.printer.printText(t)
+                                            .then(function () {
+                                            resolve();
+                                        }, function () {
+                                            reject();
+                                        });
+                                    }, 2000); // set timeout
+                                }, function (err) {
+                                    reject();
+                                });
+                                resolve();
+                                break;
+                            default:
+                                // code...
+                                reject();
+                                break;
+                        }
+                    }
+                    else {
+                        reject();
+                    }
+                    /*this.helper.printer.connect(device.address)
+                    .then(()=>{
+
+                      let el = this.helper.$('.receipt');
+                      console.log(this.billProvider)
+                      setTimeout( ()=>{
+                          let t = this.billProvider.print_bill();
+                          this.helper.printer.printText(t)
+                          .then(()=>{
+                              resolve()
+                          }, ()=>{
+                              reject();
+                          })
+                      }, 2000 ) // set timeout
+                    }, (err)=>{
+                          reject()
+                    })*/
+                });
+                _this.helper.local.opendb('printer_connected')
+                    .then(function (device) {
+                });
+            });
+        }); // end of promise
     };
     TransactionPage.prototype.splitBill = function (index, item) {
         this.navCtrl.push(SplitBillPage, {

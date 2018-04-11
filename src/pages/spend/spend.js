@@ -32,14 +32,14 @@ var SpendPage = /** @class */ (function () {
         this.ingredients = [];
         this.data_spend = [];
         this.spend_item_form_state = 'new';
-        this.is_restaurant = helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id != 2;
+        this.is_restaurant = helper.local.get_params(helper.config.variable.credential).data.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id != 2;
         this.state = 'list';
         this.spend = {
             sp_date: this.helper.moment().add(7, 'hour').toISOString(),
             sp_paid: this.helper.moment().add(7, 'hour').toISOString(),
         };
         this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
-        if (helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).outlet.serv_id == 2) {
+        if (helper.local.get_params(helper.config.variable.credential).data.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id == 2) {
             this.get_ingredient_data();
         }
         else {
@@ -141,7 +141,7 @@ var SpendPage = /** @class */ (function () {
         var data = this.spend;
         data.outlet_id = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
         data.users_outlet_id = this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id;
-        // data.items = this.spend_item;
+        data.items = this.spend_item;
         var url;
         if (!this.spend.sp_id) {
             url = this.helper.config.base_url('admin/outlet/spend/add');
@@ -149,6 +149,7 @@ var SpendPage = /** @class */ (function () {
         else {
             url = this.helper.config.base_url('admin/outlet/spend/update');
         }
+        console.log(data);
         this.helper.$.ajax({
             url: url,
             type: 'POST',
@@ -162,6 +163,10 @@ var SpendPage = /** @class */ (function () {
                 _this.view_state = undefined;
                 _this.state = 'list';
                 _this.get_data_spend();
+                _this.spend = {
+                    sp_supplier: '',
+                    sp_note: ''
+                };
             }
         })
             .always(function () {
