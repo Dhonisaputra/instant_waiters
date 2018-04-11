@@ -83,7 +83,6 @@ export class ReceiptPage {
 	trigger_update_receipt()
 	{
 		let data = this.billProvider.data_bill();
-		console.log(data)
 		this.set_receipts(data);
 		this.billProvider.detection_order_session_from_orders(data.orders)
 
@@ -275,9 +274,9 @@ export class ReceiptPage {
 			return false
 		}
 		item.index = index;
-		this.navCtrl.push(EditReceiptItemPage, item)
+		let modal = this.modalCtrl.create(EditReceiptItemPage, item)
 		// let modal = this.modalCtrl.create(EditReceiptItemPage, item)
-		// modal.present();
+		modal.present();
 		// modal.onDidDismiss(data => {
 			// this.trigger_update_receipt();
 	   // });
@@ -300,7 +299,6 @@ export class ReceiptPage {
 
 	openFormNewMember(data:any={})
 	{
-		console.log(data.data)
 		let modal = this.modalCtrl.create(MemberNewFormPage, data.data)
 		modal.onDidDismiss(data => {
 			this.callbackNewMember(data);

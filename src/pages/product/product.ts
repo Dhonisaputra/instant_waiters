@@ -609,11 +609,9 @@ export class ProductPage
 		{
 			this.helper.alertCtrl.create({
 				title: "Kesalahan",
-				message: "Layanan printer tidak tersedia untuk perangkat ini",
+				message: "Layanan printer bluetooth tidak tersedia untuk perangkat ini, sistem akan mencetak melalui printer biasa",
 				buttons:["OK"]
 			}).present()
-			console.log(this.helper.html2canvas)
-			return false;
 		}
 
 		if(this.error_product())
@@ -674,6 +672,7 @@ export class ProductPage
 										loadingPrint.dismiss();
 									}, ()=>{
 										loadingPrint.dismiss();
+										this.billProvider.set_bill(this.billProvider.temp_bill)
 									})
 									
 								}
@@ -707,126 +706,227 @@ export class ProductPage
 				alertVisitor.present();
 			}else
 			{
-				this.process_print_bill();
+				this.helper.local.set_params('temp_bill', this.billProvider.get_bill());
+
+				this.process_save_bill()
+				.done((res:any)=>{
+					res = JSON.parse(res)
+					if(res.code == 200)
+					{
+						this.process_print_bill()
+						.then(()=>{
+							this.events.publish('reset.data.receipt',{})
+							this.get_unpaid_bill();
+						}, ()=>{
+							this.helper.alertCtrl.create({
+			        			title: "Kesalahan",
+			        			message: "Gagal Mencetak bill. coba lagi?",
+			        			buttons: [{
+			        				handler: ()=>{
+			        					this.print_bill()
+			        				},
+			        				text: "Coba lagi"
+			        			}, {
+			        				text: "Batal",
+			        				handler: ()=>{
+										this.billProvider.set_bill(this.billProvider.temp_bill)
+			        				}
+			        			}]
+
+			        		}).present();
+						})
+					}else
+					{
+						this.helper.alertCtrl.create({
+		        			title: "Kesalahan",
+		        			message: "Gagal tersambung kedalam sistem. Silahkan coba lagi!",
+		        			buttons: [{
+		        				handler: ()=>{
+		        					this.print_bill()
+		        				},
+		        				text: "Coba lagi"
+		        			}, "Batal"]
+		        		}).present();
+					}
+				})
 			}
 		}
 	}
+
+
 	process_print_bill()
 	{
+		let temp_bill_params = this.helper.local.get_params('temp_bill');
 		let printer = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer;
 		let printer_rule = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer_rule;
-		
   		let nota_printer = printer_rule.filter((res)=>{
   			return res.printer_page_id == 5; //--> 5 is constanta from database;
   		})
-  		
+		
+		let last_session = 0; 
+		console.log(last_session, temp_bill_params)
+		if(temp_bill_params)
+		{
+			this.billProvider.set_bill(temp_bill_params);
+			last_session = temp_bill_params.orders[temp_bill_params.orders.length - 1 ].order_session;
+		}
+
+
+
 		return new Promise((resolve, reject) => {
 
-			if(nota_printer.length < 1)
+			let temp_bill = Object.assign({}, temp_bill_params);
+
+			this.billProvider.temp_bill = temp_bill;
+			let deff = this.helper.$.Deferred();
+			if(last_session > 0)
 			{
-				reject();
-				return false;
+				let btn = [];
+				for (var i = 0; i <= last_session; ++i) {
+					let index:number = i;
+					let text = i == 0? 'Pesanan pertama' : "Extra pesanan ke-"+(i+1);
+					btn.push(
+						{
+							handler: (res)=>{
+								deff.resolve(index)
+							},
+							text: text,
+						}
+					)
+				}
+
+				btn.push({
+					text: 'Batal',
+					role: 'cancel'
+				})
+
+				this.helper.actionSheet.create({
+					title: "Terdapat extra pesanan, silahkan pilih yang akan di cetak",
+
+					buttons: btn 
+				}).present();
+				
+			}else
+			{
+				console.log(this.billProvider.bill)
+				deff.resolve(last_session)
 			}
 
-			if( !this.helper.printer.isAvailable() )
-			{
-				this.helper.alertCtrl.create({
-					title: "Kesalahan",
-					message: "Layanan printer tidak tersedia untuk perangkat ini",
-					buttons:["OK"]
-				}).present()
-				reject();
-				return false;
-			}
-			
-	  		/*if(!device || !device.address)
-	  		{
-	  			this.helper.alertCtrl.create({
-	  				title: "Printer tidak ditemukan",
-	  				message: "Silahkan menuju settings dan pilih menu printer.",
-	  				buttons: ["OK"]
-	  			}).present();
+			this.helper.$.when(deff.promise())
+			.done((val)=>{
 
-				reject();
-	  			return false;
-	  		}*/
 
-	  		let group_printer = nota_printer[0].group_outlet_printer_id.split(',');
+				let nbill = this.billProvider.nota_bill_session(val);
+				this.billProvider.set_bill(nbill)
 
-	  		this.helper.$.each(group_printer, (i, val)=>{
-		  		let printer_filter = printer.filter((res)=>{
-		  			return res.outlet_printer_id == val;
-		  		})
-		  		console.log(printer_filter)
-
-				// var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
-
-		  		if(printer_filter.length > 0)
-		  		{
-		  			switch (printer_filter[0].outlet_printer_connect_with) {
-		  				case "wifi":
-							var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
-		  					this.helper.printer.connectWifi(printer_filter[0].outlet_printer_address)
-		  					this.helper.printer.printWifi(t);
-		  					this.helper.printer.cutpaper();
-							resolve()
-
-		  					break;
-		  				case "bluetooth":
-
-							var t = this.billProvider.print_bill('', printer_filter[0]);
-		  					this.helper.printer.connect(printer_filter[0].outlet_printer_address)
-					  		.then(()=>{
-								let el = this.helper.$('.receipt');
-								setTimeout( ()=>{
-
-									// let t = this.billProvider.print_bill(printer_filter[0]);
-									this.helper.printer.printText(t)
-									.then(()=>{
-										resolve();
-									}, ()=>{
-										reject();
-									})
-								}, 2000 ) // set timeout
-					  		}, (err)=>{
-									reject()
-					  		})
-							resolve()
-		  					break;
-
-		  				default:
-		  					// code...
-							reject();
-		  					break;
-		  			}
-		  		}else
-		  		{		
+				if(nota_printer.length < 1)
+				{
 					reject();
-		  		}
+					return false;
+				}
 
-		  		/*this.helper.printer.connect(device.address)
-		  		.then(()=>{
+				if( !this.helper.printer.isAvailable() )
+				{
+					this.helper.alertCtrl.create({
+						title: "Kesalahan",
+						message: "Layanan printer tidak tersedia untuk perangkat ini",
+						buttons:["OK"]
+					}).present()
+					reject();
+					return false;
+				}
+				
+		  		/*if(!device || !device.address)
+		  		{
+		  			this.helper.alertCtrl.create({
+		  				title: "Printer tidak ditemukan",
+		  				message: "Silahkan menuju settings dan pilih menu printer.",
+		  				buttons: ["OK"]
+		  			}).present();
 
-					let el = this.helper.$('.receipt');
-					console.log(this.billProvider)
-					setTimeout( ()=>{
-						let t = this.billProvider.print_bill();
-						this.helper.printer.printText(t)
-						.then(()=>{
-							resolve()
-						}, ()=>{
-							reject();
-						})
-					}, 2000 ) // set timeout
-		  		}, (err)=>{
-						reject()
-		  		})*/
+					reject();
+		  			return false;
+		  		}*/
 
-	  		})
+		  		let group_printer = nota_printer[0].group_outlet_printer_id.split(',');
 
-			this.helper.local.opendb('printer_connected')
-		  	.then((device)=>{
-		  	})
+
+
+
+		  		this.helper.$.each(group_printer, (i, val)=>{
+			  		let printer_filter = printer.filter((res)=>{
+			  			return res.outlet_printer_id == val;
+			  		})
+
+					// var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+
+			  		if(printer_filter.length > 0)
+			  		{
+			  			switch (printer_filter[0].outlet_printer_connect_with) {
+			  				case "wifi":
+								var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+			  					this.helper.printer.connectWifi(printer_filter[0].outlet_printer_address)
+			  					this.helper.printer.printWifi(t);
+			  					this.helper.printer.cutpaper();
+								resolve()
+
+			  					break;
+			  				case "bluetooth":
+
+								var t = this.billProvider.print_bill('', printer_filter[0]);
+			  					this.helper.printer.connect(printer_filter[0].outlet_printer_address)
+						  		.then(()=>{
+									let el = this.helper.$('.receipt');
+									setTimeout( ()=>{
+
+										// let t = this.billProvider.print_bill(printer_filter[0]);
+										this.helper.printer.printText(t)
+										.then(()=>{
+											resolve();
+										}, ()=>{
+											reject();
+										})
+									}, 2000 ) // set timeout
+						  		}, (err)=>{
+										reject()
+						  		})
+								resolve()
+			  					break;
+
+			  				default:
+			  					// code...
+								reject();
+			  					break;
+			  			}
+			  		}else
+			  		{		
+						reject();
+			  		}
+
+			  		/*this.helper.printer.connect(device.address)
+			  		.then(()=>{
+
+						let el = this.helper.$('.receipt');
+						console.log(this.billProvider)
+						setTimeout( ()=>{
+							let t = this.billProvider.print_bill();
+							this.helper.printer.printText(t)
+							.then(()=>{
+								resolve()
+							}, ()=>{
+								reject();
+							})
+						}, 2000 ) // set timeout
+			  		}, (err)=>{
+							reject()
+			  		})*/
+
+		  		})
+
+				this.helper.local.opendb('printer_connected')
+			  	.then((device)=>{
+			  	})
+			})
 		}) // end of promise
 	}
 

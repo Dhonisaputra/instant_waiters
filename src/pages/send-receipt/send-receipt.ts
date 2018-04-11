@@ -126,20 +126,102 @@ export class SendReceiptPage {
 
 	process_print_nota(nota:any=null)
 	{
+		let printer = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer;
+		let printer_rule = this.helper.local.get_params(this.helper.config.variable.credential).outlet.printer_rule;
+  		let nota_printer = printer_rule.filter((res)=>{
+  			return res.printer_page_id == 5; //--> 5 is constanta from database;
+  		})
+
 		return new Promise((resolve, reject) => {
 
 
-			if( !this.helper.printer.isAvailable() )
+			/*if( !this.helper.printer.isAvailable() )
 			{
 				this.helper.alertCtrl.create({
 					title: "Kesalahan",
 					message: "Layanan printer tidak tersedia untuk perangkat ini",
 					buttons:["OK"]
-				}).present()
+				}).present();
+				reject();
 				return false;
-			}
+			}*/
 			
-			this.helper.local.opendb('printer_connected')
+			let group_printer = nota_printer[0].group_outlet_printer_id.split(',');
+
+
+
+
+		  		this.helper.$.each(group_printer, (i, val)=>{
+			  		let printer_filter = printer.filter((res)=>{
+			  			return res.outlet_printer_id == val;
+			  		})
+
+					// var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+
+			  		if(printer_filter.length > 0)
+			  		{
+			  			switch (printer_filter[0].outlet_printer_connect_with) {
+			  				case "wifi":
+								var t = this.billProvider.print_bill_wifi(printer_filter[0],'');
+			  					this.helper.printer.connectWifi(printer_filter[0].outlet_printer_address)
+			  					this.helper.printer.printWifi(t);
+			  					this.helper.printer.cutpaper();
+								resolve()
+
+			  					break;
+			  				case "bluetooth":
+
+								var t = this.billProvider.print_bill('', printer_filter[0]);
+			  					this.helper.printer.connect(printer_filter[0].outlet_printer_address)
+						  		.then(()=>{
+									let el = this.helper.$('.receipt');
+									setTimeout( ()=>{
+
+										// let t = this.billProvider.print_bill(printer_filter[0]);
+										this.helper.printer.printText(t)
+										.then(()=>{
+											resolve();
+										}, ()=>{
+											reject();
+										})
+									}, 2000 ) // set timeout
+						  		}, (err)=>{
+										reject()
+						  		})
+								resolve()
+			  					break;
+
+			  				default:
+			  					// code...
+								reject();
+			  					break;
+			  			}
+			  		}else
+			  		{		
+						reject();
+			  		}
+
+			  		/*this.helper.printer.connect(device.address)
+			  		.then(()=>{
+
+						let el = this.helper.$('.receipt');
+						console.log(this.billProvider)
+						setTimeout( ()=>{
+							let t = this.billProvider.print_bill();
+							this.helper.printer.printText(t)
+							.then(()=>{
+								resolve()
+							}, ()=>{
+								reject();
+							})
+						}, 2000 ) // set timeout
+			  		}, (err)=>{
+							reject()
+			  		})*/
+
+		  		})
+
+			/*this.helper.local.opendb('printer_connected')
 		  	.then((device)=>{
 		  		console.log(device)
 		  		if(!device || !device.address)
@@ -165,7 +247,7 @@ export class SendReceiptPage {
 						})
 					}, 2000 ) // set timeout
 		  		})
-		  	})
+		  	})*/
 
 		}) // end of promise
 	}

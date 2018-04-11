@@ -338,13 +338,13 @@ export class BillProvider {
         let discount_id = this.get_bill_component('discount_id');
 
         
-        console.log(discount_id, discount_percent, discount_nominal, payment_total)
 
         tax_nominal = tax_nominal?parseInt(tax_nominal):0;
         discount_nominal = discount_nominal?parseInt(discount_nominal):0;
 
         let order = this.get_bill_component('orders');
 
+        console.log(this.bill)
         $.each(order, (i, val)=>{
             if(!val.complement_status || parseInt(val.complement_status) < 1)
             {
@@ -424,7 +424,9 @@ export class BillProvider {
 
     set_bill(data)
     {
-        this.set_bill_component('orders', data.data);
+        // this.set_bill_component('orders', data.data);
+        let orders = data.data||data.orders;
+        this.set_bill_component('orders', orders);
         this.count_pricing()
         this.set_bill_component('visitor_name', data.visitor_name);
         this.set_bill_component('table_id', data.visitor_table);
@@ -520,12 +522,16 @@ export class BillProvider {
             // create new session
             this.add_order_session();
         }
-
-
-
-
-
     }
+
+    get_order_session_item(session:number = 0)
+    {
+        let a = this.get_bill_component('orders');
+        return a.filter((res)=>{
+            return res.order_session == session;
+        })
+    }
+
     add_order_session(data:object={})
     {
         this.bill.order_session = this.bill.order_session? this.bill.order_session : []
@@ -659,19 +665,27 @@ export class BillProvider {
         }
     }
 
-    nota_count_pricing(nota:any)
+    nota_count_pricing(nota:any, reset:boolean=false)
     {
         nota = Object.assign({}, nota);
 
-        let payment_total     = nota['payment_total'];
-        let payment_bills     = nota['payment_bills'];
-        let tax_nominal       = nota['tax_nominal'];
         let discount_nominal  = nota['discount_nominal'];
         let discount_percent  = nota['discount_percent'];
         let discount_id       = nota['discount_id'];
+        
+        let payment_total:any     = 0;
+        let payment_bills:any     = 0;
+        let tax_nominal:any       = 0;
+
+        if(!reset)
+        {
+
+            let payment_total     = nota['payment_total'];
+            let payment_bills     = nota['payment_bills'];
+            let tax_nominal       = nota['tax_nominal'];
+        }
 
         
-        console.log(discount_id, discount_percent, discount_nominal, payment_total)
 
         tax_nominal = tax_nominal?parseInt(tax_nominal):0;
         discount_nominal = discount_nominal?parseInt(discount_nominal):0;
@@ -753,9 +767,24 @@ export class BillProvider {
         nota.payment_total = payment_total;
         nota.discount_nominal = discount_nominal;
 
-        console.log(nota);
         return nota;
 
+    }
+
+    nota_bill_session(session:number=0)
+    {
+
+        let bill = this.get_order_session_item(session)
+        bill = this.nota_count_pricing({orders: bill}) 
+        bill = Object.assign(this.get_bill(), bill)
+        return bill
+    }
+    nota_order_session(data:any)
+    {
+
+        return data.map((res)=>{
+            // return
+        })
     }
     print_bill_wifi(data_print:any={}, nota:any='')
     {

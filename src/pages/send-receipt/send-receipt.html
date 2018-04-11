@@ -7,7 +7,7 @@
 <ion-header>
 	<ion-toolbar color="main">
 	  <ion-navbar>
-	    <ion-title>Send Receipt</ion-title>
+	    <ion-title>Kirim Nota</ion-title>
 	  </ion-navbar>
 	</ion-toolbar>
 </ion-header>
@@ -19,11 +19,11 @@
 		<div style="width: 60%">
 			<div style="display: flex;" class="btn-action">
 				<input type="email" name="" class="input-send-email-inline" placeholder="Email pelanggan" [(ngModel)]="email">
-				<button class="flat btn-send-email-inline" ion-button color="secondary" (click)="sendReceiptToEmail()"> Kirim </button>
+				<button class="flat btn-send-email-inline" ion-button color="main" (click)="sendReceiptToEmail()" style="padding-left: 4px; padding-right: 4px;"> Kirim Nota </button>
 			</div>
-			<button class="btn-action" ion-button block color="secondary" (click)="printReceipt()">Cetak Struk ini</button>
-			<button class="btn-action" ion-button block color="secondary" (click)="sendAndPrint()">Cetak dan Email struk ini</button>
-			<button class="btn-action" ion-button block color="danger" (click)="backToCashier()">Kembali ke cashier.</button>
+			<button class="btn-action" ion-button block color="main" (click)="printReceipt()">Cetak Nota</button>
+			<button class="btn-action" ion-button block color="main" (click)="sendAndPrint()">Cetak dan Email nota</button>
+			<button class="btn-action" ion-button block (click)="backToCashier()">Kembali ke cashier.</button>
 		</div>
 	</div>
 </ion-content>
