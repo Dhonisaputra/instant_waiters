@@ -805,17 +805,6 @@ export class ProductPage
 					return false;
 				}
 				
-		  		/*if(!device || !device.address)
-		  		{
-		  			this.helper.alertCtrl.create({
-		  				title: "Printer tidak ditemukan",
-		  				message: "Silahkan menuju settings dan pilih menu printer.",
-		  				buttons: ["OK"]
-		  			}).present();
-
-					reject();
-		  			return false;
-		  		}*/
 
 		  		let group_printer = nota_printer[0].group_outlet_printer_id.split(',');
 
@@ -851,11 +840,14 @@ export class ProductPage
 										this.helper.printer.printText(t)
 										.then(()=>{
 											resolve();
+											this.helper.printer.disconnect();
 										}, ()=>{
+											this.helper.printer.disconnect();
 											reject();
 										})
 									}, 2000 ) // set timeout
 						  		}, (err)=>{
+										this.helper.printer.disconnect();
 										reject()
 						  		})
 								resolve()
@@ -871,29 +863,7 @@ export class ProductPage
 						reject();
 			  		}
 
-			  		/*this.helper.printer.connect(device.address)
-			  		.then(()=>{
-
-						let el = this.helper.$('.receipt');
-						console.log(this.billProvider)
-						setTimeout( ()=>{
-							let t = this.billProvider.print_bill();
-							this.helper.printer.printText(t)
-							.then(()=>{
-								resolve()
-							}, ()=>{
-								reject();
-							})
-						}, 2000 ) // set timeout
-			  		}, (err)=>{
-							reject()
-			  		})*/
-
 		  		})
-
-				this.helper.local.opendb('printer_connected')
-			  	.then((device)=>{
-			  	})
 			})
 		}) // end of promise
 	}

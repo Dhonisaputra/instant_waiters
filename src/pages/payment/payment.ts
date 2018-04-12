@@ -249,12 +249,15 @@ export class PaymentPage {
 										// let t = this.billProvider.print_bill(printer_filter[0]);
 										this.helper.printer.printText(t)
 										.then(()=>{
+											this.helper.printer.disconnect();
 											resolve();
 										}, ()=>{
+											this.helper.printer.disconnect();
 											reject();
 										})
 									}, 2000 ) // set timeout
 						  		}, (err)=>{
+										this.helper.printer.disconnect();
 										reject()
 						  		})
 								resolve()

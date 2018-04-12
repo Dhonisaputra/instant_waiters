@@ -22,39 +22,39 @@
 
 <ion-content padding>
 	<ion-grid>
-		<ion-row>
-			<ion-col offset-2 col-7 col-xs-12 col-sm-10 col-md-7 >
+		<ion-row class="relative center " >
+  			<ion-col col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10  class="column">
 				<ion-row class="row form-group">
-					<ion-col col-3 class="">Total Belanja</ion-col>
-					<ion-col col-9 class=" input-box">
+					<ion-col col-4 class="">Total Belanja</ion-col>
+					<ion-col col-8 class=" input-box">
 						<input type="text" class="form-control--lg" name="" disabled value="Rp. {{helper.intToIDR(billProvider.get_bill_component('payment_bills'))}}">
 					</ion-col>
 				</ion-row>
 
 				<ion-row class="row form-group ion-checkbox-no-bordered">
-					<ion-col col-3 class="" style="display: flex; justify-content: space-between; align-items: center;">
+					<ion-col col-4 class="" style="display: flex; justify-content: space-between; align-items: center;">
 						Diskon 
                   		<ion-toggle checked="false" value="1" [(ngModel)]="bill.is_discount" (ionChange)="toggleDiscount()"></ion-toggle>
 
 					</ion-col>
-					<ion-col col-9 class=" input-box input-group" style="display: flex; justify-content: left; align-items: center;" *ngIf="bill.is_discount">
+					<ion-col col-8 class=" input-box input-group" style="display: flex; justify-content: left; align-items: center;" *ngIf="bill.is_discount">
 						<ion-toggle checked="false" [(ngModel)]="bill.discount_type_fill"></ion-toggle> Gunakan data diskon	
 					</ion-col>
 				</ion-row>
 
 				
 				<ion-row class="row form-group" *ngIf="bill.is_discount">
-					<ion-col col-3 class=""></ion-col>
+					<ion-col col-4 class=""></ion-col>
 						
 
 
-					<ion-col col-9 class="" *ngIf="bill.discount_type_fill">
+					<ion-col col-8 class="" *ngIf="bill.discount_type_fill">
 						<ion-select [(ngModel)]="bill.discount_id" (ionChange)="change_discount()" style="max-width:100%; width: 100%; display: flex;">
 							<ion-option value="0"  selected> Pilih Diskon </ion-option>
 							<ion-option value="{{item.discount_id}}" *ngFor="let item of bill.discounts" > {{item.discount_name}} - {{item.discount_percent}} % </ion-option>
 					    </ion-select>
 					</ion-col>
-					<ion-col col-9 class=" input-box input-group" *ngIf="!bill.discount_type_fill">
+					<ion-col col-8 class=" input-box input-group" *ngIf="!bill.discount_type_fill">
 						<input type="number" class="form-control--lg form-control" max="99" min="1" name="" style="width: 20%;" [(ngModel)]="bill.discount_percent" (input)="countDiscountNominal($event)" >
 						<span class="input-group-addon" id="basic-addon1"> % </span>
 						<input type="" class="form-control--lg form-control" name="" [(ngModel)]="bill.discount_nominal" (input)="countDiscountPercent($event)">
@@ -65,12 +65,12 @@
 				
 
 				<ion-row class="row form-group">
-					<ion-col col-3 class="" style="display: flex; justify-content: space-between; align-items: center;">
+					<ion-col col-4 class="" style="display: flex; justify-content: space-between; align-items: center;">
 						Pajak 
                   		<ion-toggle checked="false" value="1" [(ngModel)]="bill.is_tax" (ionChange)="toggleTax($event)"></ion-toggle>
 
 					</ion-col>
-					<ion-col col-9 class=" input-box input-group">
+					<ion-col col-8 class=" input-box input-group">
 						<input type="number" min="1" max="99"  class="form-control--lg form-control" disabled="" name="" style="width: 18%;" [(ngModel)]="bill.tax_percent"  (input)="countTaxNominal()" value="10">
 						<span class="input-group-addon" id="basic-addon1"> % </span>
 						<input type="" class="form-control--lg form-control" name="" disabled="" [(ngModel)]="bill.tax_nominal" (input)="countTaxPercent()">
@@ -78,8 +78,8 @@
 				</ion-row>
 
 				<ion-row class="form-group">
-					<ion-col col-3 class="">Total </ion-col>
-					<ion-col col-9 class=" input-box">
+					<ion-col col-4 class="">Total </ion-col>
+					<ion-col col-8 class=" input-box">
 						<input type="text" disabled class="form-control--lg" name="" value="Rp. {{ helper.intToIDR(billProvider.get_bill_component('payment_total')) }}">
 					</ion-col>
 				</ion-row>
