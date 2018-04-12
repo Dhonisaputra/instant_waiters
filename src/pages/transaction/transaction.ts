@@ -40,6 +40,7 @@ export class TransactionPage {
       toggleSearchInput: false,
       toggleFilter: false
     }
+    isSearch:boolean = false;
     transaction_params:any = {data:{limit: 20, page: 1}};
 
 
@@ -92,6 +93,17 @@ export class TransactionPage {
       this.page_params = Object.assign(this.page_params, data)
     }
 
+    refresh_data($event:any)
+    {
+        this.get_transaction(this.transaction_params)
+        .then(()=>{
+            if($event.complete == 'function')
+            {
+                $event.complete();
+            }
+        })
+    }
+
     get_transaction(data:any={data:{}})
     {
         let loadingData = this.loadingCtrl.create({
@@ -120,11 +132,33 @@ export class TransactionPage {
                 }
             }else
             {
-                alert('Error occured while fetching data transaction!')
+                loadingData.dismiss();
+                this.helper.alertCtrl.create({
+                    title: "Gagal mengambil data transaksi",
+                    buttons: ["Tutup", {
+                        text: "Coba kembali",
+                        handler: ()=>{
+                            this.get_transaction(data)
+                        }
+                    }]
+                }).present();
             }
         })
+        .fail(()=>{
+            this.helper.alertCtrl.create({
+                    title: "Gagal terhubung kedalam sistem",
+                    buttons: ["Tutup", {
+                        text: "Coba kembali",
+                        handler: ()=>{
+                            this.get_transaction(data)
+                        }
+                    }]
+                }).present();
+        })
         .always( ()=>{
+            this.isSearch = true;
             loadingData.dismiss();
+            
         } )
     }
 
@@ -281,7 +315,8 @@ export class TransactionPage {
     {
         if(!this.navParams.data.event)
         {
-            this.info_transaction(index, item)
+            console.log(item)
+            this.advanceOptions(index, item);
         }else
         {
             this.pay_transaction(index, item)
@@ -363,24 +398,33 @@ export class TransactionPage {
         if(item.payment_nominal <= 0 && item.payment_cancel_status == 0)
         {
             this.actionSheetCtrl.create({
-              title: 'Opsi lanjutan',
+              title: 'Opsi lanjutan...',
               buttons: [
                 {
+                  icon: 'ios-copy',
                   text: 'Gabungkan Nota',
                   handler: () => {
+                      this.helper.alertCtrl.create({
+                          title: "Perhatian",
+                          message: "Fitur ini masih dalam tahap ujicoba",
+                          buttons: ["OK"]
+                      }).present();
                     // this.filter_transaction()
                   }
                 },{
+                    icon: "ios-cut",
                   text: 'Pisahkan Nota',
                   handler: () => {
                     this.splitBill(index, item)
                   }
                 },{
+                    icon: "ios-eye",
                   text: 'Lihat Detail Transaksi',
                   handler: () => {
                       this.info_transaction(index, item)
                   }
                 },{
+                    icon: "ios-print",
                   text: 'Cetak ulang nota',
                   handler: () => {
                       this.re_print(item)
@@ -388,12 +432,13 @@ export class TransactionPage {
                 }
               ]
             }).present();  
-        }else if(item.payment_nominal > 0 && item.payment_cancel_status == 0)
+        }else if( (item.payment_nominal > 0 && item.payment_cancel_status == 0) || item.payment_cancel_status == 1 )
         {
             this.actionSheetCtrl.create({
               title: 'Opsi lanjutan',
               buttons: [
                 {
+                    icon: "ios-eye",
                   text: 'Lihat Detail Transaksi',
                   handler: () => {
                       this.info_transaction(index, item)

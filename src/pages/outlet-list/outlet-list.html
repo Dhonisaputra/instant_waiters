@@ -36,7 +36,11 @@
           </ion-card>
         </ion-col>
     </ion-row>
-    <div *ngIf="!outlets || outlets.length < 1" class="text-align--center">
+    <div *ngIf="(!outlets || outlets.length < 1) && isSearch " class="text-align--center">
 		Anda tidak memiliki outlet untuk dikelola
+	</div>
+
+	<div *ngIf="(!outlets || outlets.length < 1) && !isSearch " class="text-align--center">
+		Mencari outlet yang anda kelola...
 	</div>
 </ion-content>

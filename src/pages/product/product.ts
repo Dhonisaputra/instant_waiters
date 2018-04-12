@@ -176,24 +176,12 @@ export class ProductPage
 	{
 		this.menuController.enable(false, 'menu2')
 		this.helper.events.unsubscribe('product:filter-type')
-		if(this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3)
-    	{
-	        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
-	        .catch(()=>{
-        	})
-    	}
+		
 	}
 	ionViewWillEnter()
     {
     	this.menuController.enable(true, 'menu2')
     	var index;
-
-    	if(this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3)
-    	{
-	        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
-	        .catch(()=>{
-        	})
-    	}
 
 		this.get_categories();
 
@@ -762,6 +750,7 @@ export class ProductPage
   		let nota_printer = printer_rule.filter((res)=>{
   			return res.printer_page_id == 5; //--> 5 is constanta from database;
   		})
+		  		console.log(printer)
 		
 		let last_session = 0; 
 		if(temp_bill_params)
@@ -807,7 +796,6 @@ export class ProductPage
 				
 
 		  		let group_printer = nota_printer[0].group_outlet_printer_id.split(',');
-
 
 
 		  		this.helper.$.each(group_printer, (i, val)=>{

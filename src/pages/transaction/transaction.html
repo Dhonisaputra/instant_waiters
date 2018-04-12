@@ -32,6 +32,10 @@
 
 
 <ion-content padding>
+	<ion-refresher (ionRefresh)="refresh_data($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    
 	<div *ngIf="!edit_transaction_status">
 		<div>				
 			<ion-row>
@@ -131,8 +135,12 @@
 					</button>
 			    </ion-item-options>
 			</ion-item-sliding>
-			<ion-item *ngIf="items.length < 1" class="text-align--center">
+			<ion-item *ngIf="items.length < 1 && isSearch == true" class="text-align--center">
 				Tidak ditemukan transaksi
+			</ion-item>
+
+			<ion-item *ngIf="items.length < 1 && isSearch == false" class="text-align--center">
+				mencari transaksi outlet...
 			</ion-item>
 
 		</ion-list>

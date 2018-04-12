@@ -72,11 +72,16 @@
 
 
 <ion-content >
+	<ion-refresher (ionRefresh)="refresh_data($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    
 	<div *ngIf="state == 'list'" [@pageTransition]="state" padding>
 		<div class="text-align--center" *ngIf="!data_spend || data_spend.length < 1">
 			Data Tidak Ditemukan 
 		</div>
 		<ion-list *ngIf="data_spend">
+			<ion-item> </ion-item>
 			<ion-item *ngFor="let item of data_spend; let i = index; " (click)="opsiLanjutanSpendItem(i, item)">
 				<h2>{{item.sp_supplier}}</h2>
 				<p>  
@@ -143,7 +148,7 @@
 		 			<ion-list>
 		 				<ion-item *ngIf="spend.sp_type && helper.local.get_params(helper.config.variable.credential).data.serv_id != 1 && helper.local.get_params(helper.config.variable.credential).data.serv_id != 2 ">
 		 					<ion-label class="text-greensea" stacked>Product</ion-label>
-		 					<ion-select [(ngModel)]="spend_item_form.prod_id">
+		 					<ion-select [(ngModel)]="spend_item_form.prod_id"  (ionChange)="item_form_changed()" style="display: flex; justify-content: space-between; align-items: center;">
 		 						<ion-option selected>--Pilih Produk--</ion-option>
 		 						<ion-option *ngFor="let item of products; let i = index;" value="{{item.id}}">{{item.name}}</ion-option>
 		 					</ion-select >
@@ -151,8 +156,8 @@
 
 		 				<ion-item *ngIf="spend.sp_type && (helper.local.get_params(helper.config.variable.credential).data.serv_id == 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id == 2 )">
 		 					<ion-label class="text-greensea" stacked>Ingredient</ion-label>
-		 					<ion-select [(ngModel)]="spend_item_form.ingd_id">
-		 						<ion-option selected>--Pilih Produk--</ion-option>
+		 					<ion-select [(ngModel)]="spend_item_form.ingd_id" (ionChange)="item_form_changed()" style="display: flex; justify-content: space-between; align-items: center;">
+		 						<ion-option selected>--Pilih Bahan--</ion-option>
 		 						<ion-option *ngFor="let item of ingredients; let i = index;" value="{{item.ingd_id}}">{{item.ingd_name}}</ion-option>
 		 					</ion-select >
 		 				</ion-item>
@@ -169,7 +174,7 @@
 
 		 				<ion-item>
 		 					<ion-label class="text-greensea" stacked>Harga per-item</ion-label>
-		 					<ion-input type="number" [(ngModel)]="spend_item_form.sp_dt_price" (input)="countTotal($event)" placeholder="Harga barang per-itemm"> </ion-input>
+		 					<ion-input type="text" [(ngModel)]="spend_item_form.sp_dt_price" (input)="countTotal($event)" value="{{helper.intToIDR(selected_item.ingd_price)}}" placeholder="Harga barang per-itemm"> </ion-input>
 		 				</ion-item>
 
 		 				<ion-item>
@@ -249,18 +254,18 @@
 					<div class=" form-group" padding>
 						<label>Pajak</label>
 						<div class="input-box input-group" style="margin-top: 8px;">
-							<input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" id="" (input)="countTotalSpend()" [(ngModel)]="spend.sp_tax_percent">
+							<input type="text" maxlength="5" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" id="sp_tax_percent" (input)="countTotalSpend_percent()" [(ngModel)]="spend.sp_tax_percent">
 							<span class="input-group-addon" id="basic-addon1"> % </span>
-							<input type="number" class="form-control--lg form-control" name="" id="" placeholder="Pajak nominal" (input)="countTotalSpend()" [(ngModel)]="spend.sp_tax_nominal">
+							<input type="text" class="form-control--lg form-control" name="" id="sp_tax_nominal" placeholder="Pajak nominal" (input)="countTotalSpend_nominal()" [(ngModel)]="spend.sp_tax_nominal">
 						</div>
 					</div>
 
 					<div class=" form-group" padding>
 						<label>Diskon</label>
 						<div class="input-box input-group" style="margin-top: 8px;">
-							<input type="number" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" id="" (input)="countTotalSpend()"[(ngModel)]="spend.sp_disc_percent">
+							<input type="text" maxlength="2" min="1" max="99" class="form-control--lg form-control" name="" style="width: 18%;" id="sp_disc_percent" (input)="countTotalSpend_percent()"[(ngModel)]="spend.sp_disc_percent">
 							<span class="input-group-addon" id="basic-addon1"> % </span>
-							<input type="number" class="form-control--lg form-control" name="" id="" placeholder="Diskon nominal" (input)="countTotalSpend()" [(ngModel)]="spend.sp_disc_nominal">
+							<input type="text" class="form-control--lg form-control" name="" id="sp_disc_nominal" placeholder="Diskon nominal" (input)="countTotalSpend_nominal()" [(ngModel)]="spend.sp_disc_nominal">
 						</div>
 					</div>
 
@@ -271,7 +276,7 @@
 
 				  	<ion-item>
 				    	<ion-label floating>Uang dibayarkan</ion-label>
-				    	<ion-input type="text"  [(ngModel)]="spend.sp_bill"  (input)="changeToIDR($event)"></ion-input>
+				    	<ion-input type="text"  [(ngModel)]="spend.sp_bill" value="{{helper.intToIDR(helper.IDRtoInt(spend.sp_bill))}}" (input)="changeToIDR($event)"></ion-input>
 				  	</ion-item>
 
 				  <ion-item>

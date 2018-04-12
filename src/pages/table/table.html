@@ -19,9 +19,11 @@
 
 
 <ion-content padding>
-  
+  <ion-refresher (ionRefresh)="refresh_data($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
   <ion-row class="center-distributed">
-    <ion-col col-6 col-md-4 col-lg-4 col-xl-4>
+    <ion-col col-9 col-md-4 col-lg-4 col-xl-4>
       
       <div class="tab">
         <label class="tab-item relative"  [ngClass]="{'active': choose_type_order == 1}" (change)="change_order(1)">
@@ -37,13 +39,14 @@
     </ion-col>
   </ion-row>
 
-  <div style="margin: 10px 0px;" class="text-align--center" padding>
-    Silahkan Pilih Meja
+  <div style="margin: 10px 0px;" class="text-align--center" padding *ngIf="tableNum.length < 1">
+    Anda belum menambahkan data meja.
   </div>
+
 	
-	<div class="table-box">
+  <ion-row class="table-box center-distributed" style="margin-top: 25px;">
 		<div class="table-item" absolute-drag *ngFor="let item of tableNum; let i = index" (click)="selectTable(i, item.tab_id)" [ngClass]="{'table-square':helper.local.get_params('configure_table') && item.tab_type == 2,'table-rectangle':helper.local.get_params('configure_table') && item.tab_type == 3, 'selected': is_selected(i)}"> {{item.tab_name}} </div>
-	</div>
+	</ion-row>
   <div class="center">
       <!-- <button ion-button >Selanjutnya >> </button> -->
   </div>

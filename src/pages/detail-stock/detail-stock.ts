@@ -73,12 +73,30 @@ import * as $ from "jquery"
         {
             data_request.ingd = this.product.ingd_id
         }
+        let stockPile = this.helper.loadingCtrl.create({
+            content: "Mengambil data stock"
+        });
+        stockPile.present();
         $.post(url, data_request)
         .then((res)=>{
             res = this.helper.isJSON(res)? JSON.parse(res):res;
             this.log_stock = res.data;
             let stock = this.log_stock[0]?this.log_stock[0].stock_rest : 0;
             this.product.stock_opname = this.product.stock < 1? this.product.stock - this.log_stock[0].stock_rest : stock;
+        })
+        .fail(()=>{
+            this.helper.alertCtrl.create({
+                message: "Tidak terdapat terhubung kedalam sistem.",
+                buttons: ["Tutup", {
+                    text: "Coba lagi",
+                    handler: ()=>{
+                        this.process_get_stock(idproduct)
+                    }
+                }]
+            })
+        })
+        .always(()=>{
+            stockPile.dismiss();
         })
     }
 

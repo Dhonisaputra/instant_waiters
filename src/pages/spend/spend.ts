@@ -37,7 +37,12 @@ export class SpendPage {
     state:any;
     is_restaurant:boolean;
     
-    spend:any={}
+    spend:any={
+        sp_tax_nominal: 0,
+        sp_disc_nominal: 0,
+        sp_disc_percent: 0,
+        sp_tax_percent: 0,
+    }
     spend_item_form:any={};
 
     spend_item:any=[];
@@ -48,6 +53,7 @@ export class SpendPage {
     spend_item_form_state:string='new';
     spend_item_form_index:number;
     view_state:any;
+    selected_item:any={ingd_price:0};
     constructor(public navCtrl: NavController, public navParams: NavParams, public helper:HelperProvider, public product:ProductProvider) {
         this.is_restaurant = helper.local.get_params(helper.config.variable.credential).data.serv_id != 1 || helper.local.get_params(helper.config.variable.credential).data.serv_id != 2
         this.state = 'list';
@@ -83,9 +89,18 @@ export class SpendPage {
     }
     ionViewWillEnter()
     {
-        this.get_data_spend();
         // detect any params
         this.spend.sp_type = this.navParams.get('sp_type');
+        this.spend.actual_sp_type = this.spend.sp_type == 0? 1 : 2;
+        this.get_data_spend();
+    }
+
+    refresh_data($event)
+    {
+        this.get_data_spend()
+        .always(()=>{
+            $event.complete();
+        })
     }
 
     openSpendItem()
@@ -100,6 +115,10 @@ export class SpendPage {
             return false;
         }*/
         this.state='spend_item';
+        this.helper.$('#sp_tax_nominal').val(0)
+        this.helper.$('#sp_disc_nominal').val(0)
+        this.helper.$('#sp_tax_percent').val(0)
+        this.helper.$('#sp_disc_percent').val(0)
     }
 
     get_ingredient_data()
@@ -129,27 +148,68 @@ export class SpendPage {
             if(res.code == 200)
             {
                 this.ingredients = res.data;
+            }else
+            {
+                this.helper.alertCtrl.create({
+                    message: "Tidak dapat mengambil data",
+                    buttons: ["Tutup", {
+                        text: "Coba lagi",
+                        handler: ()=>{
+                            this.get_ingredient_data();
+                        }
+                    }]
+                }).present();
             }
+        })
+        .fail(()=>{
+            this.helper.alertCtrl.create({
+                message: "Tidak dapat mengambil data",
+                buttons: ["Tutup", {
+                    text: "Coba lagi",
+                    handler: ()=>{
+                        this.get_ingredient_data();
+                    }
+                }]
+            }).present();
         })
         .always(()=>{
             loading.dismiss();
         })
     }
 
+    item_form_changed()
+    {
+        this.selected_item = this.ingredients.filter((res)=>{
+            return res.ingd_id == this.spend_item_form.ingd_id
+        })    
+           
+        if(this.selected_item.length > 0)
+        {
+            this.selected_item = this.selected_item[0];
+        }else
+        {
+            this.selected_item = {ingd_price:0}
+        }
+        this.spend_item_form.sp_dt_price = this.selected_item.price
+        console.log()
+        
+    }
     get_data_spend()
     {
+        console.log(this.spend.sp_type)
         let loading = this.helper.loadingCtrl.create({
             content: "Memeriksa data"
         })
         loading.present();
         let url = this.helper.config.base_url('admin/outlet/spend/get');
-        this.helper.$.ajax({
+        return this.helper.$.ajax({
             url: url,
             type: 'POST',
             data: { 
                 outlet_id: this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id,
 
                 where:{
+                    sp_type: this.spend.actual_sp_type,
                     spend_date_only: this.helper.moment().format('YYYY-MM-DD')
                 }
 
@@ -177,6 +237,8 @@ export class SpendPage {
         data.outlet_id= this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
         data.users_outlet_id = this.helper.local.get_params(this.helper.config.variable.credential).data.users_outlet_id;
         data.items = this.spend_item;
+        data.sp_bill = this.helper.IDRtoInt(data.sp_bill)
+
         let url:any;
         if(!this.spend.sp_id)
         {
@@ -186,7 +248,6 @@ export class SpendPage {
             url = this.helper.config.base_url('admin/outlet/spend/update');
         }
 
-        console.log(data)
         this.helper.$.ajax({
             url: url,
             type: 'POST',
@@ -232,6 +293,7 @@ export class SpendPage {
         let total = value * qty;
         this.spend_item_form.sp_dt_total = this.helper.intToIDR(total);
         this.spend_item_form.sp_dt_price = this.helper.intToIDR(value);
+
     }
 
     SaveItem()
@@ -314,6 +376,58 @@ export class SpendPage {
         this.ResetItem();
     }
 
+    countTotalSpend_percent()
+    {
+        let total = 0;
+        let sp_dt_total = this.spend_item.map((res)=>{
+            return this.helper.IDRtoInt(res.sp_dt_total);
+        });
+        this.helper.$.each(sp_dt_total, (i, val)=>{
+            total = total + val;
+        });
+
+        let tax = this.helper.$('#sp_tax_percent');
+        let disc = this.helper.$('#sp_disc_percent');
+
+        let tax_n = this.helper.$('#sp_tax_nominal');
+        let disc_n = this.helper.$('#sp_disc_nominal');
+
+        let tax_v = tax.val()? tax.val() : 0;
+        let disc_v = disc.val()? disc.val() : 0;
+        tax_n.val( this.helper.intToIDR(this.helper.percentToNominal(tax_v, total)) )
+        disc_n.val( this.helper.intToIDR(this.helper.percentToNominal(disc_v, total)) )
+        this.countTotalSpend();
+
+    }
+
+    countTotalSpend_nominal()
+    {
+        let total = 0;
+        let sp_dt_total = this.spend_item.map((res)=>{
+            return this.helper.IDRtoInt(res.sp_dt_total);
+        });
+        this.helper.$.each(sp_dt_total, (i, val)=>{
+            total = total + val;
+        });
+
+        let tax = this.helper.$('#sp_tax_nominal');
+        let disc = this.helper.$('#sp_disc_nominal');
+
+        let tax_p = this.helper.$('#sp_tax_percent');
+        let disc_p = this.helper.$('#sp_disc_percent');
+
+        let tax_v = this.helper.IDRtoInt(tax.val());
+        let disc_v = this.helper.IDRtoInt(disc.val());
+
+        tax_p.val( this.helper.nominalToPercent(tax_v, total) )
+        disc_p.val( this.helper.nominalToPercent(disc_v, total) )
+
+        this.countTotalSpend();
+        
+        tax.val( this.helper.intToIDR(tax_v) )
+        disc.val( this.helper.intToIDR(disc_v) )
+
+    }
     countTotalSpend()
     {
         let sp_dt_total = this.spend_item.map((res)=>{
@@ -325,26 +439,64 @@ export class SpendPage {
             total = total + val;
         });
 
+        let tax = this.helper.$('#sp_tax_nominal');
+        let disc = this.helper.$('#sp_disc_nominal');
+
+        let tax_p = this.helper.$('#sp_tax_percent');
+        let disc_p = this.helper.$('#sp_disc_percent');
+
+        if(tax.val() < 1){tax.val(0);}
+        if(disc.val() < 1){disc.val(0);}
+        if(tax_p.val() < 1){tax_p.val(0);}
+        if(disc_p.val() < 1){disc_p.val(0);}
+
+
+        let tax_nominal = this.helper.$('#sp_tax_nominal').val();
+        let disc_nominal = this.helper.$('#sp_disc_nominal').val();
+
+        tax_nominal = this.helper.IDRtoInt(tax_nominal);
+        tax_nominal = tax_nominal > 0? tax_nominal : 0;
+
+        disc_nominal = this.helper.IDRtoInt(disc_nominal);
+        disc_nominal = disc_nominal > 0? disc_nominal : 0;
+
+
+        /*this.spend.sp_disc_percent = this.spend.sp_disc_percent? this.helper.IDRtoInt(this.spend.sp_disc_percent) : 0
+        this.spend.sp_tax_percent = this.spend.sp_tax_percent? this.helper.IDRtoInt(this.spend.sp_tax_percent) : 0
+
+
         // discount
-        let disc_nominal = this.helper.IDRtoInt(this.spend.sp_disc_nominal) > 0? this.spend.sp_disc_nominal : 0;
-        if(this.spend.sp_disc_percent)
+        if(this.spend.sp_disc_percent > 0)
         {
-            disc_nominal = this.helper.percentToNominal(this.spend.sp_disc_percent, total);
-            this.spend.sp_disc_nominal = disc_nominal
+        }else
+        {
+            this.spend.sp_disc_nominal = 0
         }
+        let disc_nominal = this.helper.IDRtoInt(this.spend.sp_disc_nominal) > 0? this.spend.sp_disc_nominal : 0;
+        disc_nominal = this.helper.percentToNominal(this.spend.sp_disc_percent, total);
+        this.spend.sp_disc_nominal = this.helper.intToIDR(disc_nominal)
 
         // tax
-        let tax_nominal = this.helper.IDRtoInt(this.spend.sp_tax_nominal) > 0? this.spend.sp_tax_nominal : 0;
-        if(this.spend.sp_tax_percent)
+        if(this.spend.sp_tax_percent > 0)
         {
-            tax_nominal = this.helper.percentToNominal(this.spend.sp_tax_percent, total);
-            this.spend.sp_tax_nominal = tax_nominal
+        }else
+        {
+            this.spend.sp_tax_nominal = 0
+
         }
 
+        let tax_nominal = this.helper.IDRtoInt(this.spend.sp_tax_nominal) > 0? this.spend.sp_tax_nominal : 0;
+        tax_nominal = this.helper.percentToNominal(this.spend.sp_tax_percent, total);
+        this.spend.sp_tax_nominal = this.helper.intToIDR(tax_nominal)
+
+        let sp_disc_percent = this.helper.nominalToPercent(disc_nominal, total)
+        let sp_tax_percent = this.helper.nominalToPercent(tax_nominal, total)*/
+
+        
         total = total - disc_nominal + tax_nominal;
 
         this.spend.sp_total = total;
-        this.spend.sp_bill = total;
+        this.spend.sp_bill = this.helper.intToIDR(total);
 
     }
 

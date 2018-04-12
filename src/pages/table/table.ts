@@ -25,7 +25,7 @@ declare let DatecsPrinter:any;
 })
 export class TablePage {
   DatecsPrinter: any;
-  tableNum : any;
+  tableNum : any = [];
   outlet : number;
   tableSelect : any;
   multiple:boolean = false;
@@ -52,12 +52,7 @@ export class TablePage {
   ionViewWillEnter()
   {
     this.detect_parameters();
-    if(this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3)
-      {
-          this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
-          .catch(()=>{
-          })
-      }
+    
 
     if(!this.navParams.data.trigger_event || this.navParams.data.trigger_event != 'table.change' )
     {
@@ -73,27 +68,46 @@ export class TablePage {
 
   ionViewDidLoad() {
     this.outlet = this.helper.local.get_params(this.helper.config.variable.credential).data.outlet_id;
-  
-    this.dbTableProvider.get_table({outlet: this.outlet})
-    .then( (res)=>{
-      res = !this.helper.isJSON(res)? res : JSON.parse(res);
-      if(res.code == 200)
-      {
-        this.tableNum = res.results;
-      }else
-      {
-        alert('Error on getting data')
-      }
+    this.get_data_table();
+
+  }
+
+  refresh_data($event)
+  {
+    this.get_data_table()
+    .then(()=>{
+        $event.complete()
     })
     .catch(()=>{
-        alert('Error on getting data')
+        $event.complete()
     })
-    
-    /*this.local.opendb('outlet')
-    .then((val)=>{
-      this.outlet = val;
-    })*/
-      
+  }
+
+  get_data_table()
+  {
+    return new Promise((resolve, reject)=>{
+      let tableRefresh = this.helper.loadingCtrl.create({
+        content: "Mengambil data meja"
+      })
+      tableRefresh.present();
+      this.dbTableProvider.get_table({outlet: this.outlet})
+      .then( (res)=>{
+        tableRefresh.dismiss();
+        res = !this.helper.isJSON(res)? res : JSON.parse(res);
+        if(res.code == 200)
+        {
+           resolve()
+          this.tableNum = res.results;
+        }else
+        {
+          reject()
+        }
+      })
+      .catch(()=>{
+          reject()
+          tableRefresh.dismiss();
+      })
+    })
   }
 
   selectTable(index:number, tab_id:number)

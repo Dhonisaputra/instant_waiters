@@ -64,6 +64,9 @@
           <button menuClose ion-item (click)="setRoot(debtPage)" *ngIf="helper.local.get_params(helper.config.variable.settings) && helper.local.get_params(helper.config.variable.settings).debt_mode">
             <img src="assets/imgs/icons/debt.png" style="width:25px; height: 25px;"> Hutang
           </button>
+          <button menuClose ion-item (click)="setRoot(kitchenbarPage)">
+          <img src="assets/imgs/icons/realtime.png" style="width:25px; height: 25px;"> Monitoring permintaan
+      </button>
           <button menuClose ion-item (click)="setRoot(settingsPage)">
             <img src="assets/imgs/icons/settings.png" style="width:25px; height: 25px;"> Settings
           </button>
@@ -73,9 +76,7 @@
           <img src="assets/imgs/icons/printer.png" style="width:25px; height: 25px;"> Printer
         </button>
       </div>
-      <button menuClose ion-item (click)="setRoot(kitchenbarPage)">
-          <img src="assets/imgs/icons/realtime.png" style="width:25px; height: 25px;"> Monitoring permintaan
-      </button>
+      
       <button menuClose ion-item (click)="setRoot(aboutPage)">
           <img src="assets/imgs/icons/about.png" style="width:25px; height: 25px;"> Tentang System
       </button>
