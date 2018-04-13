@@ -328,6 +328,8 @@ export class ProductPage
 	    loader.present();
 
 	    loader.onDidDismiss(()=>{
+				window.clearInterval(ct)
+	    	
 		    if(!isFullyLoaded)
 		    {
 		    	this.helper.alertCtrl.create({
@@ -396,6 +398,7 @@ export class ProductPage
 		{
 			this.get_product({data: data, online:true})
 			.then(()=>{
+				window.clearInterval(ct)
 				isFullyLoaded = true;
 				if(refresher.complete)
 				{
@@ -524,7 +527,7 @@ export class ProductPage
 				payment_date_only: moment().format('YYYY-MM-DD'),
 				payment_nominal: 0,
 				payment_cancel_status: 0,
-				
+
 			}
 		})
 		.then((res) => {

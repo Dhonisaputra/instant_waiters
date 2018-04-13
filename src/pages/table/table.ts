@@ -91,7 +91,7 @@ export class TablePage {
       })
       tableRefresh.present();
       this.dbTableProvider.get_table({outlet: this.outlet})
-      .then( (res)=>{
+      .done( (res)=>{
         tableRefresh.dismiss();
         res = !this.helper.isJSON(res)? res : JSON.parse(res);
         if(res.code == 200)
@@ -102,6 +102,10 @@ export class TablePage {
         {
           reject()
         }
+      })
+      .fail(()=>{
+
+          reject()
       })
       .catch(()=>{
           reject()
