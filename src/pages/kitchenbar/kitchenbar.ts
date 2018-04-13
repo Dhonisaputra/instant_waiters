@@ -91,6 +91,15 @@ export class KitchenbarPage {
       }
     }
 
+    refresh_data($event)
+    {
+        this.filter_transaction()
+        .then((res)=>{
+            $event.complete();
+        })
+
+    }
+
     ionViewDidLoad() {
         this.helper.events.subscribe("monitoring_request:refresh", (res)=>{
             this.filter_transaction();
@@ -125,7 +134,6 @@ export class KitchenbarPage {
             if(res.code == 200)
             {
                 this.filter_transaction();
-                console.log(item.pay_dt_order_status)
                 switch (parseInt(item.pay_dt_order_status)) {
                     case 0:
                         this.helper.toast.create({
@@ -175,18 +183,18 @@ export class KitchenbarPage {
         let url = this.config.base_url('admin/outlet/transaction/realtime/kitchenbar')
         let included_data = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id != 3? [0,1] : [0,1,2]
         let ndata = {
-            "where":{
-                "outlet_id": this.outlet,
-                "pay_dt_date_now": this.helper.moment('YYYY-MM-DD')
+            where    :{
+                outlet_id         : this.outlet,
+                pay_dt_date_now   : this.helper.moment('YYYY-MM-DD')
             },
-            in : [['pay_dt_order_status', included_data]],
-            "join":["md_prod_type","tr_payment","mg_member"],
-            "group_by":"pay_id,pay_dt_order_session",
-            "order_by":"date ASC",
+            in       : [['pay_dt_order_status', included_data]],
+            join     : ["md_prod_type","tr_payment","mg_member"],
+            group_by : "pay_id,pay_dt_order_session",
+            order_by : "date ASC",
         }
         data.data = Object.assign(ndata, data.data)
-        return $.post(url, data.data)
-        .done((res) => {
+        return this.helper.loading_countdown({url:url, data:data.data})
+        .then((res:any) => {
 
             res = !this.helper.isJSON(res)? res : JSON.parse(res); 
             if(res.code == 200)
@@ -203,11 +211,13 @@ export class KitchenbarPage {
                 }
             }else
             {
-                alert('Error occured while fetching data transaction!')
+                this.helper.alertCtrl.create({
+                    title: "Kesalahan",
+                    message: "Kesalahan saat pengambilan data.",
+                    buttons: []
+                }).present()
             }
-        })
-        .always( ()=>{
-        } )
+        });
     }
 
     product_sort() {

@@ -72,55 +72,40 @@ export class OutletListPage {
 
     get_outlet_refresh($event)
     {
-        this.get_outlet()
-        .done(()=>{
-            if(typeof $event.complete == 'function')
-            {
+        let aj = this.get_outlet()
+        aj
+        .then(()=>{
+            
                 $event.complete();
-            }
         })
-
     }
 
     get_outlet()
     {
-        if(!this.helper.local.get_params(this.helper.config.variable.credential))
-        {
-            this.navCtrl.setRoot(LoginPage)
-            return false;
-        }
+        return new Promise((resolve, reject)=>{
 
-        let loading = this.helper.loadingCtrl.create({
-            content: "Mengambil data outlet"
-        })
-        loading.present();
+            if(!this.helper.local.get_params(this.helper.config.variable.credential))
+            {
+                this.navCtrl.setRoot(LoginPage)
+                return false;
+            }
 
-        let users_id = this.helper.local.get_params(this.helper.config.variable.credential).users.users_id;
-        let url = this.helper.config.base_url('admin/outlet/employee');
-        let ajax = this.helper.$.post(url, {users_id:users_id, smartphone:true, uuid:this.uid})
-        .done((res)=>{
-            loading.dismiss()
-            res = JSON.parse(res)
-            this.outlets = res
+            let users_id = this.helper.local.get_params(this.helper.config.variable.credential).users.users_id;
+            let url = this.helper.config.base_url('admin/outlet/employee');
+            this.helper.loading_countdown({url: url, data: {users_id:users_id, smartphone:true, uuid:this.uid} })
+            .then((res:any)=>{
+                console.log(res)
+                res = JSON.parse(res)
+                this.outlets = res
+                this.isSearch = true;
+                resolve(res)
+            })
+            .catch(()=>{
+                reject()
+                this.isSearch = true;
+                this.outlets = []
+            })
         })
-        .fail(()=>{
-            this.helper.alertCtrl.create({
-                title: "Kesalahan",
-                message: "Tidak dapat tersambung dengan sistem.",
-                buttons: ["Tutup", {
-                    text: "Coba lagi",
-                    handler: ()=>{
-                        this.get_outlet();
-                    }
-                }]
-            }).present();
-        })
-        .always(()=>{
-            this.isSearch = true;
-            loading.dismiss()
-        })
-
-        return ajax;
     }
 
     selectOutlet(item)

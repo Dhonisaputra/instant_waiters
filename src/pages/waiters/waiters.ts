@@ -321,11 +321,6 @@ export class WaitersPage {
 	refresh_data(refresher:any={})
 	{
 		let variable = this.helper.local.get_params(this.helper.config.variable.credential);
-		
-		let loader = this.loadingCtrl.create({
-	      content: "Mengambil data. Silahkan tunggu",
-	    });
-	    loader.present();
 	    
 		let data:any = {outlet:this.outlet}
 		if(this.filter_sort_product != '')
@@ -376,7 +371,6 @@ export class WaitersPage {
 			{
 				refresher.complete();
 			}
-			loader.dismiss();
 		})
 	}
 

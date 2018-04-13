@@ -33,10 +33,15 @@ export class ProductProvider {
 			this.last_options = options;
 			this.last_request = options.data;
 
-			let http = $.post( this.config.base_url('admin/outlet/product/get'), options.data )
+			// let http = $.post( this.config.base_url('admin/outlet/product/get'), options.data )
+			let http = this.helper.loading_countdown({
+				url: this.config.base_url('admin/outlet/product/get'),
+				data: options.data
+			});
+
 			http.then( (res) =>{
-				res = !this.helper.isJSON(res)? res : JSON.parse(res);
-				this.data.temp_product = res;
+				// res = !this.helper.isJSON(res)? res : JSON.parse(res);
+				// this.data.temp_product = res;
 			} )
 			return http;
 			

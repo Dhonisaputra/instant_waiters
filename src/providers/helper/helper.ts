@@ -22,217 +22,357 @@ import * as html2canvas from "html2canvas";
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
-*/
-@Injectable()
-export class HelperProvider {
-  public $:any=$;
-  public moment:any=moment;
-  public html2canvas:any=html2canvas;
-  public outlet:any;
-  public users_outlet:any;
-  public win: any;
-  private defaultTimeout: Number = 100;
-  audioType: string = 'html5';
-  sounds: any = [];
-  constructor(
-    public http: HttpClient, 
-    public config: ConfigProvider, 
-    public toast:ToastController, 
-    public alertCtrl:AlertController, 
-    public loadingCtrl: LoadingController, 
-    public local: DbLocalProvider, 
-    public storage:Storage,
-    public actionSheet: ActionSheetController,
-    public events:Events,
-    public popoverCtrl:PopoverController,
-    public platform: Platform,
-    public printer: PrinterServiceProvider,
-    public ajax: HTTP,
-    public localNotifications: LocalNotifications,
-    public airemote: AiRemoteProvider,
-    public nativeAudio: NativeAudio,
+  */
+  @Injectable()
+  export class HelperProvider {
+      public $:any=$;
+      public moment:any=moment;
+      public html2canvas:any=html2canvas;
+      public outlet:any;
+      public users_outlet:any;
+      public win: any;
+      private defaultTimeout: Number = 100;
+      audioType: string = 'html5';
+      sounds: any = [];
+      constructor(
+          public http: HttpClient, 
+          public config: ConfigProvider, 
+          public toast:ToastController, 
+          public alertCtrl:AlertController, 
+          public loadingCtrl: LoadingController, 
+          public local: DbLocalProvider, 
+          public storage:Storage,
+          public actionSheet: ActionSheetController,
+          public events:Events,
+          public popoverCtrl:PopoverController,
+          public platform: Platform,
+          public printer: PrinterServiceProvider,
+          public ajax: HTTP,
+          public localNotifications: LocalNotifications,
+          public airemote: AiRemoteProvider,
+          public nativeAudio: NativeAudio,
 
-    ) {
-      this.win = window;
-      
-      console.log('Hello HelperProvider Provider');
-      this.platform.ready().then(() => {
-        if (this.win.cordova && !this.win.DatecsPrinter) {
-          console.warn("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
-        }
-      });
-      if(platform.is('cordova')){
-          this.audioType = 'native';
+          ) {
+          this.win = window;
+
+          console.log('Hello HelperProvider Provider');
+          this.platform.ready().then(() => {
+              if (this.win.cordova && !this.win.DatecsPrinter) {
+                  console.warn("DatecsPrinter plugin is missing. Have you installed the plugin? \nRun 'cordova plugin add cordova-plugin-datecs-printer'");
+              }
+          });
+          if(platform.is('cordova')){
+              this.audioType = 'native';
+          }
       }
-  }
+
+      uniqid()
+      {
+          var unique = function(origArr) {
+                var newArr = [],
+                    origLen = origArr.length,
+                    found, x, y;
+
+                for (x = 0; x < origLen; x++) {
+                    found = undefined;
+                    for (y = 0; y < newArr.length; y++) {
+                        if (origArr[x] === newArr[y]) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        newArr.push(origArr[x]);
+                    }
+                }
+                return newArr;
+            };
+
+            var uniqID = function() {
+                var ts = +new Date;
+                var tsStr = ts.toString();
+
+                var arr = tsStr.split('');
+                var rev = arr.reverse();
+
+
+                var filtered = unique(rev);
+
+                return filtered.join('');
+
+            };
+
+            return uniqID();
+
+      }
+      send_error(text)
+      {
+          // let url = this.config.base_url('')
+          // this.$.post()
+      }
+      loading_countdown(ajax:any, options:any={duration:5000})
+      {
+          return new Promise((resolve, reject) =>
+          {
+
+              // uniqid
+              let uniq = this.uniqid();
+              // each time increase time
+              let increase = options.increase||10000;
+              // maximum time.
+              let max_load = options.max_load||50000;
+              // duration
+              let duration = options.duration||30000;
+              let isFullyLoaded = false;
+              let variable = this.local.get_params(this.config.variable.credential);
+              let cti = options.duration||increase
+
+              // set loading
+              let loader = this.loadingCtrl.create({
+                  content: "Mengambil data. Silahkan tunggu! <span class='"+uniq+"'> "+(options.duration/1000)+" </span> detik",
+                  duration: options.duration||duration,
+              });
+
+              let ct = window.setInterval(()=>{
+                  cti = cti - 1000;
+                  this.$('.'+uniq).text(cti/1000);
+                  if(cti == 0)
+                  {
+                      window.clearInterval(ct)
+
+                  }
+              }, 1000);
+              loader.present();
+
+              let deff_aj = {type: 'POST'}
+              ajax = Object.assign(deff_aj, ajax);
+
+               let aj = this.$.ajax(ajax)
+              .done((res)=>{
+                  loader.dismiss();
+                  window.clearInterval(ct)
+                  isFullyLoaded = true;
+                  resolve(res);
+              })
+
+              loader.onDidDismiss(()=>{
+                  window.clearInterval(ct)
+
+                  if(!isFullyLoaded)
+                  {
+                      aj.abort();
+                      this.alertCtrl.create({
+                          title: "Gagal mengambil data.",
+                          message: "Coba lagi?",
+                          buttons: [{
+                              text: "Tidak",
+                              handler: ()=>{
+                                  loader.dismiss();
+                                  resolve([]);
+                              }
+                          }, {
+                              text: "Ya",
+                              handler: ()=>{
+                                  options.duration = options.duration + increase;
+                                  options.reload = false;
+                                  if(options.duration > max_load)
+                                  {
+                                      options.duration = 5000;
+                                  }
+                                  this.loading_countdown(ajax, options)
+                              }
+                          }]
+                      }).present();
+                  }  
+              });
+
+             
+              /*.catch(()=>{
+                  loader.dismiss();
+                  window.clearInterval(ct)
+                 this.alertCtrl.create({
+                     title: "Kesalahan sambungan",
+                     message: "Tidak dapat tersambung kedalam sistem. Pastikan koneksi internet anda stabil",
+                     buttons: ["Tutup", {
+                         text: "Ulangi",
+                         handler: ()=>{
+                             this.loading_countdown(fn, options)
+                         }
+                     }]
+                 }).present();
+                 reject();
+              })*/
+        });
+          
+      }
 
   /*
 	Source
 	- https://faisalman.com/2012/02/27/konversi-angka-ke-format-rupiah-di-javascript/
-  */
-  intToIDR(angka:any)
-  {
-  	var rev     = parseInt(angka, 10).toString().split('').reverse().join('');
-    var rev2    = '';
-    for(var i = 0; i < rev.length; i++){
-        rev2  += rev[i];
-        if((i + 1) % 3 === 0 && i !== (rev.length - 1)){
-            rev2 += '.';
-        }
-    }
-    return rev2.split('').reverse().join('');
- 
-  }
-
-  nativeWindow()
-  {
-    return window;
-  }
-
-  IDRtoInt(angka:any)
-  {
-
-    angka = angka? angka.toString() : '0';
-  	return parseInt(angka.replace(/,.*|\D/g,''),10)
-
-  }
-
-  isJSON(str) 
-  {
-  	try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return {status:true, result: JSON.parse(str)};
-  }
-
-  nominalToPercent(nominal:number, total:number)
-  {
-    return ((nominal/total)*100).toFixed(1);
-  }
-
-  percentToNominal(percent:number, total:number)
-  {
-    return total * (percent/100);
-  }
-
-  toInt(text:any)
-  {
-    return parseInt(text)
-  }
-
-  clone_object(data)
-  {
-    return Object.assign({}, data)
-  }
-
-  html_encode(value)
-  {
-      return $('<div/>').text(value).html();
-  }
-
-  html_decode(value)
-  {
-      return $('<div/>').html(value).text();
-  }
-
-  get_initial_outlet_name(name:string, join:string=null)
-  {
-    let nameArr = name.replace(/[^A-Za-z0-9]/g, ' ').split(' ');
-    let initialName:any=[];
-    $.each(nameArr, (i, val)=>{
-      initialName.push(val[0])
-    })
-    if(join)
+    */
+    intToIDR(angka:any)
     {
-      return initialName.join(join);
-    }
-    return initialName;
-  }
+        var rev     = parseInt(angka, 10).toString().split('').reverse().join('');
+        var rev2    = '';
+        for(var i = 0; i < rev.length; i++){
+            rev2  += rev[i];
+            if((i + 1) % 3 === 0 && i !== (rev.length - 1)){
+                rev2 += '.';
+            }
+        }
+        return rev2.split('').reverse().join('');
 
-  outlet_initial_name()
-  {
-    let outletName = this.local.get_params(this.config.variable.credential).outlet.outlet_name? this.local.get_params(this.config.variable.credential).outlet.outlet_name : 'OUTLET';
-    return this.get_initial_outlet_name(outletName, '.');
-  }
+    }
+
+    nativeWindow()
+    {
+        return window;
+    }
+
+    IDRtoInt(angka:any)
+    {
+
+        angka = angka? angka.toString() : '0';
+        return parseInt(angka.replace(/,.*|\D/g,''),10)
+
+    }
+
+    isJSON(str) 
+    {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return {status:true, result: JSON.parse(str)};
+    }
+
+    nominalToPercent(nominal:number, total:number)
+    {
+        return ((nominal/total)*100).toFixed(1);
+    }
+
+    percentToNominal(percent:number, total:number)
+    {
+        return total * (percent/100);
+    }
+
+    toInt(text:any)
+    {
+        return parseInt(text)
+    }
+
+    clone_object(data)
+    {
+        return Object.assign({}, data)
+    }
+
+    html_encode(value)
+    {
+        return $('<div/>').text(value).html();
+    }
+
+    html_decode(value)
+    {
+        return $('<div/>').html(value).text();
+    }
+
+    get_initial_outlet_name(name:string, join:string=null)
+    {
+        let nameArr = name.replace(/[^A-Za-z0-9]/g, ' ').split(' ');
+        let initialName:any=[];
+        $.each(nameArr, (i, val)=>{
+            initialName.push(val[0])
+        })
+        if(join)
+        {
+            return initialName.join(join);
+        }
+        return initialName;
+    }
+
+    outlet_initial_name()
+    {
+        let outletName = this.local.get_params(this.config.variable.credential).outlet.outlet_name? this.local.get_params(this.config.variable.credential).outlet.outlet_name : 'OUTLET';
+        return this.get_initial_outlet_name(outletName, '.');
+    }
 
   // audio
   preload(key, asset) {
- 
-        if(this.audioType === 'html5'){
- 
-            let audio = {
-                key: key,
-                asset: asset,
-                type: 'html5'
-            };
- 
-            this.sounds.push(audio);
- 
-        } else {
- 
-            this.nativeAudio.preloadSimple(key, asset);
- 
-            let audio = {
-                key: key,
-                asset: key,
-                type: 'native'
-            };
- 
-            this.sounds.push(audio);
-        }      
- 
-    }
- 
-    play(key){
- 
-        let audio = this.sounds.find((sound) => {
-            return sound.key === key;
-        })
- 
-        if(audio.type === 'html5'){
- 
-            let audioAsset = new Audio(audio.asset);
-            audioAsset.play();
- 
-        } else {
- 
-            this.nativeAudio.play(audio.asset).then((res) => {
-                console.log(res);
-            }, (err) => {
-                console.log(err);
-            })
-            .catch(()=>{
 
-            })
- 
-        }
- 
-    }
+      if(this.audioType === 'html5'){
 
-    zoom(type:string="in")
-    {
+          let audio = {
+              key: key,
+              asset: asset,
+              type: 'html5'
+          };
+
+          this.sounds.push(audio);
+
+      } else {
+
+          this.nativeAudio.preloadSimple(key, asset);
+
+          let audio = {
+              key: key,
+              asset: key,
+              type: 'native'
+          };
+
+          this.sounds.push(audio);
+      }      
+
+  }
+
+  play(key){
+
+      let audio = this.sounds.find((sound) => {
+          return sound.key === key;
+      })
+
+      if(audio.type === 'html5'){
+
+          let audioAsset = new Audio(audio.asset);
+          audioAsset.play();
+
+      } else {
+
+          this.nativeAudio.play(audio.asset).then((res) => {
+              console.log(res);
+          }, (err) => {
+              console.log(err);
+          })
+          .catch(()=>{
+
+          })
+
+      }
+
+  }
+
+  zoom(type:string="in")
+  {
       // this.navParams.data.zoom('out')
       this.events.publish('zoom.controller', {event: type})
-    }
+  }
 
-    lead_zero(value, length)
-    {
-        length = length || 5;
-        value = value.toString();
-        let val_len = value.length;
-        if(val_len < length)
-        {
-            let chunk = length - val_len;
-            let text = '';
-            for (var i = 0; i < chunk; i++) {
-                text += '0';
-            }
-            return text+value; 
-        }
-        return value;
+  lead_zero(value, length)
+  {
+      length = length || 5;
+      value = value.toString();
+      let val_len = value.length;
+      if(val_len < length)
+      {
+          let chunk = length - val_len;
+          let text = '';
+          for (var i = 0; i < chunk; i++) {
+              text += '0';
+          }
+          return text+value; 
+      }
+      return value;
 
-    }
+  }
 
 }
