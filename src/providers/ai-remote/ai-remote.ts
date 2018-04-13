@@ -64,6 +64,11 @@ export class AiRemoteProvider {
             dismissOnPageChange: false
         });
         
+        this.network.onchange()
+        .subscribe((res)=>{
+            console.log(res)
+        })
+
         this.network.onDisconnect().subscribe(() => {
             conn.present();
             contoasting.present();

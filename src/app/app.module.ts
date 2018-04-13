@@ -61,6 +61,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { HTTP } from '@ionic-native/http';
 import { AiRemoteProvider } from '../providers/ai-remote/ai-remote';
 import { Network } from '@ionic-native/network';
+import { BackgroundMode } from '@ionic-native/background-mode';
 // import { AbsoluteDragDirective } from '../directives/absolute-drag/absolute-drag';  
 
 @NgModule({
@@ -162,6 +163,7 @@ import { Network } from '@ionic-native/network';
     HTTP,
     AiRemoteProvider,
     Network,
+    BackgroundMode,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

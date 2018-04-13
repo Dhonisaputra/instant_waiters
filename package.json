@@ -21,6 +21,7 @@
     "@angular/http": "5.0.3",
     "@angular/platform-browser": "5.0.3",
     "@angular/platform-browser-dynamic": "5.0.3",
+    "@ionic-native/background-mode": "^4.7.0",
     "@ionic-native/bluetooth-serial": "^4.5.3",
     "@ionic-native/core": "4.4.0",
     "@ionic-native/device": "^4.5.3",
@@ -42,6 +43,7 @@
     "cordova-android": "~6.3.0",
     "cordova-browser": "~5.0.3",
     "cordova-plugin-advanced-http": "^1.11.0",
+    "cordova-plugin-background-mode": "^0.7.2",
     "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
     "cordova-plugin-device": "^1.1.7",
@@ -95,7 +97,8 @@
       "cordova-plugin-local-notification": {},
       "cordova-plugin-nativeaudio": {},
       "cordova-plugin-thermalprint": {},
-      "cordova-plugin-network-information": {}
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-background-mode": {}
     },
     "platforms": [
       "browser",

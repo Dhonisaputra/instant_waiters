@@ -27,6 +27,33 @@
 
 
 <ion-content padding>
+	<ion-grid>
+		<ion-row>
+			<ion-col col-4>
+
+				<ion-list>
+					<ion-item></ion-item>
+					<ion-item>
+					  	<ion-label> Using Bluetooth</ion-label>
+					  	<ion-toggle checked="false"></ion-toggle>
+					</ion-item>
+					<ion-item>
+						<ion-label floating>Alamat printer</ion-label>
+						<ion-input type="text"></ion-input>
+					</ion-item>
+
+					<ion-item>
+						<ion-label floating>Password</ion-label>
+						<ion-input type="password"></ion-input>
+					</ion-item>
+
+				</ion-list>
+			</ion-col>
+
+		</ion-row>
+		
+	</ion-grid>
+
 	<ion-list>
 	  	<button ion-item *ngIf="default_printer && default_printer.aliasName">
 			<ion-icon ios="ios-bluetooth" md="md-bluetooth"></ion-icon>

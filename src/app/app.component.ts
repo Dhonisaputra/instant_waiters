@@ -21,6 +21,7 @@ import { KitchenbarPage } from '../pages/kitchenbar/kitchenbar';
 
 
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { HelperProvider } from '../providers/helper/helper'; 
 @Component({
@@ -52,7 +53,7 @@ export class MyApp {
   public routeHistory: Array<any>;
 
 
-  constructor(public toastCtrl: ToastController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public helper:HelperProvider, private screenOrientation: ScreenOrientation) {
+  constructor(public backgroundMode: BackgroundMode, public toastCtrl: ToastController, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public helper:HelperProvider, private screenOrientation: ScreenOrientation) {
     this.splashScreen.show();
 
     this.initializeApp();
@@ -70,6 +71,10 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      if(!this.backgroundMode.isEnabled())
+      {
+        this.backgroundMode.enable();
+      }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
 

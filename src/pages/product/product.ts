@@ -306,15 +306,50 @@ export class ProductPage
 		})
 	}
 
-	refresh_data(refresher:any={})
+	refresh_data(refresher:any={}, options:any={duration:15000, reload: true})
 	{
+		let isFullyLoaded = false;
 		let variable = this.helper.local.get_params(this.helper.config.variable.credential);
-		
+		let cti = options.duration||30000
 		let loader = this.loadingCtrl.create({
-	      content: "Mengambil data. Silahkan tunggu",
+	      	content: "Mengambil data. Silahkan tunggu! <span class='cti_scnds'> </span> detik",
+	      	duration: options.duration||30000,
 	    });
+
+		let ct = window.setInterval(()=>{
+			this.helper.$('.cti_scnds').text(cti/1000);
+			if(cti == 0)
+			{
+				window.clearInterval(ct)
+				
+			}
+			cti = cti - 1000;
+		}, 1000);
 	    loader.present();
-	    
+
+	    loader.onDidDismiss(()=>{
+		    if(!isFullyLoaded)
+		    {
+		    	this.helper.alertCtrl.create({
+					title: "Gagal mengambil data.",
+					message: "Coba lagi?",
+					buttons: [{
+						text: "Tidak",
+						handler: ()=>{
+							loader.dismiss();
+						}
+					}, {
+						text: "Ya",
+						handler: ()=>{
+							options.duration = options.duration + 15000;
+							options.reload = false;
+							this.refresh_data(refresher, options)
+						}
+					}]
+				}).present();
+		    }	
+	    })
+
 		let data:any = {outlet:this.outlet}
 		if(this.filter_sort_product != '')
 		{
@@ -357,15 +392,18 @@ export class ProductPage
 		}
 
 		data.page = 1;
-
-		this.get_product({data: data, online:true})
-		.then(()=>{
-			if(refresher.complete)
-			{
-				refresher.complete();
-			}
-			loader.dismiss();
-		})
+		if(options.reload)
+		{
+			this.get_product({data: data, online:true})
+			.then(()=>{
+				isFullyLoaded = true;
+				if(refresher.complete)
+				{
+					refresher.complete();
+				}
+				loader.dismiss();
+			})
+		}
 	}
 
 	infinite_product(ev:any={})
@@ -485,6 +523,8 @@ export class ProductPage
 			where: {
 				payment_date_only: moment().format('YYYY-MM-DD'),
 				payment_nominal: 0,
+				payment_cancel_status: 0,
+				
 			}
 		})
 		.then((res) => {

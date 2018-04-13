@@ -97,69 +97,82 @@ export class TransactionPage {
     {
         this.get_transaction(this.transaction_params)
         .then(()=>{
-            if($event.complete == 'function')
+            if($event)
             {
                 $event.complete();
             }
+        })
+        .catch(()=>{
+            if($event)
+            {
+                $event.complete();
+            }  
         })
     }
 
     get_transaction(data:any={data:{}})
     {
-        let loadingData = this.loadingCtrl.create({
-          content: "Silahkan tunggu"
-        });
+        return new Promise((resolve, reject)=>{
 
-        loadingData.present();
-        this.transaction_params = data;
+            let loadingData = this.loadingCtrl.create({
+              content: "Silahkan tunggu"
+            });
 
-        let url = this.config.base_url('admin/outlet/transaction/get')
-        return $.post(url, data.data)
-        .done((res) => {
+            loadingData.present();
+            this.transaction_params = data;
 
-            res = !this.helper.isJSON(res)? res : JSON.parse(res); 
-            if(res.code == 200)
-            {
+            let url = this.config.base_url('admin/outlet/transaction/get')
+            return $.post(url, data.data)
+            .done((res) => {
 
-                if(data.infinite == true)
+                res = !this.helper.isJSON(res)? res : JSON.parse(res); 
+                if(res.code == 200)
                 {
-                    this.items = this.items.concat(res.data);
-                    this.original_items = this.original_items.concat(res.data);
+                    resolve();
+
+                    if(data.infinite == true)
+                    {
+                        this.items = this.items.concat(res.data);
+                        this.original_items = this.original_items.concat(res.data);
+                    }else
+                    {
+                        this.items = res.data;
+                        this.original_items = res.data;
+                    }
                 }else
                 {
-                    this.items = res.data;
-                    this.original_items = res.data;
+                    loadingData.dismiss();
+                    this.helper.alertCtrl.create({
+                        title: "Gagal mengambil data transaksi",
+                        buttons: ["Tutup", {
+                            text: "Coba kembali",
+                            handler: ()=>{
+                                this.get_transaction(data)
+                            }
+                        }]
+                    }).present();
+                    reject();
                 }
-            }else
-            {
-                loadingData.dismiss();
+            })
+            .fail(()=>{
                 this.helper.alertCtrl.create({
-                    title: "Gagal mengambil data transaksi",
-                    buttons: ["Tutup", {
-                        text: "Coba kembali",
-                        handler: ()=>{
-                            this.get_transaction(data)
-                        }
-                    }]
-                }).present();
-            }
-        })
-        .fail(()=>{
-            this.helper.alertCtrl.create({
-                    title: "Gagal terhubung kedalam sistem",
-                    buttons: ["Tutup", {
-                        text: "Coba kembali",
-                        handler: ()=>{
-                            this.get_transaction(data)
-                        }
-                    }]
-                }).present();
-        })
-        .always( ()=>{
-            this.isSearch = true;
-            loadingData.dismiss();
-            
-        } )
+                        title: "Gagal terhubung kedalam sistem",
+                        buttons: ["Tutup", {
+                            text: "Coba kembali",
+                            handler: ()=>{
+                                this.get_transaction(data)
+                            }
+                        }]
+                    }).present();
+                reject();
+            })
+            .always( ()=>{
+                this.isSearch = true;
+                loadingData.dismiss();
+                
+            } );
+        });
+
     }
 
     product_sort() {
@@ -286,7 +299,7 @@ export class TransactionPage {
     pay_transaction(i, item)
     {
         item = Object.assign({}, item)
-        this.navCtrl.push(ProductPage, {
+        this.navCtrl.setRoot(ProductPage, {
             previous: 'transaction-page',
             event: 'transaction.edit',
             trigger_event: 'product.pay',
@@ -315,11 +328,18 @@ export class TransactionPage {
     {
         if(!this.navParams.data.event)
         {
-            console.log(item)
             this.advanceOptions(index, item);
         }else
         {
-            this.pay_transaction(index, item)
+            if(item.payment_nominal < 0 && item.paid_date == '0000-00-00 00:00:00')
+            {
+                // bayar
+                this.pay_transaction(index, item)
+            }else
+            {
+                // tampilkan opsi
+                this.advanceOptions(index, item);
+            }
         }
     }
 
