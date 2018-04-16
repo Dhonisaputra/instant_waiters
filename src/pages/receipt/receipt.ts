@@ -53,6 +53,7 @@ export class ReceiptPage {
 		// update data
 
 		// event listener to update bill
+		console.log(this)
 	  	events.subscribe('bill.update', (data) => {
 	  		this.trigger_update_receipt();
 		});
@@ -125,6 +126,13 @@ export class ReceiptPage {
     get_orders()
     {
     	let orders = this.billProvider.get_bill_component('orders')
+
+    	return orders;
+    }
+
+    get_bill()
+    {
+    	let orders = this.billProvider.bill
 
     	return orders;
     }
@@ -360,6 +368,29 @@ export class ReceiptPage {
 					text: 'Pilih Member',
 					handler: () => {
 						this.openFormDataMember()
+					}
+				}
+			]
+		}).present()
+	}
+
+	optionTable()
+	{
+		let visitor_name =  this.bill.visitor_name;
+		this.helper.actionSheet.create({
+			title: 'Opsi lanjutan',
+			buttons: [{
+					text: 'Pilih meja',
+					handler: () => {
+						this.change_table()
+					}
+				},
+				{
+					text: 'Hapus meja',
+					handler: () => {
+						this.billProvider.set_bill_component('table', undefined);
+						this.billProvider.set_bill_component('table_id', undefined);
+						this.billProvider.set_bill_component('table_name', undefined);
 					}
 				}
 			]

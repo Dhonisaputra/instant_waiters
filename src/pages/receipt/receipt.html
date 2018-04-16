@@ -13,11 +13,11 @@
 			</div>
 			<ion-row class="receipt-headinput">
 				<ion-col col-5>
-					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--table"  placeholder="Nomor Meja" [disabled]="can_edit_table" [(ngModel)]="bill.table_name" (input)="update_receipt()" (click)="change_table()">
+					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--table"  placeholder="Nomor Meja" [disabled]="can_edit_table" value="{{get_bill().table_name}}" (click)="change_table()" (press)="optionTable()">
 				</ion-col>
 				<ion-col col-2></ion-col>
 				<ion-col col-5>
-					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer"  placeholder="Atas nama" [disabled]="can_edit_visitor_name" [(ngModel)]="bill.visitor_name" (input)="update_receipt()" (press)="optionVisitor()">
+					<input type="text" name="" class="text-align--center form-control form-receipt--border-bottom form-receipt--customer"  placeholder="Atas nama" [disabled]="can_edit_visitor_name" value="{{get_bill().visitor_name}}" (press)="optionVisitor()" (input)="update_receipt()">
 				</ion-col>
 			</ion-row>	
 		</div>

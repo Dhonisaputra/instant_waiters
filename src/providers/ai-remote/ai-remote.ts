@@ -103,7 +103,7 @@ export class AiRemoteProvider {
     {
         return {
             host:'https://folariumremote.herokuapp.com/',
-            apiKey:'5pFv2d0zM7z7iM/LekW8izupPjzhtmgqgVQXKz2y+VwQqZoU8hhy8N64h9zdOokbPZxxh5APqQ4wQPBysBVmJa0=' ,
+            apiKey:'instantFolar3030' ,
             id:undefined
         }
     }
@@ -161,6 +161,12 @@ export class AiRemoteProvider {
                 }).present();
             })
 
+            this.subscribe('app.outlet_list:refresh', (res)=>{
+                if(res.uuid && res.uuid == uuid){
+                    this.events.publish('outlet_list.refresh')
+                }
+            })
+
             if(this.local.get_params(this.config.variable.credential).outlet.outlet_roles_id != 3)
             {
 
@@ -179,34 +185,43 @@ export class AiRemoteProvider {
                 })
             }
 
-            this.subscribe('app.'+uuid+'.'+outlet_id+'.authority.revoke', (res)=>{
+            this.subscribe('app.'+uuid+'.'+outlet_id+'.authority:revoke', (res)=>{
+                isLogin = this.local.get_params('login_outlet_device')
+
                 if(!isLogin)
                 {
                     this.events.publish('outlet_list.refresh')
                     return false;
                 }
-                if(res.uuid && res.uuid == uuid){return false;}
-                this.alert.create({
-                    title: "Anda telah dikeluarkan oleh admin",
-                    subTitle: "Hak akses Anda telah dicabut oleh admin dari outlet ini. Silahkan hubungi admin outlet anda untuk keterangan lebih lanjut!",
-                    buttons: [{
-                        text: "Tutup",
-                        handler: ()=>{
-                            this.events.publish('outlet.signout')
-                        }
-                    }]
-                }).present();
+                
+                if(res.uuid && res.uuid == uuid){
+                    this.alert.create({
+                        title: "Anda telah dikeluarkan oleh admin",
+                        subTitle: "Hak akses Anda telah dicabut oleh admin dari outlet ini. Silahkan hubungi admin outlet anda untuk keterangan lebih lanjut!",
+                        buttons: [{
+                            text: "Tutup",
+                            handler: ()=>{
+                                this.events.publish('outlet.signout')
+                            }
+                        }]
+                    }).present();
+                }
             })
 
-            this.subscribe('app.'+uuid+'.authority.accepted', (res)=>{
-                if(res.uuid && res.uuid == uuid){return false;}
-                this.localNotifications.schedule({
-                    id: 1,
-                    icon: 'file://assets/icon/official.png',
-                    text: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
-                    sound: 'file://assets/audio/notification.mp3',
-                    data: { secret: uuid }
-                });
+            
+
+            this.subscribe('app.'+uuid+'.authority:accepted', (res)=>{
+                console.log(res)
+                if(res.uuid && res.uuid == uuid){
+                    this.events.publish('outlet_list.refresh')
+                    this.localNotifications.schedule({
+                        id: 1,
+                        icon: 'file://assets/icon/official.png',
+                        text: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
+                        sound: 'file://assets/audio/notification.mp3',
+                        data: { secret: uuid }
+                    });
+                }
             })
 
             this.isListen = true;

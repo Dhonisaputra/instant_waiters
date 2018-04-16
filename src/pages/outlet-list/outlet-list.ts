@@ -37,6 +37,10 @@ export class OutletListPage {
             })
         })
 
+        this.helper.events.subscribe('outlet_list.refresh', ()=>{
+            this.get_outlet();
+        })
+
         this.helper.storage.get(this.helper.config.variable.credential)
         .then((val) => {
             if(!this.platform.is('cordova'))
@@ -94,7 +98,6 @@ export class OutletListPage {
             let url = this.helper.config.base_url('admin/outlet/employee');
             this.helper.loading_countdown({url: url, data: {users_id:users_id, smartphone:true, uuid:this.uid} })
             .then((res:any)=>{
-                console.log(res)
                 res = JSON.parse(res)
                 this.outlets = res
                 this.isSearch = true;
@@ -149,11 +152,16 @@ export class OutletListPage {
                             res = JSON.parse(res);
                             switch (res.code) {
                                 case 200:
-                                this.helper.alertCtrl.create({
-                                    title: "Permintaan hak akses sukses",
-                                    message: "Menunggu konfirmasi dari admin outlet",
-                                    buttons: ["OK"]
-                                }).present();
+                                
+                                this.helper.airemote.send('admin.outlet.device:new-request','', {outlet_id: item.outlet_id}, (res) => {
+                                    this.helper.alertCtrl.create({
+                                        title: "Permintaan hak akses sukses",
+                                        message: "Menunggu konfirmasi dari admin outlet",
+                                        buttons: ["OK"]
+                                    }).present();
+                                    console.log(res)
+                                })
+
                                 break;
 
                                 case 304:
@@ -225,7 +233,11 @@ export class OutletListPage {
 
     ionViewDidLoad() {
 
-// console.log('ionViewDidLoad OutletListPage');
-}
+    // console.log('ionViewDidLoad OutletListPage');
+    }
+    ionViewWillLeave()
+    {
+        this.helper.events.unsubscribe('outlet_list.refresh')
+    }
 
 }

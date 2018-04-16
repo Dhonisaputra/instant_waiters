@@ -112,7 +112,50 @@ export class TransactionPage {
 
     get_transaction(data:any={data:{}})
     {
-        return new Promise((resolve, reject)=>{
+        let url = this.config.base_url('admin/outlet/transaction/get')
+        return this.helper.loading_countdown({
+            url: url,
+            data: data.data
+        })
+        .then((res:any)=>{
+            res = !this.helper.isJSON(res)? res : JSON.parse(res); 
+                if(res.code == 200)
+                {
+
+                    if(data.infinite == true)
+                    {
+                        this.items = this.items.concat(res.data);
+                        this.original_items = this.original_items.concat(res.data);
+                    }else
+                    {
+                        this.items = res.data;
+                        this.original_items = res.data;
+                    }
+                }else
+                {
+                    this.helper.alertCtrl.create({
+                        title: "Gagal mengambil data transaksi",
+                        buttons: ["Tutup", {
+                            text: "Coba kembali",
+                            handler: ()=>{
+                                this.get_transaction(data)
+                            }
+                        }]
+                    }).present();
+                }
+        })
+        .catch(()=>{
+            this.helper.alertCtrl.create({
+                title: "Gagal terhubung kedalam sistem",
+                buttons: ["Tutup", {
+                    text: "Coba kembali",
+                    handler: ()=>{
+                        this.get_transaction(data)
+                    }
+                }]
+            }).present();
+        })
+        /*return new Promise((resolve, reject)=>{
 
             let loadingData = this.loadingCtrl.create({
               content: "Silahkan tunggu"
@@ -171,7 +214,7 @@ export class TransactionPage {
                 loadingData.dismiss();
                 
             } );
-        });
+        });*/
 
     }
 
@@ -421,23 +464,6 @@ export class TransactionPage {
               title: 'Opsi lanjutan...',
               buttons: [
                 {
-                  icon: 'ios-copy',
-                  text: 'Gabungkan Nota',
-                  handler: () => {
-                      this.helper.alertCtrl.create({
-                          title: "Perhatian",
-                          message: "Fitur ini masih dalam tahap ujicoba",
-                          buttons: ["OK"]
-                      }).present();
-                    // this.filter_transaction()
-                  }
-                },{
-                    icon: "ios-cut",
-                  text: 'Pisahkan Nota',
-                  handler: () => {
-                    this.splitBill(index, item)
-                  }
-                },{
                     icon: "ios-eye",
                   text: 'Lihat Detail Transaksi',
                   handler: () => {

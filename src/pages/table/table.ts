@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, App } from 'ionic-angular';
 import { DbLocalProvider } from "../../providers/db-local/db-local";
-import { ProductPage } from "../../pages/product/product";
+import { WaitersPage } from "../../pages/waiters/waiters";
 import { DbTableProvider } from "../../providers/db-table/db-table";
 import { HelperProvider } from '../../providers/helper/helper'; 
 import { BillProvider } from '../../providers/bill/bill';
@@ -59,7 +59,7 @@ export class TablePage {
 
       /*if(this.helper.local.get_params(this.helper.config.variable.settings) && !this.helper.local.get_params(this.helper.config.variable.settings).choose_table_first)
       {
-        this.navCtrl.setRoot(ProductPage);
+        this.navCtrl.setRoot(WaitersPage);
       }*/
 
     }
@@ -148,7 +148,7 @@ export class TablePage {
         break;
       case 2:
         // code...
-        this.navCtrl.setRoot(ProductPage)
+        this.navCtrl.setRoot(WaitersPage)
         break;
       
       default:
@@ -189,6 +189,6 @@ export class TablePage {
       this.events.publish('bill.update', {})
     }
     
-    this.navCtrl.setRoot(ProductPage, {'previous': 'table-page', event:'table.pick', trigger_event: trigger_event, 'table': this.tableChoosen, 'multiple': this.multiple})
+    this.navCtrl.setRoot(WaitersPage, {'previous': 'table-page', event:'table.pick', trigger_event: trigger_event, 'table': this.tableChoosen, 'multiple': this.multiple})
   }
 }

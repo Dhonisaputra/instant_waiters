@@ -14,8 +14,8 @@
 			
 
 			<ion-buttons end *ngIf="waiter_state=='product'">
-				<button ion-button clear icon-right color="light" (tap)="tooltip_present($event)">
-				  <ion-icon name="more"></ion-icon>
+				<button ion-button clear icon-right color="light" (tap)="reset_receipts($event)">
+				  <ion-icon name="trash"></ion-icon> &nbsp;Reset Pesanan
 				</button>
 			</ion-buttons>
 			
@@ -154,7 +154,7 @@
 		  	Selanjutnya
 		  	<ion-icon ios="ios-arrow-forward" md="ios-arrow-forward"></ion-icon>
 		</button>
-	    <button ion-button color="light" clear small icon-left (tap)="waiter_state='bill'" *ngIf="waiter_state=='product'">
+	    <button ion-button color="light" clear small icon-left (tap)="openBillPreview()" *ngIf="waiter_state=='product'">
 		  	<ion-icon ios="ios-document" md="md-document"></ion-icon>
 		  	Lihat Nota Pesanan &nbsp; <ion-badge item-end color="light">{{billProvider.get_bill_component('orders').length}}</ion-badge>
 		</button>

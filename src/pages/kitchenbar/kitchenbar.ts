@@ -71,15 +71,8 @@ export class KitchenbarPage {
         }
 
         this.transaction_params = dataFetch;
-        let loadingData = this.loadingCtrl.create({
-          content: "Mengambil data.Silahkan tunggu"
-        });
-
-        loadingData.present();
         this.filter_transaction()
-        .then((res)=>{
-            loadingData.dismiss();
-        })
+        
 
         
 
@@ -180,7 +173,7 @@ export class KitchenbarPage {
         
         this.transaction_params = data;
 
-        let url = this.config.base_url('admin/outlet/transaction/realtime/kitchenbar')
+        let url = this.config.base_url('admin/outlet/transaction/realtime/kitchenbar/waiters')
         let included_data = this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id != 3? [0,1] : [0,1,2]
         let ndata = {
             where    :{
@@ -217,6 +210,8 @@ export class KitchenbarPage {
                     buttons: []
                 }).present()
             }
+
+            return res;
         });
     }
 
@@ -325,10 +320,10 @@ export class KitchenbarPage {
             this.transaction_params.data.order_by = this.order_by;
 
             this.get_transaction(this.transaction_params)
-            .done((res)=>{
+            .then((res)=>{
                 resolve(res)
             })
-            .fail(()=>{
+            .catch(()=>{
                 reject();
             })
 

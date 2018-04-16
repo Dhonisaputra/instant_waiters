@@ -12,26 +12,30 @@
 	  		<button ion-button menuToggle>
 	  			<ion-icon name="menu"></ion-icon>
 	  		</button>
-			<ion-searchbar *ngIf="page_params.toggleSearchInput" class="searchbar-toolbar" (ionInput)="filter_transaction()" [(ngModel)]="filter_input" style="padding: 0px 5px; width:40%;"></ion-searchbar>
 			<ion-buttons class="center distributed">
-				<button ion-button icon-only color="light" (click)="page_params.toggleSearchInput=!page_params.toggleSearchInput">
-					<ion-icon name="search" *ngIf="!page_params.toggleSearchInput"></ion-icon>
-					<ion-icon name="close" *ngIf="page_params.toggleSearchInput"></ion-icon>
-				</button>
-			</ion-buttons>
-			<ion-buttons>
-				<button ion-button clear icon-right color="light" (click)="page_params.toggleFilter = !page_params.toggleFilter">
-				  Sort <ion-icon name="funnel"></ion-icon>
-				</button>
+				
 			</ion-buttons>
 		</ion-navbar>
 	</ion-toolbar>
-
+	<ion-toolbar>
+		<div style="display: flex; flex-direction: column;width: 100%;">
+			
+			<ion-row>
+				<ion-col col-12 col-xs-12 col-sm-12 col-md-12>
+					<ion-searchbar class="searchbar-toolbar" (ionInput)="filter_transaction()" [(ngModel)]="filter_input"></ion-searchbar>
+				</ion-col>
+			</ion-row>
+		</div>
+  	</ion-toolbar>
 </ion-header>
 
 
 
 <ion-content padding>
+	<ion-refresher (ionRefresh)="refresh_data($event)">
+	    <ion-refresher-content></ion-refresher-content>
+  	</ion-refresher>
+	
 	<div *ngIf="!edit_transaction_status">
 		<div>				
 			<ion-row>
@@ -108,65 +112,12 @@
 				</ion-card-content>
 			</ion-card>
 
+			<div class="" *ngIf="items.length <= 0">
+				Data tidak ditemukan
+			</div>
+
 		</div>
-		<!-- <ion-list>
-			<ion-item>
-			</ion-item>
-			<ion-item-sliding *ngFor="let item of items; let i = index">
-				
-				<ion-item (press)="advanceOptions(i, item)">
-						<span>{{transform_date(item.date)}}</span> &middot;
-					<span style="font-weight:700; ">
-					</span>
-					<p style="margin-top: 10px;">
-						<span> Nota {{helper.outlet_initial_name()}}/NOTA/{{helper.lead_zero(item.pay_id, 5)}} <span *ngIf="item.order_session > 0" class="bs-label label-success">{{item.order_session > 0? "Extra #"+item.order_session : 'Pesanan Awal'}}</span> &middot;</span>
-						<span *ngIf="item.group_prod_name">						
-							<span  *ngFor="let ip of splitting_prod_name(item.group_prod_name)"> <span class="bs-label label-primary">{{ip}}</span> &nbsp;</span>  
-						</span>
-						<span *ngIf="item.table_name"> {{item.table_name}} &middot;</span> 
-						<span *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" class="bs-label label-success"> Terbayar </span>
-						<span *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" class="bs-label label-warning"> Belum Dibayar </span>
-						<span *ngIf="item.payment_cancel_status == 1" class="bs-label label-danger"> Pembayaran Dibatalkan </span>
-					</p>
-					<p>
-						
-					</p>
-					<ion-icon name="done-all" *ngIf="item.payment_nominal > 0 && item.payment_cancel_status == 0" color="primary" item-end></ion-icon>
-					<ion-icon name="alert" *ngIf="item.payment_nominal < 1 && item.payment_cancel_status == 0" color="warning" item-end></ion-icon>
-					<ion-icon name="trash" *ngIf="item.payment_cancel_status == 1" color="danger" item-end></ion-icon>
-					<div item-end style="height: 80%;"  *ngIf="helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id != 3">				
-						<button ion-button color="main" item-end style="height: 80%;" *ngIf="item.pay_dt_order_status == 0" (tap)="changeProses(item)">Proses permintaan</button>
-						<button ion-button item-end style="height: 80%;" *ngIf="item.pay_dt_order_status == 1" (tap)="changeProses(item)">Proses selesai</button>
-					</div>
 		
-					<div item-end *ngIf="helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3">				
-						<button ion-button color="danger" item-end *ngIf="item.pay_dt_order_status == 0">Belum di-proses</button>
-						<button ion-button color="secondary" item-end *ngIf="item.pay_dt_order_status == 1">Sedang di-proses</button>
-						<button ion-button item-end *ngIf="item.pay_dt_order_status == 2" (tap)="changeProses(item)"> Proses Selesai</button>
-					</div>
-				</ion-item>
-				
-				<ion-item-options side="right">
-			      	
-					<button ion-button color="primary" class="center distributed" *ngIf="helper.local.get_params(helper.config.variable.credential).outlet.outlet_roles_id != 3 && ( helper.IDRtoInt(item.payment_nominal) + helper.IDRtoInt(item.paid_with_bank_nominal) < helper.IDRtoInt(item.payment_total) && item.payment_cancel_status == 0 )" (click)="pay_transaction(i, item)"> 
-						<ion-icon name="logo-usd" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
-					</button>
-					<button ion-button color="secondary" class="center distributed" *ngIf="page_params.action=='edit' || item.payment_nominal + item.paid_with_bank_nominal >= item.payment_total" (click)="edit_transaction(i, item)">
-						<ion-icon name="create" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
-					</button>
-					<button ion-button color="danger" class="center distributed" (click)="cancel_transaction(i, item)" *ngIf="item.payment_cancel_status == 0">
-						<ion-icon name="trash" style="padding:0px 10px; font-size:1.2em;"></ion-icon>
-					</button>
-			    </ion-item-options>
-			</ion-item-sliding>
-			<ion-item *ngIf="items.length < 1" class="text-align--center">
-				Tidak ditemukan transaksi
-			</ion-item>
-		
-		</ion-list> -->
-		<!-- <ion-infinite-scroll (ionInfinite)="infinite_scroll($event)">
-		   <ion-infinite-scroll-content></ion-infinite-scroll-content>
-		</ion-infinite-scroll> -->
 	</div>
 	<div *ngIf="edit_transaction_status">
 

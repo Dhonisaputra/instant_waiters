@@ -21,6 +21,7 @@ export class ProductProvider {
 
 	get_product(options:any)
 	{
+		
 		if(options.online == true)
 		{
 			options.data = Object.assign(
@@ -39,10 +40,6 @@ export class ProductProvider {
 				data: options.data
 			});
 
-			http.then( (res) =>{
-				// res = !this.helper.isJSON(res)? res : JSON.parse(res);
-				// this.data.temp_product = res;
-			} )
 			return http;
 			
 		}else

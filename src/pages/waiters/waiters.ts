@@ -178,9 +178,7 @@ export class WaitersPage {
 		this.helper.events.unsubscribe('product:filter-type')
 		if(this.helper.local.get_params(this.helper.config.variable.credential).outlet.outlet_roles_id == 3)
     	{
-	        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
-	        .catch(()=>{
-        	})
+	        
     	}
 	}
 	ionViewWillEnter()
@@ -208,7 +206,7 @@ export class WaitersPage {
 
 		this.billProvider.pull_data_bill()
 		.then( ()=>{
-
+			console.log(this.navParams.data)
 			switch (this.navParams.data.event) {
 
 				case "transaction.edit":
@@ -591,6 +589,7 @@ export class WaitersPage {
 			{
 				this.events.publish('reset.data.receipt',{})
 				this.get_unpaid_bill();
+				this.waiter_state = 'product'
 			}else
 			{
 			}
@@ -664,6 +663,7 @@ export class WaitersPage {
 										this.events.publish('reset.data.receipt',{})
 										this.get_unpaid_bill();
 										loadingPrint.dismiss();
+										this.waiter_state = 'product'
 									}, ()=>{
 										loadingPrint.dismiss();
 										this.billProvider.set_bill(this.billProvider.temp_bill)
@@ -773,38 +773,7 @@ export class WaitersPage {
 
 			this.billProvider.temp_bill = temp_bill;
 			let deff = this.helper.$.Deferred();
-			if(last_session > 0)
-			{
-				let btn = [];
-				for (var i = 0; i <= last_session; ++i) {
-					let index:number = i;
-					let text = i == 0? 'Pesanan pertama' : "Extra pesanan ke-"+(i+1);
-					btn.push(
-						{
-							handler: (res)=>{
-								deff.resolve(index)
-							},
-							text: text,
-						}
-					)
-				}
-
-				btn.push({
-					text: 'Batal',
-					role: 'cancel'
-				})
-
-				this.helper.actionSheet.create({
-					title: "Terdapat extra pesanan, silahkan pilih yang akan di cetak",
-
-					buttons: btn 
-				}).present();
-				
-			}else
-			{
-				console.log(this.billProvider.bill)
-				deff.resolve(last_session)
-			}
+			deff.resolve(last_session)
 
 			this.helper.$.when(deff.promise())
 			.done((val)=>{
@@ -1173,6 +1142,17 @@ export class WaitersPage {
       ]
     });
     actionSheet.present();
+  }
+
+  openBillPreview()
+  {
+
+  	if(this.error_product())
+  	{
+  		console.log(this.billProvider)
+	  	this.waiter_state='bill'
+  	}
+
   }
 
 }

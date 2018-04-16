@@ -180,6 +180,12 @@ import * as html2canvas from "html2canvas";
                                       options.duration = 5000;
                                   }
                                   this.loading_countdown(ajax, options)
+                                  .then((res)=>{
+                                    resolve(res)
+                                  })
+                                  .catch((res)=>{
+                                    reject(res)
+                                  })
                               }
                           }]
                       }).present();
