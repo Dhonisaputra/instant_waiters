@@ -73,6 +73,10 @@ export class MyApp {
     this.platform.ready().then(() => {
       if(!this.backgroundMode.isEnabled())
       {
+        this.backgroundMode.configure({
+          title: "Folarpos Waiters",
+          icon: 'file://assets/icon/official.png',
+        });
         this.backgroundMode.enable();
       }
       // Okay, so the platform is ready and our plugins are available.

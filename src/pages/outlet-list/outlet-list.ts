@@ -217,7 +217,7 @@ export class OutletListPage {
                         this.navCtrl.setRoot(WaitersPage);
 
                     }else{
-                        if( this.platform.is('android') )
+                        if( !this.platform.is('tablet') )
                         {
                             this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
                             .catch(()=>{

@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { HTTP } from '@ionic-native/http';
 import { AiRemoteProvider } from '../../providers/ai-remote/ai-remote';
 import { NativeAudio } from '@ionic-native/native-audio';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 import * as $ from "jquery"
 
@@ -34,6 +35,7 @@ import * as html2canvas from "html2canvas";
       private defaultTimeout: Number = 100;
       audioType: string = 'html5';
       sounds: any = [];
+      uuid: any;
       constructor(
           public http: HttpClient, 
           public config: ConfigProvider, 
@@ -51,6 +53,7 @@ import * as html2canvas from "html2canvas";
           public localNotifications: LocalNotifications,
           public airemote: AiRemoteProvider,
           public nativeAudio: NativeAudio,
+          public uniqueDeviceID: UniqueDeviceID,
 
           ) {
           this.win = window;
@@ -64,6 +67,40 @@ import * as html2canvas from "html2canvas";
           if(platform.is('cordova')){
               this.audioType = 'native';
           }
+          
+          this.get_uuid();
+
+      }
+
+      get_uuid()
+      {
+        this.storage.get(this.config.variable.credential)
+        .then((val) => {
+            if(!this.platform.is('cordova'))
+            {
+                this.storage.get('uuid')
+                .then((uuid:any) => {
+                    if(!uuid)
+                    {
+                        this.uuid = val.outlet.outlet_id+'-'+this.moment().valueOf()+'-'+val.users.users_id;
+                        this.storage.set('uuid', this.uuid);
+                    }else
+                    {
+                        this.uuid = uuid;
+                        this.local.set_params('uuid', this.uuid)
+                    }
+                })
+            }else
+            {
+                this.uniqueDeviceID.get()
+                .then((uuid: any)=>{
+
+                    this.uuid = uuid? uuid: val.outlet.outlet_id+'-'+this.moment().valueOf()+'-'+val.users.users_id;
+                    this.local.set_params('uuid', this.uuid)
+
+                });
+            }
+        })
       }
 
       uniqid()

@@ -111,11 +111,30 @@ export class KitchenbarPage {
 
     changeProses(item)
     {
+        item.selected_item = [item.detail_id]
+        item.pay_dt_order_status = 2
+        this.changeProsesForSelectedItem(item);
+    }
+
+    splitting_prod_name(item)
+    {
+        return item.split(', ');
+    }
+
+
+    update_page_parameters(data:any={})
+    {
+      this.page_params = Object.assign(this.page_params, data)
+    }
+
+    changeProsesForSelectedItem(item)
+    {
         let url = this.config.base_url('admin/outlet/transaction/order/update');
         let data = {
             update:{
                 pay_dt_order_status: item.pay_dt_order_status == 0? 1 : (item.pay_dt_order_status == 1? 2 : 3),
             },
+            in: [['pay_dt_id', item.selected_item]],
             where: {
                 pay_id: item.pay_id,
                 order_session: item.order_session,
@@ -134,7 +153,7 @@ export class KitchenbarPage {
                             duration: 2000
                         }).present()
                         var nota = this.helper.outlet_initial_name()+'/NOTA/'+this.helper.lead_zero(item.pay_id, 5);
-                        this.helper.airemote.send(this.outlet+'.waiters:proses-done','',{title: "Pesanan nota "+nota+' telah diproses' }, () => {
+                        this.helper.airemote.send(this.outlet+'.waiters:proses-done','',{uuid: this.helper.uuid, title: "Pesanan nota "+nota+' telah diproses' }, () => {
                         })
                         break;
 
@@ -144,7 +163,7 @@ export class KitchenbarPage {
                             duration: 4000
                         }).present()
                         var nota = this.helper.outlet_initial_name()+'/NOTA/'+this.helper.lead_zero(item.pay_id, 5);
-                        this.helper.airemote.send(this.outlet+'.waiters:proses-done','',{title: "Pesanan nota "+nota+' telah selesai' }, () => {
+                        this.helper.airemote.send(this.outlet+'.waiters:proses-done','',{uuid: this.helper.uuid, title: "Pesanan nota "+nota+' telah selesai' }, () => {
 
                         })
                         break;
@@ -155,17 +174,6 @@ export class KitchenbarPage {
                 }
             }
         })
-    }
-
-    splitting_prod_name(item)
-    {
-        return item.split(', ');
-    }
-
-
-    update_page_parameters(data:any={})
-    {
-      this.page_params = Object.assign(this.page_params, data)
     }
 
     get_transaction(data:any={data:{}})
@@ -180,9 +188,9 @@ export class KitchenbarPage {
                 outlet_id         : this.outlet,
                 pay_dt_date_now   : this.helper.moment('YYYY-MM-DD')
             },
-            in       : [['pay_dt_order_status', included_data]],
+            in       : [['pay_dt_order_status', [2] ]],
             join     : ["md_prod_type","tr_payment","mg_member"],
-            group_by : "pay_id,pay_dt_order_session",
+            group_by : "detail_id",
             order_by : "date ASC",
         }
         data.data = Object.assign(ndata, data.data)
