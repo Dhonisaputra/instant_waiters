@@ -9,6 +9,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { NativeAudio } from '@ionic-native/native-audio';
+import { Market } from '@ionic-native/market';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -164,6 +165,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     AiRemoteProvider,
     Network,
     BackgroundMode,
+    Market,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

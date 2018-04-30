@@ -27,6 +27,7 @@ export class OutletListPage {
     uid:any='';
     outlets:any=[];
     isSearch: any = false;
+    c:any;
     constructor(public screenOrientation: ScreenOrientation, private splashScreen : SplashScreen, public navCtrl: NavController, public navParams: NavParams, public device_id: UniqueDeviceID, private helper:HelperProvider, public platform: Platform) {
 
         this.helper.local.set_params('login_outlet_device', false)
@@ -70,6 +71,10 @@ export class OutletListPage {
 
                 });
             }
+        })
+
+        this.c = this.helper.loadingCtrl.create({
+            content: "Menuju outlet"
         })
 
     }
@@ -147,8 +152,8 @@ export class OutletListPage {
                             outlet_id: item.outlet_id,
                             uuid: this.uid
                         }
-                        this.helper.$.post(url, data)
-                        .then((res)=>{
+                        this.helper.loading_countdown({url:url, data:data})
+                        .then((res:any)=>{
                             res = JSON.parse(res);
                             switch (res.code) {
                                 case 200:
@@ -181,21 +186,22 @@ export class OutletListPage {
                                 break;
                             }
                         })
-                        .fail(()=>{
+                        .catch(()=>{
+                            loading.dismiss();
                             this.helper.alertCtrl.create({
                                 title: "Permintaan hak akses Gagal",
                                 message: "Terdapat kesalahan saat melakukan pengiriman hak akses ke outlet. Silahkan ulangi kembali!",
                                 buttons: ["OK"]
                             }).present();
                         })
-                        .always(()=>{
-                            loading.dismiss();
-                        })
                     }
                 }]
             }).present();
         }else
         {
+            
+            this.c.present();
+
             let data = this.helper.local.get_params(this.helper.config.variable.credential);
             data.outlet = Object.assign(data.outlet, item);
             data.data = Object.assign(data.data, item);
@@ -223,7 +229,15 @@ export class OutletListPage {
                             .catch(()=>{
                             })
                         }
-                        this.navCtrl.setRoot(default_page);
+                        let r = this.navCtrl.setRoot(default_page);
+                        r
+                        .catch(()=>{
+                            this.c.dismiss();
+                            this.helper.alertCtrl.create({
+                                title: "Kesalahan sistem",
+                                message: "Tidak dapat membuka outlet"
+                            }).present();
+                        })
                     }
                 })
             })
@@ -238,6 +252,7 @@ export class OutletListPage {
     ionViewWillLeave()
     {
         this.helper.events.unsubscribe('outlet_list.refresh')
+        this.c.dismiss();
     }
 
 }

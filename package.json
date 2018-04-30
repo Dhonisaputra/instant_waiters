@@ -1,6 +1,6 @@
 {
   "name": "folarpos_instant",
-  "version": "0.0.1",
+  "version": "1.1.45",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
   "private": true,
@@ -29,6 +29,7 @@
     "@ionic-native/file-transfer": "^4.5.3",
     "@ionic-native/http": "^4.6.0",
     "@ionic-native/local-notifications": "^4.6.0",
+    "@ionic-native/market": "^4.7.0",
     "@ionic-native/native-audio": "^4.6.0",
     "@ionic-native/network": "^4.7.0",
     "@ionic-native/screen-orientation": "^4.5.3",
@@ -51,6 +52,7 @@
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-local-notification": "^0.9.0-beta.2",
+    "cordova-plugin-market": "^1.2.0",
     "cordova-plugin-nativeaudio": "^3.0.9",
     "cordova-plugin-network-information": "^2.0.1",
     "cordova-plugin-screen-orientation": "^3.0.1",
@@ -98,7 +100,8 @@
       "cordova-plugin-nativeaudio": {},
       "cordova-plugin-thermalprint": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-background-mode": {}
+      "cordova-plugin-background-mode": {},
+      "cordova-plugin-market": {}
     },
     "platforms": [
       "browser",

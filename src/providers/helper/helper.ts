@@ -418,4 +418,9 @@ import * as html2canvas from "html2canvas";
 
   }
 
+  closeApp()
+  {
+      this.platform.exitApp()
+  }
+
 }

@@ -72,10 +72,12 @@ export class AiRemoteProvider {
         this.network.onDisconnect().subscribe(() => {
             conn.present();
             contoasting.present();
+            this.local.set_params('connection',false);
         
         });
 
         this.network.onConnect().subscribe(() => {
+            this.local.set_params('connection',true);
             conn.dismiss();
             this.toast.create({
                 message: "Koneksi kembali tersedia",
@@ -101,14 +103,10 @@ export class AiRemoteProvider {
     }
     default_params()
     {
-        return {
-            host:'https://folariumremote.herokuapp.com/',
-            apiKey:'instantFolar3030' ,
-            id:undefined
-        }
+        return this.config.remote_host_default();
     }
     subscribe(event, fn)
-    {	
+    {    
         event = this.options.apiKey+"_"+event;
         this.socket.on(event, fn)
     }
@@ -161,18 +159,13 @@ export class AiRemoteProvider {
                 }).present();
             })
 
-            this.subscribe('app.outlet_list:refresh', (res)=>{
-                if(res.uuid && res.uuid == uuid){
-                    this.events.publish('outlet_list.refresh')
-                }
-            })
-
             if(this.local.get_params(this.config.variable.credential).outlet.outlet_roles_id != 3)
             {
 
 
                 this.subscribe(outlet_id+'.app.cashier:new-order', (res)=>{
                     if(res.uuid && res.uuid == uuid){return false;}
+                    console.log(res)
                     this.events.publish('transaction:refresh')
                     this.events.publish('monitoring_request:refresh')
                     this.localNotifications.schedule({
@@ -185,43 +178,34 @@ export class AiRemoteProvider {
                 })
             }
 
-            this.subscribe('app.'+uuid+'.'+outlet_id+'.authority:revoke', (res)=>{
-                isLogin = this.local.get_params('login_outlet_device')
-
+            this.subscribe('app.'+uuid+'.'+outlet_id+'.authority.revoke', (res)=>{
                 if(!isLogin)
                 {
                     this.events.publish('outlet_list.refresh')
                     return false;
                 }
-                
-                if(res.uuid && res.uuid == uuid){
-                    this.alert.create({
-                        title: "Anda telah dikeluarkan oleh admin",
-                        subTitle: "Hak akses Anda telah dicabut oleh admin dari outlet ini. Silahkan hubungi admin outlet anda untuk keterangan lebih lanjut!",
-                        buttons: [{
-                            text: "Tutup",
-                            handler: ()=>{
-                                this.events.publish('outlet.signout')
-                            }
-                        }]
-                    }).present();
-                }
+                if(res.uuid && res.uuid == uuid){return false;}
+                this.alert.create({
+                    title: "Anda telah dikeluarkan oleh admin",
+                    subTitle: "Hak akses Anda telah dicabut oleh admin dari outlet ini. Silahkan hubungi admin outlet anda untuk keterangan lebih lanjut!",
+                    buttons: [{
+                        text: "Tutup",
+                        handler: ()=>{
+                            this.events.publish('outlet.signout')
+                        }
+                    }]
+                }).present();
             })
 
-            
-
-            this.subscribe('app.'+uuid+'.authority:accepted', (res)=>{
-                console.log(res)
-                if(res.uuid && res.uuid == uuid){
-                    this.events.publish('outlet_list.refresh')
-                    this.localNotifications.schedule({
-                        id: 1,
-                        icon: 'file://assets/icon/official.png',
-                        text: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
-                        sound: 'file://assets/audio/notification.mp3',
-                        data: { secret: uuid }
-                    });
-                }
+            this.subscribe('app.'+uuid+'.authority.accepted', (res)=>{
+                if(res.uuid && res.uuid == uuid){return false;}
+                this.localNotifications.schedule({
+                    id: 1,
+                    icon: 'file://assets/icon/official.png',
+                    text: 'Perangkat anda telah diperbolehkan untuk mengakses outlet '+data.outlet_name,
+                    sound: 'file://assets/audio/notification.mp3',
+                    data: { secret: uuid }
+                });
             })
 
             this.isListen = true;
