@@ -4,7 +4,7 @@ import { DbLocalProvider } from '../../providers/db-local/db-local';
 import { HelperProvider } from '../../providers/helper/helper'; 
 import { BillProvider } from '../../providers/bill/bill';
 import { ProductPage } from '../product/product';
-import { SendReceiptPage } from '../send-receipt/send-receipt';
+// import { SendReceiptPage } from '../send-receipt/send-receipt';
 
 import * as $ from "jquery"
 
@@ -150,7 +150,7 @@ export class PaymentPage {
 			{
 
 				this.latest_bill_id = res.data.pay_id;
-				this.navCtrl.setRoot(SendReceiptPage, {data: this.latest_bill_id})
+				// this.navCtrl.setRoot(SendReceiptPage, {data: this.latest_bill_id})
 				// this.state = 'afterPayment';
 			}else
 			{
@@ -189,7 +189,7 @@ export class PaymentPage {
   email_panel()
   {
   	let bill = Object.assign({}, this.bill);
-	this.navCtrl.push('SendReceiptPage', {bill:bill})
+	// this.navCtrl.push('SendReceiptPage', {bill:bill})
 	this.bill = {}
   }
 

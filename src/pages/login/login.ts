@@ -38,14 +38,14 @@ export class LoginPage {
 				res = this.helper.isJSON(res)? JSON.parse(res) : res;
 				if(res.code == 200)
 				{
-					if(res.data.apk_version_build != this.helper.config.build_number)
+					if(res.data.apk_version_code > this.helper.versionCode)
 					{
 						if(res.data.force_update == 1)
 						{
 							deff.reject(true)
 							this.helper.alertCtrl.create({
 								title: "Versi aplikasi terbaru ditemukan",
-								message: "Silahkan update folarpos instant anda",
+								message: "Silahkan update folarpos instant ke versi "+res.data.apk_version_number,
 								enableBackdropDismiss: false,
 								buttons:[{
 									text: "tutup",

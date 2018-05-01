@@ -10,13 +10,14 @@ import { File } from '@ionic-native/file';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Market } from '@ionic-native/market';
+import { AppVersion } from '@ionic-native/app-version';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { TablePage } from '../pages/table/table';
 import { LoginPage } from '../pages/login/login';
-import { SendReceiptPage } from '../pages/send-receipt/send-receipt';
+// import { SendReceiptPage } from '../pages/send-receipt/send-receipt';
 import { PaymentPage } from '../pages/payment/payment';
 import { ReceiptPage } from '../pages/receipt/receipt';
 import { ProductPage } from '../pages/product/product';
@@ -72,7 +73,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     ListPage,
     TablePage,
     LoginPage,
-    SendReceiptPage,
+    // SendReceiptPage,
     PaymentPage,
     ReceiptPage,
     ProductPage,
@@ -116,7 +117,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     ListPage,
     LoginPage,
     TablePage,
-    SendReceiptPage,
+    // SendReceiptPage,
     PaymentPage,
     ReceiptPage,
     ProductPage,
@@ -166,6 +167,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
     Network,
     BackgroundMode,
     Market,
+    AppVersion,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

@@ -23,7 +23,7 @@ export class ConfigProvider {
 		// this.host = 'http://192.168.0.104/folarpos-instant/';
 		// this.host = 'http://192.168.100.31/folarpos-instant/';
 
-		this.build_number = '20180419-1-1-46';
+		this.build_number = '20180501-1-1-47';
 		this.remote_host =  this.remote_host_default();
 	}
 

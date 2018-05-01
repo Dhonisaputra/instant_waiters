@@ -10,6 +10,7 @@ import { HTTP } from '@ionic-native/http';
 import { AiRemoteProvider } from '../../providers/ai-remote/ai-remote';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { AppVersion } from '@ionic-native/app-version';
 
 import * as $ from "jquery"
 
@@ -36,6 +37,10 @@ import * as html2canvas from "html2canvas";
       audioType: string = 'html5';
       sounds: any = [];
       uuid: any;
+      appName:any = 'loading..';
+      versionCode:any = 'loading..';
+      versionNumber:any = 'loading..';
+
       constructor(
           public http: HttpClient, 
           public config: ConfigProvider, 
@@ -54,6 +59,7 @@ import * as html2canvas from "html2canvas";
           public airemote: AiRemoteProvider,
           public nativeAudio: NativeAudio,
           public uniqueDeviceID: UniqueDeviceID,
+          public appVersion: AppVersion,
 
           ) {
           this.win = window;
@@ -69,6 +75,20 @@ import * as html2canvas from "html2canvas";
           }
           
           this.get_uuid();
+
+          this.appVersion.getAppName()
+          .then((res:any)=>{
+            this.appName = res;
+          })
+          this.appVersion.getVersionNumber()
+          .then((res:any)=>{
+            console.log(res)
+            this.versionNumber = res;
+          })
+          this.appVersion.getVersionCode()
+          .then((res:any)=>{
+            this.versionCode = res;
+          })
 
       }
 

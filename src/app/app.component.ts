@@ -66,6 +66,11 @@ export class MyApp {
     // this.storage.set('outlet', 1)
     this.routeHistory = [];
     
+    if(this.helper.win.StatusBar)
+    {
+      this.helper.win.StatusBar.hide();
+    }
+    
 
   }
 
